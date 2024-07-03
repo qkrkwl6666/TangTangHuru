@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
         if(timer > lifeTime)
         {
             gameObject.SetActive(false);
+
             timer = 0f;
         }
         else
@@ -25,6 +26,9 @@ public class Bullet : MonoBehaviour
     {
         if(other.gameObject.layer == attackableLayer)
         {
+            gameObject.SetActive(false);
+            timer = 0f;
+
         }
 
     }

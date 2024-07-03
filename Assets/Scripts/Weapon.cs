@@ -10,9 +10,12 @@ public class Weapon : MonoBehaviour
     public List<GameObject> bullets;
 
     public float damage = 5;
-    float fireRate = 3f;
+    public float bulletSpeed = 15f;
+
+    float fireRate = 1.5f;
     float timer = 0f;
-    int fireCount = 3;
+    int fireCount = 1;
+
 
     void Start()
     {
@@ -36,13 +39,30 @@ public class Weapon : MonoBehaviour
     void Fire()
     {
         var count = fireCount;
+        var targetPos = detecter.nearest.transform.position;
+        Vector2 velocity = Vector2.zero;
 
-        foreach(GameObject bullet in bullets)
+        if (targetPos != null )
+        {
+            velocity = targetPos - transform.position;
+        }
+        else
+        {
+            velocity = transform.position;
+        }
+
+
+        velocity = velocity.normalized * bulletSpeed;
+
+
+        foreach (GameObject bullet in bullets)
         {
             if(!bullet.activeSelf)
             {
+                bullet.gameObject.transform.position = transform.position;
                 bullet.SetActive(true);
                 bullet.GetComponent<Bullet>().damage = damage;
+                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
                 count--;
             }
         }
@@ -52,7 +72,9 @@ public class Weapon : MonoBehaviour
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             if(bullet.GetComponent<Bullet>() != null)
             {
+                bullet.gameObject.transform.position = transform.position;
                 bullet.GetComponent<Bullet>().damage = damage;
+                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
             }
             else
             {

@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -224,7 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9dcc369d0ab44c541aad6d8dc0a37708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 20
   targetLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -244,6 +244,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 3661404853983736829, guid: 5651fd9ee71d96d45b7a1e48d0e78a27, type: 3}
   bullets: []
   damage: 5
+  bulletSpeed: 15
 --- !u!1 &834462508
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,7 +319,7 @@ Camera:
   m_AllowMSAA: 1
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!4 &834462511
@@ -522,6 +523,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 782992261285629, guid: 654bf18f3ad788f48b81ad3b2d3b5481, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 782992261285629, guid: 654bf18f3ad788f48b81ad3b2d3b5481, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.8828125
+      objectReference: {fileID: 0}
+    - target: {fileID: 3690970018250149109, guid: 654bf18f3ad788f48b81ad3b2d3b5481, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 2747690628134850419, guid: 16037dbd798344f57a526d53d48f5ead, type: 3}
     - target: {fileID: 5092979247709694063, guid: 654bf18f3ad788f48b81ad3b2d3b5481, type: 3}
       propertyPath: m_Name
       value: Jem
