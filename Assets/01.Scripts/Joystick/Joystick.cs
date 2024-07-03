@@ -49,6 +49,7 @@ public class Joystick : MonoBehaviour
                 }
             case InputActionPhase.Canceled:
                 {
+                    isStarted = false;
                     InputValue = Vector2.zero;
                     blackCircle.SetActive(false);
                     break;
