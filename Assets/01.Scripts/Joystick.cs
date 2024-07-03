@@ -32,11 +32,13 @@ public class Joystick : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(InputValue);
+        //Debug.Log(InputValue);
     }
 
     public void OnJoyStick(InputAction.CallbackContext context)
     {
+        Debug.Log(context.ReadValue<Vector2>());
+
         switch (context.phase)
         {
             case InputActionPhase.Performed:
@@ -61,8 +63,6 @@ public class Joystick : MonoBehaviour
         }
 
     }
-
-    // 
     public void UpdateJoystick(bool isStarted, Vector3 screenPosition)
     {
         if (isStarted)
@@ -73,8 +73,6 @@ public class Joystick : MonoBehaviour
             startScreenPosition.z = 10;
             worldPos = Camera.main.ScreenToWorldPoint(startScreenPosition);
             blackCircle.transform.position = worldPos;
-
-            return;
         }
         else
         {
@@ -87,16 +85,16 @@ public class Joystick : MonoBehaviour
                 dir = dir.normalized * joystickRadius;
                 dir.z = 10;
                 worldPos = Camera.main.ScreenToWorldPoint(startScreenPosition + dir);
-                blackCircle.transform.position = worldPos;
             }
             else
             {
                 currentScreenPosition.z = 10;
                 worldPos = Camera.main.ScreenToWorldPoint(currentScreenPosition);
-                blackCircle.transform.position = worldPos;
             }
 
+            blackCircle.transform.position = worldPos;
             InputValue = dir / joystickRadius;
+
         }
     }
 
@@ -108,6 +106,13 @@ public class Joystick : MonoBehaviour
             blackCircle.SetActive(false);
             isStarted = false;
         }
+    }
+
+    public void OnKeyBoard(InputAction.CallbackContext context)
+    {
+        blackCircle.SetActive(true);
+        blackCircle.transform.position = context.ReadValue<Vector2>();
+        InputValue = context.ReadValue<Vector2>();
     }
     private void OnEnable()
     {
