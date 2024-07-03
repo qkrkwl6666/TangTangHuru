@@ -30,15 +30,8 @@ public class Joystick : MonoBehaviour
         blackCircle.SetActive(false);
     }
 
-    private void Update()
-    {
-        //Debug.Log(InputValue);
-    }
-
     public void OnJoyStick(InputAction.CallbackContext context)
     {
-        Debug.Log(context.ReadValue<Vector2>());
-
         switch (context.phase)
         {
             case InputActionPhase.Performed:
