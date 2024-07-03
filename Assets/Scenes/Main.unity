@@ -354,7 +354,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
+  orthographic: 1
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -460,6 +460,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 36ab6582-ce32-4e78-af55-60c6430052b4
     m_ActionName: Player/Move
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1165280599}
+        m_TargetAssemblyTypeName: Joystick, Assembly-CSharp
+        m_MethodName: OnTouchEnd
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 50aeca2f-1174-4eb2-bea0-354d76358073
+    m_ActionName: Player/TouchEnd[/Simulated Touchscreen/touch1/press]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -478,8 +494,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blackCirclePrefabs: {fileID: 8661158018902524296, guid: 23f035498255a2b4185ec95a1aaa96f5, type: 3}
-  blackCircle: {fileID: 0}
-  joystickRadius: 30
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

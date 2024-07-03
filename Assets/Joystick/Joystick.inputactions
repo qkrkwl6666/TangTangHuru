@@ -6,24 +6,44 @@
             "id": "70055d62-dcae-4415-979a-d5e455114d55",
             "actions": [
                 {
-                    "name": "Move",
+                    "name": "TouchPerformed",
                     "type": "Value",
                     "id": "36ab6582-ce32-4e78-af55-60c6430052b4",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "TouchEnd",
+                    "type": "Value",
+                    "id": "50aeca2f-1174-4eb2-bea0-354d76358073",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=1)",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "cd6fce9d-af0b-4b91-b4c2-22cdca34ad9d",
+                    "id": "d3645e1d-6084-4f07-847f-516e5806522e",
                     "path": "<Touchscreen>/primaryTouch/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Move",
+                    "action": "TouchPerformed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9f95a7cf-0e54-402f-a8ba-f05f58776188",
+                    "path": "<Touchscreen>/primaryTouch/press",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TouchEnd",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
