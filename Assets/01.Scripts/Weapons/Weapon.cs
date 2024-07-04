@@ -9,6 +9,8 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public List<GameObject> bullets;
 
+    Vector3 targetPos = Vector3.zero;
+
     public float damage = 5;
     public float bulletSpeed = 15f;
 
@@ -38,21 +40,16 @@ public class Weapon : MonoBehaviour
     void Fire()
     {
         var count = fireCount;
-        var targetPos = detecter.nearest.transform.position;
+
+        if (detecter.nearest != null)
+        {
+            targetPos = detecter.nearest.transform.position;
+        }
+
         Vector2 velocity = Vector2.zero;
 
-        if (targetPos != null )
-        {
-            velocity = targetPos - transform.position;
-        }
-        else
-        {
-            velocity = transform.position;
-        }
-
-
+        velocity = targetPos - transform.position;
         velocity = velocity.normalized * bulletSpeed;
-
 
         foreach (GameObject bullet in bullets)
         {

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1185057724711407014}
   - component: {fileID: 2252312512633937327}
   - component: {fileID: 547285394953554114}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 4799795428068537680}
   - component: {fileID: 8263818556418302191}
   - component: {fileID: 2864452925136739935}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 1990268178469561674}
   - component: {fileID: 8814491942359040892}
   - component: {fileID: 467231315941445272}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2506466044164910165}
   - component: {fileID: 2360799171507005797}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 4429768310422050209}
   - component: {fileID: 7657026840396213534}
   - component: {fileID: 5327080221737141181}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9306545606478547}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,9 +458,9 @@ GameObject:
   - component: {fileID: 5351226737744049179}
   - component: {fileID: 8614973953701554874}
   - component: {fileID: -2955195352645807809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -560,7 +560,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &148722309698514280
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ffd2c7ddad92d4aa0a5035970644b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
+  moveSpeed: 10
   joystick: {fileID: 0}
 --- !u!114 &-2955195352645807809
 MonoBehaviour:

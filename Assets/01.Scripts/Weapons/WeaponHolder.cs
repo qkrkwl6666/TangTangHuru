@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeWeapon : MonoBehaviour
+public class WeaponHolder : MonoBehaviour
 {
-    RangeDetecter detecter;
-    public GameObject bulletPrefab;
+    RangeDetecter detecter; //가장 가까운 적 위치감지
+
+    public List<GameObject> WeaponPrefabs = new();
     public List<GameObject> bullets;
 
     public float damage = 5;
@@ -48,6 +49,8 @@ public class RangeWeapon : MonoBehaviour
         {
             velocity = transform.position;
         }
+
+
         velocity = velocity.normalized * bulletSpeed;
 
 
@@ -56,17 +59,21 @@ public class RangeWeapon : MonoBehaviour
             if (!bullet.activeSelf)
             {
                 bullet.gameObject.transform.position = transform.position;
-                bullet.GetComponent<Bullet>().Init(damage, 0, transform.position, velocity);
+                bullet.SetActive(true);
+                bullet.GetComponent<Bullet>().damage = damage;
+                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
                 count--;
             }
         }
 
         while (count > 0)
         {
-            var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+            var bullet = Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
             if (bullet.GetComponent<Bullet>() != null)
             {
-                bullet.GetComponent<Bullet>().Init(damage, 0, transform.position, velocity);
+                bullet.gameObject.transform.position = transform.position;
+                bullet.GetComponent<Bullet>().damage = damage;
+                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
             }
             else
             {
