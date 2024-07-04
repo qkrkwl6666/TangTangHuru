@@ -7,8 +7,6 @@ using UnityEngine.InputSystem.Interactions;
 using UnityEditor;
 using Unity.VisualScripting;
 
-// 터치 인핸스드로 임시구현
-
 public class Joystick : MonoBehaviour
 {
     private Vector2 pos;
