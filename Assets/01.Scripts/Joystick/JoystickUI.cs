@@ -28,6 +28,11 @@ public class JoystickUI : MonoBehaviour
     {
         defaultAnchoredPosition = CurrentAnchoredPosition;
     }
+
+    private void Update()
+    {
+        Debug.Log(InputValue);
+    }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
         switch (context.phase)

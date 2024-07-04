@@ -11,7 +11,6 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
     public event Action onDeath; // 사망시 발동할 이벤트
 
-
     protected virtual void OnEnable()
     {
         dead = false;
