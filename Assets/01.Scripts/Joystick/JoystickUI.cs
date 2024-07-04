@@ -1,36 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
-using UnityEngine.InputSystem.Interactions;
-using UnityEditor;
 
-public class Joystick : MonoBehaviour
+public class JoystickUI : MonoBehaviour
 {
     private Vector2 pos;
-    public GameObject blackCirclePrefabs;
-    private GameObject blackCircle;
+
     public Vector2 InputValue { get; private set; }
-    private Vector3 startScreenPosition = Vector2.zero;
-    private Vector3 currentScreenPosition = Vector3.zero;
-    private Vector3 worldPos = Vector3.zero;
+    private Vector2 startScreenPosition = Vector2.zero;
+    private Vector2 currentScreenPosition = Vector3.zero;
+
+    public RectTransform canvasRectTransform;
+    private Vector2 defaultAnchoredPosition = Vector2.zero;
+    private Vector2 CurrentAnchoredPosition 
+    { 
+        get { return GetComponent<RectTransform>().anchoredPosition; }
+        set { GetComponent<RectTransform>().anchoredPosition = value; }
+    } 
 
     private bool isStarted = false;
 
     // 터치 최대 길이
-    private float joystickRadius = 50f;
+    private float joystickRadius = 70;
+
     private void Awake()
     {
-        blackCircle = Instantiate(blackCirclePrefabs);
-        blackCircle.SetActive(false);
+        defaultAnchoredPosition = CurrentAnchoredPosition;
     }
-
     public void OnJoyStick(InputAction.CallbackContext context)
     {
         switch (context.phase)
         {
             case InputActionPhase.Performed:
                 {
-                    if(!isStarted)
+                    if (!isStarted)
                     {
                         isStarted = true;
                         UpdateJoystick(true, context.ReadValue<Vector2>());
@@ -45,7 +49,6 @@ public class Joystick : MonoBehaviour
                 {
                     isStarted = false;
                     InputValue = Vector2.zero;
-                    blackCircle.SetActive(false);
                     break;
                 }
         }
@@ -55,34 +58,30 @@ public class Joystick : MonoBehaviour
     {
         if (isStarted)
         {
-            blackCircle.SetActive(true);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle
+                (canvasRectTransform, screenPosition, null, out startScreenPosition);
 
-            startScreenPosition = screenPosition;
-            startScreenPosition.z = 10;
-            worldPos = Camera.main.ScreenToWorldPoint(startScreenPosition);
-            blackCircle.transform.position = worldPos;
+            CurrentAnchoredPosition = startScreenPosition;
         }
         else
         {
-            currentScreenPosition = screenPosition;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle
+                (canvasRectTransform, screenPosition, null, out currentScreenPosition);
+
             var dir = currentScreenPosition - startScreenPosition;
             float distance = (startScreenPosition - currentScreenPosition).magnitude;
 
             if (distance > joystickRadius)
             {
                 dir = dir.normalized * joystickRadius;
-                dir.z = 10;
-                worldPos = Camera.main.ScreenToWorldPoint(startScreenPosition + dir);
+                CurrentAnchoredPosition = startScreenPosition + dir;
             }
             else
             {
-                currentScreenPosition.z = 10;
-                worldPos = Camera.main.ScreenToWorldPoint(currentScreenPosition);
+                CurrentAnchoredPosition = currentScreenPosition;
             }
 
-            blackCircle.transform.position = worldPos;
             InputValue = dir / joystickRadius;
-
         }
     }
 
@@ -90,16 +89,16 @@ public class Joystick : MonoBehaviour
     {
         if (context.canceled)
         {
+            CurrentAnchoredPosition = defaultAnchoredPosition;
             InputValue = Vector2.zero;
-            blackCircle.SetActive(false);
             isStarted = false;
         }
     }
 
     public void OnKeyBoard(InputAction.CallbackContext context)
     {
-        blackCircle.SetActive(true);
-        blackCircle.transform.position = context.ReadValue<Vector2>();
+        CurrentAnchoredPosition = defaultAnchoredPosition;
+        CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
     }
 }
