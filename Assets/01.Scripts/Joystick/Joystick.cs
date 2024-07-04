@@ -21,7 +21,6 @@ public class Joystick : MonoBehaviour
 
     // 터치 최대 길이
     private float joystickRadius = 50f;
-
     private void Awake()
     {
         blackCircle = Instantiate(blackCirclePrefabs);
