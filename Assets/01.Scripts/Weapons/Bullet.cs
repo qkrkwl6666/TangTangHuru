@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class Bullet : MonoBehaviour, IAttackable
 {
     public LayerMask attackableLayer;
     private Rigidbody2D rb;
@@ -11,6 +11,7 @@ public class Bullet : MonoBehaviour
     float lifeTime = 3f;
     float timer = 0f;
     int pierce = 0;
+
 
     public void Init(float damage, int pierce, Vector2 position, Vector2 dir)
     {
@@ -46,12 +47,15 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.layer == attackableLayer.value)
-        {
- 
-        }
-        other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
-        gameObject.SetActive(false);
+        OnAttack(other);
     }
 
+    public void OnAttack(Collider2D other)
+    {
+        if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
+        {
+            other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
+            gameObject.SetActive(false);
+        }
+    }
 }

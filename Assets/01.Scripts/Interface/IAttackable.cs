@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IAttackable
 {
-    void Attack();
+    void OnAttack(Collider2D other);
 
 }
