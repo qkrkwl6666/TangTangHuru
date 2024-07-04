@@ -14,18 +14,34 @@ public class SpawnManager : MonoBehaviour
         playerTransform = GameObject.FindWithTag("Player").transform;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.F1))
+        {
+            CreateMonster(MonsterType.MonsterType1);
+        }
+        if (Input.GetKeyUp(KeyCode.F2))
+        {
+            CreateMonster(MonsterType.MonsterType2);
+        }
+        if (Input.GetKeyUp(KeyCode.F3))
+        {
+            CreateMonster(MonsterType.MonsterType3);
+        }
+    }
+
     public void CreateMonster(MonsterType monsterType)
     {
         switch (monsterType) 
         {
             case MonsterType.MonsterType1:
-                Addressables.InstantiateAsync("");
+                Addressables.InstantiateAsync("MonsterType1", RandomPosition(), Quaternion.identity);
                 break;
             case MonsterType.MonsterType2:
-
+                Addressables.InstantiateAsync("MonsterType2", RandomPosition(), Quaternion.identity);
                 break;
             case MonsterType.MonsterType3:
-
+                Addressables.InstantiateAsync("MonsterType3", RandomPosition(), Quaternion.identity);
                 break;
         }
     }
