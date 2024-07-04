@@ -26,6 +26,7 @@ public class RangeDetecter : MonoBehaviour
 
             if (distance < currdistance)
             {
+                currdistance = distance;
                 result = target.transform;
             }
         }

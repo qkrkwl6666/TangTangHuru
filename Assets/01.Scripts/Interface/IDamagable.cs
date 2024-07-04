@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IAttackable
+public interface IDamagable
 {
-    void Attack();
+    void OnDamage(float damage);
 
 }

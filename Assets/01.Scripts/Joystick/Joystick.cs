@@ -20,7 +20,7 @@ public class Joystick : MonoBehaviour
     private bool isStarted = false;
 
     // 터치 최대 길이
-    private float joystickRadius = 50f;
+    private float joystickRadius = 100f;
 
     private void Awake()
     {

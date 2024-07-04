@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+public class RangeWeapon : MonoBehaviour
 {
     RangeDetecter detecter;
     public GameObject bulletPrefab;
@@ -24,7 +23,7 @@ public class Weapon : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(timer > fireRate)
+        if (timer > fireRate)
         {
             Fire();
             timer = 0f;
@@ -41,7 +40,7 @@ public class Weapon : MonoBehaviour
         var targetPos = detecter.nearest.transform.position;
         Vector2 velocity = Vector2.zero;
 
-        if (targetPos != null )
+        if (targetPos != null)
         {
             velocity = targetPos - transform.position;
         }
@@ -49,31 +48,25 @@ public class Weapon : MonoBehaviour
         {
             velocity = transform.position;
         }
-
-
         velocity = velocity.normalized * bulletSpeed;
 
 
         foreach (GameObject bullet in bullets)
         {
-            if(!bullet.activeSelf)
+            if (!bullet.activeSelf)
             {
                 bullet.gameObject.transform.position = transform.position;
-                bullet.SetActive(true);
-                bullet.GetComponent<Bullet>().damage = damage;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
+                bullet.GetComponent<Bullet>().Init(damage, 0, transform.position, velocity);
                 count--;
             }
         }
 
-        while(count > 0)
+        while (count > 0)
         {
             var bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            if(bullet.GetComponent<Bullet>() != null)
+            if (bullet.GetComponent<Bullet>() != null)
             {
-                bullet.gameObject.transform.position = transform.position;
-                bullet.GetComponent<Bullet>().damage = damage;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
+                bullet.GetComponent<Bullet>().Init(damage, 0, transform.position, velocity);
             }
             else
             {
@@ -83,6 +76,4 @@ public class Weapon : MonoBehaviour
             count--;
         }
     }
-
-
 }

@@ -5,15 +5,36 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public LayerMask attackableLayer;
+    private Rigidbody2D rb;
+
     public float damage;
     float lifeTime = 3f;
     float timer = 0f;
+    int pierce = 0;
+
+    public void Init(float damage, int pierce, Vector2 position, Vector2 dir)
+    {
+        gameObject.SetActive(true);
+        this.damage = damage;
+        this.pierce = pierce;
+        transform.position = position;
+
+        if (pierce > -1)
+        {
+            rb.velocity = dir * 15f;
+        }
+    }
+
+    private void OnEnable()
+    {
+        timer = 0f;
+    }
+
     private void Update()
     {
         if(timer > lifeTime)
         {
             gameObject.SetActive(false);
-
             timer = 0f;
         }
         else
@@ -22,14 +43,15 @@ public class Bullet : MonoBehaviour
         }
     }
 
+
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.layer == attackableLayer)
+        if (other.gameObject.layer == attackableLayer.value)
         {
-            gameObject.SetActive(false);
-            timer = 0f;
-
+ 
         }
-
+        other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
+        gameObject.SetActive(false);
     }
+
 }
