@@ -1,30 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class WeaponHolder : MonoBehaviour
 {
-    RangeDetecter detecter; //가장 가까운 적 위치감지
+    //쿨타임마다, 연속발사 개수만큼 무기를 생성'만' 한다.
+    //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
-    public List<GameObject> WeaponPrefabs = new();
-    public List<GameObject> bullets;
+    public List<GameObject> Weapons = new();
+    private float timer = 0f;
 
-    public float damage = 5;
-    public float bulletSpeed = 15f;
+    private WeaponInfo weaponInfo;
 
-    float fireRate = 1.5f;
-    float timer = 0f;
-    int fireCount = 1;
-
-    void Start()
+    private void Start()
     {
-        detecter = GetComponent<RangeDetecter>();
+        weaponInfo = GetComponent<WeaponInfo>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (timer > fireRate)
+        if (timer > weaponInfo.weapon_CoolDown)
         {
             Fire();
             timer = 0f;
@@ -35,51 +31,26 @@ public class WeaponHolder : MonoBehaviour
         }
     }
 
-    void Fire()
+   IEnumerator Fire()
     {
-        var count = fireCount;
-        var targetPos = detecter.nearest.transform.position;
-        Vector2 velocity = Vector2.zero;
+        var count = weaponInfo.weapon_BurstCount;
 
-        if (targetPos != null)
+        foreach (GameObject weapon in Weapons)
         {
-            velocity = targetPos - transform.position;
-        }
-        else
-        {
-            velocity = transform.position;
-        }
-
-
-        velocity = velocity.normalized * bulletSpeed;
-
-
-        foreach (GameObject bullet in bullets)
-        {
-            if (!bullet.activeSelf)
+            if (!weapon.activeSelf)
             {
-                bullet.gameObject.transform.position = transform.position;
-                bullet.SetActive(true);
-                bullet.GetComponent<Bullet>().damage = damage;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
+                weapon.gameObject.transform.position = transform.position;
+                weapon.SetActive(true);
+                yield return new WaitForSeconds(0.3f);
                 count--;
             }
         }
 
         while (count > 0)
         {
-            var bullet = Instantiate(WeaponPrefabs[0], transform.position, Quaternion.identity);
-            if (bullet.GetComponent<Bullet>() != null)
-            {
-                bullet.gameObject.transform.position = transform.position;
-                bullet.GetComponent<Bullet>().damage = damage;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity;
-            }
-            else
-            {
-                Debug.LogError("Bullet Prefab doesn't have script.");
-            }
-            bullets.Add(bullet);
+            var weapon = Instantiate(Weapons[0], transform.position, Quaternion.identity);
+            Weapons.Add(weapon);
+            yield return new WaitForSeconds(0.3f);
             count--;
         }
     }
