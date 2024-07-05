@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 
 public class DataTableManager : MonoBehaviour
 {
-    private Dictionary<string, DataTable> tables = new Dictionary<string, DataTable>();
+    private static Dictionary<string, DataTable> tables = new Dictionary<string, DataTable>();
     public static readonly string stageWave = "StageWave";
 
     private void Awake()
@@ -17,8 +17,14 @@ public class DataTableManager : MonoBehaviour
         tables.Add(stageWave, WaveTable);
     }
 
-    private void Update()
+    public static DataTable GetDataTable(string name)
     {
-        //Debug.Log("Hello");
+        if (tables.ContainsKey(name))
+        {
+            return tables[name];
+        }
+
+        return null;
     }
+
 }

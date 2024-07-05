@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.TextCore.Text;
@@ -10,32 +11,29 @@ using TextAsset = UnityEngine.TextAsset;
 
 public class WaveData
 {
-    public int WaveID { get; set; }
+    public int stage { get; set; }
+    public int duration { get; set; }
+    public int monster1_Id { get; set; }
+    public int monster1_Count { get; set; }
+    public int monster1_Duration { get; set; }
+    public int spawn1_Type { get; set; }
 
-    public int Nw1_ID { get; set; }
-    public int Nw1_Count { get; set; }
-    public int Nw1_Time { get; set; }
+    public int monster2_Id { get; set; }
+    public int monster2_Count { get; set; }
+    public int monster2_Duration { get; set; }
+    public int spawn2_Type { get; set; }
 
-    public int Nw2_ID { get; set; }
-    public int Nw2_Count { get; set; }
-    public int Nw2_Time { get; set; }
+    public int monster3_Id { get; set; }
+    public int monster3_Count { get; set; }
+    public int monster3_Duration { get; set; }
+    public int spawn3_Type { get; set; }
 
-    public int Nw3_ID { get; set; }
-    public int Nw3_Count { get; set; }
-    public int Nw3_Time { get; set; }
 
-    public int Nw4_ID { get; set; }
-    public int Nw4_Count { get; set; }
-    public int Nw4_Time { get; set; }
-
-    public int Nw5_ID { get; set; }
-    public int Nw5_Count { get; set; }
-    public int Nw5_Time { get; set; }
 }
 
 public class WaveTable : DataTable
 {
-    public Dictionary<string, WaveData> waveTable { get; private set; } = new();
+    public Dictionary<string, List<WaveData>> waveTable { get; private set; } = new();
 
     public override void Load(string name)
     {
@@ -46,9 +44,17 @@ public class WaveTable : DataTable
             {
                 var records = csvReader.GetRecords<WaveData>();
 
-                foreach (var record in records)
+                var waveList = records.ToList();
+
+                for (int i = 0; i < waveList.Count; i++)
                 {
-                    waveTable.Add(record.WaveID.ToString(), record);
+                    // 키가 없으면 List 생성
+                    if(!waveTable.ContainsKey(waveList[i].stage.ToString()))
+                    {
+                        waveTable.Add(waveList[i].stage.ToString(), new List<WaveData>());
+                    }
+
+                    waveTable[waveList[i].stage.ToString()].Add(waveList[i]);
                 }
             }
         };

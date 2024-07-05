@@ -31,7 +31,7 @@ public class JoystickUI : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(InputValue);
+        //Debug.Log(InputValue);
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {

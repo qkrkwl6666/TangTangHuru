@@ -12,7 +12,7 @@ public class ConstantChaseMove : MonoBehaviour
         monster = GetComponent<Monster>();
     }
 
-    public void Update()
+    private void FixedUpdate()
     {
         if (monster.Player == null) return;
 

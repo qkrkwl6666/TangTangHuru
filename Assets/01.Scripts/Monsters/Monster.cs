@@ -28,9 +28,10 @@ public class Monster : LivingEntity
 
         Player = go.GetComponent<LivingEntity>();
     }
-
     private void Update()
     {
         
     }
+
+
 }
