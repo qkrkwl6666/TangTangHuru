@@ -11,7 +11,6 @@ public class Shoot : MonoBehaviour
     public float damage;
     float lifeTime = 3f;
     float timer = 0f;
-    int pierce = 0;
 
     private void Start()
     {

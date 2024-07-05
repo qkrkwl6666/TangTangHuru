@@ -1,61 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class AutoTargeting : MonoBehaviour
 {
-    public LayerMask attackableLayer;
+    public WeaponInfo weaponInfo;
+
     private Rigidbody2D rb;
+    private RangeDetecter detector;
+    private float timer = 0f;
+    
+    Vector3 dir = Vector3.zero;
 
-    public float damage;
-    float lifeTime = 3f;
-    float timer = 0f;
-    int pierce = 0;
-
-
-    public void Init(float damage, int pierce, Vector2 position, Vector2 dir)
+    private void Awake()
     {
-        gameObject.SetActive(true);
-        this.damage = damage;
-        this.pierce = pierce;
-        transform.position = position;
-
-        if (pierce > -1)
-        {
-            rb.velocity = dir * 15f;
-        }
+        rb = GetComponent<Rigidbody2D>();
+        detector = GetComponent<RangeDetecter>();
     }
 
     private void OnEnable()
+    {
+        var targetTrans = detector.GetNearest();
+
+        if (targetTrans != null)
+        {
+            dir = targetTrans.position - transform.position;
+        }
+        else
+        {
+            dir = Random.insideUnitCircle;
+        }
+        rb.velocity = dir.normalized * weaponInfo.weapon_Speed;
+    }
+
+    private void OnDisable()
     {
         timer = 0f;
     }
 
     private void Update()
     {
-        if (timer > lifeTime)
+        if(timer > weaponInfo.weapon_LifeTime)
         {
-            gameObject.SetActive(false);
             timer = 0f;
+            gameObject.SetActive(false);
         }
         else
         {
             timer += Time.deltaTime;
         }
-    }
 
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        OnAttack(other);
-    }
-
-    public void OnAttack(Collider2D other)
-    {
-        if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
-        {
-            other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
-            gameObject.SetActive(false);
-        }
     }
 }

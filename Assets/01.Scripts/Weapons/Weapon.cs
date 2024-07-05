@@ -41,10 +41,10 @@ public class Weapon : MonoBehaviour
     {
         var count = fireCount;
 
-        if (detecter.nearest != null)
-        {
-            targetPos = detecter.nearest.transform.position;
-        }
+        //if (detecter.nearest != null)
+        //{
+        //    targetPos = detecter.nearest.transform.position;
+        //}
 
         Vector2 velocity = Vector2.zero;
 

@@ -8,10 +8,15 @@ public class WeaponHolder : MonoBehaviour
     //쿨타임마다, 연속발사 개수만큼 무기를 생성'만' 한다.
     //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
-    public List<GameObject> Weapons = new();
+    public GameObject weaponPrefab;
+    private List<GameObject> weapons = new List<GameObject>();
     private float timer = 0f;
 
     private WeaponInfo weaponInfo;
+
+    private float coolDown;
+    private float burstRate;
+
 
     private void Start()
     {
@@ -22,7 +27,7 @@ public class WeaponHolder : MonoBehaviour
     {
         if (timer > weaponInfo.weapon_CoolDown)
         {
-            Fire();
+            StartCoroutine(Fire());
             timer = 0f;
         }
         else
@@ -35,23 +40,24 @@ public class WeaponHolder : MonoBehaviour
     {
         var count = weaponInfo.weapon_BurstCount;
 
-        foreach (GameObject weapon in Weapons)
+        foreach (var bullet in weapons)
         {
-            if (!weapon.activeSelf)
+            if (!bullet.activeSelf)
             {
-                weapon.gameObject.transform.position = transform.position;
-                weapon.SetActive(true);
-                yield return new WaitForSeconds(0.3f);
+                bullet.gameObject.transform.position = transform.position;
+                bullet.SetActive(true);
                 count--;
+                yield return new WaitForSeconds(weaponInfo.weapon_BurstRate);
             }
         }
 
         while (count > 0)
         {
-            var weapon = Instantiate(Weapons[0], transform.position, Quaternion.identity);
-            Weapons.Add(weapon);
-            yield return new WaitForSeconds(0.3f);
+            var bullet = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
+            bullet.SetActive(true);
+            weapons.Add(bullet);
             count--;
+            yield return new WaitForSeconds(weaponInfo.weapon_BurstRate);
         }
     }
 }

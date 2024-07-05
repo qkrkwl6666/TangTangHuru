@@ -7,12 +7,13 @@ public class Hit : MonoBehaviour
     public LayerMask attackableLayer;
 
     public WeaponInfo weaponInfo;
-
     private float damage;
+    private float pierceCount;
 
-    void Start()
+    void OnEnable()
     {
-        weaponInfo.GetComponent<WeaponInfo>();
+        damage = weaponInfo.weapon_Damage;
+        pierceCount = weaponInfo.weapon_pierceCount;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,7 +26,16 @@ public class Hit : MonoBehaviour
         if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
             other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
-            gameObject.SetActive(false);
+
+            if(pierceCount > 0)
+            {
+                pierceCount--;
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
+
         }
     }
 }
