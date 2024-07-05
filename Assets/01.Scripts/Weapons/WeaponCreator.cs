@@ -20,7 +20,7 @@ public class WeaponCreator : MonoBehaviour
 
     private void Start()
     {
-
+        CreateWeapon();
     }
 
     void Update()
@@ -36,16 +36,41 @@ public class WeaponCreator : MonoBehaviour
         }
     }
 
-    void CreateWeapon()
+    public void CreateWeapon()
     {
+        var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
+        switch (weaponData.WeaponAimType)
+        {
+            case WeaponData.Aim.Auto:
+                weapon.AddComponent<AutoAim>();
+                break;
+            case WeaponData.Aim.Fixed:
+                weapon.AddComponent<FixedAim>();
+                break;
+            case WeaponData.Aim.Manual:
+                weapon.AddComponent<ManualAim>();
+                break;
+        }
 
+        switch (weaponData.WeaponAttackType)
+        {
+            case WeaponData.Attack.Melee:
+                weapon.AddComponent<MeleeType>();
+                break;
+            case WeaponData.Attack.Shoot:
+                weapon.AddComponent<Shoot>();
+                break;
+        }
+
+        weapon.AddComponent<Hit>().damage = weaponData.Damage;
+        weapon.GetComponent<Hit>().pierceCount = weaponData.PierceCount;
+
+        weapons.Add(weapon);
     }
-
 
     IEnumerator Fire()
     {
         var count = weaponData.BurstCount;
-
 
         foreach (var bullet in weapons)
         {

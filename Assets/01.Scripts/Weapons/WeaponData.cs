@@ -4,13 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "Scriptable Object/Weapon Data", order = int.MaxValue)]
 public class WeaponData : ScriptableObject
 {
-    enum Aim
+    public enum Aim
     {
         Auto,
         Manual,
         Fixed,
     }
-    enum Attack
+
+    public enum Attack
     {
         Melee,
         Shoot,
@@ -22,10 +23,10 @@ public class WeaponData : ScriptableObject
 
     [SerializeField]
     private Aim aimType;
-    public Enum WeaponAimType { get { return aimType; } }
+    public Aim WeaponAimType { get { return aimType; } }
     [SerializeField]
     private Attack attackType;
-    public Enum WeaponAttackType { get { return attackType; } }
+    public Attack WeaponAttackType { get { return attackType; } }
 
 
 

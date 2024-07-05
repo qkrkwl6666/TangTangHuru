@@ -4,17 +4,16 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public WeaponInfo weaponInfo;
-    public MonoBehaviour aimer;
-    private IAimer currAimer;
+    public float speed = 0f;
+    public float lifeTime = 0f;
+    public IAimer currAimer;
 
-    private Rigidbody2D rb;
     private float timer = 0f;
+    private Rigidbody2D rb;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        currAimer = aimer as IAimer;
     }
 
     private void OnEnable()
@@ -32,7 +31,7 @@ public class Shoot : MonoBehaviour
 
         var dir = targetPos - transform.position;
 
-        rb.velocity = dir.normalized * weaponInfo.weapon_Speed;
+        rb.velocity = dir.normalized * speed;
     }
 
     private void OnDisable()
@@ -42,7 +41,7 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (timer > weaponInfo.weapon_LifeTime)
+        if (timer > lifeTime)
         {
             gameObject.SetActive(false);
         }
