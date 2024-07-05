@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
-public class AutoTargeting : MonoBehaviour
+public class Shoot : MonoBehaviour
 {
     public WeaponInfo weaponInfo;
+    public MonoBehaviour aimer;
+    private IAimer currAimer;
 
     private Rigidbody2D rb;
-    private RangeDetecter detector;
     private float timer = 0f;
-    
-    Vector3 dir = Vector3.zero;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        detector = GetComponent<RangeDetecter>();
+        currAimer = aimer as IAimer;
     }
 
     private void OnEnable()
     {
-        var targetTrans = detector.GetNearest();
+        Vector3 targetPos;
 
-        if (targetTrans != null)
+        if (currAimer.AimDirection() != null)
         {
-            dir = targetTrans.position - transform.position;
+            targetPos = currAimer.AimDirection().position;
         }
         else
         {
-            dir = Random.insideUnitCircle;
+            targetPos = Random.insideUnitCircle;
         }
+
+        var dir = targetPos - transform.position;
+
         rb.velocity = dir.normalized * weaponInfo.weapon_Speed;
     }
 
@@ -41,16 +42,14 @@ public class AutoTargeting : MonoBehaviour
 
     private void Update()
     {
-        if(timer > weaponInfo.weapon_LifeTime)
+        if (timer > weaponInfo.weapon_LifeTime)
         {
-            timer = 0f;
             gameObject.SetActive(false);
         }
         else
         {
             timer += Time.deltaTime;
         }
-
-
     }
 }
+
