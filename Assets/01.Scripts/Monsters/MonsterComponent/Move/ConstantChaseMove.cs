@@ -3,9 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class ConstantChaseMove : MonoBehaviour
+public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
 {
     private Monster monster;
+
+    private Transform playerTransform;
+    private PlayerSubject playerSubject;
+
+    public ConstantChaseMove(PlayerSubject playerSubject)
+    {
+        this.playerSubject = playerSubject;
+
+        if (playerSubject == null)
+        {
+            Debug.Log("ConstantChaseMove Script PlayerSubject is Null");
+            return;
+        }
+
+        playerSubject.AddObserver(this);
+    }
 
     private void Awake()
     {
@@ -14,9 +30,21 @@ public class ConstantChaseMove : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (monster.Player == null) return;
+        if (playerTransform == null) return;
 
-        Vector2 dir = (monster.Player.transform.position - gameObject.transform.position).normalized;
+        Vector2 dir = (playerTransform.position - gameObject.transform.position).normalized;
         transform.Translate(dir * Time.deltaTime * monster.moveSpeed);
     }
+
+    public void IObserverUpdate()
+    {
+        playerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    private void OnDestroy()
+    {
+        playerSubject.RemoveObserver(this);
+    }
+
+
 }
