@@ -48,7 +48,6 @@ public class WaveTable : DataTable
 
                 for (int i = 0; i < waveList.Count; i++)
                 {
-                    // 키가 없으면 List 생성
                     if(!waveTable.ContainsKey(waveList[i].stage.ToString()))
                     {
                         waveTable.Add(waveList[i].stage.ToString(), new List<WaveData>());

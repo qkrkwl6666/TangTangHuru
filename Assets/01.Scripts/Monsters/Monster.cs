@@ -8,7 +8,7 @@ public enum MonsterType
     RangedAttackType,
     ChargeMeleeType,
 
-    MonsterType1,
+    MonsterType1 = 100001,
     MonsterType2,
     MonsterType3,
 }

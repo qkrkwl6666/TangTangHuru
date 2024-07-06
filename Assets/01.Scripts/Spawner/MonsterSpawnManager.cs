@@ -10,54 +10,86 @@ public class MonsterSpawnManager : MonoBehaviour
     private WaveData currentWaveData = null;
     private int waveIndex = 0;
 
-    private float totalWaveTime;
-    private float wave1Time;
-    private float wave2Time;
-    private float wave3Time;
+    private Dictionary<int, MonsterSpawnInfo> monsterSpawnInfos = new Dictionary<int, MonsterSpawnInfo>();
 
-    MonsterSpawnFactory monsterSpawnFactory = null;
+    private float totalWaveTime;
+
+    private MonsterSpawnFactory monsterSpawnFactory = null;
 
     private void Awake()
     {
         waveDatas = (DataTableManager.GetDataTable(DataTableManager.stageWave) 
             as WaveTable).waveTable[stage.ToString()];
 
-        currentWaveData = waveDatas[waveIndex++];
-
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
+
+        InitializeSpawnInfos();
+
+        NextWave();
     }
 
     public void Update()
     {
         totalWaveTime += Time.deltaTime;
-        wave1Time += Time.deltaTime;
-        wave2Time += Time.deltaTime;
-        wave3Time += Time.deltaTime;
 
         if (totalWaveTime >= currentWaveData.duration)
         {
-            currentWaveData = waveDatas[waveIndex++];
-            totalWaveTime = 0f;
+            NextWave();
         }
 
-        if(wave1Time >= currentWaveData.monster1_Duration && currentWaveData.monster1_Duration != -1)
+        foreach(var spawnData in monsterSpawnInfos.Values)
         {
-            wave1Time = 0f;
-            monsterSpawnFactory.CreateMonster((MonsterType)currentWaveData.monster1_Id, 
-                currentWaveData.monster1_Count, currentWaveData.spawn1_Type);
-        }
-        if (wave2Time >= currentWaveData.monster2_Duration && currentWaveData.monster2_Duration != -1)
-        {
-            wave2Time = 0f;
-            monsterSpawnFactory.CreateMonster((MonsterType)currentWaveData.monster2_Id,
-                currentWaveData.monster2_Count, currentWaveData.spawn2_Type);
-        }
-        if (wave3Time >= currentWaveData.monster3_Duration && currentWaveData.monster3_Duration != -1)
-        {
-            wave3Time = 0f;
-            monsterSpawnFactory.CreateMonster((MonsterType)currentWaveData.monster3_Id,
-                currentWaveData.monster3_Count, currentWaveData.spawn3_Type);
+            spawnData.Update(Time.deltaTime);
+            if(spawnData.IsSpawn)
+            {
+                SpawnMonster(spawnData);
+            }
+
         }
     }
- 
+
+    public void SpawnMonster(MonsterSpawnInfo monsterSpawnInfo)
+    {
+        if(monsterSpawnInfo.IsValid)
+        {
+            monsterSpawnFactory.CreateMonster((MonsterType)monsterSpawnInfo.MonsterId, 
+                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType);
+        }
+    }
+
+    private void InitializeSpawnInfos()
+    {
+        monsterSpawnInfos[1] = new MonsterSpawnInfo();
+        monsterSpawnInfos[2] = new MonsterSpawnInfo();
+        monsterSpawnInfos[3] = new MonsterSpawnInfo();
+    }
+
+    private void UpdateSpawnInfos()
+    {
+        monsterSpawnInfos[1].SetSpawnData(currentWaveData.monster1_Id, currentWaveData.monster1_Count,
+            currentWaveData.monster1_Duration, currentWaveData.spawn1_Type);
+        monsterSpawnInfos[2].SetSpawnData(currentWaveData.monster2_Id, currentWaveData.monster2_Count,
+            currentWaveData.monster2_Duration, currentWaveData.spawn2_Type);
+        monsterSpawnInfos[3].SetSpawnData(currentWaveData.monster3_Id, currentWaveData.monster3_Count,
+            currentWaveData.monster3_Duration, currentWaveData.spawn3_Type);
+    }
+
+    public void NextWave()
+    {
+        if (waveIndex < waveDatas.Count)
+        {
+            totalWaveTime = 0f;
+            currentWaveData = waveDatas[waveIndex];
+            UpdateSpawnInfos();
+            waveIndex++;
+        }
+        else
+        {
+            Debug.Log("All Waves Completed");
+            enabled = false;
+        }
+
+    }
+
+
 }
