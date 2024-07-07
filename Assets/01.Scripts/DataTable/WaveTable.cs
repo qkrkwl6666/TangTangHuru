@@ -1,12 +1,9 @@
 using CsvHelper;
-using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.TextCore.Text;
 using TextAsset = UnityEngine.TextAsset;
 
 public class WaveData
@@ -27,8 +24,6 @@ public class WaveData
     public int monster3_Count { get; set; }
     public int monster3_Duration { get; set; }
     public int spawn3_Type { get; set; }
-
-
 }
 
 public class WaveTable : DataTable
