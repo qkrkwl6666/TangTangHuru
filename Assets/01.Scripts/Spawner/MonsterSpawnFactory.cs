@@ -35,22 +35,18 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (Input.GetKeyUp(KeyCode.F1))
         {
-            for(int i = 0; i < 5; i ++)
+
+            int index = Random.Range(0, monsters.Count);
+            var go = monsters[index];
+
+            if (go.activeSelf)
             {
-                var go = monsters[Random.Range(0, monsters.Count)];
                 go.GetComponent<Monster>().PoolRelease();
-                monsters.Remove(go);
             }
             
+            
         }
-        if (Input.GetKeyUp(KeyCode.F2))
-        {
-            //CreateMonster(MonsterType.MonsterType2, 10, 2);
-        }
-        if (Input.GetKeyUp(KeyCode.F3))
-        {
-            //CreateMonster(MonsterType.MonsterType3);
-        }
+
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
@@ -86,13 +82,19 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     monsterScript.SetPool(monsterPools[typeId]);
                     var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
                     ccm.Initialize(playerSubject);
-                    monsters.Add(go);
                     MonsterSkillAddComponent(go, typeData);
-
                     return go; 
                 },
-                (x) => x.SetActive(true),
-                (x) => x.SetActive(false),
+                (x) => 
+                { 
+                    monsters.Add(x);
+                    x.SetActive(true); 
+                },
+                (x) => 
+                {
+                    monsters.Remove(x);
+                    x.SetActive(false); 
+                } ,
                 (x) => Destroy(x.gameObject),
                 true,
                 10, 200);

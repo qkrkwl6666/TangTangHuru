@@ -17,23 +17,30 @@ public class Monster : LivingEntity
 
     private IObjectPool<GameObject> pool;
 
-    private void Awake()
-    {
-
-    }
-    private void Update()
-    {
-        
-    }
-
     public void SetPool(IObjectPool<GameObject> pool)
     {
         this.pool = pool;
     }
 
+    // 몬스터 죽을 떄 호출 해야함
     public void PoolRelease()
     {
-        pool.Release(this.gameObject);
+        if(pool == null) Destroy(gameObject);
+
+        pool.Release(gameObject);
+    }
+
+    // 오버라이드 LivingEntity event -> delegate 로 변경햇습니다
+    public override void Die()
+    {
+        if (onDeath != null)
+        {
+            onDeath();
+        }
+
+        dead = true;
+
+        PoolRelease();
     }
 
 }
