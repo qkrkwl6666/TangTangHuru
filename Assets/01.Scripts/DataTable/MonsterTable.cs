@@ -12,16 +12,23 @@ public class MonsterData
     public int Monster_ID { get; set; }
     public int Monster_Prefab { get; set; }
     public int Monster_Type { get; set; }
-    public int Monster_Hp { get; set; }
-    public int Monster_Move { get; set; }
-    public int Monster_Damage { get; set; }
-    public int Monster_Exp { get; set; }
+    public float Monster_Hp { get; set; }
+    public float Monster_Move { get; set; }
+    public float Monster_Damage { get; set; }
+    public float Monster_Exp { get; set; }
     public int Monster_Gold { get; set; }
 }
 
 public class MonsterTable : DataTable
 {
     public Dictionary<string, MonsterData> monsterTable { get; private set; } = new();
+
+    public MonsterData GetMonsterData(string monsterID)
+    {
+        if (!monsterTable.ContainsKey(monsterID)) return null;
+
+        return monsterTable[monsterID];
+    }
 
     public override void Load(string name)
     {

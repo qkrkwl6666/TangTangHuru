@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class MonsterSpawnManager : MonoBehaviour
@@ -18,8 +19,8 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private void Awake()
     {
-        waveDatas = (DataTableManager.GetDataTable(DataTableManager.stageWave) 
-            as WaveTable).waveTable[stage.ToString()];
+        waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
+            waveTable[stage.ToString()];
 
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
 
@@ -52,7 +53,8 @@ public class MonsterSpawnManager : MonoBehaviour
     {
         if(monsterSpawnInfo.IsValid)
         {
-            monsterSpawnFactory.CreateMonster((MonsterType)monsterSpawnInfo.MonsterId, 
+            monsterSpawnFactory.CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+                (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()), 
                 monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType);
         }
     }

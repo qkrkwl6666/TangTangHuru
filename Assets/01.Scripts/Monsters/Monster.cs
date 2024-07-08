@@ -4,13 +4,9 @@ using UnityEngine;
 
 public enum MonsterType
 {
-    MeleeAttackType,
+    MeleeAttackType = 1,
     RangedAttackType,
     ChargeMeleeType,
-
-    MonsterType1 = 100001,
-    MonsterType2,
-    MonsterType3,
 }
 
 public class Monster : LivingEntity

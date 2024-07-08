@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.AddressableAssets;
 
-public class DataTableManager : MonoBehaviour
+public class DataTableManager : Singleton<DataTableManager>
 {
     private static Dictionary<string, DataTable> tables = new Dictionary<string, DataTable>();
     public static readonly string stageWave = "StageWave";
     public static readonly string monster = "Monster";
     public static readonly string monsterType = "MonsterType";
+    public static readonly string monsterSkill = "MonsterSkill";
 
     private void Awake()
     {
@@ -22,24 +23,20 @@ public class DataTableManager : MonoBehaviour
         DataTable monsterTypeTable = new MonsterTypeTable();
         monsterTypeTable.Load(monsterType);
 
+        DataTable monsterSkillTable = new MonsterSkillTable();
+        monsterSkillTable.Load(monsterSkill);
+
         tables.Add(stageWave, WaveTable);
         tables.Add(monster, monsterTable);
         tables.Add(monsterType, monsterTypeTable);
+        tables.Add(monsterSkill, monsterSkillTable);
     }
 
-    public void Update()
+    public T Get<T>(string id) where T : DataTable
     {
-        
-    }
+        if (!tables.ContainsKey(id)) return default;
 
-    public static DataTable GetDataTable(string name)
-    {
-        if (tables.ContainsKey(name))
-        {
-            return tables[name];
-        }
-
-        return null;
+        return tables[id] as T;
     }
 
 }

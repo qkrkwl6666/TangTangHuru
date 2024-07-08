@@ -10,7 +10,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    public ConstantChaseMove(PlayerSubject playerSubject)
+    public void Initialize(PlayerSubject playerSubject)
     {
         this.playerSubject = playerSubject;
 
@@ -21,7 +21,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         }
 
         playerSubject.AddObserver(this);
-    }
+    }  
 
     private void Awake()
     {
@@ -43,6 +43,8 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
 
     private void OnDestroy()
     {
+        if (playerTransform == null) return;
+
         playerSubject.RemoveObserver(this);
     }
 

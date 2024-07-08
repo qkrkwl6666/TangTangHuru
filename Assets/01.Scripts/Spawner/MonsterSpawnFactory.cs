@@ -3,18 +3,23 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
-public class MonsterSpawnFactory : MonoBehaviour
+public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 {
     private Transform playerTransform;
+    private PlayerSubject playerSubject;
 
     private float defaultDistance = 10f;
     private float circleSpawnDistance = 10f;
     private float lineSpawnDistance = 5f;
-     
+
+    private MonsterData currentMonsterData = null;
+
     private void Awake()
     {
-        playerTransform = GameObject.FindWithTag("Player").transform;
+        playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
+        playerSubject.AddObserver(this);
     }
 
     private void Update()
@@ -33,15 +38,20 @@ public class MonsterSpawnFactory : MonoBehaviour
         }
     }
 
-    public void CreateMonster(MonsterType monsterType, int spawnCount, int spawnType)
+    public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
     {
-        switch(spawnType)
+        if (monsterData == null) return;
+
+        currentMonsterData = monsterData;
+
+        switch (spawnType)
         {
             // 랜덤 생성
             case 1:
-                for(int i = 0; i < spawnCount; i++)
+                for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterType.ToString(), RandomPosition(defaultDistance), Quaternion.identity);
+                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
+                        RandomPosition(defaultDistance), Quaternion.identity).Completed += MonsterAddComponent;
                 }
                 break;
             // 직선 생성
@@ -50,19 +60,54 @@ public class MonsterSpawnFactory : MonoBehaviour
 
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterType.ToString(), lineList[i], Quaternion.identity);
+                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
+                        lineList[i], Quaternion.identity).Completed += MonsterAddComponent;
                 }
                 break;
             // 원 생성
             case 3:
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterType.ToString(), CirclePosition(spawnCount, i), Quaternion.identity);
+                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
+                        CirclePosition(spawnCount, i), Quaternion.identity).Completed += MonsterAddComponent;
                 }
                 break;
         }
     }
-    //public void 
+
+    public void MonsterAddComponent(AsyncOperationHandle<GameObject> op)
+    {
+        GameObject monster = op.Result;
+
+        var typeData = DataTableManager.Instance.Get<MonsterTypeTable>
+            (DataTableManager.monsterType).GetMonsterTypeData(currentMonsterData.Monster_Type.ToString());
+
+        var list = typeData.GetSkillDatas();
+
+        // 움직임 스크립트 추가
+        var ccm = monster.AddComponent<ConstantChaseMove>();
+        ccm.Initialize(playerSubject);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i] == -1) break;
+
+            var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
+                (DataTableManager.monsterSkill).GetMonsterSkillData(list[i].ToString());
+
+            switch (skillData.Skill_Id) 
+            {
+                // 근접 공격
+                case 300001:
+                    
+                    break;
+                // 원거리 공격
+                case 300002:
+
+                    break;
+            }
+        }
+    }
 
     public Vector2 RandomPosition(float distance)
     {
@@ -102,5 +147,8 @@ public class MonsterSpawnFactory : MonoBehaviour
         return lines;
     }
 
-
+    public void IObserverUpdate()
+    {
+        playerTransform = playerSubject.GetPlayerTransform;
+    }
 }
