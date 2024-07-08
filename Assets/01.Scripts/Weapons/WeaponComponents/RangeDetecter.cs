@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class RangeDetecter : MonoBehaviour
 {
-    public float range = 10f;
+    private float range = 30f;
     public LayerMask targetLayer;
 
-    public Transform GetNearest()
+    public Vector3 GetNearest()
     {
          var targets = Physics2D.CircleCastAll(transform.position, range, Vector2.zero, 0, targetLayer);
 
         float currdistance = float.MaxValue;
-        Transform result = null;
+        Vector3 result = Vector3.zero;
         foreach (var target in targets)
         {
             var distance = Vector3.Distance(transform.position, target.transform.position);
@@ -20,7 +20,7 @@ public class RangeDetecter : MonoBehaviour
             if (distance < currdistance)
             {
                 currdistance = distance;
-                result = target.transform;
+                result = target.transform.position;
             }
         }
         return result;

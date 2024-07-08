@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        velocity = joystick.InputValue* moveSpeed;
+        velocity = joystick.InputValue * moveSpeed;
         rb.velocity = velocity;
     }
 }

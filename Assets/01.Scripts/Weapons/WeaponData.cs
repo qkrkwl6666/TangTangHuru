@@ -9,6 +9,8 @@ public class WeaponData : ScriptableObject
         Auto,
         Manual,
         Fixed,
+        Circle,
+        Spawn,
     }
 
     public enum Attack

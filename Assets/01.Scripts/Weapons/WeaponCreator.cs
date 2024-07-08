@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
 {
@@ -8,88 +10,104 @@ public class WeaponCreator : MonoBehaviour
     //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
     public GameObject weaponPrefab;
-
     public WeaponData weaponData;
 
     private List<GameObject> weapons = new List<GameObject>();
-    private float timer = 0f;
 
-    private float coolDown;
-    private float burstRate;
-
+    private IEnumerator SpawnCoroutine;
 
     private void Start()
     {
-        CreateWeapon();
+        SpawnCoroutine = Spawn();
+        StartCoroutine(SpawnCoroutine);
     }
 
     void Update()
     {
-        if (timer > weaponData.CoolDown)
+
+    }
+
+    private void OnDisable()
+    {
+        StopCoroutine(SpawnCoroutine);
+    }
+
+    IEnumerator Spawn()
+    {
+        while (gameObject.activeSelf)
         {
-            StartCoroutine(Fire());
-            timer = 0f;
-        }
-        else
-        {
-            timer += Time.deltaTime;
+            yield return new WaitForSeconds(weaponData.CoolDown);
+
+            var count = weaponData.BurstCount;
+
+            foreach (var weapon in weapons)
+            {
+                if (!weapon.activeSelf)
+                {
+                    weapon.gameObject.transform.position = transform.position;
+                    weapon.SetActive(true);
+                    count--;
+                    yield return new WaitForSeconds(weaponData.BurstRate);
+                }
+            }
+
+            while (count > 0)
+            {
+                CreateWeapon();
+                count--;
+                yield return new WaitForSeconds(weaponData.BurstRate);
+            }
         }
     }
+
 
     public void CreateWeapon()
     {
         var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
+        weapon.SetActive(false);
         switch (weaponData.WeaponAimType)
         {
-            case WeaponData.Aim.Auto:
-                weapon.AddComponent<AutoAim>();
+            case Aim.Auto:
+                var aim = weapon.AddComponent<AutoAim>();
+                aim.targetLayer = LayerMask.GetMask("Enemy");
                 break;
-            case WeaponData.Aim.Fixed:
+            case Aim.Fixed:
                 weapon.AddComponent<FixedAim>();
                 break;
-            case WeaponData.Aim.Manual:
+            case Aim.Manual:
                 weapon.AddComponent<ManualAim>();
                 break;
         }
 
         switch (weaponData.WeaponAttackType)
         {
-            case WeaponData.Attack.Melee:
-                weapon.AddComponent<MeleeType>();
+            case Attack.Melee:
+                var melee = weapon.AddComponent<MeleeType>();
                 break;
-            case WeaponData.Attack.Shoot:
-                weapon.AddComponent<Shoot>();
+            case Attack.Shoot:
+                var shoot = weapon.AddComponent<Shoot>();
+                shoot.speed = weaponData.Speed;
+                shoot.lifeTime = weaponData.LifeTime;
                 break;
         }
 
-        weapon.AddComponent<Hit>().damage = weaponData.Damage;
-        weapon.GetComponent<Hit>().pierceCount = weaponData.PierceCount;
+        var hit = weapon.AddComponent<Hit>();
+        hit.damage = weaponData.Damage;
+        hit.pierceCount = weaponData.PierceCount;
+        hit.attackableLayer = LayerMask.GetMask("Enemy");
 
+        weapon.SetActive(true);
         weapons.Add(weapon);
     }
 
-    IEnumerator Fire()
+    
+
+
+    public void UpgradeWeapon()
     {
-        var count = weaponData.BurstCount;
-
-        foreach (var bullet in weapons)
+        foreach (var weapon in weapons)
         {
-            if (!bullet.activeSelf)
-            {
-                bullet.gameObject.transform.position = transform.position;
-                bullet.SetActive(true);
-                count--;
-                yield return new WaitForSeconds(weaponData.BurstRate);
-            }
-        }
 
-        while (count > 0)
-        {
-            var bullet = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
-            bullet.SetActive(true);
-            weapons.Add(bullet);
-            count--;
-            yield return new WaitForSeconds(weaponData.BurstRate);
         }
     }
 }

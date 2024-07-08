@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class ManualAim : MonoBehaviour, IAimer
 {
-    public Transform AimDirection()
+    GameObject player;
+    PlayerController controller;
+
+
+    private void Awake()
     {
-        throw new System.NotImplementedException();
+        player = GameObject.FindGameObjectWithTag("Player");
+        controller = player.GetComponent<PlayerController>();
+    }
+
+    public Vector3 AimDirection()
+    {
+        return controller.joystick.InputValue;
     }
 }

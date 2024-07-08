@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IAimer
 {
-    Transform AimDirection();
+    Vector3 AimDirection();
 }

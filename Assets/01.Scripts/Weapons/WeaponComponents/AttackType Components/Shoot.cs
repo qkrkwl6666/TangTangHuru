@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public float speed = 0f;
-    public float lifeTime = 0f;
+    public float speed;
+    public float lifeTime;
     public IAimer currAimer;
 
     private float timer = 0f;
@@ -14,19 +14,25 @@ public class Shoot : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        currAimer = GetComponent<IAimer>();
+    }
+    private void Start()
+    {
+
     }
 
     private void OnEnable()
     {
         Vector3 targetPos;
+        var pos = currAimer.AimDirection();
 
-        if (currAimer.AimDirection() != null)
+        if (pos != Vector3.zero)
         {
-            targetPos = currAimer.AimDirection().position;
+            targetPos = pos;
         }
         else
         {
-            targetPos = Random.insideUnitCircle;
+            targetPos = new Vector2(Random.Range(-100f,100f), Random.Range(-100f, 100f));
         }
 
         var dir = targetPos - transform.position;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AutoAim : RangeDetecter, IAimer
 {
-    public Transform AimDirection()
+    public Vector3 AimDirection()
     {
         return GetNearest();
     }
