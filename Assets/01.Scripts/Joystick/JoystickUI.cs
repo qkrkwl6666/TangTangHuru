@@ -12,6 +12,7 @@ public class JoystickUI : MonoBehaviour
     private Vector2 currentScreenPosition = Vector3.zero;
 
     public RectTransform canvasRectTransform;
+    public RectTransform circleRine;
     private Vector2 defaultAnchoredPosition = Vector2.zero;
     private Vector2 CurrentAnchoredPosition 
     { 
@@ -22,7 +23,7 @@ public class JoystickUI : MonoBehaviour
     private bool isStarted = false;
 
     // 터치 최대 길이
-    private float joystickRadius = 70;
+    private float joystickRadius = 50;
 
     private void Awake()
     {
@@ -67,6 +68,7 @@ public class JoystickUI : MonoBehaviour
                 (canvasRectTransform, screenPosition, null, out startScreenPosition);
 
             CurrentAnchoredPosition = startScreenPosition;
+            circleRine.anchoredPosition = startScreenPosition;
         }
         else
         {
@@ -95,6 +97,7 @@ public class JoystickUI : MonoBehaviour
         if (context.canceled)
         {
             CurrentAnchoredPosition = defaultAnchoredPosition;
+            circleRine.anchoredPosition = defaultAnchoredPosition;
             InputValue = Vector2.zero;
             isStarted = false;
         }
