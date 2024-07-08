@@ -22,7 +22,7 @@ public class WeaponCreator : MonoBehaviour
         StartCoroutine(SpawnCoroutine);
     }
 
-    void Update()
+    void Update() 
     {
 
     }
@@ -82,7 +82,8 @@ public class WeaponCreator : MonoBehaviour
         switch (weaponData.WeaponAttackType)
         {
             case Attack.Melee:
-                var melee = weapon.AddComponent<MeleeType>();
+                var melee = weapon.AddComponent<Melee>();
+                melee.lifeTime = weaponData.LifeTime;
                 break;
             case Attack.Shoot:
                 var shoot = weapon.AddComponent<Shoot>();

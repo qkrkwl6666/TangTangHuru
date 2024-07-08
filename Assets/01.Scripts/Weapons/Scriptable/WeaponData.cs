@@ -12,7 +12,6 @@ public class WeaponData : ScriptableObject
         Circle,
         Spawn,
     }
-
     public enum Attack
     {
         Melee,

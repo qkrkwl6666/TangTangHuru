@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ManualAim : MonoBehaviour, IAimer
 {
-    GameObject player;
+    public GameObject player;
     PlayerController controller;
 
+    public GameObject Player { get => player; }
 
     private void Awake()
     {
@@ -16,7 +17,7 @@ public class ManualAim : MonoBehaviour, IAimer
 
     public Vector3 AimDirection()
     {
-        Vector3 aimPosition = player.transform.position + (Vector3)controller.joystick.InputValue;
-        return aimPosition;
+        Vector3 aimPosition = (Vector3)controller.joystick.InputValue;
+        return aimPosition.normalized;
     }
 }

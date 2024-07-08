@@ -23,21 +23,14 @@ public class Shoot : MonoBehaviour
 
     private void OnEnable()
     {
-        Vector3 targetPos;
         var pos = currAimer.AimDirection();
 
-        if (pos != Vector3.zero)
+        if (pos == Vector3.zero)
         {
-            targetPos = pos;
-        }
-        else
-        {
-            targetPos = new Vector2(Random.Range(-100f,100f), Random.Range(-100f, 100f));
+            pos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         }
 
-        var dir = targetPos - transform.position;
-
-        rb.velocity = dir.normalized * speed;
+        rb.velocity = pos.normalized * speed;
     }
 
     private void OnDisable()

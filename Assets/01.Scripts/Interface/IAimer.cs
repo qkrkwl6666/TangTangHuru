@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IAimer
 {
+    GameObject Player { get; }
+
     Vector3 AimDirection();
 }

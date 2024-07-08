@@ -23,7 +23,7 @@ public class RangeDetecter : MonoBehaviour
                 result = target.transform.position;
             }
         }
-        return result;
+        return result.normalized;
     }
 
 }
