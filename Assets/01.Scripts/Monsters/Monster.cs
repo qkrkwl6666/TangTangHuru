@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public enum MonsterType
 {
@@ -14,6 +15,8 @@ public class Monster : LivingEntity
     public float moveSpeed = 10f;
     public float attackDamage = 10f;
 
+    private IObjectPool<GameObject> pool;
+
     private void Awake()
     {
 
@@ -21,6 +24,16 @@ public class Monster : LivingEntity
     private void Update()
     {
         
+    }
+
+    public void SetPool(IObjectPool<GameObject> pool)
+    {
+        this.pool = pool;
+    }
+
+    public void PoolRelease()
+    {
+        pool.Release(this.gameObject);
     }
 
 }
