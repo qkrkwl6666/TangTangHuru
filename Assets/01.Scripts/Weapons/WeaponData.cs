@@ -63,6 +63,5 @@ public class WeaponData : ScriptableObject
     private float lifeTime;
     public float LifeTime { get { return lifeTime; } }
 
-
 }
 

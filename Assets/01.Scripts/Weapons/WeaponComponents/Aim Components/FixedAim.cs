@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class FixedAim : MonoBehaviour, IAimer
 {
     GameObject player;
-    Vector3 left;
-    Vector3 right;
+    PlayerController controller;
+    float dir;
+
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        left = player.transform.position;
-        left.x -= 3f;
-        right = player.transform.position;
-        right.y += 3f;
+        controller = player.GetComponent<PlayerController>();
     }
     public Vector3 AimDirection()
     {
-        left = player.transform.position;
-        left.x -= 3f;
-        return left;
+        dir = controller.joystick.InputValue.x > 0 ? 3f : -3f;
+
+        Vector3 aimPosition = player.transform.position;
+        aimPosition.x += dir;
+        return aimPosition;
     }
 }
