@@ -457,17 +457,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081687404}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1306732749}
-  m_Father: {fileID: 1332896624}
+  m_Father: {fileID: 1511199584}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -35.874084, y: -18.75003}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1081687406
@@ -711,7 +711,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1306732748}
   m_CullTransparentMesh: 1
---- !u!1001 &1332896623
+--- !u!1001 &1511199583
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -803,10 +803,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: JoystickUI
       objectReference: {fileID: 0}
-    - target: {fileID: 8193143698762198927, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -815,10 +811,10 @@ PrefabInstance:
       addedObject: {fileID: 1081687405}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
---- !u!224 &1332896624 stripped
+--- !u!224 &1511199584 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3924731221243952620, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
-  m_PrefabInstance: {fileID: 1332896623}
+  m_PrefabInstance: {fileID: 1511199583}
   m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -827,5 +823,5 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 125023097}
-  - {fileID: 1332896623}
+  - {fileID: 1511199583}
   - {fileID: 574444445}
