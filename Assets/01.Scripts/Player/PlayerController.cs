@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    public Vector2 velocity;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -17,12 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        float moveInputX = Input.GetAxis("Horizontal");
-        float moveInputY = Input.GetAxis("Vertical");
-
-        Vector2 moveVelocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);
-        //rb.velocity = moveVelocity;
-
-        rb.velocity = joystick.InputValue * moveSpeed;
+        velocity = joystick.InputValue * moveSpeed;
+        rb.velocity = velocity;
     }
 }
