@@ -106,4 +106,12 @@ public class JoystickUI : MonoBehaviour
         CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
     }
+
+
+    public void OnGamePad(InputAction.CallbackContext context)
+    {
+        CurrentAnchoredPosition = defaultAnchoredPosition;
+        CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
+        InputValue = context.ReadValue<Vector2>();
+    }
 }
