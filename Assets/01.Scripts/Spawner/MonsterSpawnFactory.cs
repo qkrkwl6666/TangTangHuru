@@ -41,7 +41,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
             if (go.activeSelf)
             {
-                go.GetComponent<Monster>().PoolRelease();
+                go.GetComponent<Monster>().Die();
             }
             
             
@@ -90,7 +90,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 (x) => 
                 { 
                     monsters.Add(x);
-                    x.SetActive(true); 
+                    x.SetActive(true);
                 },
                 (x) => 
                 {

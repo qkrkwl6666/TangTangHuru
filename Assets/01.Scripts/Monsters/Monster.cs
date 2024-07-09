@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 
 public enum MonsterType
@@ -9,7 +10,6 @@ public enum MonsterType
     RangedAttackType,
     ChargeMeleeType,
 }
-
 public class Monster : LivingEntity
 {
     public float moveSpeed = 10f;
@@ -38,9 +38,17 @@ public class Monster : LivingEntity
             onDeath();
         }
 
+        Addressables.InstantiateAsync(Defines.exp).Completed += (x) => 
+        {
+            //x.Result.GetComponent<MonsterExp>().Initialize(playerSubject)
+        };
+
         dead = true;
 
         PoolRelease();
+
+        
     }
+
 
 }
