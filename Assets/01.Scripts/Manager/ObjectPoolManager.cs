@@ -17,10 +17,10 @@ public class ObjectPoolManager : MonoBehaviour
 
     private void Awake()
     {
-        Addressables.LoadAssetAsync<GameObject>(Defines.exp).Completed += ExpInstantiate;
+        Addressables.LoadAssetAsync<GameObject>(Defines.exp).Completed += InstantiateExp;
     }
 
-    public void ExpInstantiate(AsyncOperationHandle<GameObject> op)
+    public void InstantiateExp(AsyncOperationHandle<GameObject> op)
     {
         GameObject expPrefab = op.Result;
 
@@ -42,7 +42,6 @@ public class ObjectPoolManager : MonoBehaviour
                 x.SetActive(false);
             },
             (x) => Destroy(x.gameObject),
-            true,
-            10, 200);
+            true, 10, 200);
     }
 }

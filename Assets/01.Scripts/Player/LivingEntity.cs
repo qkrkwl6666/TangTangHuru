@@ -25,7 +25,7 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
     public virtual void OnDamage(float damage)
     {
-        Debug.Log("아야! hp : " + health);
+        //Debug.Log("아야! hp : " + health);
 
         health -= damage;
 

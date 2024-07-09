@@ -5,4 +5,5 @@ using UnityEngine;
 public static class Defines
 {
     public static readonly string exp = "Exp";
+    public static readonly string normalBullet = "NormalBullet";
 }
