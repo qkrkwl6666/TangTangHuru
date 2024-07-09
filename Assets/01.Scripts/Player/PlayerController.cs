@@ -1,4 +1,5 @@
 
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -20,12 +21,14 @@ public class PlayerController : MonoBehaviour
         joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        velocity = joystick.InputValue * moveSpeed;
-        rb.velocity = velocity;
+        velocity = joystick.InputValue * moveSpeed * Time.deltaTime;
+        //rb.velocity = velocity;
 
-        if(joystick.InputValue.x < 0)
+        transform.Translate(velocity);
+
+        if (joystick.InputValue.x < 0)
         {
             transform.localScale = Left;
         }
