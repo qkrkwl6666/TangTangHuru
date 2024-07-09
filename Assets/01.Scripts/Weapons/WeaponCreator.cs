@@ -40,33 +40,42 @@ public class WeaponCreator : MonoBehaviour
         {
             yield return new WaitForSeconds(weaponData.CoolDown);
 
-            var count = weaponData.BurstCount;
+            var count = 1;
 
             foreach (var weapon in weapons)
             {
                 if (!weapon.activeSelf)
                 {
                     weapon.gameObject.transform.position = transform.position;
+
+                    if (weaponData.WeaponAttackType == Attack.Rotate)
+                    {
+                        weapon.GetComponent<Rotate>().angle = (360f / weaponData.BurstCount) * count;
+                    }
                     weapon.SetActive(true);
-                    count--;
+
+                    count++;
+
                     yield return new WaitForSeconds(weaponData.BurstRate);
                 }
 
-                if (count <= 0)
+                if (count > weaponData.BurstCount + 1)
                     break;
+
+
             }
 
-            while (count > 0)
+            while (count < weaponData.BurstCount + 1)
             {
-                CreateWeapon();
-                count--;
+                CreateWeapon(count);
+                count++;
                 yield return new WaitForSeconds(weaponData.BurstRate);
             }
         }
     }
 
 
-    public void CreateWeapon()
+    public void CreateWeapon(int count)
     {
         var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
         weapon.SetActive(false);
@@ -94,7 +103,8 @@ public class WeaponCreator : MonoBehaviour
                 weapon.AddComponent<Shoot>();
                 break;
             case Attack.Rotate:
-                weapon.AddComponent<Rotate>(); 
+                weapon.AddComponent<Rotate>();
+                weapon.GetComponent<Rotate>().angle = (360f / weaponData.BurstCount) * count;
                 break;
         }
 
@@ -104,6 +114,8 @@ public class WeaponCreator : MonoBehaviour
         hit = weapon.AddComponent<Hit>();
         hit.damage = weaponData.Damage;
         hit.pierceCount = weaponData.PierceCount;
+        hit.criticalChance = weaponData.CriticalChance;
+        hit.criticalValue = weaponData.CriticalValue;
         hit.attackableLayer = LayerMask.GetMask("Enemy");
 
         weapon.transform.localScale *= weaponData.Range;

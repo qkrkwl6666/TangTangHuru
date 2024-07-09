@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Rotate : MonoBehaviour
 {
+    public float angle = 0f;
+
     float timer = 0f;
-    float angle = 0f;
     float range = 1.5f;
 
     IAimer currAimer;
@@ -19,6 +20,7 @@ public class Rotate : MonoBehaviour
 
     private void OnEnable()
     {
+
     }
 
     private void OnDisable()
@@ -39,8 +41,8 @@ public class Rotate : MonoBehaviour
 
             float x = parentTransform.position.x + Mathf.Cos(radians) * range;
             float y = parentTransform.position.y + Mathf.Sin(radians) * range;
-
-            Vector3 newPosition = new Vector3(x, y, transform.position.z);
+             
+            Vector3 newPosition = new Vector3(x, y, 0);
             transform.position = newPosition;
 
             Vector3 direction = (transform.position - parentTransform.position).normalized;

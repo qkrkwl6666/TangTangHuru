@@ -62,5 +62,15 @@ public class WeaponData : ScriptableObject
     private float lifeTime;
     public float LifeTime { get { return lifeTime; } }
 
+    [SerializeField]
+    private float criticalChance;
+    public float CriticalChance { get { return criticalChance; } }
+
+    [SerializeField]
+    private float criticalValue;
+    public float CriticalValue { get { return criticalValue; } }
+
+
+
 }
 

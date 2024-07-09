@@ -26,6 +26,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
     private void Awake()
     {
         monster = GetComponent<Monster>();
+        monster.OnDamaged += NuckBack;
     }
 
     private void FixedUpdate()
@@ -46,7 +47,11 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         if (playerTransform == null) return;
 
         playerSubject.RemoveObserver(this);
+        monster.OnDamaged -= NuckBack;
     }
 
-
+    private void NuckBack(float damage)
+    {
+        transform.Translate((gameObject.transform.position - playerTransform.position).normalized * 0.3f);
+    }
 }

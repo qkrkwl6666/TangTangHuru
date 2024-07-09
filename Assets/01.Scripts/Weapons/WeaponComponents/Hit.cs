@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class Hit : MonoBehaviour
 {
+    public GameObject hitText;
+    public GameObject[] hitTexts;
+
     public LayerMask attackableLayer;
 
     public float damage;
     public float pierceCount;
+
+    public float criticalChance;
+    public float criticalValue;
+
+    private float totalDamage;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -16,13 +24,24 @@ public class Hit : MonoBehaviour
 
     public void OnAttack(Collider2D other)
     {
+        var pierce = pierceCount;
+
         if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
-
-            if(pierceCount > 0)
+            if(Random.Range(0, 100) <= criticalChance)
             {
-                pierceCount--;
+                totalDamage = damage * criticalValue;
+            }
+            else
+            {
+                totalDamage = damage;
+            }
+
+            other.gameObject.GetComponent<IDamagable>().OnDamage(totalDamage);
+
+            if(pierce > 0)
+            {
+                pierce--;
             }
             else
             {
@@ -30,5 +49,14 @@ public class Hit : MonoBehaviour
             }
 
         }
+
+        //foreach(var hit in hitTexts)
+        //{
+        //    if (!hit.activeSelf)
+        //    {
+
+        //    }
+        //}
+        
     }
 }
