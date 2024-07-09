@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
-    public float lifeTime = 0f;
     float timer = 0f;
 
     IAimer currAimer;
@@ -17,19 +16,20 @@ public class Melee : MonoBehaviour
 
     private void OnEnable()
     {
+        if (currAimer == null)
+            return;
         dir = currAimer.AimDirection();
-        dir *= 1.5f;
+        dir *= 1.3f;
     }
 
     private void OnDisable()
     {
         timer = 0f;
-
     }
 
     private void Update()
     {
-        if (timer > lifeTime)
+        if (timer > currAimer.LifeTime)
         {
             gameObject.SetActive(false);
         }

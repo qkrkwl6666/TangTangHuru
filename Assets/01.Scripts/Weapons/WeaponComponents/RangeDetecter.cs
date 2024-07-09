@@ -20,7 +20,8 @@ public class RangeDetecter : MonoBehaviour
             if (distance < currdistance)
             {
                 currdistance = distance;
-                result = target.transform.position;
+                result = target.transform.position - transform.position;
+                
             }
         }
         return result.normalized;

@@ -5,11 +5,15 @@ using UnityEngine.InputSystem.XR;
 
 public class FixedAim : MonoBehaviour, IAimer
 {
-    public GameObject player;
     PlayerController controller;
+    
     float dir;
 
+    public GameObject player;
     public GameObject Player { get => player; }
+    public float LifeTime { get; set; }
+    public float Speed { get; set; }
+
 
     private void Awake()
     {
@@ -19,9 +23,9 @@ public class FixedAim : MonoBehaviour, IAimer
 
     public Vector3 AimDirection()
     {
-        dir = controller.joystick.InputValue.x > 0 ? 3f : -3f;
+        dir = controller.joystick.InputValue.x > 0 ? 1f : -1f;
 
-        Vector3 aimPosition = player.transform.position;
+        Vector3 aimPosition = Vector3.zero;
         aimPosition.x += dir;
         return aimPosition;
     }

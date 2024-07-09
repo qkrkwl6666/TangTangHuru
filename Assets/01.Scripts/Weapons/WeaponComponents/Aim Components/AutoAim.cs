@@ -5,12 +5,14 @@ using UnityEngine;
 public class AutoAim : RangeDetecter, IAimer
 {
     GameObject player;
-
     public GameObject Player { get => player; }
+    public float LifeTime { get; set; }
+    public float Speed { get; set; }
 
     private void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        targetLayer = LayerMask.GetMask("Enemy");
     }
 
     public Vector3 AimDirection()

@@ -11,6 +11,8 @@ public class WeaponCreator : MonoBehaviour
 
     public GameObject weaponPrefab;
     public WeaponData weaponData;
+    IAimer aimer;
+    Hit hit;
 
     private List<GameObject> weapons = new List<GameObject>();
 
@@ -49,6 +51,9 @@ public class WeaponCreator : MonoBehaviour
                     count--;
                     yield return new WaitForSeconds(weaponData.BurstRate);
                 }
+
+                if (count <= 0)
+                    break;
             }
 
             while (count > 0)
@@ -65,50 +70,58 @@ public class WeaponCreator : MonoBehaviour
     {
         var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
         weapon.SetActive(false);
+
         switch (weaponData.WeaponAimType)
         {
             case Aim.Auto:
-                var aim = weapon.AddComponent<AutoAim>();
-                aim.targetLayer = LayerMask.GetMask("Enemy");
+                aimer = weapon.AddComponent<AutoAim>();
                 break;
             case Aim.Fixed:
-                weapon.AddComponent<FixedAim>();
+                aimer = weapon.AddComponent<FixedAim>();
                 break;
             case Aim.Manual:
-                weapon.AddComponent<ManualAim>();
+                aimer = weapon.AddComponent<ManualAim>();
                 break;
         }
+
 
         switch (weaponData.WeaponAttackType)
         {
             case Attack.Melee:
-                var melee = weapon.AddComponent<Melee>();
-                melee.lifeTime = weaponData.LifeTime;
+                weapon.AddComponent<Melee>();
                 break;
             case Attack.Shoot:
-                var shoot = weapon.AddComponent<Shoot>();
-                shoot.speed = weaponData.Speed;
-                shoot.lifeTime = weaponData.LifeTime;
+                weapon.AddComponent<Shoot>();
+                break;
+            case Attack.Rotate:
+                weapon.AddComponent<Rotate>(); 
                 break;
         }
 
-        var hit = weapon.AddComponent<Hit>();
+        aimer.LifeTime = weaponData.LifeTime;
+        aimer.Speed = weaponData.Speed;
+
+        hit = weapon.AddComponent<Hit>();
         hit.damage = weaponData.Damage;
         hit.pierceCount = weaponData.PierceCount;
         hit.attackableLayer = LayerMask.GetMask("Enemy");
 
+        weapon.transform.localScale *= weaponData.Range;
+
         weapon.SetActive(true);
         weapons.Add(weapon);
     }
-
-    
 
 
     public void UpgradeWeapon()
     {
         foreach (var weapon in weapons)
         {
-
+            var aimer = weapon.GetComponent<IAimer>();
+            aimer.Speed = weaponData.Speed;
+            aimer.LifeTime = weaponData.LifeTime;
+            hit.damage = weaponData.Damage;
+            hit.pierceCount = weaponData.PierceCount;
         }
     }
 }

@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ManualAim : MonoBehaviour, IAimer
 {
-    public GameObject player;
     PlayerController controller;
-
+    public GameObject player;
     public GameObject Player { get => player; }
+    public float LifeTime { get; set; }
+    public float Speed { get; set; }
 
     private void Awake()
     {

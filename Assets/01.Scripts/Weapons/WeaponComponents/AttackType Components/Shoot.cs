@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Shoot : MonoBehaviour
 {
-    public float speed;
-    public float lifeTime;
     public IAimer currAimer;
 
     private float timer = 0f;
@@ -30,7 +28,9 @@ public class Shoot : MonoBehaviour
             pos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
         }
 
-        rb.velocity = pos.normalized * speed;
+        transform.up = pos;
+        rb.velocity = pos.normalized * currAimer.Speed;
+
     }
 
     private void OnDisable()
@@ -40,7 +40,7 @@ public class Shoot : MonoBehaviour
 
     private void Update()
     {
-        if (timer > lifeTime)
+        if (timer > currAimer.LifeTime)
         {
             gameObject.SetActive(false);
         }
