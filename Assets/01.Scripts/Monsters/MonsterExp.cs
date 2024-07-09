@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Pool;
 
 public class MonsterExp : MonoBehaviour , IPlayerObserver
 {
@@ -15,6 +16,8 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
     private bool isTracking = false;
     private float speed = 20f;
 
+    public IObjectPool<GameObject> pool;
+
     private void Update()
     {
         if (isTracking)
@@ -23,12 +26,15 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
             transform.Translate(dir * speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, playerTransform.position) <= 1)
             {
-                // Todo : 오브젝트 풀 해야함
-                Destroy(gameObject);
-            }
-
-            return;
+                pool.Release(gameObject);
+                return;
+            } 
         }
+    }
+
+    private void OnDisable()
+    {
+        isTracking = false;
     }
 
     private void FixedUpdate()
@@ -44,13 +50,12 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
 
     public void Initialize(PlayerSubject playerSubject, Transform monsterTransform, float exp)
     {
-        this.playerSubject = playerSubject;
-
         if (playerSubject == null)
         {
             Debug.Log("MonsterExp Script PlayerSubject is Null");
             return;
         }
+        this.playerSubject = playerSubject;
 
         playerSubject.AddObserver(this);
 
@@ -63,8 +68,8 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
         playerTransform = playerSubject.GetPlayerTransform;
     }
 
-    public void SetExp(float exp)
+    public void Reset()
     {
-        this.exp = exp;
+        
     }
 }

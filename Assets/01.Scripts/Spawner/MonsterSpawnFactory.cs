@@ -56,13 +56,11 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 (DataTableManager.monster).GetMonsterData("100003"),10, 3);
         }
 
-
-
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
     {
-        if (monsterData == null) return;
+        if (monsterData == null || monsters.Count >= maxMonster) return;
 
         currentMonsterData = monsterData;
 
