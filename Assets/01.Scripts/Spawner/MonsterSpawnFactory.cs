@@ -35,7 +35,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (Input.GetKeyUp(KeyCode.F1))
         {
-
             int index = Random.Range(0, monsters.Count);
             var go = monsters[index];
 
@@ -43,9 +42,21 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 go.GetComponent<Monster>().Die();
             }
-            
-            
         }
+
+        if (Input.GetKeyUp(KeyCode.F2))
+        {
+            CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+                (DataTableManager.monster).GetMonsterData("100002"), 10, 2);
+        }
+
+        if (Input.GetKeyUp(KeyCode.F3))
+        {
+            CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+                (DataTableManager.monster).GetMonsterData("100003"),10, 3);
+        }
+
+
 
     }
 
@@ -84,6 +95,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
                     adp.Initialize(playerSubject);
                     ccm.Initialize(playerSubject);
+                    monsterScript.Initialize(playerSubject);
                     MonsterSkillAddComponent(go, typeData);
                     return go; 
                 },

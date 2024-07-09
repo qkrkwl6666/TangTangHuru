@@ -15,6 +15,8 @@ public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
 
     public void Update()
     {
+        if (playerTransfrom == null) return;
+
         time += Time.deltaTime;
 
         if (time >= duration)
