@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
@@ -10,11 +12,18 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    private float defaultDistance = 10f;
-    private float circleSpawnDistance = 10f;
+    private float defaultDistance = 30f;
+    private float circleSpawnDistance = 20f;
     private float lineSpawnDistance = 5f;
 
     private MonsterData currentMonsterData = null;
+    private int spawnType = 1;
+    private int spawnCount = 1;
+
+    // 오브젝트 풀 관련 변수들
+    public List<GameObject> monsters = new List<GameObject>();
+    public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
+    public int maxMonster = 200; // 필드 최대 몬스터 수
 
     private void Awake()
     {
@@ -26,16 +35,18 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (Input.GetKeyUp(KeyCode.F1))
         {
-            //CreateMonster(MonsterType.MonsterType1, 30, 3);
+
+            int index = Random.Range(0, monsters.Count);
+            var go = monsters[index];
+
+            if (go.activeSelf)
+            {
+                go.GetComponent<Monster>().Die();
+            }
+            
+            
         }
-        if (Input.GetKeyUp(KeyCode.F2))
-        {
-            //CreateMonster(MonsterType.MonsterType2, 10, 2);
-        }
-        if (Input.GetKeyUp(KeyCode.F3))
-        {
-            //CreateMonster(MonsterType.MonsterType3);
-        }
+
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
@@ -44,14 +55,62 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
         currentMonsterData = monsterData;
 
+        this.spawnType = spawnType;
+        this.spawnCount = spawnCount;
+
+        var opHandle = Addressables.LoadAssetAsync<GameObject>(monsterData.Monster_Prefab.ToString());
+
+        opHandle.Completed += MonsterInstantiate;
+    }
+
+    public void MonsterInstantiate(AsyncOperationHandle<GameObject> op)
+    {
+        GameObject monsterPrefab = op.Result;
+
+        var typeData = DataTableManager.Instance.Get<MonsterTypeTable>
+            (DataTableManager.monsterType).GetMonsterTypeData(currentMonsterData.Monster_Type.ToString());
+
+        int typeId = typeData.Type_Id;
+        
+        if (!monsterPools.ContainsKey(typeId))
+        {
+            monsterPools[typeId] = new ObjectPool<GameObject>
+                ( () => 
+                {
+                    var go = Instantiate(monsterPrefab);
+                    var monsterScript = go.GetComponent<Monster>();
+                    monsterScript.SetPool(monsterPools[typeId]);
+                    var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+                    var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
+                    adp.Initialize(playerSubject);
+                    ccm.Initialize(playerSubject);
+                    MonsterSkillAddComponent(go, typeData);
+                    return go; 
+                },
+                (x) => 
+                { 
+                    monsters.Add(x);
+                    x.SetActive(true);
+                },
+                (x) => 
+                {
+                    monsters.Remove(x);
+                    x.SetActive(false); 
+                } ,
+                (x) => Destroy(x.gameObject),
+                true,
+                10, 200);
+        }
+
         switch (spawnType)
         {
             // 랜덤 생성
             case 1:
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
-                        RandomPosition(defaultDistance), Quaternion.identity).Completed += MonsterAddComponent;
+                    var monster = monsterPools[typeId].Get();
+                    monster.transform.position = RandomPosition(defaultDistance);
+                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
             // 직선 생성
@@ -60,34 +119,27 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
-                        lineList[i], Quaternion.identity).Completed += MonsterAddComponent;
+                    var monster = monsterPools[typeId].Get();
+                    monster.transform.position = lineList[i];
+                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
             // 원 생성
             case 3:
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    Addressables.InstantiateAsync(monsterData.Monster_Prefab.ToString(),
-                        CirclePosition(spawnCount, i), Quaternion.identity).Completed += MonsterAddComponent;
+                    var monster = monsterPools[typeId].Get();
+                    monster.transform.position = CirclePosition(spawnCount, i);
+                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
         }
+
     }
 
-    public void MonsterAddComponent(AsyncOperationHandle<GameObject> op)
+    public void MonsterSkillAddComponent(GameObject monster , MonsterTypeData typeData)
     {
-        GameObject monster = op.Result;
-
-        var typeData = DataTableManager.Instance.Get<MonsterTypeTable>
-            (DataTableManager.monsterType).GetMonsterTypeData(currentMonsterData.Monster_Type.ToString());
-
         var list = typeData.GetSkillDatas();
-
-        // 움직임 스크립트 추가
-        var ccm = monster.AddComponent<ConstantChaseMove>();
-        ccm.Initialize(playerSubject);
-
         for (int i = 0; i < list.Count; i++)
         {
             if (list[i] == -1) break;
@@ -95,25 +147,35 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
                 (DataTableManager.monsterSkill).GetMonsterSkillData(list[i].ToString());
 
-            switch (skillData.Skill_Id) 
+            switch (skillData.Skill_Id)
             {
                 // 근접 공격
                 case 300001:
-                    
+                    //monster.AddComponent<근접공격 스크립트>();
                     break;
                 // 원거리 공격
                 case 300002:
-
+                    //monster.AddComponent<원거리 스크립트>();
                     break;
             }
         }
+    }
+
+    public static Vector2 RandomPosition(Transform playerTransform, float distance)
+    {
+        if (playerTransform == null) return Vector2.zero;
+
+        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
+        Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+        return spawnPos;
     }
 
     public Vector2 RandomPosition(float distance)
     {
         if (playerTransform == null) return Vector2.zero;
 
-        Vector2 randomCirclePos = (Random.insideUnitCircle * distance);
+        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
         Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
         return spawnPos;
