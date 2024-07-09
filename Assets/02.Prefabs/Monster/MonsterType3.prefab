@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 2952972841528692663}
   - component: {fileID: 1216831571268440455}
   - component: {fileID: 7155080940222212425}
-  m_Layer: 0
+  - component: {fileID: 1789657252044836324}
+  m_Layer: 6
   m_Name: MonsterType3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
-  moveSpeed: 10
-  attackDamage: 10
+  startingHealth: 50
+  moveSpeed: 5
+  attackDamage: 5
 --- !u!61 &1216831571268440455
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -174,3 +175,24 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!95 &1789657252044836324
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8538077808992849983}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 93eb3acd272be84458cea82e36bce941, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
