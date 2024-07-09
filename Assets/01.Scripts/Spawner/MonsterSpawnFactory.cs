@@ -12,8 +12,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    private float defaultDistance = 10f;
-    private float circleSpawnDistance = 10f;
+    private float defaultDistance = 30f;
+    private float circleSpawnDistance = 20f;
     private float lineSpawnDistance = 5f;
 
     private MonsterData currentMonsterData = null;
@@ -81,6 +81,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     var monsterScript = go.GetComponent<Monster>();
                     monsterScript.SetPool(monsterPools[typeId]);
                     var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+                    var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
+                    adp.Initialize(playerSubject);
                     ccm.Initialize(playerSubject);
                     MonsterSkillAddComponent(go, typeData);
                     return go; 
@@ -133,7 +135,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 break;
         }
 
-
     }
 
     public void MonsterSkillAddComponent(GameObject monster , MonsterTypeData typeData)
@@ -160,11 +161,21 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         }
     }
 
+    public static Vector2 RandomPosition(Transform playerTransform, float distance)
+    {
+        if (playerTransform == null) return Vector2.zero;
+
+        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
+        Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+        return spawnPos;
+    }
+
     public Vector2 RandomPosition(float distance)
     {
         if (playerTransform == null) return Vector2.zero;
 
-        Vector2 randomCirclePos = (Random.insideUnitCircle * distance);
+        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
         Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
         return spawnPos;
