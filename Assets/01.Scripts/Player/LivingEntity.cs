@@ -27,6 +27,8 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
     public virtual void OnDamage(float damage)
     {
+        //Debug.Log("¾Æ¾ß! hp : " + health);
+
         health -= damage;
 
         OnDamaged?.Invoke(damage);
