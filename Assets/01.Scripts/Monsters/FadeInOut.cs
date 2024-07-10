@@ -11,37 +11,35 @@ public class FadeInOut : MonoBehaviour
 
     private TextMeshPro tmp;
 
-    IEnumerator fade;
-
     void Awake()
     {
         tmp = GetComponent<TextMeshPro>();
-        fade = FadeInOutRoutine();
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        StartCoroutine(fade);
+        FadeInOutRoutine();
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        StopCoroutine(fade);
+
     }
 
-    private IEnumerator FadeInOutRoutine()
+    private void FadeInOutRoutine()
     {
-        // 페이드 인
         float timer = 0f;
         while (timer < fadeInDuration)
         {
             timer += Time.deltaTime;
             tmp.alpha = Mathf.Lerp(0f, 1f, timer / fadeInDuration);
-            yield return null;
         }
 
-        // 잠깐 동안 완전히 보이는 상태 유지
-        yield return new WaitForSeconds(visibleDuration);
+        timer = 0f;
+        while (timer < visibleDuration)
+        {
+            timer += Time.deltaTime;
+        }
 
         // 페이드 아웃
         timer = 0f;
@@ -49,10 +47,9 @@ public class FadeInOut : MonoBehaviour
         {
             timer += Time.deltaTime;
             tmp.alpha = Mathf.Lerp(1f, 0f, timer / fadeOutDuration);
-            yield return null;
         }
 
-        // 비활성화
+        timer = 0f;
         gameObject.SetActive(false);
     }
 

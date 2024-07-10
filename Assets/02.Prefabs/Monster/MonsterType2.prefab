@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1397202242530687111}
   - component: {fileID: 8226949804516173025}
   - component: {fileID: 5091875836486409674}
-  - component: {fileID: 6556289288223345638}
+  - component: {fileID: 8588917490974947514}
   - component: {fileID: -597557011174926274}
   - component: {fileID: 5319275301278918565}
   - component: {fileID: -5011469301865966814}
@@ -104,7 +104,8 @@ MonoBehaviour:
   startingHealth: 50
   moveSpeed: 2
   attackDamage: 5
---- !u!114 &6556289288223345638
+  playerSubject: {fileID: 0}
+--- !u!114 &8588917490974947514
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textObject: {fileID: 5140553516563825343, guid: c7b799bc350d60142993da89c0fc5ebe, type: 3}
+  textObject: {fileID: 0}
 --- !u!61 &-597557011174926274
 BoxCollider2D:
   m_ObjectHideFlags: 0

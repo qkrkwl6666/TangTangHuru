@@ -31,8 +31,6 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
         OnDamaged?.Invoke(damage);
 
-        Debug.Log("¾Æ¾ß! hp : " + health);
-
         if (health <= 0 && !dead)
         {
             Die();
