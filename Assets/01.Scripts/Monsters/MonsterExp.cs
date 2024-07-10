@@ -8,19 +8,15 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
     private PlayerSubject playerSubject;
     private Transform playerTransform;
 
-    private float playerDistanceDifference = 3f;
-    private float duration = 0.5f;
-    private float time = 0f;
+    private float exp = 0;
 
-    public bool isTracking = false;
-    public float speed = 3f;
+    private float playerDistanceDifference = 3f;
+
+    private bool isTracking = false;
+    private float speed = 20f;
 
     private void Update()
     {
-        if (playerSubject == null) return;
-
-        time += Time.deltaTime;
-
         if (isTracking)
         {
             Vector2 dir = playerTransform.position - transform.position;
@@ -33,19 +29,20 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
 
             return;
         }
+    }
 
-        if (time >= duration)
+    private void FixedUpdate()
+    {
+        if (playerSubject == null) return;
+
+        if (Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
         {
-            time = 0f;
-            if(Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
-            {
-                // 플레이어 레벨업 메서드 호출
-                isTracking = true;
-            }
+            // 플레이어 레벨업 메서드 호출
+            isTracking = true;
         }
     }
 
-    public void Initialize(PlayerSubject playerSubject, Transform monsterTransform)
+    public void Initialize(PlayerSubject playerSubject, Transform monsterTransform, float exp)
     {
         this.playerSubject = playerSubject;
 
@@ -56,10 +53,18 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
         }
 
         playerSubject.AddObserver(this);
+
+        transform.position = monsterTransform.position;
+        this.exp = exp;
     }
 
     public void IObserverUpdate()
     {
         playerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    public void SetExp(float exp)
+    {
+        this.exp = exp;
     }
 }
