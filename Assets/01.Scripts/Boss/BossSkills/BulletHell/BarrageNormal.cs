@@ -22,6 +22,8 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     private void Awake()
     {
         Addressables.LoadAssetAsync<GameObject>(Defines.normalBullet).Completed += InstantiateNormalBullet;
+
+        enabled = false;
     }
 
     public void InstantiateNormalBullet(AsyncOperationHandle<GameObject> op)
@@ -49,6 +51,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     }
     public void SkillUpdate(float deltaTime)
     {
+        
         time += deltaTime;
 
         if (time >= attackCooldown)
@@ -61,6 +64,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public void Attack()
     {
         currentSkillCount++;
+        Debug.Log(currentSkillCount);
 
         for (int i = 0; i < attackCount; i++) 
         {

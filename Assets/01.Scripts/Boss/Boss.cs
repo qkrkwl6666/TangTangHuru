@@ -13,15 +13,13 @@ public class Boss : MonoBehaviour
 
     private void Awake()
     {
-        float per100 = 100f;
+        var skill = gameObject.AddComponent<BarrageNormal>();
+        skills.Add((skill, 50f));
+        totalProbability += 50f;
 
-        //var skill = gameObject.AddComponent<BarrageNormal>();
-        //skills.Add((skill, per100));
-        //totalProbability = per100;
-
-        var skill = gameObject.AddComponent<BarrageSnail>();
-        skills.Add((skill, per100));
-        totalProbability = per100;
+        var skill2 = gameObject.AddComponent<BarrageSnail>();
+        skills.Add((skill2, 50f));
+        totalProbability += 50f;
 
         SelectSkill();
     }
@@ -31,10 +29,8 @@ public class Boss : MonoBehaviour
         if (currentSkill.IsChange)
         {
             waitTime += Time.deltaTime;
-            Debug.Log(waitTime);
             if (waitTime >= waitDuration)
             {
-                Debug.Log("SelectSkill");
                 SelectSkill();
             }
         }
@@ -64,7 +60,7 @@ public class Boss : MonoBehaviour
             {
                 skill.Activate();
                 currentSkill = skill;
-                Debug.Log(currentSkill);
+                break;
             }
         }
     }

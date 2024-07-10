@@ -12,10 +12,6 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     private float attackScale = 0.15f;
 
-    // 카운트 재는 시간
-    private float time = 0f;
-    private float duration = 20f;
-
     // 공격 주기 시간
     private float attackTime = 0f;
     private float attackDuration = 0.05f;
@@ -30,7 +26,9 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     private void Awake()
     {
+        
         Addressables.LoadAssetAsync<GameObject>(Defines.snailBullet).Completed += InstantiateSnailBullet;
+        enabled = false;
     }
 
     public void InstantiateSnailBullet(AsyncOperationHandle<GameObject> op)
@@ -59,19 +57,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     public void SkillUpdate(float deltaTime)
     {
-        time += deltaTime;
         attackTime += deltaTime;
-
-        if (time >= duration)
-        {
-            time = 0f;
-            SkillCount++;
-            if (currentSkillCount == SkillCount) 
-            {
-                IsChange = true;
-                return;
-            }
-        }
 
         if(attackTime >= attackDuration)
         {
@@ -91,7 +77,18 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
         currentIndex++;
 
-        if (currentIndex >= maxIndex) currentIndex = 0;
+        if (currentIndex >= maxIndex)
+        {
+            currentSkillCount++;
+            currentIndex = 0;
+        }
+
+        if (currentSkillCount >= SkillCount) 
+        {
+            IsChange = true;
+            return;
+        }
+            
     }
 
     public void Activate()
@@ -103,7 +100,6 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     {
         IsChange = false;
         enabled = false;
-        time = 0f;
         attackTime = 0f;
         currentSkillCount = 0;
     }
