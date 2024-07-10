@@ -20,7 +20,7 @@ public class Monster : LivingEntity, IPlayerObserver
     private float exp = 0;
     public PlayerSubject playerSubject;
     private Transform playerTransform;
-
+    
     public void Initialize(PlayerSubject playerSubject)
     {
         this.playerSubject = playerSubject;
@@ -51,7 +51,6 @@ public class Monster : LivingEntity, IPlayerObserver
         playerSubject.AddObserver(this);
     }
 
-
     private IObjectPool<GameObject> pool;
 
     public void SetPool(IObjectPool<GameObject> pool)
@@ -75,15 +74,13 @@ public class Monster : LivingEntity, IPlayerObserver
             onDeath();
         }
 
-        Addressables.InstantiateAsync(Defines.exp).Completed += (x) => 
-        {
-            x.Result.GetComponent<MonsterExp>().Initialize(playerSubject, transform, exp);
-        };
-
+        var go = ObjectPoolManager.expPool.Get();
+        go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, exp);
         dead = true;
 
         PoolRelease();
     }
+
     public void IObserverUpdate()
     {
         playerTransform = playerSubject.GetPlayerTransform;
