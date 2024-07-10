@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3761415837891988711}
   - component: {fileID: 1512447716956666911}
   - component: {fileID: 4849698414785222713}
-  - component: {fileID: 7597690025341451920}
+  - component: {fileID: 4135806915195034619}
   - component: {fileID: 2332183553792109822}
   - component: {fileID: 5453525700053212441}
   - component: {fileID: 7761381679430453478}
@@ -104,7 +104,8 @@ MonoBehaviour:
   startingHealth: 50
   moveSpeed: 2
   attackDamage: 5
---- !u!114 &7597690025341451920
+  playerSubject: {fileID: 0}
+--- !u!114 &4135806915195034619
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textObject: {fileID: 5140553516563825343, guid: c7b799bc350d60142993da89c0fc5ebe, type: 3}
+  textObject: {fileID: 0}
 --- !u!50 &2332183553792109822
 Rigidbody2D:
   serializedVersion: 4

@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class Hit : MonoBehaviour
 {
-    public GameObject hitText;
-    public GameObject[] hitTexts;
-
     public LayerMask attackableLayer;
 
     public float damage;
@@ -17,8 +15,29 @@ public class Hit : MonoBehaviour
 
     private float totalDamage;
 
+    private bool attackable = true;
+    private float attackRate = 0.1f;
+    private float timer = 0f;
+
+    private void Update()
+    {
+        if(timer > attackRate)
+        {
+            attackable = true;
+            timer = 0f;
+        }
+        else
+        {
+            timer += Time.deltaTime;
+        }
+
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (!attackable)
+            return;
+
         OnAttack(other);
     }
 
@@ -48,15 +67,8 @@ public class Hit : MonoBehaviour
                 gameObject.SetActive(false);
             }
 
+            attackable = false;
         }
-
-        //foreach(var hit in hitTexts)
-        //{
-        //    if (!hit.activeSelf)
-        //    {
-
-        //    }
-        //}
-        
     }
+
 }
