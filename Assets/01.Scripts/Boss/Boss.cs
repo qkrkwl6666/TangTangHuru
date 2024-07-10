@@ -15,7 +15,11 @@ public class Boss : MonoBehaviour
     {
         float per100 = 100f;
 
-        var skill = gameObject.AddComponent<BarrageNormal>();
+        //var skill = gameObject.AddComponent<BarrageNormal>();
+        //skills.Add((skill, per100));
+        //totalProbability = per100;
+
+        var skill = gameObject.AddComponent<BarrageSnail>();
         skills.Add((skill, per100));
         totalProbability = per100;
 
