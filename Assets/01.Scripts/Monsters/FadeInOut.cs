@@ -18,7 +18,7 @@ public class FadeInOut : MonoBehaviour
 
     private void OnEnable()
     {
-        FadeInOutRoutine();
+        StartCoroutine(FadeInOutRoutine());
     }
 
     private void Update()
@@ -26,20 +26,17 @@ public class FadeInOut : MonoBehaviour
 
     }
 
-    private void FadeInOutRoutine()
+    IEnumerator FadeInOutRoutine()
     {
         float timer = 0f;
         while (timer < fadeInDuration)
         {
             timer += Time.deltaTime;
             tmp.alpha = Mathf.Lerp(0f, 1f, timer / fadeInDuration);
+            yield return null;
         }
 
-        timer = 0f;
-        while (timer < visibleDuration)
-        {
-            timer += Time.deltaTime;
-        }
+        yield return new WaitForSeconds(visibleDuration);
 
         // ÆäÀÌµå ¾Æ¿ô
         timer = 0f;
@@ -47,9 +44,9 @@ public class FadeInOut : MonoBehaviour
         {
             timer += Time.deltaTime;
             tmp.alpha = Mathf.Lerp(1f, 0f, timer / fadeOutDuration);
+            yield return null;
         }
 
-        timer = 0f;
         gameObject.SetActive(false);
     }
 

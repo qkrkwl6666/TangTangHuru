@@ -23,24 +23,5 @@ public class DamageText : MonoBehaviour
     private void ShowHeadUpDamage(float damage)
     {
         MonsterManager.Instance.ShowDamage(damage, transform.position);
-
-        //if(textObjects.Count < 5)
-        //{
-        //    var newText = Instantiate(textObject, gameObject.transform.position, Quaternion.identity);
-        //    newText.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
-        //    textObjects.Add(newText);
-        //    return;
-        //}
-
-        //foreach (var text in textObjects)
-        //{
-        //    if (!text.gameObject.activeSelf)
-        //    {
-        //        text.gameObject.SetActive(true);
-        //        text.gameObject.transform.position = transform.position + textPos;
-        //        text.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
-        //        return;
-        //    }
-        //}
     }
 }

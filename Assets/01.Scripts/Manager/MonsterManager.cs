@@ -55,7 +55,7 @@ public class MonsterManager : MonoBehaviour
 
     public void ShowDamage(float damage, Vector3 targetPos)
     {
-        if (textObjects.Count < 10)
+        if (textObjects.Count < 100)
         {
             var newText = Instantiate(textObject, targetPos, Quaternion.identity);
             newText.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
@@ -73,8 +73,6 @@ public class MonsterManager : MonoBehaviour
                 return;
             }
         }
-
-
     }
 
 }
