@@ -31,16 +31,16 @@ public class DataTableManager : Singleton<DataTableManager>
 
         // DataTable bossTable = new BossTable();
         // monsterSkillTable.Load(boss);
-        
-        DataTable bossSkillTable = new BossSkillTable();
-        bossSkillTable.Load(bossSkill);
+        // 
+        // DataTable bossSkillTable = new BossSkillTable();
+        // bossSkillTable.Load(bossSkill);
 
         tables.Add(stageWave, waveTable);
         tables.Add(monster, monsterTable);
         tables.Add(monsterType, monsterTypeTable);
         tables.Add(monsterSkill, monsterSkillTable);
-        //tables.Add(boss, bossTable);
-        tables.Add(bossSkill, bossSkillTable);
+        // tables.Add(boss, bossTable);
+        // tables.Add(bossSkill, bossSkillTable);
     }
 
     public T Get<T>(string id) where T : DataTable

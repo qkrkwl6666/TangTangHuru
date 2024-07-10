@@ -7,15 +7,11 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackDuration = 10f;
-    private float attackCooldown = 5f;
     private float attackScale = 0.15f;
 
-    public float Duration => throw new System.NotImplementedException();
-
-    public bool IsActive => throw new System.NotImplementedException();
-
-    public float ElapsedTime => throw new System.NotImplementedException();
+    public int SkillCount { get; set; } = 5;
+    public bool IsChange { get; set; } = false;
+    public float Cooldown { get; set; } = 5f;
 
     private void Awake()
     {
@@ -29,11 +25,11 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     public void Activate()
     {
-        throw new System.NotImplementedException();
+        enabled = true;
     }
 
     public void DeActivate()
     {
-        throw new System.NotImplementedException();
+        enabled = false;
     }
 }
