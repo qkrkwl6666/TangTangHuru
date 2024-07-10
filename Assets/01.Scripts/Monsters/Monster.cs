@@ -84,12 +84,8 @@ public class Monster : LivingEntity, IPlayerObserver
 
         PoolRelease();
     }
-<<<<<<< HEAD
-=======
-
     public void IObserverUpdate()
     {
         playerTransform = playerSubject.GetPlayerTransform;
     }
->>>>>>> develop
 }
