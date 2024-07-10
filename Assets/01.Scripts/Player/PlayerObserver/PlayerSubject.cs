@@ -6,14 +6,21 @@ public class PlayerSubject : MonoBehaviour
 {
     private List<IPlayerObserver> playerObservers = new List<IPlayerObserver>();
 
+    private GameObject playerObject;
     private LivingEntity playerLivingEntity;
+    private PlayerExp playerExp;
+
 
     public LivingEntity GetPlayerLivingEntity { get { return playerLivingEntity; } }
-    public Transform GetPlayerTransform { get { return playerLivingEntity.transform; } }
+    public Transform GetPlayerTransform { get { return playerObject.transform; } }
+    public PlayerExp GetPlayerExp { get { return playerExp; } }
+
 
     private void Awake()
     {
-        playerLivingEntity = GameObject.FindWithTag("Player").GetComponent<LivingEntity>();
+        playerObject = GameObject.FindWithTag("Player");
+        playerLivingEntity = playerObject.GetComponent<LivingEntity>();
+        playerExp = playerObject.GetComponent<PlayerExp>();
     }
 
     public void NotifyObserver()

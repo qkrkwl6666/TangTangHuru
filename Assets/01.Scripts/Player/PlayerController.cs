@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 5f;
     public JoystickUI joystick;
 
-    private Rigidbody2D rb;
+    private SpriteRenderer spriteRenderer;
 
     public Vector2 velocity;
 
@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void FixedUpdate()
@@ -30,11 +30,11 @@ public class PlayerController : MonoBehaviour
 
         if (joystick.InputValue.x < 0)
         {
-            transform.localScale = Left;
+            spriteRenderer.flipX = true;
         }
-        else
+        else if (joystick.InputValue.x > 0)
         {
-            transform.localScale = Right;
+            spriteRenderer.flipX = false;
         }
     }
 }

@@ -48,6 +48,8 @@ public class Monster : LivingEntity, IPlayerObserver
         moveSpeed = speed;
         this.exp = exp;
 
+        Debug.Log("몬스터 경험치 할당 : " + this.exp);
+
         playerSubject.AddObserver(this);
     }
 

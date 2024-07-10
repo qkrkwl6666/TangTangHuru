@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -93,8 +94,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
                     adp.Initialize(playerSubject);
                     ccm.Initialize(playerSubject);
-                    monsterScript.Initialize(playerSubject);
+                    monsterScript.Initialize(playerSubject, 30, 2, 15, 15);
                     MonsterSkillAddComponent(go, typeData);
+
+                    var attack = go.AddComponent<MonsterMelee>();
+                    attack.damage = 3f;
+                    attack.attackableLayer = LayerMask.GetMask("Player");
+
                     return go; 
                 },
                 (x) => 
@@ -161,11 +167,10 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 // 근접 공격
                 case 300001:
-                    //monster.AddComponent<근접공격 스크립트>();
+
                     break;
                 // 원거리 공격
                 case 300002:
-                    //monster.AddComponent<원거리 스크립트>();
                     break;
             }
         }

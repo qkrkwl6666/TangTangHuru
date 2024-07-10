@@ -10,6 +10,8 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
+    private SpriteRenderer spriteRenderer;
+
     public void Initialize(PlayerSubject playerSubject)
     {
         this.playerSubject = playerSubject;
@@ -26,6 +28,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
     private void Awake()
     {
         monster = GetComponent<Monster>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         monster.OnDamaged += NuckBack;
     }
 
@@ -34,6 +37,9 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         if (playerTransform == null) return;
 
         Vector2 dir = (playerTransform.position - gameObject.transform.position).normalized;
+
+        spriteRenderer.flipX = dir.x < 0 ? true : false;
+
         transform.Translate(dir * Time.deltaTime * monster.moveSpeed);
     }
 

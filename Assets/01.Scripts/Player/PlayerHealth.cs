@@ -33,4 +33,10 @@ public class PlayerHealth : LivingEntity
             Die();
         }
     }
+
+    public override void Die()
+    {
+        dead = true;
+        gameObject.SetActive(false);
+    }
 }

@@ -29,8 +29,6 @@ public class WeaponData : ScriptableObject
     private Attack attackType;
     public Attack WeaponAttackType { get { return attackType; } }
 
-
-
     [SerializeField]
     private float damage;
     public float Damage { get { return damage; } }
@@ -70,7 +68,27 @@ public class WeaponData : ScriptableObject
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } }
 
+    public int currWeaponLevel;
 
+    public WeaponData DeepCopy()
+    {
+        WeaponData newCopy = CreateInstance<WeaponData>();
+        newCopy.weaponName = weaponName;
+        newCopy.aimType = aimType;
+        newCopy.attackType = attackType;
+        newCopy.damage = damage;
+        newCopy.speed = speed;
+        newCopy.range = range;
+        newCopy.coolDown = coolDown;
+        newCopy.burstCount = burstCount;
+        newCopy.burstRate = burstRate;
+        newCopy.pierceCount = pierceCount;
+        newCopy.lifeTime = lifeTime;
+        newCopy.criticalChance = criticalChance;
+        newCopy.criticalValue = criticalValue;
+
+        return newCopy;
+    }
 
 }
 

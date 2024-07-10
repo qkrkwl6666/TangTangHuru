@@ -9,7 +9,7 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
     private PlayerSubject playerSubject;
     private Transform playerTransform;
 
-    private float exp = 0;
+    private float exp = 0; //생성시 자동세팅
 
     private float playerDistanceDifference = 3f;
 
@@ -26,6 +26,9 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
             transform.Translate(dir * speed * Time.deltaTime);
             if (Vector2.Distance(transform.position, playerTransform.position) <= 1)
             {
+                // 플레이어 레벨업 메서드 호출
+                playerSubject.GetPlayerExp.EarnExp(exp);
+
                 pool.Release(gameObject);
                 return;
             } 
@@ -43,7 +46,6 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
 
         if (Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
         {
-            // 플레이어 레벨업 메서드 호출
             isTracking = true;
         }
     }
