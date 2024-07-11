@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -10,6 +11,8 @@ public class MonsterSpawnManager : MonoBehaviour
     public List<WaveData> waveDatas;
     private WaveData currentWaveData = null;
     private int waveIndex = 0;
+    public bool IsStop { get; private set; }
+    public Action OnStop;
 
     private Dictionary<int, MonsterSpawnInfo> monsterSpawnInfos = new Dictionary<int, MonsterSpawnInfo>();
 
@@ -27,11 +30,19 @@ public class MonsterSpawnManager : MonoBehaviour
         InitializeSpawnInfos();
 
         NextWave();
+
+        OnStop += () => 
+        {
+            IsStop = true;
+            SpawnBoss();
+        };
     }
 
     public void Update()
     {
         totalWaveTime += Time.deltaTime;
+
+        if(IsStop) return;
 
         if (totalWaveTime >= currentWaveData.duration)
         {
@@ -90,7 +101,11 @@ public class MonsterSpawnManager : MonoBehaviour
             Debug.Log("All Waves Completed");
             enabled = false;
         }
+    }
 
+    public void SpawnBoss()
+    {
+        monsterSpawnFactory.CreateBoss();
     }
 
 
