@@ -33,7 +33,7 @@ public class Rotate : MonoBehaviour
         if (timer > currAimer.LifeTime)
         {
             gameObject.SetActive(false);
-        }
+        } 
         else
         {
             angle += currAimer.Speed * Time.deltaTime;
@@ -41,12 +41,12 @@ public class Rotate : MonoBehaviour
 
             float x = parentTransform.position.x + Mathf.Cos(radians) * range;
             float y = parentTransform.position.y + Mathf.Sin(radians) * range;
-             
+
             Vector3 newPosition = new Vector3(x, y, 0);
             transform.position = newPosition;
 
             Vector3 direction = (transform.position - parentTransform.position).normalized;
-            transform.right = direction;  // 오브젝트가 항상 바깥을 보도록
+            transform.up = direction;  // 오브젝트가 항상 바깥을 보도록
 
             timer += Time.deltaTime;
         }

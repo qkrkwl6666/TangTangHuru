@@ -10,6 +10,7 @@ public class WeaponData : ScriptableObject
         Manual,
         Fixed,
         Spawn,
+        None,
     }
     public enum Attack
     {
