@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,10 @@ public class PlayerExp : MonoBehaviour
     public float CurrExp { get => currExp; }
 
     public float requiredExp = 1000f;
+
+    public int levelinStage = 0;
+
+    public event Action<int> OnLevelChanged;
 
     private List<float> requiredExps;
 
@@ -28,6 +33,8 @@ public class PlayerExp : MonoBehaviour
             currExp -= requiredExp;
 
             //레벨업 메소드 호출
+            levelinStage++;
+            OnLevelChanged?.Invoke(levelinStage);
         }
     }
 

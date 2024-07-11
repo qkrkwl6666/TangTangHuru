@@ -6,14 +6,13 @@ using UnityEngine.InputSystem.XR;
 public class FixedAim : MonoBehaviour, IAimer
 {
     PlayerController controller;
-    
-    float dir;
-
     public GameObject player;
     public GameObject Player { get => player; }
     public float LifeTime { get; set; }
     public float Speed { get; set; }
+    public int Count { get; set; }
 
+    private float dir;
 
     private void Awake()
     {
@@ -23,7 +22,7 @@ public class FixedAim : MonoBehaviour, IAimer
 
     public Vector3 AimDirection()
     {
-        dir = controller.joystick.InputValue.x > 0 ? 1f : -1f;
+        dir = (Count % 2) == 0 ? -1f : 1f;
 
         Vector3 aimPosition = Vector3.zero;
         aimPosition.x += dir;

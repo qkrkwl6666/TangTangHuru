@@ -53,12 +53,8 @@ public class WeaponCreator : MonoBehaviour
                 if (!weapon.activeSelf)
                 {
                     weapon.gameObject.transform.position = transform.position;
-
-                    if (weaponDataInStage.WeaponAttackType == Attack.Rotate)
-                    {
-                        weapon.GetComponent<Rotate>().angle = (360f / weaponDataInStage.BurstCount) * count;
-                    }
                     weapon.SetActive(true);
+                    weapon.GetComponent<IAimer>().Count = count;
 
                     count++;
 
@@ -67,8 +63,6 @@ public class WeaponCreator : MonoBehaviour
 
                 if (count > weaponDataInStage.BurstCount + 1)
                     break;
-
-
             }
 
             while (count < weaponDataInStage.BurstCount + 1)
@@ -116,6 +110,7 @@ public class WeaponCreator : MonoBehaviour
 
         aimer.LifeTime = weaponDataInStage.LifeTime;
         aimer.Speed = weaponDataInStage.Speed;
+        aimer.Count = count;
 
         hit = weapon.AddComponent<Hit>();
         hit.damage = weaponDataInStage.Damage;
@@ -135,13 +130,6 @@ public class WeaponCreator : MonoBehaviour
     {
         //weaponDataInStage 을 업그레이드 계수에 맞춰 갱신하는 기능추가
         weaponDataInStage.currWeaponLevel++;
-
-        //foreach(var skill in skillUpgradeData.Level2_Upgrade)
-        //{
-
-        //}
-
-
 
         foreach (var weapon in weapons)
         {

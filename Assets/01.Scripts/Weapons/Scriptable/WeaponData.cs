@@ -47,8 +47,8 @@ public class WeaponData : ScriptableObject
     public float CoolDown { get { return coolDown; } }
 
     [SerializeField]
-    private float burstCount;
-    public float BurstCount { get { return burstCount; } }
+    private int burstCount;
+    public int BurstCount { get { return burstCount; } }
     [SerializeField]
     private float burstRate;
     public float BurstRate { get {  return burstRate; } }
