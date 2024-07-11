@@ -23,6 +23,8 @@ public class PlayerController : MonoBehaviour
     Vector3 Left = new Vector3 (-1, 1, 1);
     Vector3 Right = new Vector3 (1, 1, 1);
 
+    public GameObject viewPlayer;
+
     void Start()
     {
         joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
@@ -39,11 +41,11 @@ public class PlayerController : MonoBehaviour
 
         if (joystick.InputValue.x < 0)
         {
-            spriteRenderer.flipX = true;
+            viewPlayer.transform.localScale = Left;
         }
         else if (joystick.InputValue.x > 0)
         {
-            spriteRenderer.flipX = false;
+            viewPlayer.transform.localScale = Right;
         }
     }
 }
