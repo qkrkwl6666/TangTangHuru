@@ -3,8 +3,16 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum PlayerState
+{
+    Idle,
+    Run
+}
+
 public class PlayerController : MonoBehaviour
 {
+    public PlayerState state;
+
     public float moveSpeed = 5f;
     public JoystickUI joystick;
 
@@ -24,15 +32,16 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         velocity = joystick.InputValue * moveSpeed * Time.deltaTime;
-        //rb.velocity = velocity;
 
         transform.Translate(velocity);
+        
+        state = (velocity == Vector2.zero) ? PlayerState.Idle : PlayerState.Run;
 
         if (joystick.InputValue.x < 0)
         {
             transform.localScale = Left;
         }
-        else
+        else if (joystick.InputValue.x > 0)
         {
             transform.localScale = Right;
         }

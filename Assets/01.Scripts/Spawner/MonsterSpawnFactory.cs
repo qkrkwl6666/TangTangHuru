@@ -33,28 +33,28 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.F1))
-        {
-            int index = Random.Range(0, monsters.Count);
-            var go = monsters[index];
+        // if (Input.GetKeyUp(KeyCode.F1))
+        // {
+        //     int index = Random.Range(0, monsters.Count);
+        //     var go = monsters[index];
+        // 
+        //     if (go.activeSelf)
+        //     {
+        //         go.GetComponent<Monster>().Die();
+        //     }
+        // }
 
-            if (go.activeSelf)
-            {
-                go.GetComponent<Monster>().Die();
-            }
-        }
-
-        if (Input.GetKeyUp(KeyCode.F2))
-        {
-            CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-                (DataTableManager.monster).GetMonsterData("100002"), 10, 2);
-        }
-
-        if (Input.GetKeyUp(KeyCode.F3))
-        {
-            CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-                (DataTableManager.monster).GetMonsterData("100003"),10, 3);
-        }
+        // if (Input.GetKeyUp(KeyCode.F2))
+        // {
+        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+        //         (DataTableManager.monster).GetMonsterData("100002"), 10, 2);
+        // }
+        // 
+        // if (Input.GetKeyUp(KeyCode.F3))
+        // {
+        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+        //         (DataTableManager.monster).GetMonsterData("100003"),10, 3);
+        // }
 
     }
 
