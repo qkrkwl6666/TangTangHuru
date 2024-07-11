@@ -5,9 +5,9 @@ using UnityEngine;
 
 public interface IBossSkill
 {
-    public float Duration { get; }
-    public bool IsActive { get; } 
-    public float ElapsedTime { get; }
+    public int SkillCount { get; set; }
+    public bool IsChange { get; set;  } 
+    public float Cooldown { get; set;  }
 
     public void Activate();
     public void DeActivate();

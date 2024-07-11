@@ -1,39 +1,106 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class BarrageSnail : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackDuration = 10f;
-    private float attackCooldown = 5f;
     private float attackScale = 0.15f;
 
-    public float Duration => throw new System.NotImplementedException();
+    // 공격 주기 시간
+    private float attackTime = 0f;
+    private float attackDuration = 0.05f;
 
-    public bool IsActive => throw new System.NotImplementedException();
+    private int currentSkillCount = 0;
+    public int SkillCount { get; set; } = 3;
+    public bool IsChange { get; set; } = false;
+    public float Cooldown { get; set; } = 5f;
 
-    public float ElapsedTime => throw new System.NotImplementedException();
+    private int currentIndex = 0;
+    private int maxIndex = 20;
 
     private void Awake()
     {
         
+        Addressables.LoadAssetAsync<GameObject>(Defines.snailBullet).Completed += InstantiateSnailBullet;
+        enabled = false;
+    }
+
+    public void InstantiateSnailBullet(AsyncOperationHandle<GameObject> op)
+    {
+        var prefab = op.Result;
+
+        pool = new ObjectPool<GameObject>
+            (() =>
+            {
+                var go = Instantiate(prefab);
+                var barrage = go.AddComponent<Barrage>();
+                barrage.SetObjectPool(pool);
+                return go;
+            },
+            (x) =>
+            {
+                x.SetActive(true);
+            },
+            (x) =>
+            {
+                x.SetActive(false);
+            },
+            (x) => Destroy(x.gameObject),
+            true, 10, 100);
     }
 
     public void SkillUpdate(float deltaTime)
     {
-        throw new System.NotImplementedException();
+        attackTime += deltaTime;
+
+        if(attackTime >= attackDuration)
+        {
+            attackTime = 0f;
+            Attack();
+        }
+    }
+
+    public void Attack()
+    {
+        float angle = ((360 / maxIndex) * currentIndex) * Mathf.Deg2Rad;
+        Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+
+        var go = pool.Get();
+
+        go.GetComponent<Barrage>().Init(dir, transform, attackScale);
+
+        currentIndex++;
+
+        if (currentIndex >= maxIndex)
+        {
+            currentSkillCount++;
+            currentIndex = 0;
+        }
+
+        if (currentSkillCount >= SkillCount) 
+        {
+            IsChange = true;
+            return;
+        }
+            
     }
 
     public void Activate()
     {
-        throw new System.NotImplementedException();
+        enabled = true;
     }
 
     public void DeActivate()
     {
-        throw new System.NotImplementedException();
+        IsChange = false;
+        enabled = false;
+        attackTime = 0f;
+        currentSkillCount = 0;
     }
 }

@@ -40,7 +40,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
 
         spriteRenderer.flipX = dir.x < 0 ? true : false;
 
-        transform.Translate(dir * Time.deltaTime * monster.moveSpeed);
+        transform.Translate(dir * Time.deltaTime * monster.MoveSpeed);
     }
 
     public void IObserverUpdate()

@@ -14,14 +14,18 @@ public enum MonsterType
 }
 public class Monster : LivingEntity, IPlayerObserver
 {
-    public float moveSpeed = 10f;
-    public float attackDamage = 10f;
+    public float MoveSpeed { get; private set; }
 
-    private float exp = 0;
+    public float Damage { get; private set; }
+    public float Exp { get; private set; }
+    public float Gold { get; private set; }
+    public float TotalCooldown { get; private set; }
+    public float Range { get; private set; }
+
     public PlayerSubject playerSubject;
     private Transform playerTransform;
-    
-    public void Initialize(PlayerSubject playerSubject)
+   
+    public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
     {
         this.playerSubject = playerSubject;
 
@@ -31,24 +35,15 @@ public class Monster : LivingEntity, IPlayerObserver
             return;
         }
 
-        playerSubject.AddObserver(this);
-    }
+        startingHealth = monsterData.Monster_Hp;
+        MoveSpeed = monsterData.Monster_MoveSpeed;
+        Damage = monsterData.Monster_Damage;
+        Exp = monsterData.Monster_Exp;
+        Gold = monsterData.Monster_Gold;
+        TotalCooldown = monsterData.Cooldown;
+        Range = monsterData.Range;
 
-    public void Initialize(PlayerSubject playerSubject, float hp, float speed, float exp, float gold)
-    {
-        this.playerSubject = playerSubject;
-
-        if (playerSubject == null)
-        {
-            Debug.Log("MonsterExp Script PlayerSubject is Null");
-            return;
-        }
-
-        startingHealth = hp;
-        moveSpeed = speed;
-        this.exp = exp;
-
-        Debug.Log("몬스터 경험치 할당 : " + this.exp);
+        Debug.Log("몬스터 경험치 할당 : " + Exp);
 
         playerSubject.AddObserver(this);
     }
@@ -77,7 +72,7 @@ public class Monster : LivingEntity, IPlayerObserver
         }
 
         var go = ObjectPoolManager.expPool.Get();
-        go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, exp);
+        go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
         dead = true;
 
         PoolRelease();
