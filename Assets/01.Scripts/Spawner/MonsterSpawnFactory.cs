@@ -76,98 +76,90 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         GameObject monsterPrefab = op.Result;
 
-        var typeData = DataTableManager.Instance.Get<MonsterTypeTable>
-            (DataTableManager.monsterType).GetMonsterTypeData(currentMonsterData.Monster_Type.ToString());
+       if (!monsterPools.ContainsKey(currentMonsterData.Monster_ID))
+       {
+           monsterPools[currentMonsterData.Monster_ID] = new ObjectPool<GameObject>
+               ( () => 
+               {
+                   var go = Instantiate(monsterPrefab);
+                   var monsterScript = go.GetComponent<Monster>();
+                   monsterScript.SetPool(monsterPools[currentMonsterData.Monster_ID]);
+                   var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+                   var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
+                   adp.Initialize(playerSubject);
+                   ccm.Initialize(playerSubject);
+                   monsterScript.Initialize(playerSubject, currentMonsterData);
 
-        int typeId = typeData.Type_Id;
-        
-        if (!monsterPools.ContainsKey(typeId))
-        {
-            monsterPools[typeId] = new ObjectPool<GameObject>
-                ( () => 
-                {
-                    var go = Instantiate(monsterPrefab);
-                    var monsterScript = go.GetComponent<Monster>();
-                    monsterScript.SetPool(monsterPools[typeId]);
-                    var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
-                    var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
-                    adp.Initialize(playerSubject);
-                    ccm.Initialize(playerSubject);
-                    monsterScript.Initialize(playerSubject);
-                    MonsterSkillAddComponent(go, typeData);
-                    return go; 
-                },
-                (x) => 
-                { 
-                    monsters.Add(x);
-                    x.SetActive(true);
-                },
-                (x) => 
-                {
-                    monsters.Remove(x);
-                    x.SetActive(false); 
-                } ,
-                (x) => Destroy(x.gameObject),
-                true,
-                10, 200);
-        }
+                   var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
+                   (DataTableManager.monsterSkill).GetMonsterSkillData(currentMonsterData
+                        .Monster_Skill_Id.ToString());
 
-        switch (spawnType)
-        {
-            // 랜덤 생성
-            case 1:
-                for (int i = 0; i < spawnCount; i++)
-                {
-                    var monster = monsterPools[typeId].Get();
-                    monster.transform.position = RandomPosition(defaultDistance);
-                    monster.transform.rotation = Quaternion.identity;
-                }
-                break;
-            // 직선 생성
-            case 2:
-                var lineList = LinePosition(RandomPosition(lineSpawnDistance), spawnCount, 0f);
+                   MonsterSkillAddComponent(go, skillData);
 
-                for (int i = 0; i < spawnCount; i++)
-                {
-                    var monster = monsterPools[typeId].Get();
-                    monster.transform.position = lineList[i];
-                    monster.transform.rotation = Quaternion.identity;
-                }
-                break;
-            // 원 생성
-            case 3:
-                for (int i = 0; i < spawnCount; i++)
-                {
-                    var monster = monsterPools[typeId].Get();
-                    monster.transform.position = CirclePosition(spawnCount, i);
-                    monster.transform.rotation = Quaternion.identity;
-                }
-                break;
-        }
+                   return go; 
+               },
+               (x) => 
+               { 
+                   monsters.Add(x);
+                   x.SetActive(true);
+               },
+               (x) => 
+               {
+                   monsters.Remove(x);
+                   x.SetActive(false); 
+               } ,
+               (x) => Destroy(x.gameObject),
+               true,
+               10, 200);
+       }
+       
+       switch (spawnType)
+       {
+           // 랜덤 생성
+           case 1:
+               for (int i = 0; i < spawnCount; i++)
+               {
+                   var monster = monsterPools[currentMonsterData.Monster_ID].Get();
+                   monster.transform.position = RandomPosition(defaultDistance);
+                   monster.transform.rotation = Quaternion.identity;
+               }
+               break;
+           // 직선 생성
+           case 2:
+               var lineList = LinePosition(RandomPosition(lineSpawnDistance), spawnCount, 0f);
+       
+               for (int i = 0; i < spawnCount; i++)
+               {
+                   var monster = monsterPools[currentMonsterData.Monster_ID].Get();
+                   monster.transform.position = lineList[i];
+                   monster.transform.rotation = Quaternion.identity;
+               }
+               break;
+           // 원 생성
+           case 3:
+               for (int i = 0; i < spawnCount; i++)
+               {
+                   var monster = monsterPools[currentMonsterData.Monster_ID].Get();
+                   monster.transform.position = CirclePosition(spawnCount, i);
+                   monster.transform.rotation = Quaternion.identity;
+               }
+               break;
+       }
 
     }
 
-    public void MonsterSkillAddComponent(GameObject monster , MonsterTypeData typeData)
+    // Todo : 몬스터 테이블 수정 
+    public void MonsterSkillAddComponent(GameObject monster , MonsterSkillData skillData)
     {
-        var list = typeData.GetSkillDatas();
-        for (int i = 0; i < list.Count; i++)
+        switch (skillData.Skill_Id)
         {
-            if (list[i] == -1) break;
+            // 스킬 추가 
+            case 300001:
+                // ex : monster.AddComponent<근접공격 스크립트>();
+                break;
+            case 300002:
 
-            var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
-                (DataTableManager.monsterSkill).GetMonsterSkillData(list[i].ToString());
-
-            switch (skillData.Skill_Id)
-            {
-                // 근접 공격
-                case 300001:
-                    //monster.AddComponent<근접공격 스크립트>();
-                    break;
-                // 원거리 공격
-                case 300002:
-                    //monster.AddComponent<원거리 스크립트>();
-                    break;
-            }
+                break;
         }
     }
 
