@@ -10,7 +10,7 @@ public class Barrage : MonoBehaviour
 
     private Transform bossTransform;
     private Vector2 dir = Vector2.zero;
-    private float speed = 3f;
+    private float speed = 10f;
     private float circleScale = 1f;
 
     private float disableDuration = 8f;

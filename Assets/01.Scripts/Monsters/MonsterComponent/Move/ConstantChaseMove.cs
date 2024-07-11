@@ -34,7 +34,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         if (playerTransform == null) return;
 
         Vector2 dir = (playerTransform.position - gameObject.transform.position).normalized;
-        transform.Translate(dir * Time.deltaTime * monster.moveSpeed);
+        transform.Translate(dir * Time.deltaTime * monster.MoveSpeed);
     }
 
     public void IObserverUpdate()

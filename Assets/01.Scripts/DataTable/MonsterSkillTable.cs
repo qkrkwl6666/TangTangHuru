@@ -8,10 +8,10 @@ using TextAsset = UnityEngine.TextAsset;
 public class MonsterSkillData
 {
     public int Skill_Id { get; set; }
-    public float Cooldown { get; set; }
-    public float Duration { get; set; }
-    public float Speed { get; set; }
-    public string Desc { get; set; }
+    public string Skill_Prefab { get; set; }
+    public float Skill_Rate { get; set; }
+    public int Skill_Count { get; set; }
+    public float Damage_Factor { get; set; }
 }
 
 public class MonsterSkillTable : DataTable

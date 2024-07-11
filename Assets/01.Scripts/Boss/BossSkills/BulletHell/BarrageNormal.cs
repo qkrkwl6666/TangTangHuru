@@ -14,16 +14,18 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     private float attackScale = 0.1f;
     private float time = 0f;
 
-    public float Duration => throw new System.NotImplementedException();
-
-    public bool IsActive => throw new System.NotImplementedException();
-
-    public float ElapsedTime => throw new System.NotImplementedException();
+    public int currentSkillCount = 0;
+    public int SkillCount { get; set; } = 5;
+    public bool IsChange { get; set; } = false;
+    public float Cooldown { get; set; } = 5f;
 
     private void Awake()
     {
         Addressables.LoadAssetAsync<GameObject>(Defines.normalBullet).Completed += InstantiateNormalBullet;
+
+        enabled = false;
     }
+
     public void InstantiateNormalBullet(AsyncOperationHandle<GameObject> op)
     {
         var prefab = op.Result;
@@ -49,6 +51,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     }
     public void SkillUpdate(float deltaTime)
     {
+        
         time += deltaTime;
 
         if (time >= attackCooldown)
@@ -59,13 +62,24 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     }
 
     public void Attack()
-    { 
+    {
+        currentSkillCount++;
+        Debug.Log(currentSkillCount);
+
         for (int i = 0; i < attackCount; i++) 
         {
             CirlcePosition(i);
         }
+
+        if (currentSkillCount + 1 > SkillCount)
+        {
+            IsChange = true;
+            return;
+        }
+
     }
 
+    // Todo : 이름 변경 하기
     public void CirlcePosition(int index)
     {
         float angle = ((360 / attackCount) * index) * Mathf.Deg2Rad;
@@ -77,11 +91,14 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
     public void Activate()
     {
-        throw new System.NotImplementedException();
+        enabled = true;
     }
 
     public void DeActivate()
     {
-        throw new System.NotImplementedException();
+        time = 0f;
+        enabled = false;
+        currentSkillCount = 0;
+        IsChange = false;
     }
 }
