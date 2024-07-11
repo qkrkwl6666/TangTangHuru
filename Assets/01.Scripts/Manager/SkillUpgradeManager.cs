@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
 {
+    public GameObject levelUpMenu;
+
     private PlayerSubject playerSubject;
     private PlayerExp playerExp;
+    
 
     void Start()
     {
@@ -25,6 +28,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
     {
         Debug.Log("Player level changed to: " + newLevel);
         // 레벨 변경에 따른 로직 처리
+        levelUpMenu.SetActive(true);
     }
 
     public void IObserverUpdate()
