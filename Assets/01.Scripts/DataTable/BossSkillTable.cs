@@ -12,11 +12,19 @@ public class BossSkillData
     public int BossSkill_Id { get; set; }
     public string Preafab_Id { get; set; }
     public float Damage_Factor { get; set; }
-    public float Skill_Count { get; set; }
+    public int Skill_Count { get; set; }
+    public float Skill_Rate { get; set; }
 }
 public class BossSkillTable : DataTable
 {
     public Dictionary<string, BossSkillData> bossSkillTable { get; private set; } = new();
+
+    public BossSkillData Get(string name)
+    {
+        if(!bossSkillTable.ContainsKey(name)) return null;
+
+        return bossSkillTable[name];
+    }
 
     public override void Load(string name)
     {

@@ -15,6 +15,7 @@ public class LivingEntity : MonoBehaviour, IDamagable
 
     protected virtual void OnEnable()
     {
+        // Todo : 활성화 주기랑 startingHealth 초기화 안 맞을 가능성 있음
         dead = false;
         health = startingHealth;
     }

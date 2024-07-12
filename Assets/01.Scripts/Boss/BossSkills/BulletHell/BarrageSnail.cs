@@ -19,14 +19,14 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     private int currentSkillCount = 0;
     public int SkillCount { get; set; } = 3;
     public bool IsChange { get; set; } = false;
-    public float Cooldown { get; set; } = 5f;
+    public float SkillRate { get; set; } = 5f;
+    public float DamageFactor { get; set; } = 0f;
 
     private int currentIndex = 0;
     private int maxIndex = 20;
 
     private void Awake()
     {
-        
         Addressables.LoadAssetAsync<GameObject>(Defines.snailBullet).Completed += InstantiateSnailBullet;
         enabled = false;
     }

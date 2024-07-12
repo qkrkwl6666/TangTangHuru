@@ -6,8 +6,9 @@ using UnityEngine;
 public interface IBossSkill
 {
     public int SkillCount { get; set; }
-    public bool IsChange { get; set;  } 
-    public float Cooldown { get; set;  }
+    public bool IsChange { get; set; } 
+    public float SkillRate { get; set; }
+    public float DamageFactor { get; set; }
 
     public void Activate();
     public void DeActivate();

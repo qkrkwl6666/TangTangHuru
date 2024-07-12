@@ -11,9 +11,13 @@ public class BossData
 {
     public int Boss_Id { get; set; }
     public string Boss_Prefab { get; set; }
+    public int Boss_Hp { get; set; }
+    public float Boss_Damage { get; set; }
+    public float Boss_MoveSpeed { get; set; }
+    public float Boss_Cooldown { get; set; }
 
-    public int Skill1_Id { get;  set; }
-    public float Skill1_Probability { get;  set; }
+    public int Skill1_Id { get; set; }
+    public float Skill1_Probability { get; set; }
     public int Skill2_Id { get; set; }
     public float Skill2_Probability { get; set; }
     public int Skill3_Id { get; set; }
@@ -22,6 +26,19 @@ public class BossData
     public float Skill4_Probability { get; set; }
     public int Skill5_Id { get; set; }
     public float Skill5_Probability { get; set; }
+
+    public List<(int, float)> GetBossSkillId()
+    {
+        List<(int, float)> skills = new ();
+
+        skills.Add((Skill1_Id, Skill1_Probability));
+        skills.Add((Skill2_Id, Skill2_Probability));
+        skills.Add((Skill3_Id, Skill3_Probability));
+        skills.Add((Skill4_Id, Skill4_Probability));
+        skills.Add((Skill5_Id, Skill5_Probability));
+
+        return skills;
+    }
 }
 
 public class BossTable : DataTable
