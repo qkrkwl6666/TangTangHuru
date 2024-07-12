@@ -13,26 +13,8 @@ public class Hit : MonoBehaviour
     public float criticalChance;
     public float criticalValue;
 
-    public float attackRate = 0.1f;
-
     private float totalDamage;
 
-    private bool attackable = true;
-    private float timer = 0f;
-
-    private void Update()
-    {
-        if(timer > attackRate)
-        {
-            attackable = true;
-            timer = 0f;
-        }
-        else
-        {
-            timer += Time.deltaTime;
-        }
-
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {

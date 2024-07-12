@@ -11,7 +11,6 @@ public class WeaponFadeInOut : MonoBehaviour
     public float fadeInDuration = 0.3f;
     public float fadeOutDuration = 0.5f;
 
-    float lifeTime = 0f;
     float timer = 0f;
 
     bool fadingIn = true;

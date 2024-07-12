@@ -51,7 +51,6 @@ public class WeaponCreator : MonoBehaviour
     {
         while (gameObject.activeSelf)
         {
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
 
             var count = 1;
 
@@ -65,7 +64,10 @@ public class WeaponCreator : MonoBehaviour
 
                     count++;
 
-                    yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                    if(weaponDataInStage.BurstRate > 0f)
+                    {
+                        yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                    }
                 }
 
                 if (count > weaponDataInStage.BurstCount + 1)
@@ -76,8 +78,13 @@ public class WeaponCreator : MonoBehaviour
             {
                 CreateWeapon(count);
                 count++;
-                yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                if (weaponDataInStage.BurstRate > 0f)
+                {
+                    yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                }
             }
+
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
         }
     }
 
@@ -113,8 +120,8 @@ public class WeaponCreator : MonoBehaviour
                 weapon.AddComponent<Shoot>();
                 break;
             case Attack.Rotate:
-                weapon.AddComponent<Rotate>();
-                weapon.GetComponent<Rotate>().angle = (360f / weaponDataInStage.BurstCount) * count;
+                var script = weapon.AddComponent<Rotate>();
+                script.angle = (360f / weaponDataInStage.BurstCount) * count;
                 break;
         }
 
