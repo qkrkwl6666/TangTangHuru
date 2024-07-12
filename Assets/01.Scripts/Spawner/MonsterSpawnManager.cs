@@ -105,6 +105,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
     public void SpawnBoss()
     {
+        monsterSpawnFactory.MonsterAllDead();
         monsterSpawnFactory.CreateBoss();
     }
 

@@ -10,8 +10,9 @@ using TextAsset = UnityEngine.TextAsset;
 public class BossSkillData
 {
     public int BossSkill_Id { get; set; }
-    public float Duration { get; set; }
-    public float CoolDown { get; set; }
+    public string Preafab_Id { get; set; }
+    public float Damage_Factor { get; set; }
+    public float Skill_Count { get; set; }
 }
 public class BossSkillTable : DataTable
 {

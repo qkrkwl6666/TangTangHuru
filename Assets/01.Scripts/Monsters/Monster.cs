@@ -24,7 +24,13 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public PlayerSubject playerSubject;
     private Transform playerTransform;
-   
+
+    public void Initialize(PlayerSubject playerSubject)
+    {
+        this.playerSubject = playerSubject;
+    }
+
+
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
     {
         this.playerSubject = playerSubject;
@@ -43,7 +49,7 @@ public class Monster : LivingEntity, IPlayerObserver
         TotalCooldown = monsterData.Cooldown;
         Range = monsterData.Range;
 
-        Debug.Log("몬스터 경험치 할당 : " + Exp);
+        //Debug.Log("몬스터 경험치 할당 : " + Exp);
 
         playerSubject.AddObserver(this);
     }

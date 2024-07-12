@@ -26,7 +26,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
 
     private void HandleLevelChanged(int newLevel)
     {
-        Debug.Log("Player level changed to: " + newLevel);
+        //Debug.Log("Player level changed to: " + newLevel);
         // 레벨 변경에 따른 로직 처리
         levelUpMenu.SetActive(true);
     }

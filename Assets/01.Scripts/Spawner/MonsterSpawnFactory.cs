@@ -88,7 +88,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                    ccm.Initialize(playerSubject);
                    monsterScript.Initialize(playerSubject, currentMonsterData);
 
-
                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
                    (DataTableManager.monsterSkill).GetMonsterSkillData(currentMonsterData
                         .Monster_Skill_Id.ToString());
@@ -161,10 +160,24 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         }
     }
 
+    public void MonsterAllDead()
+    {
+
+        foreach(var monster in monsters)
+        {
+            monster.SetActive(false);
+        }
+
+        monsters.Clear();
+    }
+
     public void CreateBoss()
     {
         Addressables.InstantiateAsync("Boss", RandomPosition(playerTransform, 5f), 
-            Quaternion.identity);
+            Quaternion.identity).Completed += (x) => 
+            {
+                x.Result.GetComponent<Monster>().Initialize(playerSubject);
+            };
     }
 
     public static Vector2 RandomPosition(Transform playerTransform, float distance)

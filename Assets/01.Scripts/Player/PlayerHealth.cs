@@ -22,11 +22,10 @@ public class PlayerHealth : LivingEntity
     public override void OnDamage(float damage)
     {
 
-        Debug.Log("아야! hp : " + health);
+        //Debug.Log("아야! hp : " + health);
 
         health -= damage;
         hpBar.value -= damage;
-
 
         if (health <= 0 && !dead)
         {

@@ -11,7 +11,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
     private float attackCooldown = 3f;
     private float attackCount = 20;
-    private float attackScale = 0.1f;
+    private float attackScale = 0.2f;
     private float time = 0f;
 
     public int currentSkillCount = 0;
@@ -85,6 +85,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         float angle = ((360 / attackCount) * index) * Mathf.Deg2Rad;
 
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        if (pool == null) return;
         var go = pool.Get();
         go.GetComponent<Barrage>().Init(CirclePos, transform, attackScale);
     }

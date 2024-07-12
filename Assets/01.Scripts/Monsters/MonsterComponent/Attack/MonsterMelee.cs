@@ -29,7 +29,6 @@ public class MonsterMelee : MonoBehaviour
         {
             timer += Time.deltaTime;
         }
-
     }
 
     private void OnCollisionEnter2D(Collision2D other)
