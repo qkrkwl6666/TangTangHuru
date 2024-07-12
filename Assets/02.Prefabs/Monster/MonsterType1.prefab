@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1512447716956666911}
   - component: {fileID: 4849698414785222713}
   - component: {fileID: 4135806915195034619}
+  - component: {fileID: 3711932252667006129}
   - component: {fileID: 2332183553792109822}
   - component: {fileID: 2824829795872882280}
   - component: {fileID: 7761381679430453478}
@@ -102,8 +103,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 50
-  moveSpeed: 2
-  attackDamage: 5
   playerSubject: {fileID: 0}
 --- !u!114 &4135806915195034619
 MonoBehaviour:
@@ -117,6 +116,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3711932252667006129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204445384709943040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d99e1423c409c95469579b07b092e8c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackableLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  damage: 5
+  pierceCount: 0
+  criticalChance: 0
+  criticalValue: 0
+  attackRate: 0.1
 --- !u!50 &2332183553792109822
 Rigidbody2D:
   serializedVersion: 4

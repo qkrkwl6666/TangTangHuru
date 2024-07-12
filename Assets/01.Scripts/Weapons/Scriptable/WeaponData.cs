@@ -10,7 +10,7 @@ public class WeaponData : ScriptableObject
         Manual,
         Fixed,
         Spawn,
-        None,
+        Player,
     }
     public enum Attack
     {
@@ -68,8 +68,6 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } }
-
-    public int currWeaponLevel;
 
     public WeaponData DeepCopy()
     {

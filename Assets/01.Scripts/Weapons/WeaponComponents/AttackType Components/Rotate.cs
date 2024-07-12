@@ -7,7 +7,7 @@ public class Rotate : MonoBehaviour
     public float angle = 0f;
 
     float timer = 0f;
-    float range = 1.5f;
+    float range = 2.5f;
 
     IAimer currAimer;
     Transform parentTransform;

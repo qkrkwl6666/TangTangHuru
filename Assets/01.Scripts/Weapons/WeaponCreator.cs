@@ -15,6 +15,8 @@ public class WeaponCreator : MonoBehaviour
 
     private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
 
+    private int currWeaponLevel = 1;
+
     IAimer aimer;
     Hit hit;
 
@@ -23,6 +25,11 @@ public class WeaponCreator : MonoBehaviour
     private IEnumerator SpawnCoroutine;
 
     private void Start()
+    {
+
+    }
+
+    private void OnEnable()
     {
         weaponDataInStage = weaponDataRef.DeepCopy();
 
@@ -91,6 +98,9 @@ public class WeaponCreator : MonoBehaviour
             case Aim.Manual:
                 aimer = weapon.AddComponent<ManualAim>();
                 break;
+            case Aim.Player:
+                aimer = weapon.AddComponent<PlayerAim>();
+                break;
         }
 
 
@@ -125,12 +135,27 @@ public class WeaponCreator : MonoBehaviour
         weapons.Add(weapon);
     }
 
-
-    public void UpgradeWeapon(int num)
+    public void UpgradeWeaponData()
     {
-        //weaponDataInStage 을 업그레이드 계수에 맞춰 갱신하는 기능추가
-        weaponDataInStage.currWeaponLevel++;
+        currWeaponLevel++;
 
+        switch(currWeaponLevel)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+        }
+    }
+
+    public void UpdataWeaponData()
+    {
         foreach (var weapon in weapons)
         {
             var aimer = weapon.GetComponent<IAimer>();

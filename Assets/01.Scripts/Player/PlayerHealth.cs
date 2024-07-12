@@ -7,6 +7,10 @@ public class PlayerHealth : LivingEntity
 {
     public Slider hpBar;
 
+    private float invincibleTime = 0.1f;
+    private float timer = 0f;
+    private bool isInvincible = false;
+
     void Start()
     {
         hpBar.maxValue = startingHealth;
@@ -16,13 +20,21 @@ public class PlayerHealth : LivingEntity
     // Update is called once per frame
     void Update()
     {
+        if(isInvincible)
+        {
+            timer += Time.deltaTime;
 
+            if(timer > invincibleTime)
+            {
+                isInvincible = false;
+            }
+        }
     }
 
     public override void OnDamage(float damage)
     {
-
-        Debug.Log("¾Æ¾ß! hp : " + health);
+        if (dead || isInvincible)
+            return;
 
         health -= damage;
         hpBar.value -= damage;
@@ -32,11 +44,7 @@ public class PlayerHealth : LivingEntity
         {
             Die();
         }
-    }
 
-    public override void Die()
-    {
-        dead = true;
-        gameObject.SetActive(false);
+        isInvincible = true;
     }
 }

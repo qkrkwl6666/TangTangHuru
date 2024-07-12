@@ -1,14 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
-public class Hit : MonoBehaviour
+public class MonsterBaseAttack : MonoBehaviour
 {
     public LayerMask attackableLayer;
 
     public float damage;
-    public float pierceCount;
 
     public float criticalChance;
     public float criticalValue;
@@ -22,7 +20,7 @@ public class Hit : MonoBehaviour
 
     private void Update()
     {
-        if(timer > attackRate)
+        if (timer > attackRate)
         {
             attackable = true;
             timer = 0f;
@@ -34,18 +32,20 @@ public class Hit : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionStay2D(Collision2D other)
     {
+        if (!attackable)
+            return;
+
         OnAttack(other);
     }
 
-    public void OnAttack(Collider2D other)
+    public void OnAttack(Collision2D other)
     {
-        var pierce = pierceCount;
 
         if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            if(Random.Range(0, 100) <= criticalChance)
+            if (Random.Range(0, 100) <= criticalChance)
             {
                 totalDamage = damage * criticalValue;
             }
@@ -56,15 +56,7 @@ public class Hit : MonoBehaviour
 
             other.gameObject.GetComponent<IDamagable>().OnDamage(totalDamage);
 
-            if(pierce > 0)
-            {
-                pierce--;
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+            attackable = false;
         }
     }
-
 }

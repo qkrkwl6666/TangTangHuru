@@ -31,7 +31,7 @@ public class Melee : MonoBehaviour
         {
             prevDir = dir;
         }
-        dir *= 1.3f;
+        dir *= 2f;
     }
 
     private void OnDisable()
