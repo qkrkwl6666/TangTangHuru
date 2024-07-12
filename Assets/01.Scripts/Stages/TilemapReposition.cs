@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TilemapReposition : MonoBehaviour, IPlayerObserver
 {
-    public float TileSize = 20f;
+    public float TileSize = 25f;
 
     private PlayerSubject playerSubject;
     private Transform playerTransform;

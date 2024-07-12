@@ -11,22 +11,19 @@ public class WeaponCreator : MonoBehaviour
 
     public GameObject weaponPrefab;
     public WeaponData weaponDataRef; //무기 원본 데이터
-    public SkillUpgradeData skillUpgradeData; //스테이지내 업그레이드 데이터
-
     private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
 
-    private int currWeaponLevel = 1;
-
-    IAimer aimer;
-    Hit hit;
-
     private List<GameObject> weapons = new List<GameObject>();
+    private IAimer aimer;
+    private Hit hit;
+
+    private WeaponUpgrader weaponUpgrader;
 
     private IEnumerator SpawnCoroutine;
 
     private void Start()
     {
-
+        weaponUpgrader = GetComponent<WeaponUpgrader>();
     }
 
     private void OnEnable()
@@ -142,36 +139,5 @@ public class WeaponCreator : MonoBehaviour
         weapons.Add(weapon);
     }
 
-    public void UpgradeWeaponData()
-    {
-        currWeaponLevel++;
 
-        switch(currWeaponLevel)
-        {
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-        }
-    }
-
-    public void UpdataWeaponData()
-    {
-        foreach (var weapon in weapons)
-        {
-            var aimer = weapon.GetComponent<IAimer>();
-            aimer.Speed = weaponDataInStage.Speed;
-            aimer.LifeTime = weaponDataInStage.LifeTime;
-            hit.damage = weaponDataInStage.Damage;
-            hit.pierceCount = weaponDataInStage.PierceCount;
-            hit.criticalChance = weaponDataInStage.CriticalChance;
-            hit.criticalValue = weaponDataInStage.CriticalValue;
-        }
-    }
 }

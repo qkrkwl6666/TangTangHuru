@@ -9,20 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5344fbd0282aeb47a4846184d112edd, type: 3}
-  m_Name: FixedSword 5
+  m_Script: {fileID: 11500000, guid: 9c51e5267d28e5a44a731f1441c7bf73, type: 3}
+  m_Name: Skill Upgrade Data
   m_EditorClassIdentifier: 
   weaponName: AutoGun
-  aimType: 2
-  attackType: 0
-  damage: 5
-  speed: 30
-  range: 1
-  coolDown: 1
-  burstCount: 3
-  burstRate: 1
-  pierceCount: 0
-  lifeTime: 3
-  criticalChance: 0
-  criticalValue: 0
-  currWeaponLevel: 0
+  level2_Upgrade: 00000000
+  level2_Value:
+  - 1.2
+  level3_Upgrade: 0300000004000000
+  level3_Value:
+  - 0.9
+  - 1
+  level4_Upgrade: 05000000
+  level4_Value:
+  - 3
