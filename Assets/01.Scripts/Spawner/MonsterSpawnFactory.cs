@@ -1,8 +1,5 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -13,8 +10,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    private float defaultDistance = 30f;
-    private float circleSpawnDistance = 20f;
+    private float defaultDistance = 10f;
+    private float circleSpawnDistance = 7f;
     private float lineSpawnDistance = 5f;
 
     private MonsterData currentMonsterData = null;
@@ -91,7 +88,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                    ccm.Initialize(playerSubject);
                    monsterScript.Initialize(playerSubject, currentMonsterData);
 
-
                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
                    (DataTableManager.monsterSkill).GetMonsterSkillData(currentMonsterData
                         .Monster_Skill_Id.ToString());
@@ -164,11 +160,31 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         }
     }
 
+    public void MonsterAllDead()
+    {
+
+        foreach(var monster in monsters)
+        {
+            monster.SetActive(false);
+        }
+
+        monsters.Clear();
+    }
+
+    public void CreateBoss()
+    {
+        Addressables.InstantiateAsync("Boss", RandomPosition(playerTransform, 5f), 
+            Quaternion.identity).Completed += (x) => 
+            {
+                x.Result.GetComponent<Monster>().Initialize(playerSubject);
+            };
+    }
+
     public static Vector2 RandomPosition(Transform playerTransform, float distance)
     {
         if (playerTransform == null) return Vector2.zero;
 
-        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
+        Vector2 randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
         Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
         return spawnPos;
@@ -178,7 +194,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (playerTransform == null) return Vector2.zero;
 
-        Vector2 randomCirclePos = Random.insideUnitCircle.normalized * distance;
+        Vector2 randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
         Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
         return spawnPos;

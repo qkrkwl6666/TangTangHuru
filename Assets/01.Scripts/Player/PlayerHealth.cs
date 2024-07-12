@@ -39,7 +39,6 @@ public class PlayerHealth : LivingEntity
         health -= damage;
         hpBar.value -= damage;
 
-
         if (health <= 0 && !dead)
         {
             Die();

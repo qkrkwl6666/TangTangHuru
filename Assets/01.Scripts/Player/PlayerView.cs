@@ -1,6 +1,4 @@
 using Spine.Unity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerView : MonoBehaviour
@@ -9,10 +7,11 @@ public class PlayerView : MonoBehaviour
     public AnimationReferenceAsset idle, run, hit, attack;
     public PlayerController controller;
     public PlayerState previousState = PlayerState.Idle;
+    private bool isAttacking = false;
 
     private void Awake()
     {
-        //PlayAnimation(idle, true);
+
     }
 
     private void Update()
@@ -21,26 +20,51 @@ public class PlayerView : MonoBehaviour
 
         PlayerState currentState = controller.state;
 
-        if (currentState != previousState)
+        if (currentState != previousState || Input.GetKeyDown(KeyCode.Space)) 
         {
-            PlayAnimation();
+            PlayAnimation(currentState);
         }
     }
 
-    public void PlayAnimation()
+    public void PlayAnimation(PlayerState currentState)
     {
-        PlayerState currentState = controller.state;
         previousState = currentState;
+
         switch (currentState)
         {
             case PlayerState.Idle:
                 skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
-                
+                if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
+                {
+                    PlayAttackAnimation();
+                }
                 break;
             case PlayerState.Run:
                 skeletonAnimation.AnimationState.SetAnimation(0, run, true);
+                if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
+                {
+                    PlayAttackAnimation();
+                }
                 break;
         }
     }
 
+    private void PlayAttackAnimation()
+    {
+        if (!isAttacking)
+        {
+            isAttacking = true;
+            var attackTrack = skeletonAnimation.AnimationState.SetAnimation(1, attack, false);
+            attackTrack.Complete += OnAttackComplete; // 공격 애니메이션이 끝나면 호출될 이벤트
+
+            // 공격 애니메이션과 달리기 애니메이션을 부드럽게 블렌딩
+            attackTrack.MixDuration = 0.1f;
+        }
+    }
+
+    private void OnAttackComplete(Spine.TrackEntry trackEntry)
+    {
+        isAttacking = false;
+        skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0.1f); // 공격 애니메이션 트랙을 비웁니다
+    }
 }

@@ -8,8 +8,8 @@ public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
     private PlayerSubject playerSubject;
     private Transform playerTransfrom;
 
-    private float playerDistanceDifference = 50f;
-    private float defaultDistance = 30f;
+    private float playerDistanceDifference = 15;
+    private float defaultDistance = 10f;
     private float duration = 1f;
     private float time = 0f;
 
