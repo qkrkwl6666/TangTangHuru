@@ -29,6 +29,11 @@ public class Barrage : MonoBehaviour
         OnAttack(collision);
     }
 
+    public void SetDamage(float damage)
+    {
+        this.damage = damage; 
+    }
+
     public void OnAttack(Collider2D other)
     {
         if(other.gameObject.tag == "Player")

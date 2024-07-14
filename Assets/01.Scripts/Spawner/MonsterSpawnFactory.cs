@@ -178,14 +178,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             (x) => 
             {
                 var monsterGo = x.Result;
-                monsterGo.GetComponent<Boss>().SetBossSkill(bossData);
+                monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
             };
-
-        //Addressables.InstantiateAsync("Boss", RandomPosition(playerTransform, 5f), 
-        //    Quaternion.identity).Completed += (x) => 
-        //    {
-        //        x.Result.GetComponent<Monster>().Initialize(playerSubject);
-        //    };
     }
 
     public static Vector2 RandomPosition(Transform playerTransform, float distance)

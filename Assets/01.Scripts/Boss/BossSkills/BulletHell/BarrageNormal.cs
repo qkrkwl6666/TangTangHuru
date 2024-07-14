@@ -14,6 +14,8 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     private float time = 0f;
 
     public int currentSkillCount = 0;
+
+    public float Damage { get; set; }
     public int SkillCount { get; set; } = 5;
     public bool IsChange { get; set; } = false;
     public float SkillRate { get; set; } = 5f;
@@ -24,7 +26,13 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
     }
 
-    public void Initialize(BossSkillData bossSkillData)
+    public void SetCountScale(int count, float scale)
+    {
+        attackCount = count;
+        attackScale = scale;
+    }
+
+    public void Initialize(BossSkillData bossSkillData, float damage)
     {
         Addressables.LoadAssetAsync<GameObject>(bossSkillData.Preafab_Id)
             .Completed += InstantiateNormalBullet;
@@ -32,7 +40,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         SkillCount = bossSkillData.Skill_Count;
         DamageFactor = bossSkillData.Damage_Factor;
         SkillRate = bossSkillData.Skill_Rate;
-
+        Damage = damage * DamageFactor;
         enabled = false;
     }
 
@@ -47,6 +55,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
                 var go = Instantiate(prefab);
                 var barrage = go.AddComponent<Barrage>();
                 barrage.SetObjectPool(pool);
+                barrage.SetDamage(Damage);
                 return go;
             },
             (x) =>

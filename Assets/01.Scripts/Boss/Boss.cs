@@ -41,22 +41,21 @@ public class Boss : LivingEntity, IPlayerObserver
             {
                 case 500001:
                     {
-                        var bossSkill = gameObject.AddComponent<BarrageNormal>();
-                        var bossSkillData = DataTableManager.Instance.Get<BossSkillTable>
-                            (DataTableManager.bossSkill).Get(skill.Item1.ToString());
-                        bossSkill.Initialize(bossSkillData);
-                        skills.Add((bossSkill, skill.Item2));
-                        totalProbability += skill.Item2;
+                        var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
+
+                        bn.SetCountScale(20, 0.2f);
                     }
                     break;
                 case 500002:
                     {
-                        //var bossSkill = gameObject.AddComponent<BarrageNormal>();
-                        //var bossSkillData = DataTableManager.Instance.Get<BossSkillTable>
-                        //    (DataTableManager.bossSkill).Get(skill.Item1.ToString());
-                        //bossSkill.Initialize(bossSkillData);
-                        //skills.Add((bossSkill, skill.Item2));
-                        //totalProbability += skill.Item2;
+                        var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
+
+                        bn.SetCountScale(40, 0.15f);
+                    }
+                    break;
+                case 500003:
+                    {
+                        var bn = AddSkill<BarrageSnail>(skill.Item1, skill.Item2);
                     }
                     break;
             }
@@ -65,15 +64,16 @@ public class Boss : LivingEntity, IPlayerObserver
         SelectSkill();
     }
 
-    private void Awake()
+    private T AddSkill<T>(int skillId, float probability) where T : Component, IBossSkill
     {
-        //var skill = gameObject.AddComponent<BarrageNormal>();
-        //skills.Add((skill, 50f));
-        //totalProbability += 50f;
-        //
-        //var skill2 = gameObject.AddComponent<BarrageSnail>();
-        //skills.Add((skill2, 50f));
-        //totalProbability += 50f;
+        var bossSkill = gameObject.AddComponent<T>();
+        var bossSkillData = DataTableManager.Instance.Get<BossSkillTable>
+            (DataTableManager.bossSkill).Get(skillId.ToString());
+        bossSkill.Initialize(bossSkillData, damage);
+        skills.Add((bossSkill, probability));
+        totalProbability += probability;
+
+        return bossSkill;
     }
 
     public void Update()
@@ -81,13 +81,18 @@ public class Boss : LivingEntity, IPlayerObserver
         if (currentSkill.IsChange)
         {
             time += Time.deltaTime;
+            
             if (time >= cooldown)
             {
                 SelectSkill();
             }
         }
+        else
+        {
+            currentSkill?.SkillUpdate(Time.deltaTime);
+        }
 
-        currentSkill?.SkillUpdate(Time.deltaTime);
+        
     }
 
     public void SelectSkill()
