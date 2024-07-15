@@ -49,6 +49,7 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private int burstCount;
     public int BurstCount { get { return burstCount; } }
+
     [SerializeField]
     private float burstRate;
     public float BurstRate { get {  return burstRate; } }
@@ -69,7 +70,7 @@ public class WeaponData : ScriptableObject
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } }
 
-    public WeaponData DeepCopy()
+    public WeaponData DeepCopy() 
     {
         WeaponData newCopy = CreateInstance<WeaponData>();
         newCopy.weaponName = weaponName;

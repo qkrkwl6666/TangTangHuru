@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Melee : MonoBehaviour
 {
+    public float range = 2f;
+
     float timer = 0f;
 
     IAimer currAimer;
@@ -31,7 +33,7 @@ public class Melee : MonoBehaviour
         {
             prevDir = dir;
         }
-        dir *= 2f;
+        dir *= range;
     }
 
     private void OnDisable()

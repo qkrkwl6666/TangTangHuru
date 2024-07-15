@@ -2,7 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 using static WeaponData;
+
+
+public class DataInStage
+{
+    public int currWeaponLevel;
+    public float damage;
+    public float speed;
+    public float range;
+    public float coolDown;
+    public int burstCount;
+    public float burstRate;
+    public int pierceCount;
+    public float lifeTime;
+    public float criticalChance;
+    public float criticalValue;
+}
 
 public class WeaponCreator : MonoBehaviour
 {
@@ -11,7 +28,8 @@ public class WeaponCreator : MonoBehaviour
 
     public GameObject weaponPrefab;
     public WeaponData weaponDataRef; //무기 원본 데이터
-    private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
+    
+    //private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
 
     private List<GameObject> weapons = new List<GameObject>();
     private IAimer aimer;
@@ -21,6 +39,29 @@ public class WeaponCreator : MonoBehaviour
 
     private IEnumerator SpawnCoroutine;
 
+    public DataInStage dataInStage;
+
+    public bool levelUpReady = false;
+
+
+    private void Awake()
+    {
+        dataInStage = new DataInStage();
+
+        dataInStage.currWeaponLevel = 1;
+        dataInStage.damage = weaponDataRef.Damage;
+        dataInStage.speed = weaponDataRef.Speed;
+        dataInStage.range = weaponDataRef.Range;
+        dataInStage.coolDown = weaponDataRef.CoolDown;
+        dataInStage.burstCount = weaponDataRef.BurstCount;
+        dataInStage.burstRate = weaponDataRef.BurstRate;
+        dataInStage.pierceCount = weaponDataRef.PierceCount;
+        dataInStage.lifeTime = weaponDataRef.LifeTime;
+        dataInStage.criticalChance = weaponDataRef.CriticalChance;
+        dataInStage.criticalValue = weaponDataRef.CriticalValue;
+    }
+
+
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
@@ -28,15 +69,8 @@ public class WeaponCreator : MonoBehaviour
 
     private void OnEnable()
     {
-        weaponDataInStage = weaponDataRef.DeepCopy();
-
         SpawnCoroutine = Spawn();
         StartCoroutine(SpawnCoroutine);
-    }
-
-    void Update() 
-    {
-
     }
 
     private void OnDisable()
@@ -46,10 +80,17 @@ public class WeaponCreator : MonoBehaviour
 
     IEnumerator Spawn()
     {
+        yield return new WaitForSeconds(1.5f);
+
         while (gameObject.activeSelf)
         {
-
             var count = 1;
+
+            if (levelUpReady)
+            {
+                LevelUp();
+                levelUpReady = false;
+            }
 
             foreach (var weapon in weapons)
             {
@@ -58,30 +99,30 @@ public class WeaponCreator : MonoBehaviour
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
                     weapon.GetComponent<IAimer>().Count = count;
-
                     count++;
 
-                    if(weaponDataInStage.BurstRate > 0f)
+
+                    if (dataInStage.burstRate > 0f)
                     {
-                        yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                        yield return new WaitForSeconds(dataInStage.burstRate);
                     }
                 }
 
-                if (count > weaponDataInStage.BurstCount + 1)
+                if (count > dataInStage.burstCount + 1)
                     break;
             }
 
-            while (count < weaponDataInStage.BurstCount + 1)
+            while (count < dataInStage.burstCount + 1)
             {
                 CreateWeapon(count);
                 count++;
-                if (weaponDataInStage.BurstRate > 0f)
+                if (dataInStage.burstRate > 0f)
                 {
-                    yield return new WaitForSeconds(weaponDataInStage.BurstRate);
+                    yield return new WaitForSeconds(dataInStage.burstRate);
                 }
             }
 
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
+            yield return new WaitForSeconds(dataInStage.coolDown);
         }
     }
 
@@ -91,7 +132,7 @@ public class WeaponCreator : MonoBehaviour
         var weapon = Instantiate(weaponPrefab, transform.position, Quaternion.identity);
         weapon.SetActive(false);
 
-        switch (weaponDataInStage.WeaponAimType)
+        switch (weaponDataRef.WeaponAimType)
         {
             case Aim.Auto:
                 aimer = weapon.AddComponent<AutoAim>();
@@ -108,36 +149,76 @@ public class WeaponCreator : MonoBehaviour
         }
 
 
-        switch (weaponDataInStage.WeaponAttackType)
+        switch (weaponDataRef.WeaponAttackType)
         {
             case Attack.Melee:
-                weapon.AddComponent<Melee>();
+                var melee = weapon.AddComponent<Melee>();
+                melee.range = dataInStage.range;
                 break;
             case Attack.Shoot:
                 weapon.AddComponent<Shoot>();
                 break;
             case Attack.Rotate:
-                var script = weapon.AddComponent<Rotate>();
-                script.angle = (360f / weaponDataInStage.BurstCount) * count;
+                var rotate = weapon.AddComponent<Rotate>();
+                rotate.angle = (360f / dataInStage.burstCount) * count;
                 break;
         }
 
-        aimer.LifeTime = weaponDataInStage.LifeTime;
-        aimer.Speed = weaponDataInStage.Speed;
+        aimer.LifeTime = dataInStage.lifeTime;
+        aimer.Speed = dataInStage.speed;
         aimer.Count = count;
 
         hit = weapon.AddComponent<Hit>();
-        hit.damage = weaponDataInStage.Damage;
-        hit.pierceCount = weaponDataInStage.PierceCount;
-        hit.criticalChance = weaponDataInStage.CriticalChance;
-        hit.criticalValue = weaponDataInStage.CriticalValue;
+        hit.damage = dataInStage.damage;
+        hit.pierceCount = dataInStage.pierceCount;
+        hit.criticalChance = dataInStage.criticalChance;
+        hit.criticalValue = dataInStage.criticalValue;
         hit.attackableLayer = LayerMask.GetMask("Enemy");
 
-        weapon.transform.localScale *= weaponDataInStage.Range;
+        weapon.transform.localScale = new Vector3 (dataInStage.range, dataInStage.range);
 
         weapon.SetActive(true);
         weapons.Add(weapon);
     }
 
+
+
+    public void LevelUpReady()
+    {
+        levelUpReady = true;
+    }
+
+    public void LevelUp()
+    {
+        dataInStage = weaponUpgrader.UpgradeWeaponData(dataInStage);
+
+        int count = 1;
+
+        foreach (var weapon in weapons)
+        {
+            weapon.transform.localScale = new Vector3(dataInStage.range, dataInStage.range);
+            aimer = weapon.GetComponent<IAimer>();
+            aimer.LifeTime = dataInStage.lifeTime;
+            aimer.Speed = dataInStage.speed;
+
+            hit = weapon.GetComponent<Hit>();
+            hit.damage = dataInStage.damage;
+            hit.pierceCount = dataInStage.pierceCount;
+            hit.criticalChance = dataInStage.criticalChance;
+            hit.criticalValue = dataInStage.criticalValue;
+
+            switch (weaponDataRef.WeaponAttackType)
+            {
+                case Attack.Melee:
+                    break;
+                case Attack.Shoot:
+                    break;
+                case Attack.Rotate:
+                    weapon.GetComponent<Rotate>().angle = (360f / dataInStage.burstCount) * count;
+                    count++;
+                    break;
+            }
+        }
+    }
 
 }

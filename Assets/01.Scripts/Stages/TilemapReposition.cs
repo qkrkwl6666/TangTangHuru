@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class TilemapReposition : MonoBehaviour, IPlayerObserver
 {
-    public float TileSize = 25f;
+    public float TileSize = 30f;
 
     private PlayerSubject playerSubject;
     private Transform playerTransform;
@@ -31,7 +31,7 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
             float dirX = diffX > 0 ? 1 : -1;
             float dirY = diffY > 0 ? 1 : -1;
 
-            if(Mathf.Abs(diffX) > Mathf.Abs(diffY))
+            if (Mathf.Abs(diffX) > Mathf.Abs(diffY))
             {
                 transform.Translate(Vector3.right * dirX * TileSize * 2);
             }
@@ -39,6 +39,7 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
             {
                 transform.Translate(Vector3.up * dirY * TileSize * 2);
             }
+
 
         }
     }
