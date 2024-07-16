@@ -18,14 +18,16 @@ public class TreasureSpawnManager : MonoBehaviour
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
             .GetTreasure(GameManager.Instance.CurrentStage.ToString());
+
+        for (int i = 0; i < treasuresCount; i++)
+        {
+            SetTreasure(treasureData);
+        }
     }
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            SetTreasure(treasureData);
-        }
+
     }
 
     public Vector2 SetPosition(Treasure tr)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemDetection : MonoBehaviour
 {
@@ -28,11 +29,17 @@ public class ItemDetection : MonoBehaviour
     private List<Treasure> treasureList;
     private Treasure targetTreasure = null;
 
+    public GameObject treasurePrefab;
+    private Slider treasureBar;
+
     private void Awake()
     {
         hitCollider = new Collider[maxCollider];
         treasureList = GameObject.FindWithTag("TreasureSpawnManager")
             .GetComponent<TreasureSpawnManager>().treasures;
+
+        treasureBar = Instantiate(treasurePrefab, transform).GetComponentInChildren<Slider>();
+        treasureBar.gameObject.SetActive(false);
     }
 
     public void Update()
@@ -88,6 +95,7 @@ public class ItemDetection : MonoBehaviour
             if (Vector2.Distance(treasure.transform.position, transform.position) <= treasureRadius)
             {
                 opening = true;
+                treasureBar.gameObject.SetActive(true);
                 targetTreasure = treasure;
                 break;
             }
@@ -101,8 +109,12 @@ public class ItemDetection : MonoBehaviour
 
         treasureTime += Time.deltaTime;
 
+        float value = Mathf.InverseLerp(0f, treasureDuration, treasureTime);
+        treasureBar.value = value;
+
         if(treasureTime >= treasureDuration)
         {
+            treasureBar.gameObject.SetActive(false);
             treasureTime = 0f;
             opening = false;
             targetTreasure.UseItem();
