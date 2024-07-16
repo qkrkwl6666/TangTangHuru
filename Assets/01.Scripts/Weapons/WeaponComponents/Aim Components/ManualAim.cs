@@ -19,7 +19,17 @@ public class ManualAim : MonoBehaviour, IAimer
 
     public Vector3 AimDirection()
     {
-        Vector3 aimPosition = (Vector3)controller.joystick.InputValue;
+        Vector3 aimPosition = Vector3.zero;
+
+        if (controller.joystick.InputValue == Vector2.zero)
+        {
+            aimPosition = (Vector3)controller.joystick.prevVector;
+        }
+        else
+        {
+            aimPosition = (Vector3)controller.joystick.InputValue;
+
+        }
         return aimPosition.normalized;
     }
 }

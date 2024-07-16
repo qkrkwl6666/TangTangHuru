@@ -22,7 +22,9 @@ public class JoystickUI : MonoBehaviour
     { 
         get { return GetComponent<RectTransform>().anchoredPosition; }
         set { GetComponent<RectTransform>().anchoredPosition = value; }
-    } 
+    }
+
+    public Vector2 prevVector = Vector2.zero;
 
     private bool isStarted = false;
 
@@ -127,6 +129,7 @@ public class JoystickUI : MonoBehaviour
         {
             CurrentAnchoredPosition = defaultAnchoredPosition;
             circleRine.anchoredPosition = defaultAnchoredPosition;
+            prevVector = InputValue;
             InputValue = Vector2.zero;
             isStarted = false;
         }

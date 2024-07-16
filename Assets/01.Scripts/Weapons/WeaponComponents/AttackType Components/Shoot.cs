@@ -23,10 +23,10 @@ public class Shoot : MonoBehaviour
     {
         var pos = currAimer.AimDirection();
 
-        if (pos == Vector3.zero)
-        {
-            pos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
-        }
+        //if (pos == Vector3.zero)
+        //{
+        //    pos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        //}
 
         transform.up = pos;
         rb.velocity = pos * currAimer.Speed;

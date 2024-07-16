@@ -133,7 +133,9 @@ public class WeaponCreator : MonoBehaviour
                 weapon.AddComponent<Fixed>();
                 break;
             case Attack.Spread:
-                weapon.AddComponent<Spread>();
+                var spread = weapon.AddComponent<Spread>();
+                spread.totalProjectiles = weaponDataInStage.BurstCount;
+                spread.projectileIndex = count;
                 break;
 
         }

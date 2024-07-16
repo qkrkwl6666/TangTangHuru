@@ -79,14 +79,14 @@ public class WeaponUpgrader : MonoBehaviour
                 break;
 
             case EvolutionType.Replace:
-                firstWeaponCreator.enabled = false;
-                finalWeaponCreator.enabled = true;
 
-                foreach(var weapon in weapons)
+                finalWeaponCreator.enabled = true;
+                foreach (var weapon in weapons)
                 {
                     Destroy(weapon);
                 }
                 weapons.Clear();
+                firstWeaponCreator.enabled = false;
                 break;
         }
     }
