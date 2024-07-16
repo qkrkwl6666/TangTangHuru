@@ -15,10 +15,27 @@ public class Hit : MonoBehaviour
 
     private float totalDamage;
 
+    public bool one_Off = false;
+    private HashSet<Collider2D> contactedEnemies;
+
+    void Start()
+    {
+        contactedEnemies = new HashSet<Collider2D>();
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        OnAttack(other);
+        if (!one_Off)
+        {
+            OnAttack(other);
+            return;
+        }
+
+        if (!contactedEnemies.Contains(other))
+        {
+            OnAttack(other);
+            contactedEnemies.Add(other);
+        }
     }
 
     public void OnAttack(Collider2D other)

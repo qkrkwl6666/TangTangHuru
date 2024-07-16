@@ -141,6 +141,7 @@ public class JoystickUI : MonoBehaviour
 
     public void OnKeyBoard(InputAction.CallbackContext context)
     {
+        prevVector = InputValue;
         CurrentAnchoredPosition = defaultAnchoredPosition;
         CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
@@ -149,8 +150,10 @@ public class JoystickUI : MonoBehaviour
 
     public void OnGamePad(InputAction.CallbackContext context)
     {
+        prevVector = InputValue;
         CurrentAnchoredPosition = defaultAnchoredPosition;
         CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
+
     }
 }

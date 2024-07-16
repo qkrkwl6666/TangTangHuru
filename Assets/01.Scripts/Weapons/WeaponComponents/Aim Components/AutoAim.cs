@@ -18,7 +18,12 @@ public class AutoAim : RangeDetecter, IAimer
 
     public Vector3 AimDirection()
     {
-        return GetNearest().normalized;
+        var getPos = GetNearest().normalized;
+        if (getPos == Vector3.zero)
+        {
+            getPos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        }
+        return getPos;
     }
 
 }
