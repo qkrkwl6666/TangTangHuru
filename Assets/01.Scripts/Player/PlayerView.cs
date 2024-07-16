@@ -14,6 +14,21 @@ public class PlayerView : MonoBehaviour
 
     }
 
+    private void Start()
+    {
+        Spine.Skin characterSkin = skeletonAnimation.skeleton.Data.FindSkin("body_001");
+        Spine.Skin weaponSkin = skeletonAnimation.skeleton.Data.FindSkin("weapon_005");
+
+        Spine.Skin combinedSkin = new Spine.Skin("character_with_weapon");
+
+        combinedSkin.AddSkin(weaponSkin);
+        combinedSkin.AddSkin(characterSkin);
+
+        // 결합된 스킨 적용
+        skeletonAnimation.Skeleton.SetSkin(combinedSkin);
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+    }
+
     private void Update()
     {
         if (skeletonAnimation == null || controller == null) return;

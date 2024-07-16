@@ -182,22 +182,87 @@ PrefabInstance:
       propertyPath: viewPlayer
       value: 
       objectReference: {fileID: 268887020}
+    - target: {fileID: 4887374340640414192, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: run
+      value: 
+      objectReference: {fileID: 11400000, guid: d9f9a85ecc97d724abf43ef7ba01f524, type: 2}
+    - target: {fileID: 4887374340640414192, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: idle
+      value: 
+      objectReference: {fileID: 11400000, guid: ccbd77fb35fe6474ab03b4ca109ac555, type: 2}
+    - target: {fileID: 4887374340640414192, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 11400000, guid: d7490a4de69751245bf424469a73215d, type: 2}
+    - target: {fileID: 4887374340640414192, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: skeletonAnimation
+      value: 
+      objectReference: {fileID: 268887021}
+    - target: {fileID: 6862021125319412034, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6862021125319412034, guid: 484a650620e1b23458342855d277f538, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac0461dd7f0a7d746921edb8748cbe33, type: 2}
     - target: {fileID: 9156099610414448677, guid: 484a650620e1b23458342855d277f538, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2919875187480334238, guid: 484a650620e1b23458342855d277f538, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8187426889824283788, guid: 484a650620e1b23458342855d277f538, type: 3}
     - {fileID: 6342208944981456194, guid: 484a650620e1b23458342855d277f538, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8884532700332877789, guid: 484a650620e1b23458342855d277f538, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 268887021}
   m_SourcePrefab: {fileID: 100100000, guid: 484a650620e1b23458342855d277f538, type: 3}
 --- !u!1 &268887020 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8884532700332877789, guid: 484a650620e1b23458342855d277f538, type: 3}
   m_PrefabInstance: {fileID: 53973791}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &268887021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 268887020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonDataAsset: {fileID: 11400000, guid: d97931001b26c76479cb9874a0f94b57, type: 2}
+  initialSkinName: body_001
+  initialFlipX: 0
+  initialFlipY: 0
+  updateWhenInvisible: 3
+  separatorSlotNames: []
+  zSpacing: 0
+  useClipping: 1
+  immutableTriangles: 0
+  pmaVertexColors: 1
+  clearStateOnDisable: 0
+  tintBlack: 0
+  singleSubmesh: 0
+  fixDrawOrder: 0
+  addNormals: 0
+  calculateTangents: 0
+  maskInteraction: 0
+  maskMaterials:
+    materialsMaskDisabled: []
+    materialsInsideMask: []
+    materialsOutsideMask: []
+  disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1
 --- !u!1 &834462508
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,7 +571,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1913833828
 Transform:
   m_ObjectHideFlags: 0
@@ -548,7 +613,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c000834fd58917046948e099a7d734fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 1
 --- !u!114 &1913833831
 MonoBehaviour:
   m_ObjectHideFlags: 0
