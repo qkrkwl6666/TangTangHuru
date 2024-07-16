@@ -84,7 +84,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public void Attack()
     {
         currentSkillCount++;
-        Debug.Log(currentSkillCount);
+        //Debug.Log(currentSkillCount);
 
         for (int i = 0; i < attackCount; i++) 
         {

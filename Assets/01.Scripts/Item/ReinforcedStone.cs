@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 강화석
-public class ReinforcedStone : IInGameItem
+public class ReinforcedStone : MonoBehaviour, IInGameItem
 {
     public int ItemId { get; set; } = 600006;
     public string Name { get; set; } = DataTableManager.Instance.Get<StringTable>
@@ -18,6 +18,6 @@ public class ReinforcedStone : IInGameItem
     public void UseItem()
     {
         // Todo : 바로 메인 인벤토리 에 강화석이 들어가야함
-        
+        Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
     }
 }

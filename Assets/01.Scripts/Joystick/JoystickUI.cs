@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class JoystickUI : MonoBehaviour
@@ -36,6 +37,10 @@ public class JoystickUI : MonoBehaviour
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
+        //ntext.action.u
+
+        //if (EventSystem.current.IsPointerOverGameObject(context)) return;
+
         switch (context.phase)
         {
             case InputActionPhase.Performed:

@@ -10,7 +10,7 @@ public class TreasureSpawnManager : MonoBehaviour
 
     private float minRadius = 150f;
     private float maxRadius = 350f;
-    private float treasuresRadius = 30f;
+    private float treasuresRadius = 50f;
 
     private TreasureData treasureData = null;
 
@@ -51,7 +51,7 @@ public class TreasureSpawnManager : MonoBehaviour
                     if (treasure == tr) continue;
 
                     if (Vector2.Distance(treasure.transform.position,
-                        tr.transform.position) <= treasuresRadius)
+                        randomPos) <= treasuresRadius)
                     {
                         isSame = false; 
                         break;
@@ -93,21 +93,35 @@ public class TreasureSpawnManager : MonoBehaviour
                         (DataTableManager.item).GetItemData(stone.id.ToString());
 
                     var treasure = treasureGo.AddComponent<Treasure>();
-                    // 장비 아이템 , 강화석 , 자석
-                    var equipStone = new EquipmentGemstone(itemData);
+                    // 장비 원석 , 강화석 , 자석
 
+                    // 장비 원석 생성
+                    Addressables.InstantiateAsync(itemData.Prefab_Id).Completed += 
+                    (x) => 
+                    {
+                        var stone = x.Result;
+                        var equip = stone.AddComponent<EquipmentGemstone>();
+                        equip.Init(itemData);
+
+                        treasure.AddItem(stone);
+                    };
+
+                    // 강화석 생성
                     int rand = Random.Range(treasureData.Min_Re_Stone, treasureData.Max_Re_Stone + 1);
 
                     for(int i = 0; i < rand; i++)
                     {
-                        var re = new ReinforcedStone();
-                        treasure.AddItem(re);
+                        Addressables.InstantiateAsync("Normal_Re_Stone").Completed +=
+                        (x) =>
+                        {
+                            var restoneGo = x.Result;
+                            var reStone = restoneGo.AddComponent<ReinforcedStone>();
+                            treasure.AddItem(restoneGo);
+                        };
                     }
 
-                    treasure.AddItem(equipStone);
-                    treasures.Add(treasure);
-
                     treasureGo.transform.position = SetPosition(treasure);
+                    treasures.Add(treasure);
                     break;
                 }
             }
