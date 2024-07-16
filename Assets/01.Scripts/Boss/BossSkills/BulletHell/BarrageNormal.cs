@@ -9,20 +9,38 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackCooldown = 3f;
-    private float attackCount = 20;
+    private float attackCount = 20; // 총알 개수
     private float attackScale = 0.2f;
     private float time = 0f;
 
     public int currentSkillCount = 0;
+
+    public float Damage { get; set; }
     public int SkillCount { get; set; } = 5;
     public bool IsChange { get; set; } = false;
-    public float Cooldown { get; set; } = 5f;
+    public float SkillRate { get; set; } = 5f;
+    public float DamageFactor { get; set; } = 1f;
 
     private void Awake()
     {
-        Addressables.LoadAssetAsync<GameObject>(Defines.normalBullet).Completed += InstantiateNormalBullet;
 
+    }
+
+    public void SetCountScale(int count, float scale)
+    {
+        attackCount = count;
+        attackScale = scale;
+    }
+
+    public void Initialize(BossSkillData bossSkillData, float damage)
+    {
+        Addressables.LoadAssetAsync<GameObject>(bossSkillData.Preafab_Id)
+            .Completed += InstantiateNormalBullet;
+
+        SkillCount = bossSkillData.Skill_Count;
+        DamageFactor = bossSkillData.Damage_Factor;
+        SkillRate = bossSkillData.Skill_Rate;
+        Damage = damage * DamageFactor;
         enabled = false;
     }
 
@@ -33,9 +51,11 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         pool = new ObjectPool<GameObject>
             (() =>
             {
+                // Todo : 데미지 적용 계수 넣어줘야함
                 var go = Instantiate(prefab);
                 var barrage = go.AddComponent<Barrage>();
                 barrage.SetObjectPool(pool);
+                barrage.SetDamage(Damage);
                 return go;
             },
             (x) =>
@@ -54,7 +74,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         
         time += deltaTime;
 
-        if (time >= attackCooldown)
+        if (time >= SkillRate)
         {
             time = 0f;
             Attack();   
@@ -64,7 +84,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public void Attack()
     {
         currentSkillCount++;
-        Debug.Log(currentSkillCount);
+        //Debug.Log(currentSkillCount);
 
         for (int i = 0; i < attackCount; i++) 
         {

@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -27,6 +26,11 @@ public class Barrage : MonoBehaviour
         if (!attackable) return;
         
         OnAttack(collision);
+    }
+
+    public void SetDamage(float damage)
+    {
+        this.damage = damage; 
     }
 
     public void OnAttack(Collider2D other)

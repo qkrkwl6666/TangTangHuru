@@ -171,12 +171,14 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         monsters.Clear();
     }
 
-    public void CreateBoss()
+    public void CreateBoss(BossData bossData)
     {
-        Addressables.InstantiateAsync("Boss", RandomPosition(playerTransform, 5f), 
-            Quaternion.identity).Completed += (x) => 
+ 
+        Addressables.InstantiateAsync(bossData.Boss_Prefab).Completed += 
+            (x) => 
             {
-                x.Result.GetComponent<Monster>().Initialize(playerSubject);
+                var monsterGo = x.Result;
+                monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
             };
     }
 

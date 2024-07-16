@@ -42,6 +42,10 @@ public class JoystickUI : MonoBehaviour
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
+        //ntext.action.u
+
+        //if (EventSystem.current.IsPointerOverGameObject(context)) return;
+
         switch (context.phase)
         {
             case InputActionPhase.Performed:
