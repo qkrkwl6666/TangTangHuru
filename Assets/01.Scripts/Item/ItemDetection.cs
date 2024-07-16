@@ -20,8 +20,10 @@ public class ItemDetection : MonoBehaviour
 
     private float followSpeed = 5f;
 
+    private InGameUI gameUI;
+
     // 보물 상자
-    private float treasureRadius = 1f; // 보물 아이템 거리
+    private float targetDistance = 1f; // 보물 아이템 거리
     private float treasureTime = 0f;
     private float treasureDuration = 3f;
     private bool opening = false;
@@ -29,8 +31,10 @@ public class ItemDetection : MonoBehaviour
     private List<Treasure> treasureList;
     private Treasure targetTreasure = null;
 
-    public GameObject treasurePrefab;
-    private Slider treasureBar;
+    // 보물 레이더
+    private float treasureDistance = 100f;
+    private float prevTreasureDistance = int.MaxValue;
+    private Treasure radarTreasure = null;
 
     private void Awake()
     {
@@ -38,15 +42,16 @@ public class ItemDetection : MonoBehaviour
         treasureList = GameObject.FindWithTag("TreasureSpawnManager")
             .GetComponent<TreasureSpawnManager>().treasures;
 
-        treasureBar = Instantiate(treasurePrefab, transform).GetComponentInChildren<Slider>();
-        treasureBar.gameObject.SetActive(false);
+        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
     public void Update()
     {
         time += Time.deltaTime;
+        prevTreasureDistance = int.MaxValue;
+        targetTreasure = null;
 
-        if(time >= duration)
+        if (time >= duration)
         {
             Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
 
@@ -92,10 +97,18 @@ public class ItemDetection : MonoBehaviour
 
         foreach(var treasure in treasureList)
         {
-            if (Vector2.Distance(treasure.transform.position, transform.position) <= treasureRadius)
+            var distacne = Vector2.Distance(treasure.transform.position, transform.position);
+
+            if(distacne <= treasureDistance && distacne <= prevTreasureDistance)
+            {
+                prevTreasureDistance = distacne;
+                radarTreasure = treasure;
+            }
+
+            if (distacne <= targetDistance)
             {
                 opening = true;
-                treasureBar.gameObject.SetActive(true);
+                gameUI.SetActiveTreasureBar(true);
                 targetTreasure = treasure;
                 break;
             }
@@ -105,21 +118,47 @@ public class ItemDetection : MonoBehaviour
             }
         }
 
-        if (!opening) return;
+        Radar();
+
+        if (!opening)
+        {
+            gameUI.SetActiveTreasureBar(false);
+            gameUI.UpdateTreasureBar(0f);
+            treasureTime = 0f;
+            return;
+        }
 
         treasureTime += Time.deltaTime;
 
         float value = Mathf.InverseLerp(0f, treasureDuration, treasureTime);
-        treasureBar.value = value;
+        //treasureBar.value = value;
+        gameUI.UpdateTreasureBar(value);
 
-        if(treasureTime >= treasureDuration)
+        if (treasureTime >= treasureDuration)
         {
-            treasureBar.gameObject.SetActive(false);
+            gameUI.SetActiveTreasureBar(false);
+            gameUI.UpdateTreasureBar(0f);
             treasureTime = 0f;
             opening = false;
             targetTreasure.UseItem();
             treasureList.Remove(targetTreasure);
             targetTreasure = null;
+            radarTreasure = null;
         }
+    }
+
+    public void Radar()
+    {
+        // 레이더  
+        if (radarTreasure == null) 
+        {
+            gameUI.UpdateRadarBar(0f);
+            return;
+        }
+
+        var distacne = Vector2.Distance(radarTreasure.transform.position, transform.position);
+        float disValue = Mathf.InverseLerp(treasureDistance, 1f, distacne);
+
+        gameUI.UpdateRadarBar(disValue);
     }
 }
