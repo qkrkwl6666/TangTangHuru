@@ -5,6 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Skill Upgrade Data", menuName = "Scriptable Object/Skill Upgrade Data", order = int.MaxValue)]
 public class SkillUpgradeData : ScriptableObject
 {
+    public enum EvolutionType
+    {
+        Add,
+        Replace,
+    }
+
     public enum SkillUp
     {
         Damage,
@@ -44,7 +50,8 @@ public class SkillUpgradeData : ScriptableObject
     private List<float> level4_Value;
     public List<float> Level4_Value { get { return level4_Value; } }
 
-
-
+    [SerializeField]
+    private EvolutionType level5_Type;
+    public EvolutionType Level5_Type { get { return level5_Type; } }
 
 }
