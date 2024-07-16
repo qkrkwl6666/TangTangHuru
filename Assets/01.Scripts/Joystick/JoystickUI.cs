@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 public class JoystickUI : MonoBehaviour
 {
+    public LayerMask uiLayerMask;   // UI 레이어 마스크
+    public LayerMask worldLayerMask; // 월드 레이어 마스크
+
     private Vector2 pos;
 
     public Vector2 InputValue { get; private set; }
@@ -45,6 +48,9 @@ public class JoystickUI : MonoBehaviour
         {
             case InputActionPhase.Performed:
                 {
+                    if (IsTouchOverUI(context.ReadValue<Vector2>()))
+                        return;
+
                     if (!isStarted)
                     {
                         isStarted = true;
@@ -63,8 +69,30 @@ public class JoystickUI : MonoBehaviour
                     break;
                 }
         }
-
     }
+
+    private bool IsTouchOverUI(Vector2 touchPosition)
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+        eventDataCurrentPosition.position = touchPosition;
+
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+        foreach (var result in results)
+        {
+            if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
+            {
+                // UI 레이어 마스크에 해당하는 오브젝트가 있음
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void UpdateJoystick(bool isStarted, Vector3 screenPosition)
     {
         if (isStarted)

@@ -29,7 +29,7 @@ public class Shoot : MonoBehaviour
         }
 
         transform.up = pos;
-        rb.velocity = pos.normalized * currAimer.Speed;
+        rb.velocity = pos * currAimer.Speed;
 
     }
 

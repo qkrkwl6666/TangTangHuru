@@ -20,7 +20,7 @@ public class PlayerView : MonoBehaviour
 
         PlayerState currentState = controller.state;
 
-        if (currentState != previousState || Input.GetKeyDown(KeyCode.Space)) 
+        if (currentState != previousState /* || Input.GetKeyDown(KeyCode.Space)*/) 
         {
             PlayAnimation(currentState);
         }
@@ -34,17 +34,17 @@ public class PlayerView : MonoBehaviour
         {
             case PlayerState.Idle:
                 skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
-                if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
-                {
-                    PlayAttackAnimation();
-                }
+                //if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
+                //{
+                //    PlayAttackAnimation();
+                //}
                 break;
             case PlayerState.Run:
                 skeletonAnimation.AnimationState.SetAnimation(0, run, true);
-                if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
-                {
-                    PlayAttackAnimation();
-                }
+                //if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
+                //{
+                //    PlayAttackAnimation();
+                //}
                 break;
         }
     }

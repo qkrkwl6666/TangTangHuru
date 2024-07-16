@@ -17,6 +17,8 @@ public class WeaponData : ScriptableObject
         Melee,
         Shoot,
         Rotate,
+        Fixed,
+        Spread,
     }
 
     [SerializeField]
@@ -24,70 +26,54 @@ public class WeaponData : ScriptableObject
     public string WeaponName { get { return weaponName; } }
 
     [SerializeField]
+    private int level;
+    public int Level { get { return level; } set { level = value; } }
+
+    [SerializeField]
     private Aim aimType;
-    public Aim WeaponAimType { get { return aimType; } }
+    public Aim WeaponAimType { get { return aimType; } set { aimType = value; } }
     [SerializeField]
     private Attack attackType;
-    public Attack WeaponAttackType { get { return attackType; } }
+    public Attack WeaponAttackType { get { return attackType; } set { attackType = value; } }
 
     [SerializeField]
     private float damage;
-    public float Damage { get { return damage; } }
+    public float Damage { get { return damage; } set { damage = value; } }
 
     [SerializeField]
     private float speed;
-    public float Speed { get { return speed; } }
+    public float Speed { get { return speed; } set { speed = value; } }
 
     [SerializeField]
     private float range;
-    public float Range { get { return range; } }
+    public float Range { get { return range; } set { range = value; } }
 
     [SerializeField]
     private float coolDown;
-    public float CoolDown { get { return coolDown; } }
+    public float CoolDown { get { return coolDown; } set { coolDown = value; } }
 
     [SerializeField]
     private int burstCount;
-    public int BurstCount { get { return burstCount; } }
+    public int BurstCount { get { return burstCount; } set { burstCount = value; } }
+
     [SerializeField]
     private float burstRate;
-    public float BurstRate { get {  return burstRate; } }
+    public float BurstRate { get {  return burstRate; } set { burstRate = value; } }
 
     [SerializeField]
     private int pierceCount;
-    public int PierceCount { get { return pierceCount; } }
+    public int PierceCount { get { return pierceCount; } set { pierceCount = value; } }
 
     [SerializeField]
     private float lifeTime;
-    public float LifeTime { get { return lifeTime; } }
+    public float LifeTime { get { return lifeTime; } set { lifeTime = value; } }
 
     [SerializeField]
     private float criticalChance;
-    public float CriticalChance { get { return criticalChance; } }
+    public float CriticalChance { get { return criticalChance; } set { criticalChance = value; } }
 
     [SerializeField]
     private float criticalValue;
-    public float CriticalValue { get { return criticalValue; } }
-
-    public WeaponData DeepCopy()
-    {
-        WeaponData newCopy = CreateInstance<WeaponData>();
-        newCopy.weaponName = weaponName;
-        newCopy.aimType = aimType;
-        newCopy.attackType = attackType;
-        newCopy.damage = damage;
-        newCopy.speed = speed;
-        newCopy.range = range;
-        newCopy.coolDown = coolDown;
-        newCopy.burstCount = burstCount;
-        newCopy.burstRate = burstRate;
-        newCopy.pierceCount = pierceCount;
-        newCopy.lifeTime = lifeTime;
-        newCopy.criticalChance = criticalChance;
-        newCopy.criticalValue = criticalValue;
-
-        return newCopy;
-    }
-
+    public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
 }
 

@@ -18,7 +18,7 @@ public class AutoAim : RangeDetecter, IAimer
 
     public Vector3 AimDirection()
     {
-        return GetNearest();
+        return GetNearest().normalized;
     }
 
 }

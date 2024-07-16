@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-
 public class Barrage : MonoBehaviour
 {
     private IObjectPool<GameObject> pool;

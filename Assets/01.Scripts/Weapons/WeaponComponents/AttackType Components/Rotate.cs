@@ -36,9 +36,8 @@ public class Rotate : MonoBehaviour
         } 
         else
         {
-            angle += currAimer.Speed * Time.deltaTime;
             float radians = angle * Mathf.Deg2Rad;
-
+             
             float x = parentTransform.position.x + Mathf.Cos(radians) * range;
             float y = parentTransform.position.y + Mathf.Sin(radians) * range;
 
@@ -48,6 +47,7 @@ public class Rotate : MonoBehaviour
             Vector3 direction = (transform.position - parentTransform.position).normalized;
             transform.up = direction;  // 오브젝트가 항상 바깥을 보도록
 
+            angle += currAimer.Speed * Time.deltaTime;
             timer += Time.deltaTime;
         }
     }

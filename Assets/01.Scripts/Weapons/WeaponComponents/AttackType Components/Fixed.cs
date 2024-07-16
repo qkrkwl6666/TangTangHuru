@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Melee : MonoBehaviour
+public class Fixed : MonoBehaviour
 {
     public float range = 2f;
 
@@ -25,21 +25,18 @@ public class Melee : MonoBehaviour
 
         dir = currAimer.AimDirection();
 
-        if(dir == Vector3.zero)
+        if (dir == Vector3.zero)
         {
-            dir = prevDir; //입력 없으면 이전 조준값 쓰기
+            dir = prevDir;
         }
         else
         {
             prevDir = dir;
         }
+        dir *= (range + 1);
 
-        if(currAimer.AimDirection() == currAimer.Player.transform.position)
-        {
-            dir = Vector3.zero; //방향이 플레이어 위치면 dir 0으로 설정. 중심에서 따라다니는 스킬
-        }
-
-        dir *= range;
+        transform.position = currAimer.Player.transform.position + dir;
+        transform.up = dir;
     }
 
     private void OnDisable()
@@ -55,8 +52,6 @@ public class Melee : MonoBehaviour
         }
         else
         {
-            transform.position = currAimer.Player.transform.position + dir;
-            transform.up = dir;
             timer += Time.deltaTime;
         }
     }
