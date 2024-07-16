@@ -52,7 +52,7 @@ public class WeaponCreator : MonoBehaviour
 
         while (gameObject.activeSelf)
         {
-            var count = 1;
+            var count = 0;
 
             if (levelUpReady)
             {
@@ -70,7 +70,7 @@ public class WeaponCreator : MonoBehaviour
                     count++;
                 }
 
-                if (count > weaponDataInStage.BurstCount + 1)
+                if (count > weaponDataInStage.BurstCount)
                     break;
 
                 if (weaponDataInStage.BurstRate > 0f)
@@ -79,7 +79,7 @@ public class WeaponCreator : MonoBehaviour
                 }
             }
 
-            while (count < weaponDataInStage.BurstCount + 1)
+            while (count < weaponDataInStage.BurstCount)
             {
                 CreateWeapon(count);
                 count++;
@@ -132,6 +132,10 @@ public class WeaponCreator : MonoBehaviour
             case Attack.Fixed:
                 weapon.AddComponent<Fixed>();
                 break;
+            case Attack.Spread:
+                weapon.AddComponent<Spread>();
+                break;
+
         }
 
         aimer.LifeTime = weaponDataInStage.LifeTime;
@@ -154,38 +158,21 @@ public class WeaponCreator : MonoBehaviour
     public void LevelUpReady()
     {
         weaponDataInStage.Level++;
-
         levelUpReady = true;
     }
 
     public void LevelUp()
     {
-        weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        if(weaponDataInStage.Level < 5)
+        {
+            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        }
+        else
+        {
+            weaponUpgrader.Evolution(weapons);
+        }
 
-        //변경형 수정중
-        //if (weaponDataInStage.Level > 4)
-        //{
-        //    foreach (var weapon in weapons)
-        //    {
-        //        switch (weaponDataInStage.WeaponAimType)
-        //        {
-        //            case Aim.Auto:
-        //                aimer = weapon.AddComponent<AutoAim>();
-        //                break;
-        //            case Aim.Fixed:
-        //                aimer = weapon.AddComponent<FixedAim>();
-        //                break;
-        //            case Aim.Manual:
-        //                aimer = weapon.AddComponent<ManualAim>();
-        //                break;
-        //            case Aim.Player:
-        //                aimer = weapon.AddComponent<PlayerAim>();
-        //                break;
-        //        }
-        //    }
-        //}
-
-        int count = 1;
+        int count = 0;
         foreach (var weapon in weapons)
         {
             weapon.transform.localScale = new Vector3(weaponDataInStage.Range, weaponDataInStage.Range);

@@ -18,6 +18,7 @@ public class WeaponData : ScriptableObject
         Shoot,
         Rotate,
         Fixed,
+        Spread,
     }
 
     [SerializeField]

@@ -33,9 +33,6 @@ public class WeaponUpgrader : MonoBehaviour
                 upgradeStats = skillUpgradeData.Level4_Upgrade;
                 upgradeValue = skillUpgradeData.Level4_Value;
                 break;
-            case 5:
-                finalWeaponCreator.enabled = true;
-                return dataInStage;
             case > 5:
                 return dataInStage;
         }
@@ -69,7 +66,28 @@ public class WeaponUpgrader : MonoBehaviour
 
             }
         }
-
         return dataInStage;
+    }
+
+
+    public void Evolution(List<GameObject> weapons)
+    {
+        switch (skillUpgradeData.Level5_Type)
+        {
+            case EvolutionType.Add:
+                finalWeaponCreator.enabled = true;
+                break;
+
+            case EvolutionType.Replace:
+                firstWeaponCreator.enabled = false;
+                finalWeaponCreator.enabled = true;
+
+                foreach(var weapon in weapons)
+                {
+                    Destroy(weapon);
+                }
+                weapons.Clear();
+                break;
+        }
     }
 }
