@@ -8,6 +8,7 @@ public class WeaponFadeInOut : MonoBehaviour
     private IAimer currAimer;
     private SpriteRenderer spriteRenderer;
 
+    public float maxAlpha = 0.7f;
     public float fadeInDuration = 0.3f;
     public float fadeOutDuration = 0.5f;
 
@@ -35,7 +36,7 @@ public class WeaponFadeInOut : MonoBehaviour
         if (fadingIn)
         {
             timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(0f, 1f, timer / fadeInDuration);
+            float alpha = Mathf.Lerp(0f, maxAlpha, timer / fadeInDuration);
             Color color = spriteRenderer.color;
             color.a = alpha;
             spriteRenderer.color = color;
@@ -43,7 +44,7 @@ public class WeaponFadeInOut : MonoBehaviour
             if (timer >= fadeInDuration)
             {
                 fadingIn = false;
-                color.a = 1f;
+                color.a = maxAlpha;
                 spriteRenderer.color = color;
             }
         }
@@ -62,7 +63,7 @@ public class WeaponFadeInOut : MonoBehaviour
         if (fadingOut)
         {
             timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, timer / fadeOutDuration);
+            float alpha = Mathf.Lerp(maxAlpha, 0f, timer / fadeOutDuration);
             Color color = spriteRenderer.color;
             color.a = alpha;
             spriteRenderer.color = color;

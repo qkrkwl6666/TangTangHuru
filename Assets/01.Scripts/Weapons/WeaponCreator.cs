@@ -27,6 +27,7 @@ public class WeaponCreator : MonoBehaviour
     private void Awake()
     {
         weaponDataInStage = Instantiate(weaponDataRef);
+        
     }
 
     private void Start()
@@ -161,31 +162,28 @@ public class WeaponCreator : MonoBehaviour
     {
         weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
 
-
-        if (weaponDataInStage.Level > 4)
-        {
-            foreach (var weapon in weapons)
-            {
-                var prevAimer = weapon.GetComponent<IAimer>();
-                Destroy((Object)prevAimer);
-
-                switch (weaponDataInStage.WeaponAimType)
-                {
-                    case Aim.Auto:
-                        aimer = weapon.AddComponent<AutoAim>();
-                        break;
-                    case Aim.Fixed:
-                        aimer = weapon.AddComponent<FixedAim>();
-                        break;
-                    case Aim.Manual:
-                        aimer = weapon.AddComponent<ManualAim>();
-                        break;
-                    case Aim.Player:
-                        aimer = weapon.AddComponent<PlayerAim>();
-                        break;
-                }
-            }
-        }
+        //변경형 수정중
+        //if (weaponDataInStage.Level > 4)
+        //{
+        //    foreach (var weapon in weapons)
+        //    {
+        //        switch (weaponDataInStage.WeaponAimType)
+        //        {
+        //            case Aim.Auto:
+        //                aimer = weapon.AddComponent<AutoAim>();
+        //                break;
+        //            case Aim.Fixed:
+        //                aimer = weapon.AddComponent<FixedAim>();
+        //                break;
+        //            case Aim.Manual:
+        //                aimer = weapon.AddComponent<ManualAim>();
+        //                break;
+        //            case Aim.Player:
+        //                aimer = weapon.AddComponent<PlayerAim>();
+        //                break;
+        //        }
+        //    }
+        //}
 
         int count = 1;
         foreach (var weapon in weapons)

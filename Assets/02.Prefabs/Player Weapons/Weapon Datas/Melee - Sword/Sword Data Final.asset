@@ -9,19 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c51e5267d28e5a44a731f1441c7bf73, type: 3}
-  m_Name: Skill Upgrade Data
+  m_Script: {fileID: 11500000, guid: f5344fbd0282aeb47a4846184d112edd, type: 3}
+  m_Name: Sword Data Final
   m_EditorClassIdentifier: 
   weaponName: Sword
-  level2_Upgrade: 0400000001000000
-  level2_Value:
-  - 2
-  - 50
-  level3_Upgrade: 0300000004000000
-  level3_Value:
-  - 0.8
-  - 3
-  level4_Upgrade: 0200000005000000
-  level4_Value:
-  - 6
-  - 99
+  level: 5
+  aimType: 4
+  attackType: 0
+  damage: 10
+  speed: 20
+  range: 3
+  coolDown: 2
+  burstCount: 3
+  burstRate: 0.8
+  pierceCount: 99
+  lifeTime: 0.5
+  criticalChance: 0
+  criticalValue: 0

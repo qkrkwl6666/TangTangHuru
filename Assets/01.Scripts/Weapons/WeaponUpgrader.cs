@@ -7,7 +7,9 @@ using static SkillUpgradeData;
 public class WeaponUpgrader : MonoBehaviour
 {
     public SkillUpgradeData skillUpgradeData;
-    public WeaponData finalWeaponData;
+    public WeaponCreator firstWeaponCreator;
+    public WeaponCreator finalWeaponCreator;
+
 
     public WeaponData UpgradeWeaponData(WeaponData dataInStage)
     {
@@ -29,10 +31,11 @@ public class WeaponUpgrader : MonoBehaviour
                 break;
             case 4:
                 upgradeStats = skillUpgradeData.Level4_Upgrade;
-                upgradeValue = skillUpgradeData.Level3_Value;
+                upgradeValue = skillUpgradeData.Level4_Value;
                 break;
             case 5:
-                return finalWeaponData;
+                finalWeaponCreator.enabled = true;
+                return dataInStage;
             case > 5:
                 return dataInStage;
         }
