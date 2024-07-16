@@ -57,9 +57,13 @@ public class ItemDetection : MonoBehaviour
 
             foreach(var item in hitCollider)
             {
-                if (item == null) continue;
-                Debug.Log(item.name);
-                followMeItems.AddLast(item.gameObject);
+                if (item == null) break;
+                
+                if(!followMeItems.Contains(item.gameObject))
+                {
+                    followMeItems.AddLast(item.gameObject);
+                }
+                    
             }
             time = 0f;
         }

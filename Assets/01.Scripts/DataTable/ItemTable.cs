@@ -14,6 +14,7 @@ public class ItemData
     public string Prefab_Id { get; set; }
     public string Name_Id { get; set; }
     public string Desc_Id { get; set; }
+    public string Texture_Id { get; set; }
 }
 
 public class ItemTable : DataTable
