@@ -54,7 +54,6 @@ public class MonsterSpawnManager : MonoBehaviour
             {
                 SpawnMonster(spawnData);
             }
-
         }
     }
 
