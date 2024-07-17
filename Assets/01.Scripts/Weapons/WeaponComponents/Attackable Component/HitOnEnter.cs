@@ -1,24 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
-public class Hit : MonoBehaviour
+public class HitOnEnter : MonoBehaviour, IAttackable
 {
-    public LayerMask attackableLayer;
-
-    public float damage;
-    public float pierceCount;
-
-    public float criticalChance;
-    public float criticalValue;
-
-    private float totalDamage;
+    public LayerMask AttackableLayer { get; set; }
+    public float Damage { get; set; }
+    public float PierceCount { get; set; }
+    public float CriticalChance { get; set; }
+    public float CriticalValue { get; set; }
+    public float TotalDamage { get; set; }
 
     public bool one_Off = false;
     private HashSet<Collider2D> contactedEnemies;
 
-    void Start()
+    private void Start()
     {
         contactedEnemies = new HashSet<Collider2D>();
     }
@@ -40,22 +36,22 @@ public class Hit : MonoBehaviour
 
     public void OnAttack(Collider2D other)
     {
-        var pierce = pierceCount;
+        var pierce = PierceCount;
 
-        if ((attackableLayer.value & (1 << other.gameObject.layer)) != 0)
+        if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            if(Random.Range(0, 100) <= criticalChance)
+            if (Random.Range(0, 100) <= CriticalChance)
             {
-                totalDamage = damage * criticalValue;
+                TotalDamage = Damage * CriticalValue;
             }
             else
             {
-                totalDamage = damage;
+                TotalDamage = Damage;
             }
 
-            other.gameObject.GetComponent<IDamagable>().OnDamage(totalDamage);
+            other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
 
-            if(pierce > 0)
+            if (pierce > 0)
             {
                 pierce--;
             }

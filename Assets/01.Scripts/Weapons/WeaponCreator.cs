@@ -15,7 +15,7 @@ public class WeaponCreator : MonoBehaviour
 
     private List<GameObject> weapons = new List<GameObject>();
     private IAimer aimer;
-    private Hit hit;
+
 
     private WeaponUpgrader weaponUpgrader;
 
@@ -137,19 +137,24 @@ public class WeaponCreator : MonoBehaviour
                 spread.totalProjectiles = weaponDataInStage.BurstCount;
                 spread.projectileIndex = count;
                 break;
-
         }
+
+        var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
+        fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
+        fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
+        fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
+
 
         aimer.LifeTime = weaponDataInStage.LifeTime;
         aimer.Speed = weaponDataInStage.Speed;
         aimer.Count = count;
 
-        hit = weapon.AddComponent<Hit>();
-        hit.damage = weaponDataInStage.Damage;
-        hit.pierceCount = weaponDataInStage.PierceCount;
-        hit.criticalChance = weaponDataInStage.CriticalChance;
-        hit.criticalValue = weaponDataInStage.CriticalValue;
-        hit.attackableLayer = LayerMask.GetMask("Enemy");
+        var hit = weapon.AddComponent<Hit>();
+        hit.Damage = weaponDataInStage.Damage;
+        hit.PierceCount = weaponDataInStage.PierceCount;
+        hit.CriticalChance = weaponDataInStage.CriticalChance;
+        hit.CriticalValue = weaponDataInStage.CriticalValue;
+        hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
         weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
 
@@ -182,11 +187,11 @@ public class WeaponCreator : MonoBehaviour
             aimer.LifeTime = weaponDataInStage.LifeTime;
             aimer.Speed = weaponDataInStage.Speed;
 
-            hit = weapon.GetComponent<Hit>();
-            hit.damage = weaponDataInStage.Damage;
-            hit.pierceCount = weaponDataInStage.PierceCount;
-            hit.criticalChance = weaponDataInStage.CriticalChance;
-            hit.criticalValue = weaponDataInStage.CriticalValue;
+            var hit = weapon.GetComponent<Hit>();
+            hit.Damage = weaponDataInStage.Damage;
+            hit.PierceCount = weaponDataInStage.PierceCount;
+            hit.CriticalChance = weaponDataInStage.CriticalChance;
+            hit.CriticalValue = weaponDataInStage.CriticalValue;
 
             switch (weaponDataRef.WeaponAttackType)
             {

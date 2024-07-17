@@ -50,7 +50,7 @@ public class GradualSizeChange : MonoBehaviour
 
     private void Grow()
     {
-        size = Mathf.Lerp(1, 3, timer / currAimer.LifeTime);
+        size = Mathf.Lerp(1, 2, timer / currAimer.LifeTime);
         gameObject.transform.localScale = baseScale * size;
     }
 }
