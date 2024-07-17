@@ -17,16 +17,23 @@ public class WeaponData : ScriptableObject
     {
         Melee,
         Shoot,
+        WaveShoot,
         Rotate,
         Fixed,
         Spread,
     }
-
     public enum AttackType
     {
         Enter,
         Stay,
         OneOff,
+    }
+    public enum Option
+    {
+        FadeInOut,
+        SizeUp,
+        SizeDown,
+        Randomizer,
     }
 
 
@@ -111,5 +118,9 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float maxAlpha;
     public float MaxAlpha { get { return maxAlpha; } set { maxAlpha = value; } }
+
+    [Header("투사체 부가옵션")]
+    public Option[] Options;
+
 }
 

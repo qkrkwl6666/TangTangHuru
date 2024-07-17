@@ -15,14 +15,18 @@ MonoBehaviour:
   weaponName: Axe
   level: 1
   aimType: 1
-  attackType: 3
+  moveType: 3
+  attackType: 2
   damage: 10
+  criticalChance: 0
+  criticalValue: 0
   speed: 20
-  range: 3
-  coolDown: 2
+  range: 2
+  lifeTime: 2
+  coolDown: 3
   burstCount: 1
   burstRate: 0.8
   pierceCount: 99
-  lifeTime: 0.5
-  criticalChance: 0
-  criticalValue: 0
+  fadeInRate: 0.1
+  fadeOutRate: 0.1
+  maxAlpha: 1

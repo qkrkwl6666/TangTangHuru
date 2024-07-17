@@ -23,11 +23,9 @@ public class WeaponCreator : MonoBehaviour
 
     public bool levelUpReady = false;
 
-
     private void Awake()
     {
         weaponDataInStage = Instantiate(weaponDataRef);
-        
     }
 
     private void Start()
@@ -52,13 +50,7 @@ public class WeaponCreator : MonoBehaviour
 
         while (gameObject.activeSelf)
         {
-            var count = 0;
-
-            if (levelUpReady)
-            {
-                LevelUp();
-                levelUpReady = false;
-            }
+            var index = 0;
 
             foreach (var weapon in weapons)
             {
@@ -66,11 +58,16 @@ public class WeaponCreator : MonoBehaviour
                 {
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
-                    weapon.GetComponent<IAimer>().Count = count;
-                    count++;
+                    var aimer = weapon.GetComponent<IAimer>();
+                    aimer.TotalCount = weaponDataInStage.BurstCount;
+                    aimer.Index = index;
+
+                    index++;
                 }
 
-                if (count > weaponDataInStage.BurstCount)
+                Options(weapon);
+
+                if (index > weaponDataInStage.BurstCount)
                     break;
 
                 if (weaponDataInStage.BurstRate > 0f)
@@ -79,16 +76,20 @@ public class WeaponCreator : MonoBehaviour
                 }
             }
 
-            while (count < weaponDataInStage.BurstCount)
+            while (index < weaponDataInStage.BurstCount)
             {
-                CreateWeapon(count);
-                count++;
+                CreateWeapon(index);
+                index++;
                 if (weaponDataInStage.BurstRate > 0f)
                 {
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
 
+            if (levelUpReady)
+            {
+                LevelUp();
+            }
             yield return new WaitForSeconds(weaponDataInStage.CoolDown);
         }
     }
@@ -125,17 +126,17 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Shoot:
                 weapon.AddComponent<Shoot>();
                 break;
+            case MoveType.WaveShoot:
+                weapon.AddComponent<WaveShoot>();
+                break;
             case MoveType.Rotate:
                 var rotate = weapon.AddComponent<Rotate>();
-                rotate.angle = (360f / weaponDataInStage.BurstCount) * count;
                 break;
             case MoveType.Fixed:
                 weapon.AddComponent<Fixed>();
                 break;
             case MoveType.Spread:
                 var spread = weapon.AddComponent<Spread>();
-                spread.totalProjectiles = weaponDataInStage.BurstCount;
-                spread.projectileIndex = count;
                 break;
         }
 
@@ -148,34 +149,38 @@ public class WeaponCreator : MonoBehaviour
                 hit = weapon.AddComponent<HitOnStay>();
                 break;
             case AttackType.OneOff:
+                hit = weapon.AddComponent<HitOneOff>();
                 break;
         }
 
         aimer.LifeTime = weaponDataInStage.LifeTime;
         aimer.Speed = weaponDataInStage.Speed;
-        aimer.Count = count;
+        aimer.TotalCount = weaponDataInStage.BurstCount;
+        aimer.Index = count;
 
         hit.Damage = weaponDataInStage.Damage;
         hit.PierceCount = weaponDataInStage.PierceCount;
         hit.CriticalChance = weaponDataInStage.CriticalChance;
         hit.CriticalValue = weaponDataInStage.CriticalValue;
+        hit.AttackRate = weaponDataInStage.BurstRate;
         hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
-        var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
-        fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
-        fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
-        fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
-
-
-
-
-
-
+        foreach (var option in weaponDataInStage.Options)
+        {
+            if (option == Option.FadeInOut)
+            {
+                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
+                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
+                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
+                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
+            }
+        }
 
         weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
-
         weapon.SetActive(true);
         weapons.Add(weapon);
+
+        Options(weapon);
     }
 
     public void LevelUpReady()
@@ -184,18 +189,16 @@ public class WeaponCreator : MonoBehaviour
         levelUpReady = true;
     }
 
-    public void LevelUp()
+    private void LevelUp()
     {
-        if(weaponDataInStage.Level < 5)
+        if(weaponDataInStage.Level >= 5)
         {
-            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
-        }
-        else
-        {
+            weaponDataInStage.Level = 5;
             weaponUpgrader.Evolution(weapons);
         }
 
-        int count = 0;
+        weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+
         foreach (var weapon in weapons)
         {
             weapon.transform.localScale = new Vector3(weaponDataInStage.Range, weaponDataInStage.Range);
@@ -208,19 +211,19 @@ public class WeaponCreator : MonoBehaviour
             hit.PierceCount = weaponDataInStage.PierceCount;
             hit.CriticalChance = weaponDataInStage.CriticalChance;
             hit.CriticalValue = weaponDataInStage.CriticalValue;
+        }
 
-            switch (weaponDataRef.WeaponMoveType)
+        levelUpReady = false;
+    }
+      
+    private void Options(GameObject weapon)
+    {
+        foreach (var option in weaponDataInStage.Options)
+        {
+            if (option == Option.Randomizer)
             {
-                case MoveType.Melee:
-                    break;
-                case MoveType.Shoot:
-                    break;
-                case MoveType.Rotate:
-                    weapon.GetComponent<Rotate>().angle = (360f / weaponDataInStage.BurstCount) * count;
-                    count++;
-                    break;
+                weapon.transform.position += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1));
             }
         }
     }
-
 }

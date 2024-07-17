@@ -8,7 +8,8 @@ public class PlayerAim : MonoBehaviour, IAimer
     public GameObject Player { get => player; }
     public float LifeTime { get; set; }
     public float Speed { get; set; }
-    public int Count { get; set; }
+    public int TotalCount { get; set; }
+    public int Index { get; set; }
 
     private void Awake()
     {

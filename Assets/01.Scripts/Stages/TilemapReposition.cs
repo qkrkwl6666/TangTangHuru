@@ -39,8 +39,6 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
             {
                 transform.Translate(Vector3.up * dirY * TileSize * 2);
             }
-
-
         }
     }
 

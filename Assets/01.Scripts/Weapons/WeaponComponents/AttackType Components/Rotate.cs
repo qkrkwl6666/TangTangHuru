@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Rotate : MonoBehaviour
 {
-    public float angle = 0f;
+    public int burstCount = 0;
+    public int index = 0;
+    private float angle = 0f;
 
     float timer = 0f;
     float range = 2.5f;
@@ -20,7 +23,7 @@ public class Rotate : MonoBehaviour
 
     private void OnEnable()
     {
-
+        angle = (360f / currAimer.TotalCount) * currAimer.Index;
     }
 
     private void OnDisable()

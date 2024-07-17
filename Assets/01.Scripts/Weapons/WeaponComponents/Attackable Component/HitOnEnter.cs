@@ -10,28 +10,12 @@ public class HitOnEnter : MonoBehaviour, IAttackable
     public float CriticalChance { get; set; }
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
+    public float AttackRate { get; set; }
 
-    public bool one_Off = false;
-    private HashSet<Collider2D> contactedEnemies;
-
-    private void Start()
-    {
-        contactedEnemies = new HashSet<Collider2D>();
-    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!one_Off)
-        {
-            OnAttack(other);
-            return;
-        }
-
-        if (!contactedEnemies.Contains(other))
-        {
-            OnAttack(other);
-            contactedEnemies.Add(other);
-        }
+        OnAttack(other);
     }
 
     public void OnAttack(Collider2D other)
@@ -49,7 +33,7 @@ public class HitOnEnter : MonoBehaviour, IAttackable
                 TotalDamage = Damage;
             }
 
-            other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
+            other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
 
             if (pierce > 0)
             {

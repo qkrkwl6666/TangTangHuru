@@ -15,7 +15,6 @@ public class Melee : MonoBehaviour
     {
         currAimer = GetComponent<IAimer>();
     }
-
     private void OnEnable()
     {
         if (currAimer == null)

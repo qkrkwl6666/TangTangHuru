@@ -5,21 +5,16 @@ using UnityEngine;
 public class Spread : MonoBehaviour
 {
     public float spreadAngle = 15f;
-    public int totalProjectiles = 0;
-    public int projectileIndex = 0;
 
     Rigidbody2D rb;
     float timer = 0f;
 
     IAimer currAimer;
-    Transform parentTransform;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         currAimer = GetComponent<IAimer>();
-        parentTransform = currAimer.Player.transform;
-
     }
 
     private void OnEnable()
@@ -35,13 +30,13 @@ public class Spread : MonoBehaviour
         float baseAngle = Mathf.Atan2(pos.y, pos.x) * Mathf.Rad2Deg;
 
         // 발사체가 2개 이상일 경우 상대 각도 계산
-        if (totalProjectiles > 1)
+        if (currAimer.TotalCount > 1)
         {
-            float totalSpreadAngle = spreadAngle * (totalProjectiles - 1);
+            float totalSpreadAngle = spreadAngle * (currAimer.TotalCount - 1);
             float startAngle = baseAngle - totalSpreadAngle / 2f;
-            float angleStep = totalSpreadAngle / (totalProjectiles - 1);
+            float angleStep = totalSpreadAngle / (currAimer.TotalCount - 1);
 
-            float currentAngle = startAngle + angleStep * projectileIndex;
+            float currentAngle = startAngle + angleStep * currAimer.Index;
             float radianAngle = currentAngle * Mathf.Deg2Rad;
             Vector2 direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
@@ -51,7 +46,6 @@ public class Spread : MonoBehaviour
         {
             rb.velocity = pos * currAimer.Speed;
         }
-
     }
 
     private void OnDisable()

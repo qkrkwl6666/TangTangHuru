@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3997497829719749152}
   - component: {fileID: 2952972841528692663}
   - component: {fileID: 935506440157227879}
-  - component: {fileID: 1397627129982784024}
   - component: {fileID: 4905470294371581555}
   - component: {fileID: 7155080940222212425}
   - component: {fileID: 1789657252044836324}
@@ -116,26 +115,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1397627129982784024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8538077808992849983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d99e1423c409c95469579b07b092e8c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackableLayer:
-    serializedVersion: 2
-    m_Bits: 128
-  damage: 5
-  pierceCount: 0
-  criticalChance: 0
-  criticalValue: 0
-  attackRate: 0.1
 --- !u!70 &4905470294371581555
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

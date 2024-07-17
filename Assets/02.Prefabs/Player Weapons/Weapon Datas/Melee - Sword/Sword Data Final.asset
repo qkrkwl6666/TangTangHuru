@@ -15,14 +15,18 @@ MonoBehaviour:
   weaponName: Sword
   level: 5
   aimType: 4
-  attackType: 0
+  moveType: 0
+  attackType: 1
   damage: 10
-  speed: 20
-  range: 3
-  coolDown: 2
-  burstCount: 3
-  burstRate: 0.8
-  pierceCount: 99
-  lifeTime: 0.5
   criticalChance: 0
   criticalValue: 0
+  speed: 20
+  range: 4
+  lifeTime: 4
+  coolDown: 4
+  burstCount: 1
+  burstRate: 0.3
+  pierceCount: 99
+  fadeInRate: 0.3
+  fadeOutRate: 0.3
+  maxAlpha: 0.7

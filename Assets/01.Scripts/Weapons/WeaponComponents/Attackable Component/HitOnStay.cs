@@ -11,25 +11,31 @@ public class HitOnStay : MonoBehaviour, IAttackable
     public float CriticalChance { get; set; }
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
+    public float AttackRate { get; set; }
 
-    public bool one_Off = false;
-    private HashSet<Collider2D> contactedEnemies;
-
-    private float attackRate = 0.3f;
     private float timer = 0f;
     private bool attackReady = true;
+    private Collider2D triggerCollider;
 
-    private void Start()
+
+    private void Awake()
     {
-        contactedEnemies = new HashSet<Collider2D>();
+        triggerCollider = GetComponent<Collider2D>();
+
+        //if (triggerCollider != null && !triggerCollider.isTrigger)
+        //{
+        //    Debug.LogError("Collider2D is not set as a trigger!");
+        //}
     }
 
     private void Update()
     {
         if (attackReady)
-            return;
+        {
+            AttackReady();
+        }
 
-        if (timer > attackRate)
+        if (timer > AttackRate)
         {
             attackReady = true;
             timer = 0f;
@@ -40,51 +46,55 @@ public class HitOnStay : MonoBehaviour, IAttackable
         }
 
     }
-    private void OnTriggerStay2D(Collider2D other)
+
+    private void AttackReady()
     {
-        if (!attackReady)
-            return;
+        //트리거에 닿아있는 모든 콜라이더 가져와 OnAttack() 함수의 매개변수로 넣는 코드
 
-        if (!one_Off)
-        {
-            OnAttack(other);
-            return;
-        }
+        Collider2D[] hitColliders = new Collider2D[100];
+        ContactFilter2D contactFilter = new ContactFilter2D();
+        int numColliders = triggerCollider.OverlapCollider(contactFilter, hitColliders);
 
-        if (!contactedEnemies.Contains(other))
+        if (numColliders > 0)
         {
-            OnAttack(other);
-            contactedEnemies.Add(other);
+            Collider2D[] collidersToAttack = new Collider2D[numColliders];
+            System.Array.Copy(hitColliders, collidersToAttack, numColliders);
+            foreach (var collider in collidersToAttack)
+            {
+                if (!collider.enabled)
+                    continue;
+
+                if ((AttackableLayer.value & (1 << collider.gameObject.layer)) != 0)
+                {
+                    OnAttack(collider);
+                }
+            }
         }
+        attackReady = false;
     }
 
     public void OnAttack(Collider2D other)
     {
         var pierce = PierceCount;
 
-        if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
+        if (Random.Range(0, 100) <= CriticalChance)
         {
-            attackReady = false;
+            TotalDamage = Damage * CriticalValue;
+        }
+        else
+        {
+            TotalDamage = Damage;
+        }
 
-            if (Random.Range(0, 100) <= CriticalChance)
-            {
-                TotalDamage = Damage * CriticalValue;
-            }
-            else
-            {
-                TotalDamage = Damage;
-            }
+        other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
 
-            other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
-
-            if (pierce > 0)
-            {
-                pierce--;
-            }
-            else
-            {
-                gameObject.SetActive(false);
-            }
+        if (pierce > 0)
+        {
+            pierce--;
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
 

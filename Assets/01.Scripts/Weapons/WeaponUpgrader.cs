@@ -33,7 +33,7 @@ public class WeaponUpgrader : MonoBehaviour
                 upgradeStats = skillUpgradeData.Level4_Upgrade;
                 upgradeValue = skillUpgradeData.Level4_Value;
                 break;
-            case > 5:
+            case 5:
                 return dataInStage;
         }
 
