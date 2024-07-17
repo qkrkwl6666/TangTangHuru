@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "Scriptable Object/Weapon Data", order = int.MaxValue)]
 public class WeaponData : ScriptableObject
 {
-    public enum Aim
+    public enum AimType
     {
         Auto,
         Manual,
@@ -13,7 +13,7 @@ public class WeaponData : ScriptableObject
         Spawn,
         Player,
     }
-    public enum Attack
+    public enum MoveType
     {
         Melee,
         Shoot,
@@ -21,6 +21,14 @@ public class WeaponData : ScriptableObject
         Fixed,
         Spread,
     }
+
+    public enum AttackType
+    {
+        Enter,
+        Stay,
+        OneOff,
+    }
+
 
     [Header("이름 및 레벨")]
     [SerializeField]
@@ -33,13 +41,18 @@ public class WeaponData : ScriptableObject
 
     [Header("조준 방식")]
     [SerializeField]
-    private Aim aimType;
-    public Aim WeaponAimType { get { return aimType; } set { aimType = value; } }
+    private AimType aimType;
+    public AimType WeaponAimType { get { return aimType; } set { aimType = value; } }
 
     [Header("공격 방식(생성 후 움직임)")]
     [SerializeField]
-    private Attack attackType;
-    public Attack WeaponAttackType { get { return attackType; } set { attackType = value; } }
+    private MoveType moveType;
+    public MoveType WeaponMoveType { get { return moveType; } set { moveType = value; } }
+
+    [Header("공격 방식(다단 히트 여부)")]
+    [SerializeField]
+    private AttackType attackType;
+    public AttackType WeaponAttckType { get { return attackType; } set { attackType = value; } }
 
     [Header("대미지 관련 수치")]
     [SerializeField]
@@ -62,6 +75,11 @@ public class WeaponData : ScriptableObject
     private float range;
     public float Range { get { return range; } set { range = value; } }
 
+    [Header("투사체 유지시간")]
+    [SerializeField]
+    private float lifeTime;
+    public float LifeTime { get { return lifeTime; } set { lifeTime = value; } }
+
     [Header("발사 대기시간")]
     [SerializeField]
     private float coolDown;
@@ -82,10 +100,6 @@ public class WeaponData : ScriptableObject
     private int pierceCount;
     public int PierceCount { get { return pierceCount; } set { pierceCount = value; } }
 
-    [Header("투사체 유지시간")]
-    [SerializeField]
-    private float lifeTime;
-    public float LifeTime { get { return lifeTime; } set { lifeTime = value; } }
 
     [Header("시각효과")]
     [SerializeField]

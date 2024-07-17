@@ -15,7 +15,7 @@ public class WeaponCreator : MonoBehaviour
 
     private List<GameObject> weapons = new List<GameObject>();
     private IAimer aimer;
-
+    private IAttackable hit;
 
     private WeaponUpgrader weaponUpgrader;
 
@@ -101,43 +101,65 @@ public class WeaponCreator : MonoBehaviour
 
         switch (weaponDataRef.WeaponAimType)
         {
-            case Aim.Auto:
+            case AimType.Auto:
                 aimer = weapon.AddComponent<AutoAim>();
                 break;
-            case Aim.Fixed:
+            case AimType.Fixed:
                 aimer = weapon.AddComponent<FixedAim>();
                 break;
-            case Aim.Manual:
+            case AimType.Manual:
                 aimer = weapon.AddComponent<ManualAim>();
                 break;
-            case Aim.Player:
+            case AimType.Player:
                 aimer = weapon.AddComponent<PlayerAim>();
                 break;
         }
 
 
-        switch (weaponDataRef.WeaponAttackType)
+        switch (weaponDataRef.WeaponMoveType)
         {
-            case Attack.Melee:
+            case MoveType.Melee:
                 var melee = weapon.AddComponent<Melee>();
                 melee.range = weaponDataInStage.Range;
                 break;
-            case Attack.Shoot:
+            case MoveType.Shoot:
                 weapon.AddComponent<Shoot>();
                 break;
-            case Attack.Rotate:
+            case MoveType.Rotate:
                 var rotate = weapon.AddComponent<Rotate>();
                 rotate.angle = (360f / weaponDataInStage.BurstCount) * count;
                 break;
-            case Attack.Fixed:
+            case MoveType.Fixed:
                 weapon.AddComponent<Fixed>();
                 break;
-            case Attack.Spread:
+            case MoveType.Spread:
                 var spread = weapon.AddComponent<Spread>();
                 spread.totalProjectiles = weaponDataInStage.BurstCount;
                 spread.projectileIndex = count;
                 break;
         }
+
+        switch (weaponDataRef.WeaponAttckType)
+        {
+            case AttackType.Enter:
+                hit = weapon.AddComponent<HitOnEnter>();
+                break;
+            case AttackType.Stay:
+                hit = weapon.AddComponent<HitOnStay>();
+                break;
+            case AttackType.OneOff:
+                break;
+        }
+
+        aimer.LifeTime = weaponDataInStage.LifeTime;
+        aimer.Speed = weaponDataInStage.Speed;
+        aimer.Count = count;
+
+        hit.Damage = weaponDataInStage.Damage;
+        hit.PierceCount = weaponDataInStage.PierceCount;
+        hit.CriticalChance = weaponDataInStage.CriticalChance;
+        hit.CriticalValue = weaponDataInStage.CriticalValue;
+        hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
         var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
         fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
@@ -145,16 +167,10 @@ public class WeaponCreator : MonoBehaviour
         fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
 
 
-        aimer.LifeTime = weaponDataInStage.LifeTime;
-        aimer.Speed = weaponDataInStage.Speed;
-        aimer.Count = count;
 
-        var hit = weapon.AddComponent<Hit>();
-        hit.Damage = weaponDataInStage.Damage;
-        hit.PierceCount = weaponDataInStage.PierceCount;
-        hit.CriticalChance = weaponDataInStage.CriticalChance;
-        hit.CriticalValue = weaponDataInStage.CriticalValue;
-        hit.AttackableLayer = LayerMask.GetMask("Enemy");
+
+
+
 
         weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
 
@@ -187,19 +203,19 @@ public class WeaponCreator : MonoBehaviour
             aimer.LifeTime = weaponDataInStage.LifeTime;
             aimer.Speed = weaponDataInStage.Speed;
 
-            var hit = weapon.GetComponent<Hit>();
+            hit = weapon.GetComponent<IAttackable>();
             hit.Damage = weaponDataInStage.Damage;
             hit.PierceCount = weaponDataInStage.PierceCount;
             hit.CriticalChance = weaponDataInStage.CriticalChance;
             hit.CriticalValue = weaponDataInStage.CriticalValue;
 
-            switch (weaponDataRef.WeaponAttackType)
+            switch (weaponDataRef.WeaponMoveType)
             {
-                case Attack.Melee:
+                case MoveType.Melee:
                     break;
-                case Attack.Shoot:
+                case MoveType.Shoot:
                     break;
-                case Attack.Rotate:
+                case MoveType.Rotate:
                     weapon.GetComponent<Rotate>().angle = (360f / weaponDataInStage.BurstCount) * count;
                     count++;
                     break;
