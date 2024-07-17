@@ -65,6 +65,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         this.spawnType = spawnType;
         this.spawnCount = spawnCount;
 
+        Debug.Log(monsterData.Monster_Prefab);
         var opHandle = Addressables.LoadAssetAsync<GameObject>(monsterData.Monster_Prefab.ToString());
 
         opHandle.Completed += MonsterInstantiate;
@@ -74,6 +75,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         GameObject monsterPrefab = op.Result;
 
+        Debug.Log(currentMonsterData.Monster_Prefab);
+
        if (!monsterPools.ContainsKey(currentMonsterData.Monster_ID))
        {
            monsterPools[currentMonsterData.Monster_ID] = new ObjectPool<GameObject>
@@ -82,11 +85,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                    var go = Instantiate(monsterPrefab);
                    var monsterScript = go.GetComponent<Monster>();
                    monsterScript.SetPool(monsterPools[currentMonsterData.Monster_ID]);
-                   var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+                   //var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
                    var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
                    adp.Initialize(playerSubject);
-                   ccm.Initialize(playerSubject);
+                   //ccm.Initialize(playerSubject);
                    monsterScript.Initialize(playerSubject, currentMonsterData);
+
+                   if (currentMonsterData.Monster_Skill_Id == -1) return go;
 
                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
                    (DataTableManager.monsterSkill).GetMonsterSkillData(currentMonsterData

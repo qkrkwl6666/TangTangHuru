@@ -20018,6 +20018,14 @@ PrefabInstance:
       propertyPath: initialFlipY
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 132132227189184169, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      propertyPath: skeletonDataAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d97931001b26c76479cb9874a0f94b57, type: 2}
+    - target: {fileID: 133934708834505869, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac0461dd7f0a7d746921edb8748cbe33, type: 2}
     - target: {fileID: 1023108088056998930, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -20090,6 +20098,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6907939958033154240, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      propertyPath: run
+      value: 
+      objectReference: {fileID: 11400000, guid: d9f9a85ecc97d724abf43ef7ba01f524, type: 2}
+    - target: {fileID: 6907939958033154240, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      propertyPath: idle
+      value: 
+      objectReference: {fileID: 11400000, guid: ccbd77fb35fe6474ab03b4ca109ac555, type: 2}
     - target: {fileID: 8283229053823117778, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -20285,7 +20301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e143154d90a11944987432185591047, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridLayout: {fileID: 1953846058}
 --- !u!1 &1982606886
 GameObject:
   m_ObjectHideFlags: 0

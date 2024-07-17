@@ -8,10 +8,7 @@ public class PlayerView : MonoBehaviour
     public AnimationReferenceAsset idle, run;
     public PlayerController controller;
     public PlayerState previousState = PlayerState.Idle;
-    private bool isAttacking = false;
-
     public string CurrentCharacterSkin { get; private set; } = string.Empty;
-
     public string CurrentWeaponSkin { get; private set; } = string.Empty;
 
     private void Awake()
