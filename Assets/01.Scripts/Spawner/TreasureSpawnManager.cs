@@ -6,6 +6,7 @@ using UnityEngine.AddressableAssets;
 public class TreasureSpawnManager : MonoBehaviour
 {
     public List<Treasure> treasures = new ();
+
     public readonly int treasuresCount = 3;
 
     private float minRadius = 150f;

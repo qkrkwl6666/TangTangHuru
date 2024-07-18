@@ -1,3 +1,4 @@
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,11 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
+        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
+
+
+        MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
+
         MonsterStateMachine.Update(Time.deltaTime);
     }
 
