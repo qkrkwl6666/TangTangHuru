@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3554261894701360327}
   - component: {fileID: 8980749293310184557}
   - component: {fileID: 3560381400044011201}
+  - component: {fileID: 312638968484984811}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -122,7 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  moveSpeed: 4
+  moveSpeed: 5
   joystick: {fileID: 0}
   velocity: {x: 0, y: 0}
   viewPlayer: {fileID: 3420277298346549491}
@@ -154,6 +155,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredExp: 500
   levelinStage: 0
+--- !u!114 &312638968484984811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1023108088056998930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e203bb5ef2b87647a443a342c72c41d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemLayerMask:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1 &1603739081648258547
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,7 +335,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ab048c291fe09034f9f4a261cfafbfd8, type: 2}
+  - {fileID: 2100000, guid: ac0461dd7f0a7d746921edb8748cbe33, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -353,7 +369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: a35b0c488e93117409cb0037ed440e79, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d97931001b26c76479cb9874a0f94b57, type: 2}
   initialSkinName: body_001
   initialFlipX: 0
   initialFlipY: 0
@@ -391,10 +407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonAnimation: {fileID: 132132227189184169}
-  idle: {fileID: 11400000, guid: 45520cb5d40ee3d4d9b8e4fc7fcc3f75, type: 2}
-  run: {fileID: 11400000, guid: a73d500671f93224fa97e1ba7847e9c7, type: 2}
-  hit: {fileID: 11400000, guid: a5517c06f224c464b8820fa861118a3c, type: 2}
-  attack: {fileID: 11400000, guid: fd7c2d7b07904b94093f86ecbf40ea27, type: 2}
+  idle: {fileID: 11400000, guid: ccbd77fb35fe6474ab03b4ca109ac555, type: 2}
+  run: {fileID: 11400000, guid: d9f9a85ecc97d724abf43ef7ba01f524, type: 2}
   controller: {fileID: 3554261894701360327}
   previousState: 0
 --- !u!1 &3683594691504671395
