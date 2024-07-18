@@ -24,7 +24,7 @@ public class RangeDetecter : MonoBehaviour
                 
             }
         }
-        return result.normalized;
+        return result;
     }
 
 }

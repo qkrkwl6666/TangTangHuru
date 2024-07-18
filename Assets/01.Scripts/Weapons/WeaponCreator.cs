@@ -56,11 +56,12 @@ public class WeaponCreator : MonoBehaviour
             {
                 if (!weapon.activeSelf)
                 {
-                    weapon.gameObject.transform.position = transform.position;
-                    weapon.SetActive(true);
                     var aimer = weapon.GetComponent<IAimer>();
                     aimer.TotalCount = weaponDataInStage.BurstCount;
                     aimer.Index = index;
+
+                    weapon.gameObject.transform.position = transform.position;
+                    weapon.SetActive(true);
 
                     index++;
                 }

@@ -15,6 +15,7 @@ public class WaveShoot : MonoBehaviour
 
     private float frequency = 15f; // 출렁이는 빈도
     private float magnitude = 2f; // 출렁이는 강도
+    private float currFrequency;
     //
 
     private void Awake()
@@ -33,7 +34,8 @@ public class WaveShoot : MonoBehaviour
         initialPosition = transform.position;
         targetPosition = initialPosition + (Vector2)pos * currAimer.Speed * currAimer.LifeTime;
 
-        frequency *= (currAimer.Index % 2) == 0 ? -1f : 1f;
+        var dir = (currAimer.Index % 2) == 0 ? -1f : 1f;
+        currFrequency = frequency * dir;
     }
 
     private void OnDisable()
@@ -55,7 +57,7 @@ public class WaveShoot : MonoBehaviour
         Vector2 linearPosition = Vector2.Lerp(initialPosition, targetPosition, progress);
 
         // 사인파로 출렁이는 효과 추가
-        float sineOffset = Mathf.Sin(timer * frequency) * magnitude;
+        float sineOffset = Mathf.Sin(timer * currFrequency) * magnitude;
         Vector2 perpendicular = Vector2.Perpendicular((targetPosition - initialPosition).normalized);
         Vector2 sineWavePosition = linearPosition + perpendicular * sineOffset;
 

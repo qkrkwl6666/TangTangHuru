@@ -42000,8 +42000,137 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2372651236109048144, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
       insertIndex: 6
       addedObject: {fileID: 203925644}
+    - targetCorrespondingSourceObject: {fileID: 2372651236109048144, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      insertIndex: 7
+      addedObject: {fileID: 1887913601}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+--- !u!1001 &1887913600
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1890906645}
+    m_Modifications:
+    - target: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: weaponPrefab
+      value: 
+      objectReference: {fileID: 3890470082822750988, guid: 9871a2cd27fc5c8479ab6e578f7365f6, type: 3}
+    - target: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: weaponDataRef
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ed6a23d0e3cc924e83e6271db98e3cc, type: 2}
+    - target: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_Name
+      value: SubWeapon Lightning
+      objectReference: {fileID: 0}
+    - target: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1887913605}
+    - targetCorrespondingSourceObject: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1887913604}
+  m_SourcePrefab: {fileID: 100100000, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+--- !u!4 &1887913601 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+  m_PrefabInstance: {fileID: 1887913600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1887913602 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+  m_PrefabInstance: {fileID: 1887913600}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1887913603 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+  m_PrefabInstance: {fileID: 1887913600}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887913602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1887913604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887913602}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 3661404853983736829, guid: d82a1f01134292e488cb4f70c59f1840, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: ffe05996ebab486429a376b6773dc778, type: 2}
+  levelUpReady: 0
+--- !u!114 &1887913605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1887913602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91759e4e7d15c694d9809e011bd504a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillUpgradeData: {fileID: 11400000, guid: 3fa77fd2e6230f643bdc2e5d59fb0950, type: 2}
+  firstWeaponCreator: {fileID: 1887913603}
+  finalWeaponCreator: {fileID: 1887913604}
 --- !u!4 &1890906645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2372651236109048144, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
