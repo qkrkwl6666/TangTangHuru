@@ -138,6 +138,9 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Spread:
                 var spread = weapon.AddComponent<Spread>();
                 break;
+            case MoveType.Laser:
+                weapon.AddComponent<LaserShoot>();
+                break;
         }
 
         switch (weaponDataRef.WeaponAttckType)

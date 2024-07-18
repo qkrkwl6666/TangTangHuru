@@ -15,6 +15,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
 
     private float timer = 0f;
     private bool attackReady = true;
+
     private Collider2D triggerCollider;
 
 
@@ -86,7 +87,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
             TotalDamage = Damage;
         }
 
-        other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
+        other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
 
         if (pierce > 0)
         {
