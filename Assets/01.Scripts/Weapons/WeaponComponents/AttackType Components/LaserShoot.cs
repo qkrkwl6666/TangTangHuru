@@ -15,7 +15,7 @@ public class LaserShoot : MonoBehaviour
     void Start()
     {
         laser = GetComponent<LineRenderer>();
-        laser.SetPosition(0, transform.position);
+        laser.SetPosition(0, currAimer.Player.transform.position);
         laser.SetPosition(1, currAimer.AimDirection() * 10f);
     }
 
