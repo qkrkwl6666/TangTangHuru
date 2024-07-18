@@ -12,6 +12,7 @@ public enum MonsterType
     RangedAttackType,
     ChargeMeleeType,
 }
+
 public class Monster : LivingEntity, IPlayerObserver
 {
     public float MoveSpeed { get; private set; }

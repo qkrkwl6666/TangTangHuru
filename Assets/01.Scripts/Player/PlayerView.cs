@@ -1,17 +1,26 @@
+using Spine;
 using Spine.Unity;
 using UnityEngine;
 
 public class PlayerView : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset idle, run, hit, attack;
+    public AnimationReferenceAsset idle, run;
     public PlayerController controller;
     public PlayerState previousState = PlayerState.Idle;
-    private bool isAttacking = false;
+    public string CurrentCharacterSkin { get; private set; } = string.Empty;
+    public string CurrentWeaponSkin { get; private set; } = string.Empty;
 
     private void Awake()
     {
+        
+    }
 
+    private void Start()
+    {
+        SetCharacterWeaponSkin(Defines.body033, Defines.weapon005);
+
+        Defines.SetSkins();
     }
 
     private void Update()
@@ -20,9 +29,21 @@ public class PlayerView : MonoBehaviour
 
         PlayerState currentState = controller.state;
 
-        if (currentState != previousState /* || Input.GetKeyDown(KeyCode.Space)*/) 
+        if (currentState != previousState) 
         {
             PlayAnimation(currentState);
+        }
+
+        if(Input.GetKeyDown(KeyCode.F1))
+        {
+            int characterIndex = Random.Range(0, Defines.characterSkins.Count);
+            int weaponIndex = Random.Range(0, Defines.weaponSkins.Count);
+
+            var characterSkin = Defines.characterSkins[characterIndex];
+            var weaponSkin = Defines.weaponSkins[weaponIndex];
+
+            SetCharacterWeaponSkin(characterSkin, weaponSkin);
+
         }
     }
 
@@ -34,37 +55,43 @@ public class PlayerView : MonoBehaviour
         {
             case PlayerState.Idle:
                 skeletonAnimation.AnimationState.SetAnimation(0, idle, true);
-                //if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
-                //{
-                //    PlayAttackAnimation();
-                //}
                 break;
             case PlayerState.Run:
                 skeletonAnimation.AnimationState.SetAnimation(0, run, true);
-                //if (Input.GetKeyDown(KeyCode.Space)) // 달리는 중 스페이스바를 누르면 공격
-                //{
-                //    PlayAttackAnimation();
-                //}
                 break;
         }
     }
 
-    private void PlayAttackAnimation()
+    public void SetCharacterWeaponSkin(string chSkin, string wepSkin)
     {
-        if (!isAttacking)
-        {
-            isAttacking = true;
-            var attackTrack = skeletonAnimation.AnimationState.SetAnimation(1, attack, false);
-            attackTrack.Complete += OnAttackComplete; // 공격 애니메이션이 끝나면 호출될 이벤트
+        CurrentCharacterSkin = chSkin;
+        CurrentWeaponSkin = wepSkin;
 
-            // 공격 애니메이션과 달리기 애니메이션을 부드럽게 블렌딩
-            attackTrack.MixDuration = 0.1f;
-        }
+        Spine.Skin characterSkin = skeletonAnimation.skeleton.Data.FindSkin(CurrentCharacterSkin);
+        Spine.Skin weaponSkin = skeletonAnimation.skeleton.Data.FindSkin(CurrentWeaponSkin);
+
+        Spine.Skin combinedSkin = new Spine.Skin("character_with_weapon");
+
+        combinedSkin.AddSkin(weaponSkin);
+        combinedSkin.AddSkin(characterSkin);
+
+        // 결합된 스킨 적용
+        skeletonAnimation.Skeleton.SetSkin(combinedSkin);
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
     }
 
-    private void OnAttackComplete(Spine.TrackEntry trackEntry)
+    public void SetCharacterSkin(string chSkin)
     {
-        isAttacking = false;
-        skeletonAnimation.AnimationState.SetEmptyAnimation(1, 0.1f); // 공격 애니메이션 트랙을 비웁니다
+        if (CurrentCharacterSkin == chSkin) return;
+
+        SetCharacterWeaponSkin(chSkin, CurrentWeaponSkin);
     }
+
+    public void SetWeaponSkin(string wepSkin)
+    {
+        if (CurrentWeaponSkin == wepSkin) return;
+
+        SetCharacterWeaponSkin(CurrentCharacterSkin, wepSkin);
+    }
+
 }
