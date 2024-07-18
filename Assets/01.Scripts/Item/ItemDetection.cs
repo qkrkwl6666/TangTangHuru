@@ -32,7 +32,7 @@ public class ItemDetection : MonoBehaviour
     private Treasure targetTreasure = null;
 
     // 보물 레이더
-    private float treasureDistance = 100f;
+    private float treasureDistance = 300f;
     private float prevTreasureDistance = int.MaxValue;
     private Treasure radarTreasure = null;
 
