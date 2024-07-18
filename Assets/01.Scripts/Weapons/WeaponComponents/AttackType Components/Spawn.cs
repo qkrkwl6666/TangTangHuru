@@ -21,15 +21,7 @@ public class Spawn : MonoBehaviour
 
         dir = currAimer.AimDirection();
 
-        if (dir == Vector3.zero)
-        {
-            dir = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
-        }
-
-        dir *= (range + 1);
-
-        transform.position = currAimer.Player.transform.position + dir;
-        transform.up = dir;
+        transform.position = dir;
     }
 
     private void OnDisable()

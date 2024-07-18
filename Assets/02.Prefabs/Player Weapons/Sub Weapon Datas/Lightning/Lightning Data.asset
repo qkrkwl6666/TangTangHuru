@@ -10,19 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5344fbd0282aeb47a4846184d112edd, type: 3}
-  m_Name: Galric
+  m_Name: Lightning Data
   m_EditorClassIdentifier: 
-  weaponName: ManualSword
-  level: 0
+  weaponName: Staff
+  level: 1
   aimType: 4
+  moveType: 7
   attackType: 0
-  damage: 15
-  speed: 50
-  range: 10
+  damage: 100
+  criticalChance: 0
+  criticalValue: 0
+  speed: 80
+  range: 3
+  lifeTime: 2
   coolDown: 4
-  burstCount: 1
-  burstRate: 0.5
+  burstCount: 3
+  burstRate: 0.1
   pierceCount: 99
-  lifeTime: 4
-  criticalChance: 30
-  criticalValue: 2
+  fadeInRate: 0.2
+  fadeOutRate: 0.4
+  maxAlpha: 1
+  Options: 

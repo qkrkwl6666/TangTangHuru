@@ -115,6 +115,10 @@ public class WeaponCreator : MonoBehaviour
             case AimType.Player:
                 aimer = weapon.AddComponent<PlayerAim>();
                 break;
+            case AimType.Random:
+                aimer = weapon.AddComponent<RandomTarget>();
+                break;
+
         }
 
 
@@ -141,6 +145,9 @@ public class WeaponCreator : MonoBehaviour
                 break;
             case MoveType.Laser:
                 weapon.AddComponent<LaserShoot>();
+                break;
+            case MoveType.Spawn:
+                weapon.AddComponent<Spawn>();
                 break;
         }
 

@@ -9,8 +9,8 @@ public class WeaponData : ScriptableObject
         Auto,
         Manual,
         Fixed,
-        Spawn,
         Player,
+        Random,
     }
     public enum MoveType
     {
@@ -21,6 +21,7 @@ public class WeaponData : ScriptableObject
         Fixed,
         Spread,
         Laser,
+        Spawn,
     }
     public enum AttackType
     {

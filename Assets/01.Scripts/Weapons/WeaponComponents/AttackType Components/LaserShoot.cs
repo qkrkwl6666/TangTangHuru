@@ -32,7 +32,7 @@ public class LaserShoot : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(redirectionTimer >= 0.1f)
+        if(redirectionTimer >= 0.07f)
         {
             SetDestination();
             redirectionTimer = 0f;

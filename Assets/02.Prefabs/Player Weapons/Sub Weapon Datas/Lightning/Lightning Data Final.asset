@@ -10,19 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5344fbd0282aeb47a4846184d112edd, type: 3}
-  m_Name: FixedSword Final
+  m_Name: Lightning Data Final
   m_EditorClassIdentifier: 
-  weaponName: AutoGun
-  aimType: 2
-  attackType: 0
-  damage: 5
-  speed: 30
-  range: 1
-  coolDown: 1
-  burstCount: 3
-  burstRate: 1
-  pierceCount: 0
-  lifeTime: 3
+  weaponName: Sword
+  level: 5
+  aimType: 4
+  moveType: 0
+  attackType: 1
+  damage: 15
   criticalChance: 0
   criticalValue: 0
-  currWeaponLevel: 0
+  speed: 400
+  range: 3
+  lifeTime: 10
+  coolDown: 9.5
+  burstCount: 1
+  burstRate: 0.3
+  pierceCount: 99
+  fadeInRate: 0.3
+  fadeOutRate: 0.3
+  maxAlpha: 0.8
+  Options: 00000000
