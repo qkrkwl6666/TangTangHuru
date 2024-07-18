@@ -32,6 +32,8 @@ public class WaveShoot : MonoBehaviour
 
         initialPosition = transform.position;
         targetPosition = initialPosition + (Vector2)pos * currAimer.Speed * currAimer.LifeTime;
+
+        frequency *= (currAimer.Index % 2) == 0 ? -1f : 1f;
     }
 
     private void OnDisable()
@@ -51,8 +53,6 @@ public class WaveShoot : MonoBehaviour
 
         float progress = timer / currAimer.LifeTime;
         Vector2 linearPosition = Vector2.Lerp(initialPosition, targetPosition, progress);
-
-        frequency *= (currAimer.Index % 2) == 0 ? -1f : 1f;
 
         // 사인파로 출렁이는 효과 추가
         float sineOffset = Mathf.Sin(timer * frequency) * magnitude;

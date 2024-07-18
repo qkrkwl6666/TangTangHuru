@@ -67,7 +67,7 @@ public class WeaponCreator : MonoBehaviour
 
                 Options(weapon);
 
-                if (index > weaponDataInStage.BurstCount)
+                if (index >= weaponDataInStage.BurstCount)
                     break;
 
                 if (weaponDataInStage.BurstRate > 0f)
@@ -199,8 +199,10 @@ public class WeaponCreator : MonoBehaviour
             weaponDataInStage.Level = 5;
             weaponUpgrader.Evolution(weapons);
         }
-
-        weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        else
+        {
+            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        }
 
         foreach (var weapon in weapons)
         {
