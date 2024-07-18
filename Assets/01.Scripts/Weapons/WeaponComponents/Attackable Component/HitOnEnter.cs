@@ -24,6 +24,9 @@ public class HitOnEnter : MonoBehaviour, IAttackable
 
         if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
+            if (!other.gameObject.activeSelf)
+                return;
+
             if (Random.Range(0, 100) <= CriticalChance)
             {
                 TotalDamage = Damage * CriticalValue;

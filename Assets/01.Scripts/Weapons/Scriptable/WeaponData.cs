@@ -21,6 +21,7 @@ public class WeaponData : ScriptableObject
         Rotate,
         Fixed,
         Spread,
+        Laser,
     }
     public enum AttackType
     {

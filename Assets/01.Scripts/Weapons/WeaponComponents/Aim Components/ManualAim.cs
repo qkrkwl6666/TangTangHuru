@@ -5,7 +5,7 @@ using UnityEngine;
 public class ManualAim : MonoBehaviour, IAimer
 {
     PlayerController controller;
-    public GameObject player;
+    private GameObject player;
     public GameObject Player { get => player; }
     public float LifeTime { get; set; }
     public float Speed { get; set; }

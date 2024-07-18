@@ -154,12 +154,12 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         {
             // 스킬 추가 
             case 300001:
-                var attack = monster.AddComponent<HitOnStay>();
-                attack.Damage = 5f;
-                attack.PierceCount = 999f;
-                attack.CriticalChance = -1f;
-                attack.AttackRate = 0.5f;
-                attack.AttackableLayer = LayerMask.GetMask("Player");
+                //var attack = monster.AddComponent<HitOnStay>();
+                //attack.Damage = 5f;
+                //attack.PierceCount = 999f;
+                //attack.CriticalChance = -1f;
+                //attack.AttackRate = 2.5f;
+                //attack.AttackableLayer = LayerMask.GetMask("Player");
                 break;
             case 300002:
                 break;

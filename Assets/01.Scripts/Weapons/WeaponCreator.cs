@@ -56,18 +56,19 @@ public class WeaponCreator : MonoBehaviour
             {
                 if (!weapon.activeSelf)
                 {
-                    weapon.gameObject.transform.position = transform.position;
-                    weapon.SetActive(true);
                     var aimer = weapon.GetComponent<IAimer>();
                     aimer.TotalCount = weaponDataInStage.BurstCount;
                     aimer.Index = index;
+
+                    weapon.gameObject.transform.position = transform.position;
+                    weapon.SetActive(true);
 
                     index++;
                 }
 
                 Options(weapon);
 
-                if (index > weaponDataInStage.BurstCount)
+                if (index >= weaponDataInStage.BurstCount)
                     break;
 
                 if (weaponDataInStage.BurstRate > 0f)
@@ -138,6 +139,9 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Spread:
                 var spread = weapon.AddComponent<Spread>();
                 break;
+            case MoveType.Laser:
+                weapon.AddComponent<LaserShoot>();
+                break;
         }
 
         switch (weaponDataRef.WeaponAttckType)
@@ -196,8 +200,10 @@ public class WeaponCreator : MonoBehaviour
             weaponDataInStage.Level = 5;
             weaponUpgrader.Evolution(weapons);
         }
-
-        weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        else
+        {
+            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+        }
 
         foreach (var weapon in weapons)
         {

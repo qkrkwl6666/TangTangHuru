@@ -15,6 +15,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
 
     private float timer = 0f;
     private bool attackReady = true;
+
     private Collider2D triggerCollider;
 
 
@@ -49,7 +50,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
 
     private void AttackReady()
     {
-        //트리거에 닿아있는 모든 콜라이더 가져와 OnAttack() 함수의 매개변수로 넣는 코드
+        //트리거에 닿아있는 모든 콜라이더 가져와 OnAttack() 함수의 매개변수로 넣음
 
         Collider2D[] hitColliders = new Collider2D[100];
         ContactFilter2D contactFilter = new ContactFilter2D();
@@ -86,7 +87,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
             TotalDamage = Damage;
         }
 
-        other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
+        other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
 
         if (pierce > 0)
         {
