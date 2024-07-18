@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
 using CsvHelper;
 using System.Globalization;
 using System.IO;
 using TextAsset = UnityEngine.TextAsset;
-using UnityEditor.SceneManagement;
 
 public class TreasureData
 {

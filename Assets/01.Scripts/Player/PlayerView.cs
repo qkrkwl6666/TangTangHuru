@@ -1,4 +1,3 @@
-using Spine;
 using Spine.Unity;
 using UnityEngine;
 
@@ -34,17 +33,17 @@ public class PlayerView : MonoBehaviour
             PlayAnimation(currentState);
         }
 
-        if(Input.GetKeyDown(KeyCode.F1))
-        {
-            int characterIndex = Random.Range(0, Defines.characterSkins.Count);
-            int weaponIndex = Random.Range(0, Defines.weaponSkins.Count);
-
-            var characterSkin = Defines.characterSkins[characterIndex];
-            var weaponSkin = Defines.weaponSkins[weaponIndex];
-
-            SetCharacterWeaponSkin(characterSkin, weaponSkin);
-
-        }
+        //if(Input.GetKeyDown(KeyCode.F1))
+        //{
+        //    int characterIndex = Random.Range(0, Defines.characterSkins.Count);
+        //    int weaponIndex = Random.Range(0, Defines.weaponSkins.Count);
+        //
+        //    var characterSkin = Defines.characterSkins[characterIndex];
+        //    var weaponSkin = Defines.weaponSkins[weaponIndex];
+        //
+        //    SetCharacterWeaponSkin(characterSkin, weaponSkin);
+        //
+        //}
     }
 
     public void PlayAnimation(PlayerState currentState)

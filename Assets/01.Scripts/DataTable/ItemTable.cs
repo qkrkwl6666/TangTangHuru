@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.AddressableAssets;
-using System.Linq;
 using TextAsset = UnityEngine.TextAsset;
 using CsvHelper;
 using System.Globalization;
 using System.IO;
-using static SkillUpgradeData;
 
 public class ItemData
 {

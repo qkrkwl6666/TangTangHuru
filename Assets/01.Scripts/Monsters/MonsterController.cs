@@ -1,6 +1,3 @@
-using Spine.Unity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
@@ -12,7 +9,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public MonsterView MonsterView { get; private set; }
     public Transform PlayerTransform { get; private set; }
 
-    private float moveSpeed = 3f;
+    private float moveSpeed = 2f;
     public Monster Monster { get; private set; }
 
     public MonsterMoveType MoveType { get; private set; } = MonsterMoveType.Chase;

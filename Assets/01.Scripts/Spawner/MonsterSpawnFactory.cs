@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -63,7 +62,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         this.spawnType = spawnType;
         this.spawnCount = spawnCount;
 
-        Debug.Log(monsterData.Monster_Prefab);
+        //Debug.Log(monsterData.Monster_Prefab);
         var opHandle = Addressables.LoadAssetAsync<GameObject>(monsterData.Monster_Prefab.ToString());
 
         opHandle.Completed += (op) => MonsterInstantiate(op, monsterData, spawnCount, spawnType);
