@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -22,6 +23,10 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
     public int maxMonster = 200; // 필드 최대 몬스터 수
 
+    // 테스트용
+
+    public TextMeshProUGUI monsterCountText;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
@@ -30,29 +35,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        // if (Input.GetKeyUp(KeyCode.F1))
-        // {
-        //     int index = Random.Range(0, monsters.Count);
-        //     var go = monsters[index];
-        // 
-        //     if (go.activeSelf)
-        //     {
-        //         go.GetComponent<Monster>().Die();
-        //     }
-        // }
-
-        // if (Input.GetKeyUp(KeyCode.F2))
-        // {
-        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-        //         (DataTableManager.monster).GetMonsterData("100002"), 10, 2);
-        // }
-        // 
-        // if (Input.GetKeyUp(KeyCode.F3))
-        // {
-        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-        //         (DataTableManager.monster).GetMonsterData("100003"),10, 3);
-        // }
-
+        monsterCountText.text = monsters.Count.ToString();
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)

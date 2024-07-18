@@ -5,6 +5,11 @@ public class MonsterView : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
 
+    private void Awake()
+    {
+
+    }
+
     public void Update()
     {
         //if(Input.GetKeyDown(KeyCode.F2))
