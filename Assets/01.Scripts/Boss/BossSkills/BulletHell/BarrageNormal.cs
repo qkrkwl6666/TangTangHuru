@@ -7,9 +7,11 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackCount = 20; // 총알 개수
+    private int attackCount = 20; // 총알 개수
     private float attackScale = 0.2f;
     private float time = 0f;
+    private int randomAttackCount = 10;
+    private float ballSpeed = 5f;
 
     public int currentSkillCount = 0;
 
@@ -69,7 +71,6 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     }
     public void SkillUpdate(float deltaTime)
     {
-        
         time += deltaTime;
 
         if (time >= SkillRate)
@@ -82,11 +83,12 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public void Attack()
     {
         currentSkillCount++;
-        //Debug.Log(currentSkillCount);
 
-        for (int i = 0; i < attackCount; i++) 
+        float randomCount = attackCount + Random.Range(0, randomAttackCount);
+
+        for (int i = 0; i < randomCount; i++) 
         {
-            CirlcePosition(i);
+            CirlcePosition(i, randomCount);
         }
 
         if (currentSkillCount + 1 > SkillCount)
@@ -98,14 +100,14 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     }
 
     // Todo : 이름 변경 하기
-    public void CirlcePosition(int index)
+    public void CirlcePosition(int index, float randomCount)
     {
-        float angle = ((360 / attackCount) * index) * Mathf.Deg2Rad;
+        float angle = ((360 / randomCount) * index) * Mathf.Deg2Rad;
 
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         if (pool == null) return;
         var go = pool.Get();
-        go.GetComponent<Barrage>().Init(CirclePos, transform, attackScale);
+        go.GetComponent<Barrage>().Init(CirclePos, transform, attackScale, ballSpeed);
     }
 
     public void Activate()

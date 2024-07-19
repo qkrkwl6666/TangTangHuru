@@ -41,8 +41,9 @@ public class Barrage : MonoBehaviour
         }
     }
 
-    public void Init(Vector2 dir, Transform bossTransform, float attackCicle)
+    public void Init(Vector2 dir, Transform bossTransform, float attackCicle, float ballSpeed)
     {
+        this.speed = ballSpeed;
         this.dir = dir.normalized;
         this.bossTransform = bossTransform;
         circleScale = attackCicle;
