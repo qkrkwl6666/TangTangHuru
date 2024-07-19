@@ -10,18 +10,19 @@ public class WeaponCreator : MonoBehaviour
 
     public GameObject weaponPrefab;
     public WeaponData weaponDataRef; //무기 원본 데이터
+    public GameObject secondWeaponPrefab;
 
-    private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
-
+    private WeaponData weaponDataInStage; //강화에 의해 변경되는 스테이지 내 데이터
     private List<GameObject> weapons = new List<GameObject>();
+    private WeaponUpgrader weaponUpgrader;
+
     private IAimer aimer;
     private IAttackable hit;
 
-    private WeaponUpgrader weaponUpgrader;
-
     private IEnumerator SpawnCoroutine;
 
-    public bool levelUpReady = false;
+    private bool levelUpReady = false;
+
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class WeaponCreator : MonoBehaviour
 
     IEnumerator Spawn()
     {
+
         yield return new WaitForSeconds(1.5f);
 
         while (gameObject.activeSelf)
@@ -66,7 +68,7 @@ public class WeaponCreator : MonoBehaviour
                     index++;
                 }
 
-                Options(weapon);
+                OptionsOnEnable(weapon);
 
                 if (index >= weaponDataInStage.BurstCount)
                     break;
@@ -77,6 +79,7 @@ public class WeaponCreator : MonoBehaviour
                 }
             }
 
+
             while (index < weaponDataInStage.BurstCount)
             {
                 CreateWeapon(index);
@@ -86,6 +89,7 @@ public class WeaponCreator : MonoBehaviour
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
+
 
             if (levelUpReady)
             {
@@ -187,22 +191,13 @@ public class WeaponCreator : MonoBehaviour
         hit.Impact = weaponDataInStage.Impact;
         hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
-        foreach (var option in weaponDataInStage.Options)
-        {
-            if (option == Option.FadeInOut)
-            {
-                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
-                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
-                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
-                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
-            }
-        }
 
         weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
         weapon.SetActive(true);
         weapons.Add(weapon);
 
-        Options(weapon);
+        OptionsOnCreate(weapon);
+        OptionsOnEnable(weapon);
     }
 
     public void LevelUpReady()
@@ -239,8 +234,30 @@ public class WeaponCreator : MonoBehaviour
 
         levelUpReady = false;
     }
-      
-    private void Options(GameObject weapon)
+    
+    private void OptionsOnCreate(GameObject weapon)
+    {
+        foreach (var option in weaponDataInStage.Options)
+        {
+            if (option == Option.FadeInOut)
+            {
+                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
+                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
+                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
+                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
+            }
+
+            if (option == Option.SecondAttack)
+            {
+
+                var enabler = weapon.AddComponent<EnableOnHit>();
+                enabler.SecondWeapon = secondWeaponPrefab;
+                enabler.maxCount = 5;
+            }
+        }
+    }
+
+    private void OptionsOnEnable(GameObject weapon)
     {
         foreach (var option in weaponDataInStage.Options)
         {

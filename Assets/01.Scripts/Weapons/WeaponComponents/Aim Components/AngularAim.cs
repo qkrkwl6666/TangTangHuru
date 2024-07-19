@@ -12,8 +12,6 @@ public class AngularAim : MonoBehaviour, IAimer
     public int TotalCount { get; set; }
     public int Index { get; set; }
 
-    float angle = 0f;
-
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");

@@ -38,6 +38,7 @@ public class WeaponData : ScriptableObject
         SizeUp,
         SizeDown,
         Randomizer,
+        SecondAttack,
     }
 
 
