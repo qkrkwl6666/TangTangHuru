@@ -27,7 +27,7 @@ public class EnableOnHit : MonoBehaviour
     {
         if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-            foreach (var secondWeapon in secondWeapons)
+d            foreach (var secondWeapon in secondWeapons)
             {
                 if (!secondWeapon.activeSelf)
                 {
