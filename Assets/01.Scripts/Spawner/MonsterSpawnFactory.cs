@@ -161,8 +161,11 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     public void CreateBoss(BossData bossData)
     {
- 
-        Addressables.InstantiateAsync(bossData.Boss_Prefab).Completed += 
+        Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + (Vector2)playerTransform.position;
+
+        Addressables.InstantiateAsync(Defines.bossWall, bossPos, Quaternion.identity);
+
+        Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed += 
             (x) => 
             {
                 var monsterGo = x.Result;

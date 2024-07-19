@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class MonsterSpawnManager : MonoBehaviour
 {
@@ -30,7 +32,7 @@ public class MonsterSpawnManager : MonoBehaviour
         OnStop += () => 
         {
             IsStop = true;
-            SpawnBoss();
+            StartCoroutine(SpawnBoss());
         };
     }
 
@@ -98,9 +100,19 @@ public class MonsterSpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnBoss()
+    public IEnumerator SpawnBoss()
     {
         monsterSpawnFactory.MonsterAllDead();
+
+        GameObject playBoss = null;
+
+        Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) => 
+        {
+            playBoss = x.Result;
+            Destroy(playBoss , 3f);
+        };
+
+        yield return new WaitForSeconds(3f);
 
         var bossStageData = DataTableManager.Instance.Get<BossStageTable>
             (DataTableManager.stageBoss).GetBossData(GameManager.Instance.CurrentStage.ToString());
@@ -109,6 +121,7 @@ public class MonsterSpawnManager : MonoBehaviour
             .GetBossData(bossStageData.Boss_Id.ToString());
 
         monsterSpawnFactory.CreateBoss(bossData);
+
     }
 
 

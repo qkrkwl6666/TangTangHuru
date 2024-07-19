@@ -14,11 +14,13 @@ public class Boss : LivingEntity, IPlayerObserver
     private float time = 0f;
 
     private float damage = 0f;
-    private float speed = 0f;
+    private float speed = 2f;
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
     {
         this.playerSubject = playerSubject;
+
+        playerSubject.AddObserver(this);
 
         startingHealth = bossData.Boss_Hp;
         damage = bossData.Boss_Damage;
@@ -80,6 +82,9 @@ public class Boss : LivingEntity, IPlayerObserver
         if (currentSkill.IsChange)
         {
             time += Time.deltaTime;
+            //
+            Vector2 dir = (playerTransform.position - transform.position).normalized;
+            transform.Translate(dir * speed * Time.deltaTime);
             
             if (time >= cooldown)
             {
@@ -91,7 +96,6 @@ public class Boss : LivingEntity, IPlayerObserver
             currentSkill?.SkillUpdate(Time.deltaTime);
         }
 
-        
     }
 
     public void SelectSkill()
