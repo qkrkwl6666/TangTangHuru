@@ -32,7 +32,8 @@ public class RandomTarget : MonoBehaviour, IAimer
         }
         else
         {
-            result = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0);
+            var rnd = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0);
+            result = Player.transform.position + rnd;
         }
 
         return result;

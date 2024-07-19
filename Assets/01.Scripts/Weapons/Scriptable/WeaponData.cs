@@ -10,7 +10,9 @@ public class WeaponData : ScriptableObject
         Manual,
         Fixed,
         Player,
-        Random,
+        RandomTarget,
+        RandomSeed,
+        Angular,
     }
     public enum MoveType
     {
@@ -107,7 +109,6 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float burstRate;
     public float BurstRate { get {  return burstRate; } set { burstRate = value; } }
-
 
     [Header("관통 회수")]
     [SerializeField]

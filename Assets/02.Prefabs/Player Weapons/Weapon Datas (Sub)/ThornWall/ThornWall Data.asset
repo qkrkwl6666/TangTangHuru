@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f5344fbd0282aeb47a4846184d112edd, type: 3}
-  m_Name: Crossbow Data
+  m_Name: ThornWall Data
   m_EditorClassIdentifier: 
-  weaponName: Crossbow
+  weaponName: Staff
   level: 1
-  aimType: 0
-  moveType: 1
+  aimType: 5
+  moveType: 6
   attackType: 0
   damage: 10
-  criticalChance: 30
-  criticalValue: 1.5
-  speed: 30
-  range: 2
-  lifeTime: 2.5
-  coolDown: 2
-  burstCount: 1
-  burstRate: 0.2
+  criticalChance: 0
+  criticalValue: 0
+  impact: 5
+  speed: 80
+  range: 1
+  lifeTime: 1
+  coolDown: 2.5
+  burstCount: 5
+  burstRate: 0
   pierceCount: 99
   fadeInRate: 0
-  fadeOutRate: 0
+  fadeOutRate: 0.3
   maxAlpha: 1
   Options: 

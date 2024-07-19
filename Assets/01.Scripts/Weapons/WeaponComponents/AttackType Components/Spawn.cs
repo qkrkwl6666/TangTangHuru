@@ -7,7 +7,7 @@ public class Spawn : MonoBehaviour
     float timer = 0f;
 
     IAimer currAimer;
-    Vector3 dir;
+    Vector3 pos;
 
     void Awake()
     {
@@ -19,9 +19,9 @@ public class Spawn : MonoBehaviour
         if (currAimer == null)
             return;
 
-        dir = currAimer.AimDirection();
+        pos = currAimer.AimDirection();
 
-        transform.position = dir;
+        transform.position = pos;
     }
 
     private void OnDisable()

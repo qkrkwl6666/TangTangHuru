@@ -115,8 +115,14 @@ public class WeaponCreator : MonoBehaviour
             case AimType.Player:
                 aimer = weapon.AddComponent<PlayerAim>();
                 break;
-            case AimType.Random:
+            case AimType.RandomTarget:
                 aimer = weapon.AddComponent<RandomTarget>();
+                break;
+            case AimType.RandomSeed:
+                aimer = weapon.AddComponent<RandomSeed>();
+                break;
+            case AimType.Angular:
+                aimer = weapon.AddComponent<AngularAim>();
                 break;
 
         }
@@ -152,6 +158,7 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Spawn:
                 weapon.AddComponent<Spawn>();
                 break;
+
         }
 
         switch (weaponDataRef.WeaponAttckType)
