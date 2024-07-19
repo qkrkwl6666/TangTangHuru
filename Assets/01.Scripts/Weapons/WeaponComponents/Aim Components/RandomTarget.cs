@@ -32,7 +32,7 @@ public class RandomTarget : MonoBehaviour, IAimer
         }
         else
         {
-            result = new Vector3(Random.Range(-5, 5), Random.Range(-5, 5), 0);
+            result = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0);
         }
 
         return result;

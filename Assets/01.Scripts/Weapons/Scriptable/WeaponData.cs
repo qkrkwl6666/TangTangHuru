@@ -16,10 +16,11 @@ public class WeaponData : ScriptableObject
     {
         Melee,
         Shoot,
-        WaveShoot,
+        WaveShot,
         Rotate,
         Fixed,
-        Spread,
+        SpreadShot,
+        SpreadWall,
         Laser,
         Spawn,
     }
@@ -73,6 +74,11 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
+
+    [Header("넉백 크기")]
+    [SerializeField]
+    private float impact;
+    public float Impact { get { return impact; } set { impact = value; } }
 
     [Header("속도 및 범위(투사체 크기)")]
     [SerializeField]

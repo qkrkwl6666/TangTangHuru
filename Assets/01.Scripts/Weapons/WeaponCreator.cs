@@ -131,17 +131,20 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Shoot:
                 weapon.AddComponent<Shoot>();
                 break;
-            case MoveType.WaveShoot:
+            case MoveType.WaveShot:
                 weapon.AddComponent<WaveShoot>();
                 break;
             case MoveType.Rotate:
-                var rotate = weapon.AddComponent<Rotate>();
+                weapon.AddComponent<Rotate>();
                 break;
             case MoveType.Fixed:
                 weapon.AddComponent<Fixed>();
                 break;
-            case MoveType.Spread:
-                var spread = weapon.AddComponent<Spread>();
+            case MoveType.SpreadShot:
+                weapon.AddComponent<Spread>();
+                break;
+            case MoveType.SpreadWall:
+                weapon.AddComponent<SpreadWall>();
                 break;
             case MoveType.Laser:
                 weapon.AddComponent<LaserShoot>();
@@ -174,6 +177,7 @@ public class WeaponCreator : MonoBehaviour
         hit.CriticalChance = weaponDataInStage.CriticalChance;
         hit.CriticalValue = weaponDataInStage.CriticalValue;
         hit.AttackRate = weaponDataInStage.BurstRate;
+        hit.Impact = weaponDataInStage.Impact;
         hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
         foreach (var option in weaponDataInStage.Options)

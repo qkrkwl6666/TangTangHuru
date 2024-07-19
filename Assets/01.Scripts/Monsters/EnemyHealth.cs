@@ -17,7 +17,7 @@ public class EnemyHealth : LivingEntity
 
     }
 
-    public override void OnDamage(float damage)
+    public override void OnDamage(float damage, float impact)
     {
 
        // Debug.Log("¾Æ¾ß! hp : " + health);

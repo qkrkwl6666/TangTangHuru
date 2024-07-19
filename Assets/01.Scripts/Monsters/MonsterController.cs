@@ -1,3 +1,4 @@
+using System.Threading;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
@@ -27,7 +28,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
         MonsterStateMachine = new MonsterStateMachine(this, MoveType);
 
-        Monster = GetComponent<Monster>();  
+        Monster = GetComponent<Monster>();
     }
 
     private void Start()
@@ -45,10 +46,20 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         MonsterStateMachine.Update(Time.deltaTime);
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
     private void OnEnable()
     {
         // Todo : 여기서 자신의 위치 타이밍? 이 안맞을 수도 있음 
         playerDirection = (PlayerTransform.position - transform.position).normalized;
+    }
+
+    private void OnDestroy()
+    {
+        Monster.OnImpact -= NuckBack;
     }
 
     public void ChasePlayer(float deltaTime)
@@ -68,6 +79,11 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public void IObserverUpdate()
     {
         PlayerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    private void NuckBack(float impact)
+    {
+        transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
     }
 
 }

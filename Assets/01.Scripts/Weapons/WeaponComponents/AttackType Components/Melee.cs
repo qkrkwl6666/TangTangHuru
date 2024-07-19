@@ -24,6 +24,10 @@ public class Melee : MonoBehaviour
         {
             dir = Vector3.zero; //방향이 플레이어 위치면 dir 0으로 설정. 중심에서 따라다니는 스킬
         }
+        else
+        {
+            dir = dir.normalized;
+        }
 
         dir *= range;
     }

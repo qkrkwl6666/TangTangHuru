@@ -39,7 +39,7 @@ public class AttackState : IMonsterState
     {
         prevTrackEntry = trackEntry;
         // 플레이어 공격 처리
-        monsterController.PlayerTransform.GetComponent<IDamagable>().OnDamage(monsterController.Monster.Damage);
+        monsterController.PlayerTransform.GetComponent<IDamagable>().OnDamage(monsterController.Monster.Damage, 0);
         monsterController.MonsterStateMachine.TransitionTo(monsterController.MonsterStateMachine.walkState);
     }
 }

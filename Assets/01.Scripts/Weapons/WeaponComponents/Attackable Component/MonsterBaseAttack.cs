@@ -52,7 +52,7 @@ public class MonsterBaseAttack : MonoBehaviour
                 totalDamage = damage;
             }
 
-            other.gameObject.GetComponent<IDamagable>().OnDamage(totalDamage);
+            other.gameObject.GetComponent<IDamagable>().OnDamage(totalDamage, 0);
 
             attackable = false;
         }
