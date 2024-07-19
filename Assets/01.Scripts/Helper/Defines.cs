@@ -9,6 +9,7 @@ public static class Defines
     public static readonly string well = "Well";
     public static readonly string bossWall = "BossWall";
     public static readonly string playBoss = "PlayBoss";
+    public static readonly string obstacles = "Obstacles";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";

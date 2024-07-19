@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -17,6 +18,8 @@ public class MonsterSpawnManager : MonoBehaviour
     private float totalWaveTime;
 
     private MonsterSpawnFactory monsterSpawnFactory = null;
+
+
 
     private void Awake()
     {
@@ -103,7 +106,7 @@ public class MonsterSpawnManager : MonoBehaviour
     public IEnumerator SpawnBoss()
     {
         monsterSpawnFactory.MonsterAllDead();
-
+        monsterSpawnFactory.BossWallSpawn();
         GameObject playBoss = null;
 
         Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) => 

@@ -27,6 +27,12 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     public TextMeshProUGUI monsterCountText;
 
+    // 장애물 관련 변수들
+    private int obstaclesCount = 90; // 장애물 개수
+    private float obstaclesRadius = 20f;
+
+    Vector2 bossSpawnPosition = Vector2.zero;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
@@ -161,9 +167,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     public void CreateBoss(BossData bossData)
     {
-        Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + (Vector2)playerTransform.position;
-
-        Addressables.InstantiateAsync(Defines.bossWall, bossPos, Quaternion.identity);
+        Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + bossSpawnPosition;
 
         Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed += 
             (x) => 
@@ -171,6 +175,25 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 var monsterGo = x.Result;
                 monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
             };
+    }
+
+    public void BossWallSpawn()
+    {
+        var wallGo = new GameObject("BossWall");
+
+        bossSpawnPosition = wallGo.transform.position = playerTransform.position;
+
+        Addressables.LoadAssetAsync<GameObject>(Defines.obstacles).Completed += (x) =>
+        {
+            for (int i = 0; i < obstaclesCount; i++)
+            {
+                float angle = ((360 / obstaclesCount) * i) * Mathf.Deg2Rad;
+
+                Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * obstaclesRadius;
+
+                Instantiate(x.Result, (Vector2)playerTransform.position + pos, Quaternion.identity, wallGo.transform);
+            }
+        };
     }
 
     public static Vector2 RandomPosition(Transform playerTransform, float distance)
