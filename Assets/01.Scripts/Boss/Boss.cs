@@ -7,14 +7,34 @@ public class Boss : LivingEntity, IPlayerObserver
     private IBossSkill currentSkill = null;
 
     private PlayerSubject playerSubject;
-    private Transform playerTransform;
+    public Transform PlayerTransform { get; private set; }
 
     private float totalProbability = 0f;
-    private float cooldown = 2f;
+    public float Cooldown { get; private set; } = 2f;
     private float time = 0f;
 
     private float damage = 0f;
-    private float speed = 2f;
+    public float Speed { get; private set; } = 2f;
+
+    // 보스 상태 패턴
+    private BossState currentState;
+
+    public BossWalkState walkState;
+    public BossSkillState skillState;
+
+    // View
+    private MonsterView monsterView;
+
+    private void Awake()
+    {
+        monsterView = GetComponentInChildren<MonsterView>();
+    }
+
+    private void Start()
+    {
+        //currentState = walkState;
+        //currentState.Enter();
+    }
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
     {
@@ -24,8 +44,11 @@ public class Boss : LivingEntity, IPlayerObserver
 
         startingHealth = bossData.Boss_Hp;
         damage = bossData.Boss_Damage;
-        cooldown = bossData.Boss_Cooldown;
-        speed = bossData.Boss_MoveSpeed;
+        Cooldown = bossData.Boss_Cooldown;
+        Speed = bossData.Boss_MoveSpeed;
+
+        walkState = new BossWalkState(this, monsterView);
+        skillState = new BossSkillState(this, monsterView);
 
         SetBossSkill(bossData);
     }
@@ -62,7 +85,8 @@ public class Boss : LivingEntity, IPlayerObserver
             }
         }
 
-        SelectSkill();
+        currentState = walkState;
+        currentState.Enter();
     }
 
     private T AddSkill<T>(int skillId, float probability) where T : Component, IBossSkill
@@ -79,26 +103,17 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public void Update()
     {
-        if (currentSkill.IsChange)
-        {
-            time += Time.deltaTime;
-            //
-            Vector2 dir = (playerTransform.position - transform.position).normalized;
-            transform.Translate(dir * speed * Time.deltaTime);
-            
-            if (time >= cooldown)
-            {
-                SelectSkill();
-            }
-        }
-        else
-        {
-            currentSkill?.SkillUpdate(Time.deltaTime);
-        }
-
+        currentState.Update(Time.deltaTime);
     }
 
-    public void SelectSkill()
+    private void FixedUpdate()
+    {
+        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
+
+        monsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
+    }
+
+    public IBossSkill SelectSkill()
     {
         if (currentSkill != null)
         {
@@ -123,10 +138,19 @@ public class Boss : LivingEntity, IPlayerObserver
                 break;
             }
         }
+
+        return currentSkill;
+    }
+
+    public void ChangeState(BossState bossState)
+    {
+        currentState.Exit();
+        currentState = bossState;
+        currentState.Enter();
     }
 
     public void IObserverUpdate()
     {
-        playerTransform = playerSubject.GetPlayerTransform;
+        PlayerTransform = playerSubject.GetPlayerTransform;
     }
 }
