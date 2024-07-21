@@ -2,15 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpreadWall : MonoBehaviour
+public class SpreadWall : MonoBehaviour, IProjectile
 {
     public float spreadAngle = 15f;
 
     float timer = 0f;
-    float range = 3f;
 
     IAimer currAimer;
     Vector2 direction = Vector2.zero;
+
+    public float Range { get; set; }
+    public float Size { get; set; }
+    public float Speed { get; set; }
 
     void Awake()
     {
@@ -20,6 +23,7 @@ public class SpreadWall : MonoBehaviour
     private void OnEnable()
     {
         SetAngle();
+        transform.localScale = new Vector3(Size, Size);
     }
 
     private void SetAngle()
@@ -39,12 +43,12 @@ public class SpreadWall : MonoBehaviour
             float radianAngle = currentAngle * Mathf.Deg2Rad;
             direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
-            transform.position = direction * range;
+            transform.position = direction * Range;
             transform.up = direction;
         }
         else
         {
-            transform.position = pos * range;
+            transform.position = pos * Range;
             transform.up = pos;
         }
 
@@ -63,7 +67,7 @@ public class SpreadWall : MonoBehaviour
         }
         else
         {
-            transform.position = currAimer.Player.transform.position + (Vector3)direction * range;
+            transform.position = currAimer.Player.transform.position + (Vector3)direction * Range;
             transform.up = direction;
 
             timer += Time.deltaTime;

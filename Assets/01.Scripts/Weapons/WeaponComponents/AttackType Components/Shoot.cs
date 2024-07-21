@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class Shoot : MonoBehaviour
+public class Shoot : MonoBehaviour, IProjectile
 {
     public IAimer currAimer;
 
     private float timer = 0f;
     private Rigidbody2D rb;
+
+    public float Range { get; set; }
+    public float Size { get; set; }
+    public float Speed { get; set; }
 
     private void Awake()
     {
@@ -16,9 +20,11 @@ public class Shoot : MonoBehaviour
     private void OnEnable()
     {
         timer = 0f;
+        transform.localScale = new Vector3(Size, Size);
+
         var pos = currAimer.AimDirection();
         transform.up = pos;
-        rb.velocity = pos * currAimer.Speed;
+        rb.velocity = pos * Speed;
     }
 
 

@@ -25,6 +25,7 @@ public class WeaponData : ScriptableObject
         SpreadWall,
         Laser,
         Spawn,
+        Parabola,
     }
     public enum AttackType
     {
@@ -83,14 +84,20 @@ public class WeaponData : ScriptableObject
     private float impact;
     public float Impact { get { return impact; } set { impact = value; } }
 
-    [Header("속도 및 범위(투사체 크기)")]
+    [Header("속도")]
     [SerializeField]
     private float speed;
     public float Speed { get { return speed; } set { speed = value; } }
 
+    [Header("발사거리")]
     [SerializeField]
     private float range;
     public float Range { get { return range; } set { range = value; } }
+
+    [Header("투사체 크기")]
+    [SerializeField]
+    private float size;
+    public float Size { get { return size; } set { size = value; } }
 
     [Header("투사체 유지시간")]
     [SerializeField]

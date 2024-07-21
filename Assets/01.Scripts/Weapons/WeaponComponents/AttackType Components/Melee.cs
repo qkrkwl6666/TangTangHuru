@@ -1,13 +1,15 @@
 using UnityEngine;
 
-public class Melee : MonoBehaviour
+public class Melee : MonoBehaviour, IProjectile
 {
-    public float range = 2f;
-
     float timer = 0f;
 
     IAimer currAimer;
     Vector3 dir;
+
+    public float Range { get; set; }
+    public float Size { get; set; }
+    public float Speed { get; set; }
 
     void Awake()
     {
@@ -28,8 +30,8 @@ public class Melee : MonoBehaviour
         {
             dir = dir.normalized;
         }
-
-        dir *= range;
+        dir *= Range;
+        transform.localScale = new Vector3(Size, Size);
     }
 
     private void OnDisable()

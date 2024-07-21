@@ -7,9 +7,6 @@ public class EnableOnHit : MonoBehaviour
     public GameObject SecondWeapon;
     public int maxCount;
     LayerMask AttackableLayer;
-
-
-    private int count = 0;
     private List<GameObject> secondWeapons = new List<GameObject>();
 
     void Start()
@@ -27,7 +24,9 @@ public class EnableOnHit : MonoBehaviour
     {
         if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
         {
-d            foreach (var secondWeapon in secondWeapons)
+            int count = 0;
+
+            foreach (var secondWeapon in secondWeapons)
             {
                 if (!secondWeapon.activeSelf)
                 {
@@ -37,7 +36,6 @@ d            foreach (var secondWeapon in secondWeapons)
                 }
                 if (count >= maxCount)
                 {
-                    count = 0;
                     break;
                 }
             }

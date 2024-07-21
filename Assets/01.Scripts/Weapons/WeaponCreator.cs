@@ -17,6 +17,7 @@ public class WeaponCreator : MonoBehaviour
     private WeaponUpgrader weaponUpgrader;
 
     private IAimer aimer;
+    private IProjectile projectile;
     private IAttackable hit;
 
     private IEnumerator SpawnCoroutine;
@@ -135,35 +136,37 @@ public class WeaponCreator : MonoBehaviour
         switch (weaponDataRef.WeaponMoveType)
         {
             case MoveType.Melee:
-                var melee = weapon.AddComponent<Melee>();
-                melee.range = weaponDataInStage.Range;
+                projectile = weapon.AddComponent<Melee>();
                 break;
             case MoveType.Shoot:
-                weapon.AddComponent<Shoot>();
+                projectile = weapon.AddComponent<Shoot>();
                 break;
             case MoveType.WaveShot:
-                weapon.AddComponent<WaveShoot>();
+                projectile = weapon.AddComponent<WaveShoot>();
                 break;
             case MoveType.Rotate:
-                weapon.AddComponent<Rotate>();
+                projectile = weapon.AddComponent<Rotate>();
                 break;
             case MoveType.Fixed:
-                weapon.AddComponent<Fixed>();
+                projectile = weapon.AddComponent<Fixed>();
                 break;
             case MoveType.SpreadShot:
-                weapon.AddComponent<Spread>();
+                projectile = weapon.AddComponent<Spread>();
                 break;
             case MoveType.SpreadWall:
-                weapon.AddComponent<SpreadWall>();
+                projectile = weapon.AddComponent<SpreadWall>();
                 break;
             case MoveType.Laser:
-                weapon.AddComponent<LaserShoot>();
+                projectile = weapon.AddComponent<LaserShoot>();
                 break;
             case MoveType.Spawn:
-                weapon.AddComponent<Spawn>();
+                projectile = weapon.AddComponent<Spawn>();
                 break;
-
+            case MoveType.Parabola:
+                projectile = weapon.AddComponent<ParabolaShoot>();
+                break;
         }
+
 
         switch (weaponDataRef.WeaponAttckType)
         {
@@ -179,9 +182,12 @@ public class WeaponCreator : MonoBehaviour
         }
 
         aimer.LifeTime = weaponDataInStage.LifeTime;
-        aimer.Speed = weaponDataInStage.Speed;
         aimer.TotalCount = weaponDataInStage.BurstCount;
         aimer.Index = count;
+
+        projectile.Range = weaponDataInStage.Range;
+        projectile.Size = weaponDataInStage.Size;
+        projectile.Speed = weaponDataInStage.Speed;
 
         hit.Damage = weaponDataInStage.Damage;
         hit.PierceCount = weaponDataInStage.PierceCount;
@@ -191,8 +197,6 @@ public class WeaponCreator : MonoBehaviour
         hit.Impact = weaponDataInStage.Impact;
         hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
-
-        weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
         weapon.SetActive(true);
         weapons.Add(weapon);
 
@@ -220,22 +224,27 @@ public class WeaponCreator : MonoBehaviour
 
         foreach (var weapon in weapons)
         {
-            weapon.transform.localScale = new Vector3(weaponDataInStage.Range, weaponDataInStage.Range);
             aimer = weapon.GetComponent<IAimer>();
             aimer.LifeTime = weaponDataInStage.LifeTime;
-            aimer.Speed = weaponDataInStage.Speed;
+            aimer.TotalCount = weaponDataInStage.BurstCount;
+
+            projectile.Range = weaponDataInStage.Range;
+            projectile.Size = weaponDataInStage.Size;
+            projectile.Speed = weaponDataInStage.Speed;
 
             hit = weapon.GetComponent<IAttackable>();
             hit.Damage = weaponDataInStage.Damage;
             hit.PierceCount = weaponDataInStage.PierceCount;
             hit.CriticalChance = weaponDataInStage.CriticalChance;
             hit.CriticalValue = weaponDataInStage.CriticalValue;
+            hit.AttackRate = weaponDataInStage.BurstRate;
+            hit.Impact = weaponDataInStage.Impact;
         }
 
         levelUpReady = false;
     }
     
-    private void OptionsOnCreate(GameObject weapon)
+    private void OptionsOnCreate(GameObject weapon) //생성시 한번만 적용되는 옵션
     {
         foreach (var option in weaponDataInStage.Options)
         {
@@ -249,15 +258,14 @@ public class WeaponCreator : MonoBehaviour
 
             if (option == Option.SecondAttack)
             {
-
-                var enabler = weapon.AddComponent<EnableOnHit>();
+                var enabler = weapon.AddComponent<EnableOnDest>();
                 enabler.SecondWeapon = secondWeaponPrefab;
-                enabler.maxCount = 5;
+                enabler.maxCount = 3;
             }
         }
     }
 
-    private void OptionsOnEnable(GameObject weapon)
+    private void OptionsOnEnable(GameObject weapon) //재활용 될때마다 적용되는 옵션
     {
         foreach (var option in weaponDataInStage.Options)
         {
