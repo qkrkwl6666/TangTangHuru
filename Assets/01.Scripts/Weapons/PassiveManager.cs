@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class PassiveManager : MonoBehaviour
 {
-    WeaponData weaponData;
+    public List<PassiveData> passiveData;
+
+    private WeaponCreator[] weaponCreatorList;
 
     void Start()
     {
-        
+        weaponCreatorList = GetComponentsInParent<WeaponCreator>();
+    }
+
+    public void PassiveEquip()
+    {
+        for (int i = 0; i < weaponCreatorList.Length; i++)
+        {
+
+        }
     }
 
     // Update is called once per frame

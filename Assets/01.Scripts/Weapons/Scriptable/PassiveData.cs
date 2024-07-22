@@ -12,14 +12,16 @@ public class PassiveData : ScriptableObject
     }
     public enum PassiveUp
     {
-        Health,
         Damage,
-        Speed,
-        Range,
         CoolDown,
-        BurstCount,
-        PierceCount,
-        LifeTime,
+        CriticalChance,
+        CriticalValue,
+        //Health,
+        //Speed,
+        //Range,
+        //BurstCount,
+        //PierceCount,
+        //LifeTime,
     }
 
     [SerializeField]
