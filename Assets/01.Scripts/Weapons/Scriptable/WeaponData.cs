@@ -26,6 +26,7 @@ public class WeaponData : ScriptableObject
         Laser,
         Spawn,
         Parabola,
+        BackandForward,
     }
     public enum AttackType
     {
@@ -67,6 +68,11 @@ public class WeaponData : ScriptableObject
     private AttackType attackType;
     public AttackType WeaponAttckType { get { return attackType; } set { attackType = value; } }
 
+    [Header("(다단 히트의 경우) 공격 간격")]
+    [SerializeField]
+    private float singleAttackRate;
+    public float SingleAttackRate { get { return singleAttackRate; } set { singleAttackRate = value; } }
+
     [Header("대미지 관련 수치")]
     [SerializeField]
     private float damage;
@@ -79,20 +85,20 @@ public class WeaponData : ScriptableObject
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
 
+    [Header("근접 거리")]
+    [SerializeField]
+    private float range;
+    public float Range { get { return range; } set { range = value; } }
+
     [Header("넉백 크기")]
     [SerializeField]
     private float impact;
     public float Impact { get { return impact; } set { impact = value; } }
 
-    [Header("속도")]
+    [Header("투사체 속도")]
     [SerializeField]
     private float speed;
     public float Speed { get { return speed; } set { speed = value; } }
-
-    [Header("발사거리")]
-    [SerializeField]
-    private float range;
-    public float Range { get { return range; } set { range = value; } }
 
     [Header("투사체 크기")]
     [SerializeField]

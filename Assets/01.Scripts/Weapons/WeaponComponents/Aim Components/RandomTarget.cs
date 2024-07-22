@@ -9,7 +9,7 @@ public class RandomTarget : MonoBehaviour, IAimer
     public int TotalCount { get; set; }
     public int Index { get; set; }
 
-    private float range = 30f;
+    private float range = 20f;
 
     public LayerMask targetLayer;
 

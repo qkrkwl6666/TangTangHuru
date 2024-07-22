@@ -10,7 +10,12 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public MonsterView MonsterView { get; private set; }
     public Transform PlayerTransform { get; private set; }
 
+    private float currSpeed = 2f;
     private float moveSpeed = 2f;
+    private bool slowed = false;
+    private float slowTimer = 0;
+    private float slowTime = 0;
+
     public Monster Monster { get; private set; }
 
     public MonsterMoveType MoveType { get; private set; } = MonsterMoveType.Chase;
@@ -44,6 +49,17 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
 
         MonsterStateMachine.Update(Time.deltaTime);
+
+        if (slowed)
+        { 
+            slowTimer += Time.deltaTime;
+            if(slowTimer > slowTime)
+            {
+                currSpeed = moveSpeed;
+                slowed = false;
+                slowTimer = 0;
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -68,17 +84,32 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
         Vector2 dir = (PlayerTransform.position - transform.position).normalized;
 
-        transform.Translate(dir * deltaTime * moveSpeed);
+        transform.Translate(dir * deltaTime * currSpeed);
     }
 
     public void MoveToInitialPlayerPosition(float deltaTime)
     {
-        transform.Translate(playerDirection * deltaTime * moveSpeed);
+        transform.Translate(playerDirection * deltaTime * currSpeed);
     }
 
     public void IObserverUpdate()
     {
         PlayerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    public void Slow(float maxTime)
+    {
+        slowTimer = 0;
+        slowTime = maxTime;
+        currSpeed = moveSpeed * 0.5f;
+        slowed = true;
+    }
+    public void Stop(float maxTime)
+    {
+        slowTimer = 0;
+        slowTime = maxTime;
+        currSpeed = 0f;
+        slowed = true;
     }
 
     private void NuckBack(float impact)

@@ -12,6 +12,8 @@ public class AngularAim : MonoBehaviour, IAimer
     public int TotalCount { get; set; }
     public int Index { get; set; }
 
+    private Vector2 direction;
+
     private void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -19,9 +21,20 @@ public class AngularAim : MonoBehaviour, IAimer
 
     public Vector3 AimDirection()
     {
-        float angle = (360f / TotalCount) * Index;
+        float angle = 0f;
+        if (TotalCount == 2)
+        {
+            angle = (180f / TotalCount) * Index;
+
+        }
+        else
+        {
+            angle = (360f / TotalCount) * Index;
+
+        }
         angle *= Mathf.Deg2Rad;
-        Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         return direction;
     }
 }
+  

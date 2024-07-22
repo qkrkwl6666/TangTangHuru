@@ -48,7 +48,6 @@ public class WeaponCreator : MonoBehaviour
 
     IEnumerator Spawn()
     {
-
         yield return new WaitForSeconds(1.5f);
 
         while (gameObject.activeSelf)
@@ -165,6 +164,9 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.Parabola:
                 projectile = weapon.AddComponent<ParabolaShoot>();
                 break;
+            case MoveType.BackandForward:
+                projectile = weapon.AddComponent<BacknForward>();
+                break;
         }
 
 
@@ -193,7 +195,7 @@ public class WeaponCreator : MonoBehaviour
         hit.PierceCount = weaponDataInStage.PierceCount;
         hit.CriticalChance = weaponDataInStage.CriticalChance;
         hit.CriticalValue = weaponDataInStage.CriticalValue;
-        hit.AttackRate = weaponDataInStage.BurstRate;
+        hit.AttackRate = weaponDataInStage.SingleAttackRate;
         hit.Impact = weaponDataInStage.Impact;
         hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
@@ -237,7 +239,7 @@ public class WeaponCreator : MonoBehaviour
             hit.PierceCount = weaponDataInStage.PierceCount;
             hit.CriticalChance = weaponDataInStage.CriticalChance;
             hit.CriticalValue = weaponDataInStage.CriticalValue;
-            hit.AttackRate = weaponDataInStage.BurstRate;
+            hit.AttackRate = weaponDataInStage.SingleAttackRate;
             hit.Impact = weaponDataInStage.Impact;
         }
 
