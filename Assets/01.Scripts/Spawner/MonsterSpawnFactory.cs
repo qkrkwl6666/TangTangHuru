@@ -23,10 +23,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
     public int maxMonster = 200; // 필드 최대 몬스터 수
 
-    // 테스트용
-
-    public TextMeshProUGUI monsterCountText;
-
     // 장애물 관련 변수들
     private int obstaclesCount = 90; // 장애물 개수
     private float obstaclesRadius = 20f;
@@ -45,7 +41,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        monsterCountText.text = monsters.Count.ToString();
+        
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
@@ -92,6 +88,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                (x) => 
                { 
                    monsters.Add(x);
+                   x.GetComponent<LivingEntity>().AwakeHealth();
                    x.SetActive(true);
                },
                (x) => 

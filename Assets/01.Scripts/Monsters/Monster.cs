@@ -73,6 +73,8 @@ public class Monster : LivingEntity, IPlayerObserver
             onDeath();
         }
 
+        InGameInventory.OnCoinAdd?.Invoke((int)Gold);
+
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
         dead = true;

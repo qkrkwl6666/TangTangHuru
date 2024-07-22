@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +16,10 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     // 경험치 UI
     public Slider expBar;
-    // 경험치 UI
+    // 보스 체력 UI
     public Slider bossHpBar;
+    // 코인 UI
+    public TextMeshProUGUI coinText;
 
     private void Awake()
     {
@@ -55,6 +58,11 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     public void UpdateRadarBar(float value)
     {
         radarBar.value = value;
+    }
+
+    public void UpdateCoinValue(int value)
+    {
+        coinText.text = value.ToString();
     }
 
     public void IObserverUpdate()
