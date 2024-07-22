@@ -25,8 +25,6 @@ public class Monster : LivingEntity, IPlayerObserver
     {
         this.playerSubject = playerSubject;
     }
-
-
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
     {
         this.playerSubject = playerSubject;
@@ -48,6 +46,8 @@ public class Monster : LivingEntity, IPlayerObserver
         //Debug.Log("몬스터 경험치 할당 : " + Exp);
 
         playerSubject.AddObserver(this);
+
+        AwakeHealth();
     }
 
     private IObjectPool<GameObject> pool;

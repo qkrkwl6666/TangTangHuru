@@ -19,7 +19,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private MonsterSpawnFactory monsterSpawnFactory = null;
 
-
+    private InGameUI gameUI;
 
     private void Awake()
     {
@@ -27,6 +27,8 @@ public class MonsterSpawnManager : MonoBehaviour
             waveTable[GameManager.Instance.CurrentStage.ToString()];
 
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
+
+        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
 
         InitializeSpawnInfos();
 
@@ -111,6 +113,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
         Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) => 
         {
+            gameUI.SetActiveExpBar(false);
             playBoss = x.Result;
             Destroy(playBoss , 3f);
         };

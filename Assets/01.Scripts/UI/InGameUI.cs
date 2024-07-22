@@ -13,6 +13,11 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     // 레이더 UI
     public Slider radarBar;
 
+    // 경험치 UI
+    public Slider expBar;
+    // 경험치 UI
+    public Slider bossHpBar;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
@@ -22,9 +27,24 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         treasureBar.gameObject.SetActive(false);
     }
 
-    public void SetActiveTreasureBar(bool show)
+    public void SetActiveExpBar(bool active)
     {
-        treasureBar.gameObject.SetActive(show);
+        expBar.gameObject.SetActive(active);
+    }
+
+    public void SetActiveBossHpBar(bool active)
+    {
+        bossHpBar.gameObject.SetActive(active);
+    }
+
+    public void SetActiveTreasureBar(bool active)
+    {
+        treasureBar.gameObject.SetActive(active);
+    }
+
+    public void UpdateBossHpBar(float value)
+    {
+        bossHpBar.value = value;
     }
 
     public void UpdateTreasureBar(float value)

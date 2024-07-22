@@ -33,10 +33,14 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     Vector2 bossSpawnPosition = Vector2.zero;
 
+    private InGameUI gameUI;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
+
+        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
     private void Update()
@@ -174,6 +178,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 var monsterGo = x.Result;
                 monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
+
+                gameUI.SetActiveBossHpBar(true);  
             };
     }
 

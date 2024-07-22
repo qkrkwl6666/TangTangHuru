@@ -25,15 +25,12 @@ public class Boss : LivingEntity, IPlayerObserver
     // View
     private MonsterView monsterView;
 
+    private InGameUI gameUI;
+
     private void Awake()
     {
         monsterView = GetComponentInChildren<MonsterView>();
-    }
-
-    private void Start()
-    {
-        //currentState = walkState;
-        //currentState.Enter();
+        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
@@ -51,8 +48,9 @@ public class Boss : LivingEntity, IPlayerObserver
         skillState = new BossSkillState(this, monsterView);
 
         SetBossSkill(bossData);
-    }
 
+        AwakeHealth();
+    }
     public void SetBossSkill(BossData bossData)
     {
         var skillList = bossData.GetBossSkillId();
@@ -147,6 +145,13 @@ public class Boss : LivingEntity, IPlayerObserver
         currentState.Exit();
         currentState = bossState;
         currentState.Enter();
+    }
+
+    public override void OnDamage(float damage)
+    {
+        base.OnDamage(damage);
+
+        gameUI.UpdateBossHpBar(health / startingHealth);
     }
 
     public void IObserverUpdate()
