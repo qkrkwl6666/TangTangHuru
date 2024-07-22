@@ -14,6 +14,7 @@ public class InGameInventory : MonoBehaviour
         foreach (Transform image in transform) 
         {
             var im = image.GetComponent<Image>();
+            im.color = new Color(255f, 255f,255f ,0f);
             images.Add(im);
         }
     }
@@ -29,6 +30,7 @@ public class InGameInventory : MonoBehaviour
             Addressables.LoadAssetAsync<Sprite>(inGameItem.TextureId).Completed += (x) => 
             {
                 image.sprite = x.Result;
+                image.color = new Color(255f, 255f, 255f, 1f);
             };
 
             break;

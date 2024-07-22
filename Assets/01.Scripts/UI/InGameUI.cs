@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class InGameUI : MonoBehaviour, IPlayerObserver
 {
     public GameObject treasurePrefab;
-    public GameObject radarPrefab;
 
     private Transform playerTransform;
     private PlayerSubject playerSubject;
@@ -12,7 +11,7 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     // ∫∏π∞ ªÛ¿⁄ ≈âµÊ UI
     private Slider treasureBar;
     // ∑π¿Ã¥ı UI
-    private Slider radarBar;
+    public Slider radarBar;
 
     private void Awake()
     {
@@ -21,9 +20,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
         treasureBar = Instantiate(treasurePrefab, playerTransform).GetComponentInChildren<Slider>();
         treasureBar.gameObject.SetActive(false);
-
-        radarBar = Instantiate(radarPrefab, transform).GetComponentInChildren<Slider>();
-        //radarBar.gameObject.SetActive(false);
     }
 
     public void SetActiveTreasureBar(bool show)
