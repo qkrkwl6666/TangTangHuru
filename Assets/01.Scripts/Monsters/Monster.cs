@@ -14,7 +14,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public float Damage { get; private set; }
     public float Exp { get; private set; }
-    public float Gold { get; private set; }
+    public int Gold { get; private set; }
     public float TotalCooldown { get; private set; }
     public float Range { get; private set; }
 

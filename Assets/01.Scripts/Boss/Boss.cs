@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
 public class Boss : LivingEntity, IPlayerObserver
@@ -16,21 +17,25 @@ public class Boss : LivingEntity, IPlayerObserver
     private float damage = 0f;
     public float Speed { get; private set; } = 2f;
 
+    // 골드
+    public int Gold { get; private set; }
+
     // 보스 상태 패턴
     private BossState currentState;
 
     public BossWalkState walkState;
     public BossSkillState skillState;
+    public BossDeadState deadState;
 
     // View
     private MonsterView monsterView;
 
-    private InGameUI gameUI;
+    public InGameUI GameUI { get; private set; }
 
     private void Awake()
     {
         monsterView = GetComponentInChildren<MonsterView>();
-        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+        GameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
@@ -43,9 +48,11 @@ public class Boss : LivingEntity, IPlayerObserver
         damage = bossData.Boss_Damage;
         Cooldown = bossData.Boss_Cooldown;
         Speed = bossData.Boss_MoveSpeed;
+        Gold = bossData.Gold;
 
         walkState = new BossWalkState(this, monsterView);
         skillState = new BossSkillState(this, monsterView);
+        deadState = new BossDeadState(this, monsterView);
 
         SetBossSkill(bossData);
 
@@ -101,6 +108,8 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public void Update()
     {
+        if (currentState == null) return;
+
         currentState.Update(Time.deltaTime);
     }
 
@@ -146,12 +155,30 @@ public class Boss : LivingEntity, IPlayerObserver
         currentState = bossState;
         currentState.Enter();
     }
+    public override void Die()
+    {
+        base.Die();
+
+        InGameInventory.OnCoinAdd?.Invoke(Gold);
+
+        ChangeState(deadState);
+    }
+
+    public void BossDestory()
+    {
+        Destroy(gameObject);
+    }
+
+    public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
 
     public override void OnDamage(float damage)
     {
         base.OnDamage(damage);
 
-        gameUI.UpdateBossHpBar(health / startingHealth);
+        GameUI.UpdateBossHpBar(health / startingHealth);
     }
 
     public void IObserverUpdate()

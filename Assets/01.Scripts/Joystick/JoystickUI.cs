@@ -10,7 +10,6 @@ public class JoystickUI : MonoBehaviour
     public LayerMask worldLayerMask; // 월드 레이어 마스크
 
     private Vector2 pos;
-
     public Vector2 InputValue { get; private set; }
     private Vector2 startScreenPosition = Vector2.zero;
     private Vector2 currentScreenPosition = Vector3.zero;

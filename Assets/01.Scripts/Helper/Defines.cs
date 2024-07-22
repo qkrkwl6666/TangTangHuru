@@ -52,6 +52,7 @@ public static class Defines
     public static readonly string walk = "walk";
     public static readonly string attack = "attack";
     public static readonly string attack2 = "attack2";
+    public static readonly string dead = "dead";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new ();

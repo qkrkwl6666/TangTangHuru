@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour, IPlayerObserver
@@ -19,7 +20,19 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     // 보스 체력 UI
     public Slider bossHpBar;
     // 코인 UI
+    public GameObject coinUI;
+    // 코인 Text
     public TextMeshProUGUI coinText;
+
+    // 타이머 Text
+    public TextMeshProUGUI stageTimer;
+
+    // 게임 클리어 UI 
+    public GameObject clearUI;
+
+    // 조이스틱 UI
+    public GameObject joystickUI;
+    public GameObject circleUI;
 
     private void Awake()
     {
@@ -28,6 +41,22 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
         treasureBar = Instantiate(treasurePrefab, playerTransform).GetComponentInChildren<Slider>();
         treasureBar.gameObject.SetActive(false);
+    }
+
+    public void ActiveGameClearUI()
+    {
+        bossHpBar.gameObject.SetActive(false);
+        radarBar.gameObject.SetActive(false);
+        coinUI.gameObject.SetActive(false);
+        stageTimer.gameObject.SetActive(false);
+        joystickUI.gameObject.SetActive(false);
+        circleUI.gameObject.SetActive(false);
+
+        clearUI.gameObject.SetActive(true);
+    }
+    public void MainMenuButton()
+    {
+        SceneManager.LoadScene("Main");
     }
 
     public void SetActiveExpBar(bool active)
