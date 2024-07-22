@@ -167,6 +167,9 @@ public class WeaponCreator : MonoBehaviour
             case MoveType.BackandForward:
                 projectile = weapon.AddComponent<BacknForward>();
                 break;
+            case MoveType.Reflecting:
+                projectile = weapon.AddComponent<ReflectingShoot>();
+                break;
         }
 
 

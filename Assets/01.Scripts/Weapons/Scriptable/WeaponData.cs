@@ -27,6 +27,7 @@ public class WeaponData : ScriptableObject
         Spawn,
         Parabola,
         BackandForward,
+        Reflecting,
     }
     public enum AttackType
     {

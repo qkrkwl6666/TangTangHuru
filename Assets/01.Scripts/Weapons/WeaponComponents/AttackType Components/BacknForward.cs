@@ -42,14 +42,14 @@ public class BacknForward : MonoBehaviour, IProjectile
         timer += Time.deltaTime;
         float lerpTime = timer / ForwardTime;
 
-        transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, lerpTime));
-
         if (timer >= ForwardTime)
         {
             movingForward = !movingForward;
             timer = 0f;
             UpdatePositions();
         }
+
+        transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, lerpTime));
     }
 
 
