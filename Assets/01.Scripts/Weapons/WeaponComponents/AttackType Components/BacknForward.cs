@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class BacknForward : MonoBehaviour, IProjectile
@@ -14,7 +11,7 @@ public class BacknForward : MonoBehaviour, IProjectile
     public float Size { get; set; }
     public float Speed { get; set; }
 
-    public float ForwardTime = 0.7f;     // 전진 시간
+    public float ForwardTime = 0.5f;     // 전진 시간
 
     private Transform parentTransform;
     private bool movingForward = true; // 현재 전진 중인지 후진 중인지
@@ -47,7 +44,6 @@ public class BacknForward : MonoBehaviour, IProjectile
 
         transform.position = Vector3.Lerp(startPosition, endPosition, Mathf.SmoothStep(0f, 1f, lerpTime));
 
-
         if (timer >= ForwardTime)
         {
             movingForward = !movingForward;
@@ -60,8 +56,8 @@ public class BacknForward : MonoBehaviour, IProjectile
     private void UpdatePositions()
     {
         startPosition = transform.position;
-        endPosition = movingForward 
-            ? parentTransform.position + currAimer.AimDirection() * Speed
-            : parentTransform.position - currAimer.AimDirection() * Speed;
+        endPosition = movingForward
+            ? parentTransform.position + currAimer.AimDirection() * Range
+            : parentTransform.position - currAimer.AimDirection() * Range;
     }
 }
