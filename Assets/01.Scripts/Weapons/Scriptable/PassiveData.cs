@@ -24,6 +24,7 @@ public class PassiveData : ScriptableObject
         //LifeTime,
     }
 
+    [Header("이름 및 타입")]
     [SerializeField]
     private string passiveName;
     public string PassiveName { get { return passiveName; } }
@@ -31,11 +32,29 @@ public class PassiveData : ScriptableObject
     [SerializeField]
     private PassiveType itemType;
     public PassiveType ItemType { get { return itemType; } }
+
+    [Header("레벨")]
+    private int level;
+    public int Level { get { return level; } set { level = value; } } 
+
+    [Header("대미지 크기")]
     [SerializeField]
-    private List<PassiveUp> passives;
-    public List<PassiveUp> Passives { get { return passives; } }
+    private float damage;
+    public float Damage { get { return damage; } set { damage = value; } }
+
+    [Header("발사 대기시간 감소량")]
+    [SerializeField]
+    private float coolDown;
+    public float CoolDown { get { return coolDown; } set { coolDown = value; } }
+
+    [Header("치명타 관련 항목")]
+    [SerializeField]
+    private float criticalChance;
+    public float CriticalChance { get { return criticalChance; } set { criticalChance = value; } }
 
     [SerializeField]
-    private List<float> passives_Value;
-    public List<float> Passives_Value { get { return passives_Value; } }
+    private float criticalValue;
+    public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
+
+
 }

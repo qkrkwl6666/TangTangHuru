@@ -5,7 +5,7 @@ using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
 {
-    //쿨타임마다, 연속발사 개수만큼 무기를 생성'만' 한다.
+    //쿨타임마다, 연속발사 개수만큼 무기를 생성하거나 기존 무기를 활성화한다.
     //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
     public GameObject weaponPrefab;
@@ -24,10 +24,15 @@ public class WeaponCreator : MonoBehaviour
 
     private bool levelUpReady = false;
 
+    public PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
+    public PassiveData commonPassive;
+
 
     private void Awake()
     {
         weaponDataInStage = Instantiate(weaponDataRef);
+        typePassive = Instantiate(typePassive);
+        commonPassive = Instantiate(commonPassive);
     }
 
     private void Start()
@@ -95,7 +100,7 @@ public class WeaponCreator : MonoBehaviour
             {
                 LevelUp();
             }
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown * typePassive.CoolDown);
         }
     }
 
@@ -164,7 +169,12 @@ public class WeaponCreator : MonoBehaviour
                 projectile = weapon.AddComponent<ParabolaShoot>();
                 break;
             case MoveType.BackandForward:
-                projectile = weapon.AddComponent<BacknForwardRound>();
+                projectile = weapon.AddComponent<ParabolaRotate>();
+                weapon.GetComponent<ParabolaRotate>().angleOffset = 0f;
+                break;
+            case MoveType.ParabolaRotate:
+                projectile = weapon.AddComponent<ParabolaRotate>();
+                weapon.GetComponent<ParabolaRotate>().angleOffset = 30f;
                 break;
             case MoveType.Reflecting:
                 projectile = weapon.AddComponent<ReflectingShoot>();
@@ -185,21 +195,7 @@ public class WeaponCreator : MonoBehaviour
                 break;
         }
 
-        aimer.LifeTime = weaponDataInStage.LifeTime;
-        aimer.TotalCount = weaponDataInStage.BurstCount;
         aimer.Index = count;
-
-        projectile.Range = weaponDataInStage.Range;
-        projectile.Size = weaponDataInStage.Size;
-        projectile.Speed = weaponDataInStage.Speed;
-
-        hit.Damage = weaponDataInStage.Damage;
-        hit.PierceCount = weaponDataInStage.PierceCount;
-        hit.CriticalChance = weaponDataInStage.CriticalChance;
-        hit.CriticalValue = weaponDataInStage.CriticalValue;
-        hit.AttackRate = weaponDataInStage.SingleAttackRate;
-        hit.Impact = weaponDataInStage.Impact;
-        hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
         SetWeaponData();
 
@@ -224,10 +220,10 @@ public class WeaponCreator : MonoBehaviour
             projectile.Speed = weaponDataInStage.Speed;
 
             hit = weapon.GetComponent<IAttackable>();
-            hit.Damage = weaponDataInStage.Damage;
+            hit.Damage = weaponDataInStage.Damage + typePassive.Damage;
             hit.PierceCount = weaponDataInStage.PierceCount;
-            hit.CriticalChance = weaponDataInStage.CriticalChance;
-            hit.CriticalValue = weaponDataInStage.CriticalValue;
+            hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
+            hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
             hit.AttackRate = weaponDataInStage.SingleAttackRate;
             hit.Impact = weaponDataInStage.Impact;
             hit.AttackableLayer = LayerMask.GetMask("Enemy");

@@ -4,6 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "Scriptable Object/Weapon Data", order = int.MaxValue)]
 public class WeaponData : ScriptableObject
 {
+    public enum Type
+    {
+        PowerType,
+        SpeedType,
+    }
     public enum AimType
     {
         Auto,
@@ -27,6 +32,7 @@ public class WeaponData : ScriptableObject
         Spawn,
         Parabola,
         BackandForward,
+        ParabolaRotate,
         Reflecting,
     }
     public enum AttackType
@@ -45,7 +51,7 @@ public class WeaponData : ScriptableObject
     }
 
 
-    [Header("이름 및 레벨")]
+    [Header("이름, 레벨, 타입")]
     [SerializeField]
     private string weaponName;
     public string WeaponName { get { return weaponName; } }
@@ -53,6 +59,10 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private int level;
     public int Level { get { return level; } set { level = value; } }
+
+    [SerializeField]
+    private Type weaponType;
+    public Type WeaponType { get { return weaponType; } set { weaponType = value; } }
 
     [Header("조준 방식")]
     [SerializeField]
