@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using System.Xml;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss : LivingEntity, IPlayerObserver
@@ -7,27 +10,58 @@ public class Boss : LivingEntity, IPlayerObserver
     private IBossSkill currentSkill = null;
 
     private PlayerSubject playerSubject;
-    private Transform playerTransform;
+    public Transform PlayerTransform { get; private set; }
 
     private float totalProbability = 0f;
-    private float cooldown = 2f;
+    public float Cooldown { get; private set; } = 2f;
     private float time = 0f;
 
     private float damage = 0f;
-    private float speed = 0f;
+    public float Speed { get; private set; } = 2f;
+
+    public static Action OnDead;
+
+    // 골드
+    public int Gold { get; private set; }
+
+    // 보스 상태 패턴
+    private BossState currentState;
+
+    public BossWalkState walkState;
+    public BossSkillState skillState;
+    public BossDeadState deadState;
+
+    // View
+    private MonsterView monsterView;
+
+    public InGameUI GameUI { get; private set; }
+
+    private void Awake()
+    {
+        monsterView = GetComponentInChildren<MonsterView>();
+        GameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+    }
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
     {
         this.playerSubject = playerSubject;
 
+        playerSubject.AddObserver(this);
+
         startingHealth = bossData.Boss_Hp;
         damage = bossData.Boss_Damage;
-        cooldown = bossData.Boss_Cooldown;
-        speed = bossData.Boss_MoveSpeed;
+        Cooldown = bossData.Boss_Cooldown;
+        Speed = bossData.Boss_MoveSpeed;
+        Gold = bossData.Gold;
+
+        walkState = new BossWalkState(this, monsterView);
+        skillState = new BossSkillState(this, monsterView);
+        deadState = new BossDeadState(this, monsterView);
 
         SetBossSkill(bossData);
-    }
 
+        AwakeHealth();
+    }
     public void SetBossSkill(BossData bossData)
     {
         var skillList = bossData.GetBossSkillId();
@@ -42,14 +76,14 @@ public class Boss : LivingEntity, IPlayerObserver
                     {
                         var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
 
-                        bn.SetCountScale(20, 0.2f);
+                        bn.SetCountScale(10, 0.1f);
                     }
                     break;
                 case 500002:
                     {
                         var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
 
-                        bn.SetCountScale(40, 0.15f);
+                        bn.SetCountScale(20, 0.07f);
                     }
                     break;
                 case 500003:
@@ -57,10 +91,16 @@ public class Boss : LivingEntity, IPlayerObserver
                         var bn = AddSkill<BarrageSnail>(skill.Item1, skill.Item2);
                     }
                     break;
+                case 500004:
+                    {
+                        var bn = AddSkill<Rush>(skill.Item1, skill.Item2);
+                    }
+                    break;
             }
         }
 
-        SelectSkill();
+        currentState = walkState;
+        currentState.Enter();
     }
 
     private T AddSkill<T>(int skillId, float probability) where T : Component, IBossSkill
@@ -77,24 +117,19 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public void Update()
     {
-        if (currentSkill.IsChange)
-        {
-            time += Time.deltaTime;
-            
-            if (time >= cooldown)
-            {
-                SelectSkill();
-            }
-        }
-        else
-        {
-            currentSkill?.SkillUpdate(Time.deltaTime);
-        }
+        if (currentState == null) return;
 
-        
+        currentState.Update(Time.deltaTime);
     }
 
-    public void SelectSkill()
+    private void FixedUpdate()
+    {
+        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
+
+        monsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
+    }
+
+    public IBossSkill SelectSkill()
     {
         if (currentSkill != null)
         {
@@ -104,7 +139,7 @@ public class Boss : LivingEntity, IPlayerObserver
         time = 0f;
         currentSkill = null;
 
-        float random = Random.Range(0, totalProbability);
+        float random = UnityEngine.Random.Range(0, totalProbability);
 
         float currentProbability = 0f;
 
@@ -119,10 +154,50 @@ public class Boss : LivingEntity, IPlayerObserver
                 break;
             }
         }
+
+        return currentSkill;
+    }
+
+    public void ChangeState(BossState bossState)
+    {
+        currentState.Exit();
+        currentState = bossState;
+        currentState.Enter();
+    }
+    public override void Die()
+    {
+        base.Die();
+
+        InGameInventory.OnCoinAdd?.Invoke(Gold);
+        OnDead?.Invoke();
+
+        ChangeState(deadState);
+    }
+
+    public void BossDestory()
+    {
+        Destroy(gameObject);
+    }
+
+    public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
+
+    public override void OnDamage(float damage)
+    {
+        base.OnDamage(damage);
+
+        GameUI.UpdateBossHpBar(health / startingHealth);
     }
 
     public void IObserverUpdate()
     {
-        playerTransform = playerSubject.GetPlayerTransform;
+        PlayerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    public void OnDestroy()
+    {
+        OnDead = null;
     }
 }
