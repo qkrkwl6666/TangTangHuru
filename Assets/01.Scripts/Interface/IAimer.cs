@@ -5,6 +5,7 @@ public interface IAimer
     GameObject Player { get; }
 
     float LifeTime { get; set; }
+    float Speed { get; set; }
     int TotalCount { get; set; }
     int Index {  get; set; }
 

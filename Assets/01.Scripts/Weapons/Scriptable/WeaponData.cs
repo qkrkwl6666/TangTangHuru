@@ -4,36 +4,23 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Data", menuName = "Scriptable Object/Weapon Data", order = int.MaxValue)]
 public class WeaponData : ScriptableObject
 {
-    public enum Type
-    {
-        PowerType,
-        SpeedType,
-    }
     public enum AimType
     {
         Auto,
         Manual,
         Fixed,
+        Spawn,
         Player,
-        RandomTarget,
-        RandomSeed,
-        Angular,
     }
     public enum MoveType
     {
         Melee,
         Shoot,
-        WaveShot,
+        WaveShoot,
         Rotate,
         Fixed,
-        SpreadShot,
-        SpreadWall,
+        Spread,
         Laser,
-        Spawn,
-        Parabola,
-        BackandForward,
-        ParabolaRotate,
-        Reflecting,
     }
     public enum AttackType
     {
@@ -47,11 +34,10 @@ public class WeaponData : ScriptableObject
         SizeUp,
         SizeDown,
         Randomizer,
-        SecondAttack,
     }
 
 
-    [Header("이름, 레벨, 타입")]
+    [Header("이름 및 레벨")]
     [SerializeField]
     private string weaponName;
     public string WeaponName { get { return weaponName; } }
@@ -59,10 +45,6 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private int level;
     public int Level { get { return level; } set { level = value; } }
-
-    [SerializeField]
-    private Type weaponType;
-    public Type WeaponType { get { return weaponType; } set { weaponType = value; } }
 
     [Header("조준 방식")]
     [SerializeField]
@@ -79,11 +61,6 @@ public class WeaponData : ScriptableObject
     private AttackType attackType;
     public AttackType WeaponAttckType { get { return attackType; } set { attackType = value; } }
 
-    [Header("(다단 히트의 경우) 공격 간격")]
-    [SerializeField]
-    private float singleAttackRate;
-    public float SingleAttackRate { get { return singleAttackRate; } set { singleAttackRate = value; } }
-
     [Header("대미지 관련 수치")]
     [SerializeField]
     private float damage;
@@ -96,25 +73,14 @@ public class WeaponData : ScriptableObject
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
 
-    [Header("근접 거리")]
-    [SerializeField]
-    private float range;
-    public float Range { get { return range; } set { range = value; } }
-
-    [Header("넉백 크기")]
-    [SerializeField]
-    private float impact;
-    public float Impact { get { return impact; } set { impact = value; } }
-
-    [Header("투사체 속도")]
+    [Header("속도 및 범위(투사체 크기)")]
     [SerializeField]
     private float speed;
     public float Speed { get { return speed; } set { speed = value; } }
 
-    [Header("투사체 크기")]
     [SerializeField]
-    private float size;
-    public float Size { get { return size; } set { size = value; } }
+    private float range;
+    public float Range { get { return range; } set { range = value; } }
 
     [Header("투사체 유지시간")]
     [SerializeField]
@@ -134,6 +100,7 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float burstRate;
     public float BurstRate { get {  return burstRate; } set { burstRate = value; } }
+
 
     [Header("관통 회수")]
     [SerializeField]

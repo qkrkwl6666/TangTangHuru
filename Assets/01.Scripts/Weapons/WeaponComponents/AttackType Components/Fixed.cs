@@ -1,16 +1,14 @@
 using UnityEngine;
 
-public class Fixed : MonoBehaviour, IProjectile
+public class Fixed : MonoBehaviour
 {
+    public float range = 2f;
+
     float timer = 0f;
 
     IAimer currAimer;
     Vector3 dir;
     Vector3 prevDir = Vector3.zero;
-
-    public float Range { get; set; }
-    public float Size { get; set; }
-    public float Speed { get; set; }
 
     void Awake()
     {
@@ -23,7 +21,6 @@ public class Fixed : MonoBehaviour, IProjectile
         if (currAimer == null)
             return;
 
-        transform.localScale = new Vector3(Size, Size);
         dir = currAimer.AimDirection();
 
         if (dir == Vector3.zero)
@@ -34,7 +31,7 @@ public class Fixed : MonoBehaviour, IProjectile
         {
             prevDir = dir;
         }
-        dir *= (Range);
+        dir *= (range + 1);
 
         transform.position = currAimer.Player.transform.position + dir;
         transform.up = dir;

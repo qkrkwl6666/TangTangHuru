@@ -1,6 +1,4 @@
-using System.Drawing;
 using UnityEngine;
-using Color = UnityEngine.Color;
 
 public class WeaponFadeInOut : MonoBehaviour
 {
@@ -11,53 +9,84 @@ public class WeaponFadeInOut : MonoBehaviour
     public float fadeInDuration = 0.3f;
     public float fadeOutDuration = 0.5f;
 
-    private float timer = 0f;
+    float timer = 0f;
+
+    bool fadingIn = true;
+    bool fadingOut = false;
 
     void Start()
     {
-        currAimer = GetComponentInParent<IAimer>();
+        currAimer = GetComponent<IAimer>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         timer = 0f;
     }
 
-    private void OnEnable()
+    private void OnDisable()
     {
         ResetEffect();
     }
 
     private void Update()
     {
-        if (timer <= fadeInDuration)
+        if (fadingIn)
         {
             FadeIn();
         }
-        else if (timer > currAimer.LifeTime - fadeOutDuration && timer < currAimer.LifeTime)
+        else
+        {
+            timer += Time.deltaTime;
+        }
+
+        if (timer > currAimer.LifeTime - fadeOutDuration)
+        {
+            fadingOut = true;
+            timer = 0f;
+        }
+
+        if (fadingOut)
         {
             FadeOut();
         }
-
-        timer += Time.deltaTime;
     }
+
 
     private void ResetEffect()
     {
         timer = 0f;
+        fadingIn = true;
+        fadingOut = false;
     }
 
     private void FadeIn()
     {
+        timer += Time.deltaTime;
         float alpha = Mathf.Lerp(0f, maxAlpha, timer / fadeInDuration);
         Color color = spriteRenderer.color;
         color.a = alpha;
         spriteRenderer.color = color;
+
+        if (timer >= fadeInDuration)
+        {
+            fadingIn = false;
+            color.a = maxAlpha;
+            spriteRenderer.color = color;
+        }
     }
 
     private void FadeOut()
     {
-        float alpha = Mathf.Lerp(maxAlpha, 0f, (timer - (currAimer.LifeTime - fadeOutDuration)) / fadeOutDuration);
+        timer += Time.deltaTime;
+        float alpha = Mathf.Lerp(maxAlpha, 0f, timer / fadeOutDuration);
         Color color = spriteRenderer.color;
         color.a = alpha;
         spriteRenderer.color = color;
+
+        if (timer >= fadeOutDuration)
+        {
+            fadingOut = false;
+            color.a = 0f;
+            spriteRenderer.color = color;
+        }
     }
 
 }

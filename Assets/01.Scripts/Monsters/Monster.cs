@@ -11,6 +11,7 @@ public enum MonsterType
 public class Monster : LivingEntity, IPlayerObserver
 {
     public float MoveSpeed { get; private set; }
+
     public float Damage { get; private set; }
     public float Exp { get; private set; }
     public int Gold { get; private set; }

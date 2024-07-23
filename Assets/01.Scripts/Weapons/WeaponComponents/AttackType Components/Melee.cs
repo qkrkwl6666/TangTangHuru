@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class Melee : MonoBehaviour, IProjectile
+public class Melee : MonoBehaviour
 {
+    public float range = 2f;
+
     float timer = 0f;
 
     IAimer currAimer;
     Vector3 dir;
-
-    public float Range { get; set; }
-    public float Size { get; set; }
-    public float Speed { get; set; }
 
     void Awake()
     {
@@ -26,12 +24,8 @@ public class Melee : MonoBehaviour, IProjectile
         {
             dir = Vector3.zero; //방향이 플레이어 위치면 dir 0으로 설정. 중심에서 따라다니는 스킬
         }
-        else
-        {
-            dir = dir.normalized;
-        }
-        dir *= Range;
-        transform.localScale = new Vector3(Size, Size);
+
+        dir *= range;
     }
 
     private void OnDisable()

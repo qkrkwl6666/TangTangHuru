@@ -37,7 +37,7 @@ public class Barrage : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<IDamagable>().OnDamage(damage, 0);
+            other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
         }
     }
 

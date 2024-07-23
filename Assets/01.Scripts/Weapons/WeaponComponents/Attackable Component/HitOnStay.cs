@@ -9,7 +9,6 @@ public class HitOnStay : MonoBehaviour, IAttackable
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
     public float AttackRate { get; set; }
-    public float Impact { get; set; }
 
     private float timer = 0f;
     private bool attackReady = true;
@@ -85,7 +84,7 @@ public class HitOnStay : MonoBehaviour, IAttackable
             TotalDamage = Damage;
         }
 
-        other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage, Impact);
+        other.gameObject.GetComponent<IDamagable>().OnDamage(TotalDamage);
 
         if (pierce > 0)
         {

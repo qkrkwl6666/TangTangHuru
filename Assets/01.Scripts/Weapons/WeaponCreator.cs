@@ -5,40 +5,32 @@ using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
 {
-    //쿨타임마다, 연속발사 개수만큼 무기를 생성하거나 기존 무기를 활성화한다.
+    //쿨타임마다, 연속발사 개수만큼 무기를 생성'만' 한다.
     //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
     public GameObject weaponPrefab;
     public WeaponData weaponDataRef; //무기 원본 데이터
-    public GameObject secondWeaponPrefab;
 
-    private WeaponData weaponDataInStage; //강화에 의해 변경되는 스테이지 내 데이터
+    private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
+
     private List<GameObject> weapons = new List<GameObject>();
-    private WeaponUpgrader weaponUpgrader;
-
     private IAimer aimer;
-    private IProjectile projectile;
     private IAttackable hit;
+
+    private WeaponUpgrader weaponUpgrader;
 
     private IEnumerator SpawnCoroutine;
 
-    private bool levelUpReady = false;
-
-    private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
-    private PassiveData commonPassive;
-
+    public bool levelUpReady = false;
 
     private void Awake()
     {
-
+        weaponDataInStage = Instantiate(weaponDataRef);
     }
 
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
-        weaponDataInStage = Instantiate(weaponDataRef);
-        typePassive = new EmptyPassiveData();
-        commonPassive = new EmptyPassiveData();
     }
 
     private void OnEnable()
@@ -68,15 +60,13 @@ public class WeaponCreator : MonoBehaviour
                     aimer.TotalCount = weaponDataInStage.BurstCount;
                     aimer.Index = index;
 
-                    SetWeaponData();
-
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
 
                     index++;
                 }
 
-                OptionsOnEnable(weapon);
+                Options(weapon);
 
                 if (index >= weaponDataInStage.BurstCount)
                     break;
@@ -86,7 +76,6 @@ public class WeaponCreator : MonoBehaviour
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
-
 
             while (index < weaponDataInStage.BurstCount)
             {
@@ -98,12 +87,11 @@ public class WeaponCreator : MonoBehaviour
                 }
             }
 
-
             if (levelUpReady)
             {
                 LevelUp();
             }
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown - typePassive.CoolDown);
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
         }
     }
 
@@ -127,63 +115,34 @@ public class WeaponCreator : MonoBehaviour
             case AimType.Player:
                 aimer = weapon.AddComponent<PlayerAim>();
                 break;
-            case AimType.RandomTarget:
-                aimer = weapon.AddComponent<RandomTarget>();
-                break;
-            case AimType.RandomSeed:
-                aimer = weapon.AddComponent<RandomSeed>();
-                break;
-            case AimType.Angular:
-                aimer = weapon.AddComponent<AngularAim>();
-                break;
-
         }
+
 
         switch (weaponDataRef.WeaponMoveType)
         {
             case MoveType.Melee:
-                projectile = weapon.AddComponent<Melee>();
+                var melee = weapon.AddComponent<Melee>();
+                melee.range = weaponDataInStage.Range;
                 break;
             case MoveType.Shoot:
-                projectile = weapon.AddComponent<Shoot>();
+                weapon.AddComponent<Shoot>();
                 break;
-            case MoveType.WaveShot:
-                projectile = weapon.AddComponent<WaveShoot>();
+            case MoveType.WaveShoot:
+                weapon.AddComponent<WaveShoot>();
                 break;
             case MoveType.Rotate:
-                projectile = weapon.AddComponent<Rotate>();
+                var rotate = weapon.AddComponent<Rotate>();
                 break;
             case MoveType.Fixed:
-                projectile = weapon.AddComponent<Fixed>();
+                weapon.AddComponent<Fixed>();
                 break;
-            case MoveType.SpreadShot:
-                projectile = weapon.AddComponent<Spread>();
-                break;
-            case MoveType.SpreadWall:
-                projectile = weapon.AddComponent<SpreadWall>();
+            case MoveType.Spread:
+                var spread = weapon.AddComponent<Spread>();
                 break;
             case MoveType.Laser:
-                projectile = weapon.AddComponent<LaserShoot>();
-                break;
-            case MoveType.Spawn:
-                projectile = weapon.AddComponent<Spawn>();
-                break;
-            case MoveType.Parabola:
-                projectile = weapon.AddComponent<ParabolaShoot>();
-                break;
-            case MoveType.BackandForward:
-                projectile = weapon.AddComponent<ParabolaRotate>();
-                weapon.GetComponent<ParabolaRotate>().angleOffset = 0f;
-                break;
-            case MoveType.ParabolaRotate:
-                projectile = weapon.AddComponent<ParabolaRotate>();
-                weapon.GetComponent<ParabolaRotate>().angleOffset = 30f;
-                break;
-            case MoveType.Reflecting:
-                projectile = weapon.AddComponent<ReflectingShoot>();
+                weapon.AddComponent<LaserShoot>();
                 break;
         }
-
 
         switch (weaponDataRef.WeaponAttckType)
         {
@@ -198,39 +157,34 @@ public class WeaponCreator : MonoBehaviour
                 break;
         }
 
+        aimer.LifeTime = weaponDataInStage.LifeTime;
+        aimer.Speed = weaponDataInStage.Speed;
+        aimer.TotalCount = weaponDataInStage.BurstCount;
         aimer.Index = count;
+
+        hit.Damage = weaponDataInStage.Damage;
+        hit.PierceCount = weaponDataInStage.PierceCount;
+        hit.CriticalChance = weaponDataInStage.CriticalChance;
+        hit.CriticalValue = weaponDataInStage.CriticalValue;
+        hit.AttackRate = weaponDataInStage.BurstRate;
+        hit.AttackableLayer = LayerMask.GetMask("Enemy");
+
+        foreach (var option in weaponDataInStage.Options)
+        {
+            if (option == Option.FadeInOut)
+            {
+                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
+                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
+                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
+                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
+            }
+        }
+
+        weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
+        weapon.SetActive(true);
         weapons.Add(weapon);
 
-        SetWeaponData();
-
-        OptionsOnCreate(weapon);
-        OptionsOnEnable(weapon);
-
-        weapon.SetActive(true);
-    }
-
-    public void SetWeaponData()
-    {
-        foreach (var weapon in weapons)
-        {
-            aimer = weapon.GetComponent<IAimer>();
-            aimer.LifeTime = weaponDataInStage.LifeTime;
-            aimer.TotalCount = weaponDataInStage.BurstCount;
-
-            projectile = weapon.GetComponent<IProjectile>();
-            projectile.Range = weaponDataInStage.Range;
-            projectile.Size = weaponDataInStage.Size;
-            projectile.Speed = weaponDataInStage.Speed;
-
-            hit = weapon.GetComponent<IAttackable>();
-            hit.Damage = weaponDataInStage.Damage + typePassive.Damage;
-            hit.PierceCount = weaponDataInStage.PierceCount;
-            hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
-            hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
-            hit.AttackRate = weaponDataInStage.SingleAttackRate;
-            hit.Impact = weaponDataInStage.Impact;
-            hit.AttackableLayer = LayerMask.GetMask("Enemy");
-        }
+        Options(weapon);
     }
 
     public void LevelUpReady()
@@ -251,33 +205,24 @@ public class WeaponCreator : MonoBehaviour
             weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
         }
 
-        SetWeaponData();
+        foreach (var weapon in weapons)
+        {
+            weapon.transform.localScale = new Vector3(weaponDataInStage.Range, weaponDataInStage.Range);
+            aimer = weapon.GetComponent<IAimer>();
+            aimer.LifeTime = weaponDataInStage.LifeTime;
+            aimer.Speed = weaponDataInStage.Speed;
+
+            hit = weapon.GetComponent<IAttackable>();
+            hit.Damage = weaponDataInStage.Damage;
+            hit.PierceCount = weaponDataInStage.PierceCount;
+            hit.CriticalChance = weaponDataInStage.CriticalChance;
+            hit.CriticalValue = weaponDataInStage.CriticalValue;
+        }
 
         levelUpReady = false;
     }
-
-    private void OptionsOnCreate(GameObject weapon) //생성시 한번만 적용되는 옵션
-    {
-        foreach (var option in weaponDataInStage.Options)
-        {
-            if (option == Option.FadeInOut)
-            {
-                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
-                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
-                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
-                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
-            }
-
-            if (option == Option.SecondAttack)
-            {
-                var enabler = weapon.AddComponent<EnableOnDest>();
-                enabler.SecondWeapon = secondWeaponPrefab;
-                enabler.maxCount = 3;
-            }
-        }
-    }
-
-    private void OptionsOnEnable(GameObject weapon) //재활용 될때마다 적용되는 옵션
+      
+    private void Options(GameObject weapon)
     {
         foreach (var option in weaponDataInStage.Options)
         {
@@ -286,11 +231,5 @@ public class WeaponCreator : MonoBehaviour
                 weapon.transform.position += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1));
             }
         }
-    }
-
-    public void SetPassive(PassiveData typePassive, PassiveData commonPassive)
-    {
-        this.typePassive = typePassive;
-        this.commonPassive = commonPassive;
     }
 }
