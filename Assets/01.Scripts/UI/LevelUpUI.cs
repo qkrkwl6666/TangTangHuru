@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class LevelUpUI : MonoBehaviour
 
     private void OnEnable()
     {
+        foreach (GameObject levelUpButton in levelUpButtons)
+        {
+        }
     }
 
 }
