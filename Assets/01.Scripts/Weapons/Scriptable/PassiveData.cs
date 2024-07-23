@@ -34,6 +34,7 @@ public class PassiveData : ScriptableObject
     public PassiveType ItemType { get { return itemType; } }
 
     [Header("·¹º§")]
+    [SerializeField]
     private int level;
     public int Level { get { return level; } set { level = value; } } 
 

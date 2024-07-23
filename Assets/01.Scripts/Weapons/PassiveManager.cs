@@ -8,8 +8,10 @@ public class PassiveManager : MonoBehaviour
     private List<WeaponCreator> weaponCreators;
 
     public List<PassiveData> passiveDataList;
-    private List<PassiveData> currPassiveList;
+    private List<PassiveData> currPassiveList = new();
 
+    public PassiveData passiveData;
+    
     PassiveData totalPowerPassive;
     PassiveData totalSpeedPassive;
     PassiveData totalNoneTypePassive;
@@ -17,12 +19,14 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
-
+        totalPowerPassive = Instantiate(passiveData);
+        totalSpeedPassive = Instantiate(passiveData);
+        totalNoneTypePassive = Instantiate(passiveData);
     }
     public void PassiveAdd()
     {
         currPassiveList.Add(passiveDataList[0]);
-        PassiveTotal();
+        SetTotalPassive();
         PassiveEquip();
     }
 
@@ -33,22 +37,20 @@ public class PassiveManager : MonoBehaviour
             switch (weaponCreator.weaponDataRef.WeaponType)
             {
                 case WeaponData.Type.PowerType:
-                    weaponCreator.typePassive = totalPowerPassive;
+                    weaponCreator.SetPassive(totalPowerPassive, totalNoneTypePassive);
                     break;
                 case WeaponData.Type.SpeedType:
-                    weaponCreator.typePassive = totalSpeedPassive;
+                    weaponCreator.SetPassive(totalSpeedPassive, totalNoneTypePassive);
                     break;
             }
-
-            weaponCreator.commonPassive = totalNoneTypePassive;
         }
     }
 
-    public void PassiveTotal()
+    public void SetTotalPassive()
     {
-        totalPowerPassive = new PassiveData();
-        totalSpeedPassive = new PassiveData();
-        totalNoneTypePassive = new PassiveData();
+        ClearData(totalPowerPassive);
+        ClearData(totalSpeedPassive);
+        ClearData(totalNoneTypePassive);
 
         foreach (var passiveData in currPassiveList)
         {
@@ -72,6 +74,14 @@ public class PassiveManager : MonoBehaviour
     public void PassiveUpgrade(int num)
     {
         currPassiveList[num].Level++;
+    }
+
+    private void ClearData(PassiveData data)
+    {
+        data.Damage = 0;
+        data.CoolDown = 0;
+        data.CriticalChance = 0;
+        data.CriticalValue = 0;
     }
 
     void Update()

@@ -1815,6 +1815,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4bb3e054af96e384ca762bfcdf005722, type: 2}
   - {fileID: 11400000, guid: e15c5f9f03fd6f44eb5588d9d3a3c921, type: 2}
   - {fileID: 11400000, guid: ad81a776acb98ca4bbad0e8485d4e3e7, type: 2}
+  passiveData: {fileID: 11400000, guid: 814487a725745fb409f5b83c0a0452d5, type: 2}
 --- !u!1 &321169816 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8155639256695381047, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -1840,8 +1841,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 093daece5db41aa41a576dcefc518062, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 4dae129520d593c49822bd892b04d019, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &321169819
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2824,9 +2823,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 173377501}
-        m_TargetAssemblyTypeName: WeaponCreator, Assembly-CSharp
-        m_MethodName: LevelUpReady
+      - m_Target: {fileID: 317473010}
+        m_TargetAssemblyTypeName: PassiveManager, Assembly-CSharp
+        m_MethodName: PassiveAdd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2911,8 +2910,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 4d40042e844733748b6419f7f297c930, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 8e9fbda179d479e40a4918132766a12e, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &609706675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3264,6 +3261,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
+      propertyPath: passiveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 814487a725745fb409f5b83c0a0452d5, type: 2}
     - target: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
       propertyPath: weaponPrefab
       value: 
@@ -3836,8 +3837,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 4d40042e844733748b6419f7f297c930, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 8e9fbda179d479e40a4918132766a12e, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &983922737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5123,8 +5122,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 4d40042e844733748b6419f7f297c930, type: 3}
   weaponDataRef: {fileID: 11400000, guid: c31807cceb1cd1849b7f8f70e0268915, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &1179533037 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -5281,7 +5278,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2133342106}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+        m_MethodName: 
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5468,9 +5465,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 173377501}
-        m_TargetAssemblyTypeName: WeaponCreator, Assembly-CSharp
-        m_MethodName: LevelUpReady
+      - m_Target: {fileID: 317473010}
+        m_TargetAssemblyTypeName: PassiveManager, Assembly-CSharp
+        m_MethodName: PassiveAdd
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6524,8 +6521,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 1152390223990527742, guid: ab3b06c610d91064aac2c62b51d9a593, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 5f5f272a3fde65649879a50d54ca2788, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &1664096608 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -7162,6 +7157,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 172550590325018870, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
+      propertyPath: passiveData
+      value: 
+      objectReference: {fileID: 11400000, guid: 814487a725745fb409f5b83c0a0452d5, type: 2}
     - target: {fileID: 841024728522597319, guid: 872090ea27c81d8408fcfc36f869519c, type: 3}
       propertyPath: weaponPrefab
       value: 
@@ -7320,8 +7319,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 093daece5db41aa41a576dcefc518062, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 4dae129520d593c49822bd892b04d019, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &1881852743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8164,8 +8161,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3661404853983736829, guid: 093daece5db41aa41a576dcefc518062, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 4dae129520d593c49822bd892b04d019, type: 2}
   secondWeaponPrefab: {fileID: 0}
-  typePassive: {fileID: 0}
-  commonPassive: {fileID: 0}
 --- !u!114 &2043933630
 MonoBehaviour:
   m_ObjectHideFlags: 0

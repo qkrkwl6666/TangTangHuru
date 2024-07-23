@@ -24,20 +24,21 @@ public class WeaponCreator : MonoBehaviour
 
     private bool levelUpReady = false;
 
-    public PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
-    public PassiveData commonPassive;
+    private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
+    private PassiveData commonPassive;
 
 
     private void Awake()
     {
-        weaponDataInStage = Instantiate(weaponDataRef);
-        typePassive = Instantiate(typePassive);
-        commonPassive = Instantiate(commonPassive);
+
     }
 
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
+        weaponDataInStage = Instantiate(weaponDataRef);
+        typePassive = new EmptyPassiveData();
+        commonPassive = new EmptyPassiveData();
     }
 
     private void OnEnable()
@@ -66,6 +67,8 @@ public class WeaponCreator : MonoBehaviour
                     var aimer = weapon.GetComponent<IAimer>();
                     aimer.TotalCount = weaponDataInStage.BurstCount;
                     aimer.Index = index;
+
+                    SetWeaponData();
 
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
@@ -100,7 +103,7 @@ public class WeaponCreator : MonoBehaviour
             {
                 LevelUp();
             }
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown * typePassive.CoolDown);
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown - typePassive.CoolDown);
         }
     }
 
@@ -196,14 +199,14 @@ public class WeaponCreator : MonoBehaviour
         }
 
         aimer.Index = count;
+        weapons.Add(weapon);
 
         SetWeaponData();
 
-        weapon.SetActive(true);
-        weapons.Add(weapon);
-
         OptionsOnCreate(weapon);
         OptionsOnEnable(weapon);
+
+        weapon.SetActive(true);
     }
 
     public void SetWeaponData()
@@ -283,5 +286,11 @@ public class WeaponCreator : MonoBehaviour
                 weapon.transform.position += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1));
             }
         }
+    }
+
+    public void SetPassive(PassiveData typePassive, PassiveData commonPassive)
+    {
+        this.typePassive = typePassive;
+        this.commonPassive = commonPassive;
     }
 }

@@ -12,8 +12,6 @@ public class ParabolaRotate : MonoBehaviour, IProjectile
     public float Size { get; set; }
     public float Speed { get; set; }
 
-    public float ForwardTime = 4.5f;     // 전진 시간
-
     public float angleOffset = 30f; // 타원이 기울어진 각도 (오브젝트 전진 방향 기준 우측으로)
 
     private Transform parentTransform;
@@ -22,6 +20,10 @@ public class ParabolaRotate : MonoBehaviour, IProjectile
     void Awake()
     {
         currAimer = GetComponent<IAimer>();
+    }
+
+    void Start()
+    {
         parentTransform = currAimer.Player.transform;
     }
 
@@ -44,11 +46,10 @@ public class ParabolaRotate : MonoBehaviour, IProjectile
             timer = 0f;
             gameObject.SetActive(false);
         }
-        float lerpTime = timer / ForwardTime;
 
-        float angle = lerpTime * 2 * Mathf.PI;
-        float cosAngle = Mathf.Cos(angle);
-        float sinAngle = Mathf.Sin(angle);
+        float lerpTime = timer * Speed / 2;
+        float cosAngle = Mathf.Cos(lerpTime);
+        float sinAngle = Mathf.Sin(lerpTime);
 
         Vector3 newPosition = parentTransform.position + currAimer.AimDirection() * (cosAngle * Range) +
                               Quaternion.Euler(0, 0, angleOffset) * currAimer.AimDirection() * (sinAngle * Range * 0.5f);
