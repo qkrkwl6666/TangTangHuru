@@ -10,6 +10,7 @@ public static class Defines
     public static readonly string bossWall = "BossWall";
     public static readonly string playBoss = "PlayBoss";
     public static readonly string obstacles = "Obstacles";
+    public static readonly string rangeArea = "RangeArea";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
