@@ -71,6 +71,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     {
         // Todo : 여기서 자신의 위치 타이밍? 이 안맞을 수도 있음 
         playerDirection = (PlayerTransform.position - transform.position).normalized;
+        Monster.OnImpact += NuckBack;
     }
 
     private void OnDestroy()
