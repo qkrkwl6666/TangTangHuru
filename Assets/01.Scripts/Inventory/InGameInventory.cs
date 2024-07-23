@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Experimental.GlobalIllumination;
@@ -12,8 +13,10 @@ public class InGameInventory : MonoBehaviour
     private List<Image> images = new ();
 
     private InGameUI gameUI;
+    public int Kill { get; private set; }
 
     public static Action<int> OnCoinAdd;
+    public static Action OnKillAdd;
 
     // 플레이어 코인 수
     public int Coin { get; private set; } = 0;
@@ -28,13 +31,31 @@ public class InGameInventory : MonoBehaviour
         }
 
         OnCoinAdd += AddCoin;
+        OnKillAdd += AddKill;
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+        
+    }
+
+    private void OnEnable()
+    {
+        Boss.OnDead += GameClear;
+    }
+
+    private void OnDisable()
+    {
+        Boss.OnDead -= GameClear;
     }
 
     private void OnDestroy()
     {
         OnCoinAdd = null;
+        OnKillAdd = null;
+    }
+
+    public void GameClear()
+    {
+        gameUI.SetGameClearUI(Coin, Kill);
     }
 
     public void AddItem(IInGameItem inGameItem)
@@ -59,6 +80,11 @@ public class InGameInventory : MonoBehaviour
     {
         Coin += value;
         gameUI.UpdateCoinValue(Coin);
+    }
+
+    private void AddKill()
+    {
+        Kill++;
     }
 
     public void RemoveItem(IInGameItem inGameItem)

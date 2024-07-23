@@ -34,6 +34,13 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     public GameObject joystickUI;
     public GameObject circleUI;
 
+    // 게임 클리어 UI
+    public TextMeshProUGUI goldText;
+    public TextMeshProUGUI killText;
+
+    // 설정 UI
+    public GameObject pauseUI;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
@@ -54,10 +61,34 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
         clearUI.gameObject.SetActive(true);
     }
+
+    public void SetGameClearUI(int gold, int kill)
+    {
+        goldText.text = $"획득한 골드 : {gold.ToString()}";
+        killText.text = $"처치한 몬스터 수 : {kill.ToString()}";
+    }
+
+    #region 일시정지
+    public void PauseButton()
+    {
+        Time.timeScale = 0f;
+        pauseUI.SetActive(true);
+    }
+
+    public void ContinueButton()
+    {
+        Time.timeScale = 1f;
+        pauseUI.SetActive(false);
+    }
+
+    #endregion
+
     public void MainMenuButton()
     {
         SceneManager.LoadScene("Main");
     }
+
+    
 
     public void SetActiveExpBar(bool active)
     {

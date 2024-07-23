@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Xml;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss : LivingEntity, IPlayerObserver
@@ -16,6 +18,8 @@ public class Boss : LivingEntity, IPlayerObserver
 
     private float damage = 0f;
     public float Speed { get; private set; } = 2f;
+
+    public static Action OnDead;
 
     // °ñµå
     public int Gold { get; private set; }
@@ -130,7 +134,7 @@ public class Boss : LivingEntity, IPlayerObserver
         time = 0f;
         currentSkill = null;
 
-        float random = Random.Range(0, totalProbability);
+        float random = UnityEngine.Random.Range(0, totalProbability);
 
         float currentProbability = 0f;
 
@@ -160,6 +164,7 @@ public class Boss : LivingEntity, IPlayerObserver
         base.Die();
 
         InGameInventory.OnCoinAdd?.Invoke(Gold);
+        OnDead?.Invoke();
 
         ChangeState(deadState);
     }
@@ -184,5 +189,10 @@ public class Boss : LivingEntity, IPlayerObserver
     public void IObserverUpdate()
     {
         PlayerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    public void OnDestroy()
+    {
+        OnDead = null;
     }
 }
