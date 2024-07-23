@@ -47,7 +47,9 @@ public class Rush : MonoBehaviour, IBossSkill
         isRush = false;
         PlayerDir = Vector2.zero;
 
-        AwakeColor();
+        monsterView.skeletonAnimation.skeleton.R = 1f;
+        monsterView.skeletonAnimation.skeleton.G = 1f;
+        monsterView.skeletonAnimation.skeleton.B = 1f;
     }
 
     public void Initialize(BossSkillData bossSkillData, float damage)
