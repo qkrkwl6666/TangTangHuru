@@ -91,6 +91,11 @@ public class Boss : LivingEntity, IPlayerObserver
                         var bn = AddSkill<BarrageSnail>(skill.Item1, skill.Item2);
                     }
                     break;
+                case 500004:
+                    {
+                        var bn = AddSkill<Rush>(skill.Item1, skill.Item2);
+                    }
+                    break;
             }
         }
 

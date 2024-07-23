@@ -23,7 +23,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
     private void Awake()
     {
-
+        
     }
 
     public void SetCountScale(int count, float scale)
