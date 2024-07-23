@@ -13,7 +13,7 @@ public class BossData
     public float Boss_Damage { get; set; }
     public float Boss_MoveSpeed { get; set; }
     public float Boss_Cooldown { get; set; }
-    public int Gold { get; set; }
+
     public int Skill1_Id { get; set; }
     public float Skill1_Probability { get; set; }
     public int Skill2_Id { get; set; }

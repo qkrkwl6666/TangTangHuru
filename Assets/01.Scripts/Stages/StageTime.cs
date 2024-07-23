@@ -8,7 +8,7 @@ public class StageTime : MonoBehaviour
 
     public bool IsStop {  get; private set; }
 
-    private readonly float endTime = 10f;
+    private readonly float endTime = 600f;
 
     float currTime = 0f;
     string minuteText;

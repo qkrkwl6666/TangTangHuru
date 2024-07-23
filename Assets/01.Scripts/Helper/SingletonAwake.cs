@@ -8,7 +8,7 @@ public class SingletonAwake : MonoBehaviour
 
         var gm = GameManager.Instance;
 
-        Application.targetFrameRate = 200;
+        Application.targetFrameRate = 60;
 
     }
 }

@@ -9,9 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4805479976395495928}
+  - component: {fileID: 8845137624219921554}
+  - component: {fileID: 42650902328020662}
+  - component: {fileID: 8163315722985879649}
   - component: {fileID: 2121814689845733137}
   - component: {fileID: 5611783949825415720}
-  - component: {fileID: 250260703606493631}
   m_Layer: 6
   m_Name: Grouper
   m_TagString: Untagged
@@ -35,6 +37,44 @@ Transform:
   - {fileID: 16300501436000077}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8845137624219921554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671600482009907043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  playerSubject: {fileID: 0}
+--- !u!114 &42650902328020662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671600482009907043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07422c6daa019d4f9664d445dc9abc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8163315722985879649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671600482009907043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!50 &2121814689845733137
 Rigidbody2D:
   serializedVersion: 4
@@ -97,19 +137,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.96}
   m_Size: {x: 2.14, y: 2.5}
   m_Direction: 0
---- !u!114 &250260703606493631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671600482009907043}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
 --- !u!1 &1869688903236274534
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +276,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: idle
+  _animationName: walk
   loop: 0
   timeScale: 1

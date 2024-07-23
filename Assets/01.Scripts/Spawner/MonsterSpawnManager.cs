@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public class MonsterSpawnManager : MonoBehaviour
 {
@@ -19,16 +16,12 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private MonsterSpawnFactory monsterSpawnFactory = null;
 
-    private InGameUI gameUI;
-
     private void Awake()
     {
         waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
             waveTable[GameManager.Instance.CurrentStage.ToString()];
 
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
-
-        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
 
         InitializeSpawnInfos();
 
@@ -37,7 +30,7 @@ public class MonsterSpawnManager : MonoBehaviour
         OnStop += () => 
         {
             IsStop = true;
-            StartCoroutine(SpawnBoss());
+            SpawnBoss();
         };
     }
 
@@ -105,20 +98,9 @@ public class MonsterSpawnManager : MonoBehaviour
         }
     }
 
-    public IEnumerator SpawnBoss()
+    public void SpawnBoss()
     {
         monsterSpawnFactory.MonsterAllDead();
-        monsterSpawnFactory.BossWallSpawn();
-        GameObject playBoss = null;
-
-        Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) => 
-        {
-            gameUI.SetActiveExpBar(false);
-            playBoss = x.Result;
-            Destroy(playBoss , 3f);
-        };
-
-        yield return new WaitForSeconds(3f);
 
         var bossStageData = DataTableManager.Instance.Get<BossStageTable>
             (DataTableManager.stageBoss).GetBossData(GameManager.Instance.CurrentStage.ToString());
@@ -127,7 +109,6 @@ public class MonsterSpawnManager : MonoBehaviour
             .GetBossData(bossStageData.Boss_Id.ToString());
 
         monsterSpawnFactory.CreateBoss(bossData);
-
     }
 
 

@@ -19,12 +19,6 @@ public class LivingEntity : MonoBehaviour, IDamagable
         health = startingHealth;
     }
 
-    public void AwakeHealth()
-    {
-        dead = false;
-        health = startingHealth;
-    }
-
     public void ApplyUpdateHealth(float newhealth, bool newDead)
     {
         health = newhealth;

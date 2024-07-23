@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -23,25 +22,37 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
     public int maxMonster = 200; // 필드 최대 몬스터 수
 
-    // 장애물 관련 변수들
-    private int obstaclesCount = 90; // 장애물 개수
-    private float obstaclesRadius = 20f;
-
-    Vector2 bossSpawnPosition = Vector2.zero;
-
-    private InGameUI gameUI;
-
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
-
-        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
     private void Update()
     {
-        
+        // if (Input.GetKeyUp(KeyCode.F1))
+        // {
+        //     int index = Random.Range(0, monsters.Count);
+        //     var go = monsters[index];
+        // 
+        //     if (go.activeSelf)
+        //     {
+        //         go.GetComponent<Monster>().Die();
+        //     }
+        // }
+
+        // if (Input.GetKeyUp(KeyCode.F2))
+        // {
+        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+        //         (DataTableManager.monster).GetMonsterData("100002"), 10, 2);
+        // }
+        // 
+        // if (Input.GetKeyUp(KeyCode.F3))
+        // {
+        //     CreateMonster(DataTableManager.Instance.Get<MonsterTable>
+        //         (DataTableManager.monster).GetMonsterData("100003"),10, 3);
+        // }
+
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
@@ -88,7 +99,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                (x) => 
                { 
                    monsters.Add(x);
-                   x.GetComponent<LivingEntity>().AwakeHealth();
                    x.SetActive(true);
                },
                (x) => 
@@ -168,35 +178,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     public void CreateBoss(BossData bossData)
     {
-        Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + bossSpawnPosition;
-
-        Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed += 
+ 
+        Addressables.InstantiateAsync(bossData.Boss_Prefab).Completed += 
             (x) => 
             {
                 var monsterGo = x.Result;
                 monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
-
-                gameUI.SetActiveBossHpBar(true);  
             };
-    }
-
-    public void BossWallSpawn()
-    {
-        var wallGo = new GameObject("BossWall");
-
-        bossSpawnPosition = wallGo.transform.position = playerTransform.position;
-
-        Addressables.LoadAssetAsync<GameObject>(Defines.obstacles).Completed += (x) =>
-        {
-            for (int i = 0; i < obstaclesCount; i++)
-            {
-                float angle = ((360 / obstaclesCount) * i) * Mathf.Deg2Rad;
-
-                Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized * obstaclesRadius;
-
-                Instantiate(x.Result, (Vector2)playerTransform.position + pos, Quaternion.identity, wallGo.transform);
-            }
-        };
     }
 
     public static Vector2 RandomPosition(Transform playerTransform, float distance)

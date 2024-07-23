@@ -5,31 +5,22 @@ public class MonsterView : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
 
-    private float timeInterval = 1 / 30f;
-    private float deltaTime = 0f;
-
-    private void Awake()
-    {
-        // skeletonAnimation.Initialize(false);
-        // skeletonAnimation.clearStateOnDisable = false;
-        // skeletonAnimation.enabled = false;
-    }
-
     public void Update()
     {
-
-        //deltaTime += Time.deltaTime;
-        //if (deltaTime >= timeInterval)
+        //if(Input.GetKeyDown(KeyCode.F2))
         //{
-        //    ManualUpdate();
+        //    PlayAnimation(Defines.idle, true);
         //}
-    }
-
-    public void ManualUpdate()
-    {
-        skeletonAnimation.Update(deltaTime);
-        skeletonAnimation.LateUpdate();
-        deltaTime = 0f;
+        //
+        //if (Input.GetKeyDown(KeyCode.F3))
+        //{
+        //    PlayAnimation(Defines.attack, false);
+        //}
+        //
+        //if (Input.GetKeyDown(KeyCode.F4))
+        //{
+        //    PlayAnimation(Defines.walk, true);
+        //}
     }
 
     public Spine.TrackEntry PlayAnimation(string name, bool loop = false)

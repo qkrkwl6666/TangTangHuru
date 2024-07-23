@@ -22,7 +22,6 @@ public class ExpBar : MonoBehaviour
 
     }
 
-    // Todo : 나중에 옵저버 패턴으로 갱신 될때만 가져오기
     private void FixedUpdate()
     {
         expSlider.value = playerExp.CurrExp;
