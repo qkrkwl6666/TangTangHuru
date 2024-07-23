@@ -7,14 +7,27 @@ public class Area : MonoBehaviour
 {
     private IObjectPool<GameObject> pool;
 
+    private float damage = 0f;
     private float scale = 1f;
     private float duration = 1.5f;
     private float time = 0f;
+    private bool attackable = false;
 
-    public void InitSkill(float scale, float duration)
+    private Transform playerTransform;
+
+    public void InitSkill(float scale, float duration, Transform playerTransform)
     {
-        scale = this.scale;
+        this.scale = scale;
         this.duration = duration;
+        this.playerTransform = playerTransform;
+
+        Debug.Log($"Scale : {this.scale} Duration : {this.duration}");
+    }
+
+    private void OnDisable()
+    {
+        time = 0f;
+        attackable = false;
     }
 
     private void Update()
@@ -27,6 +40,14 @@ public class Area : MonoBehaviour
 
         if (time >= duration) 
         {
+            if(playerTransform != null)
+            {
+                float Distance = Vector2.Distance(transform.position, playerTransform.position);
+                if(Distance <= scale / 2)
+                {
+                    playerTransform.GetComponent<IDamagable>().OnDamage(damage);
+                }
+            }
             pool?.Release(gameObject);
         }
     }
@@ -36,4 +57,10 @@ public class Area : MonoBehaviour
         this.pool = pool;
     }
 
+    public void SetDamage(float damage)
+    {
+        this.damage = damage; 
+    }
+
 }
+

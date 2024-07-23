@@ -51,7 +51,6 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         pool = new ObjectPool<GameObject>
             (() =>
             {
-                // Todo : 데미지 적용 계수 넣어줘야함
                 var go = Instantiate(prefab);
                 var barrage = go.AddComponent<Barrage>();
                 barrage.SetObjectPool(pool);
@@ -69,6 +68,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
             (x) => Destroy(x.gameObject),
             true, 10, 100);
     }
+
     public void SkillUpdate(float deltaTime)
     {
         time += deltaTime;
