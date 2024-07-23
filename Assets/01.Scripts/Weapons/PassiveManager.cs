@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class PassiveManager : MonoBehaviour
 {
-    [SerializeField]
-    private List<WeaponCreator> weaponCreators;
+    public List<WeaponCreator> weaponCreators;
 
     public List<PassiveData> passiveDataList;
-    private List<PassiveData> currPassiveList = new();
+    public List<PassiveData> currPassiveList = new();
 
     public PassiveData passiveData;
-    
+
     PassiveData totalPowerPassive;
     PassiveData totalSpeedPassive;
     PassiveData totalNoneTypePassive;
@@ -23,11 +22,27 @@ public class PassiveManager : MonoBehaviour
         totalSpeedPassive = Instantiate(passiveData);
         totalNoneTypePassive = Instantiate(passiveData);
     }
-    public void PassiveAdd()
+    public void PassiveAdd(PassiveData selected)
     {
-        currPassiveList.Add(passiveDataList[0]);
+        currPassiveList.Add(selected);
+        passiveDataList.Remove(selected);
         SetTotalPassive();
         PassiveEquip();
+        return;
+    }
+    public void PassiveLevelUp(PassiveData selected)
+    {
+        foreach (var currPassive in currPassiveList)
+        {
+            if (currPassive == selected)
+            {
+                currPassive.Level++;
+                SetTotalPassive();
+                PassiveEquip();
+                return;
+            }
+        }
+        Debug.LogError("패시브 강화 선택지 오류. 강화가능 목록에 없음.");
     }
 
     public void PassiveEquip()
