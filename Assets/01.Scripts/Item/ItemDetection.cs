@@ -30,7 +30,7 @@ public class ItemDetection : MonoBehaviour
     private Treasure targetTreasure = null;
 
     // 보물 레이더
-    private float treasureDistance = 300f;
+    private float treasureDistance = 130f;
     private float prevTreasureDistance = int.MaxValue;
     private Treasure radarTreasure = null;
 
@@ -162,5 +162,11 @@ public class ItemDetection : MonoBehaviour
         float disValue = Mathf.InverseLerp(treasureDistance, 1f, distacne);
 
         gameUI.UpdateRadarBar(disValue);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, treasureDistance);
     }
 }
