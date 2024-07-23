@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using static SkillUpgradeData;
 
@@ -33,7 +31,7 @@ public class WeaponUpgrader : MonoBehaviour
                 upgradeStats = skillUpgradeData.Level4_Upgrade;
                 upgradeValue = skillUpgradeData.Level4_Value;
                 break;
-            case > 5:
+            case 5:
                 return dataInStage;
         }
 
@@ -79,14 +77,13 @@ public class WeaponUpgrader : MonoBehaviour
                 break;
 
             case EvolutionType.Replace:
-                firstWeaponCreator.enabled = false;
-                finalWeaponCreator.enabled = true;
-
-                foreach(var weapon in weapons)
+                foreach (var weapon in weapons)
                 {
                     Destroy(weapon);
                 }
                 weapons.Clear();
+                firstWeaponCreator.enabled = false;
+                finalWeaponCreator.enabled = true;
                 break;
         }
     }

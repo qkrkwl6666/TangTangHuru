@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public static class Defines
 {
@@ -8,6 +6,7 @@ public static class Defines
     public static readonly string normalBullet = "NormalBullet";
     public static readonly string snailBullet = "SnailBullet";
     public static readonly string treasure = "Treasure";
+    public static readonly string well = "Well";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
@@ -45,7 +44,11 @@ public static class Defines
     public static readonly string weapon027 = "weapon_027";
     public static readonly string weapon028 = "weapon_028";
 
-
+    // 몬스터 애니메이션
+    public static readonly string idle = "idle";
+    public static readonly string walk = "walk";
+    public static readonly string attack = "attack";
+    public static readonly string attack2 = "attack2";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new ();

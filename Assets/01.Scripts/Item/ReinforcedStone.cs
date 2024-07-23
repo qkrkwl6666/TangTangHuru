@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 강화석
@@ -19,6 +17,6 @@ public class ReinforcedStone : MonoBehaviour, IInGameItem
     public void UseItem()
     {
         // Todo : 바로 메인 인벤토리 에 강화석이 들어가야함
-        Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
+        //Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
     }
 }

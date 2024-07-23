@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RangeDetecter : MonoBehaviour
@@ -24,7 +22,7 @@ public class RangeDetecter : MonoBehaviour
                 
             }
         }
-        return result.normalized;
+        return result;
     }
 
 }

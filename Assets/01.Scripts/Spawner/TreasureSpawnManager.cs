@@ -1,11 +1,13 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class TreasureSpawnManager : MonoBehaviour
 {
     public List<Treasure> treasures = new ();
+
+    public Well well = null;
+
     public readonly int treasuresCount = 3;
 
     private float minRadius = 150f;
@@ -13,16 +15,21 @@ public class TreasureSpawnManager : MonoBehaviour
     private float treasuresRadius = 50f;
 
     private TreasureData treasureData = null;
+    public WellIndicator wellIndicator;
 
     private void Awake()
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
             .GetTreasure(GameManager.Instance.CurrentStage.ToString());
 
+        // 보상 스폰 
         for (int i = 0; i < treasuresCount; i++)
         {
             SetTreasure(treasureData);
         }
+
+        // 우물 스폰
+        SpawnWell();
     }
 
     public void Update()
@@ -30,7 +37,7 @@ public class TreasureSpawnManager : MonoBehaviour
 
     }
 
-    public Vector2 SetPosition(Treasure tr)
+    public Vector2 SetPosition(Treasure tr = null)
     {
         bool isSame = false;
 
@@ -50,7 +57,8 @@ public class TreasureSpawnManager : MonoBehaviour
 
                 foreach (var treasure in treasures)
                 {
-                    if (treasure == tr) continue;
+                    if(tr != null)
+                        if (treasure == tr) continue;
 
                     if (Vector2.Distance(treasure.transform.position,
                         randomPos) <= treasuresRadius)
@@ -128,6 +136,18 @@ public class TreasureSpawnManager : MonoBehaviour
                 }
             }
 
+        };
+
+    }
+
+    public void SpawnWell()
+    {
+
+        Addressables.InstantiateAsync(Defines.well).Completed += (x) =>
+        {
+            well = x.Result.GetComponent<Well>();
+            well.transform.position = SetPosition();
+            wellIndicator.target = well.transform;
         };
 
     }

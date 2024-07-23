@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
@@ -8,8 +5,8 @@ public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
     private PlayerSubject playerSubject;
     private Transform playerTransfrom;
 
-    private float playerDistanceDifference = 15;
-    private float defaultDistance = 10f;
+    private float playerDistanceDifference = 25f;
+    private float defaultDistance = 20f;
     private float duration = 1f;
     private float time = 0f;
 

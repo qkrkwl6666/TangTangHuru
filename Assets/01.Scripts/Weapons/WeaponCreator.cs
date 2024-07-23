@@ -5,34 +5,40 @@ using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
 {
-    //쿨타임마다, 연속발사 개수만큼 무기를 생성'만' 한다.
+    //쿨타임마다, 연속발사 개수만큼 무기를 생성하거나 기존 무기를 활성화한다.
     //생성한 무기(총알, 화살 등의 발사체, 근접무기)의 오브젝트 풀을 갖고 있다.
 
     public GameObject weaponPrefab;
     public WeaponData weaponDataRef; //무기 원본 데이터
+    public GameObject secondWeaponPrefab;
 
-    private WeaponData weaponDataInStage; //강화등에 의해 실시간 변경되는 스테이지 내 데이터
-
+    private WeaponData weaponDataInStage; //강화에 의해 변경되는 스테이지 내 데이터
     private List<GameObject> weapons = new List<GameObject>();
-    private IAimer aimer;
-    private Hit hit;
-
     private WeaponUpgrader weaponUpgrader;
+
+    private IAimer aimer;
+    private IProjectile projectile;
+    private IAttackable hit;
 
     private IEnumerator SpawnCoroutine;
 
-    public bool levelUpReady = false;
+    private bool levelUpReady = false;
+
+    private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
+    private PassiveData commonPassive;
 
 
     private void Awake()
     {
-        weaponDataInStage = Instantiate(weaponDataRef);
-        
+
     }
 
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
+        weaponDataInStage = Instantiate(weaponDataRef);
+        typePassive = new EmptyPassiveData();
+        commonPassive = new EmptyPassiveData();
     }
 
     private void OnEnable()
@@ -52,25 +58,27 @@ public class WeaponCreator : MonoBehaviour
 
         while (gameObject.activeSelf)
         {
-            var count = 0;
-
-            if (levelUpReady)
-            {
-                LevelUp();
-                levelUpReady = false;
-            }
+            var index = 0;
 
             foreach (var weapon in weapons)
             {
                 if (!weapon.activeSelf)
                 {
+                    var aimer = weapon.GetComponent<IAimer>();
+                    aimer.TotalCount = weaponDataInStage.BurstCount;
+                    aimer.Index = index;
+
+                    SetWeaponData();
+
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
-                    weapon.GetComponent<IAimer>().Count = count;
-                    count++;
+
+                    index++;
                 }
 
-                if (count > weaponDataInStage.BurstCount)
+                OptionsOnEnable(weapon);
+
+                if (index >= weaponDataInStage.BurstCount)
                     break;
 
                 if (weaponDataInStage.BurstRate > 0f)
@@ -79,17 +87,23 @@ public class WeaponCreator : MonoBehaviour
                 }
             }
 
-            while (count < weaponDataInStage.BurstCount)
+
+            while (index < weaponDataInStage.BurstCount)
             {
-                CreateWeapon(count);
-                count++;
+                CreateWeapon(index);
+                index++;
                 if (weaponDataInStage.BurstRate > 0f)
                 {
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
 
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown);
+
+            if (levelUpReady)
+            {
+                LevelUp();
+            }
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown - typePassive.CoolDown);
         }
     }
 
@@ -101,58 +115,122 @@ public class WeaponCreator : MonoBehaviour
 
         switch (weaponDataRef.WeaponAimType)
         {
-            case Aim.Auto:
+            case AimType.Auto:
                 aimer = weapon.AddComponent<AutoAim>();
                 break;
-            case Aim.Fixed:
+            case AimType.Fixed:
                 aimer = weapon.AddComponent<FixedAim>();
                 break;
-            case Aim.Manual:
+            case AimType.Manual:
                 aimer = weapon.AddComponent<ManualAim>();
                 break;
-            case Aim.Player:
+            case AimType.Player:
                 aimer = weapon.AddComponent<PlayerAim>();
                 break;
+            case AimType.RandomTarget:
+                aimer = weapon.AddComponent<RandomTarget>();
+                break;
+            case AimType.RandomSeed:
+                aimer = weapon.AddComponent<RandomSeed>();
+                break;
+            case AimType.Angular:
+                aimer = weapon.AddComponent<AngularAim>();
+                break;
+
         }
 
-
-        switch (weaponDataRef.WeaponAttackType)
+        switch (weaponDataRef.WeaponMoveType)
         {
-            case Attack.Melee:
-                var melee = weapon.AddComponent<Melee>();
-                melee.range = weaponDataInStage.Range;
+            case MoveType.Melee:
+                projectile = weapon.AddComponent<Melee>();
                 break;
-            case Attack.Shoot:
-                weapon.AddComponent<Shoot>();
+            case MoveType.Shoot:
+                projectile = weapon.AddComponent<Shoot>();
                 break;
-            case Attack.Rotate:
-                var rotate = weapon.AddComponent<Rotate>();
-                rotate.angle = (360f / weaponDataInStage.BurstCount) * count;
+            case MoveType.WaveShot:
+                projectile = weapon.AddComponent<WaveShoot>();
                 break;
-            case Attack.Fixed:
-                weapon.AddComponent<Fixed>();
+            case MoveType.Rotate:
+                projectile = weapon.AddComponent<Rotate>();
                 break;
-            case Attack.Spread:
-                weapon.AddComponent<Spread>();
+            case MoveType.Fixed:
+                projectile = weapon.AddComponent<Fixed>();
                 break;
-
+            case MoveType.SpreadShot:
+                projectile = weapon.AddComponent<Spread>();
+                break;
+            case MoveType.SpreadWall:
+                projectile = weapon.AddComponent<SpreadWall>();
+                break;
+            case MoveType.Laser:
+                projectile = weapon.AddComponent<LaserShoot>();
+                break;
+            case MoveType.Spawn:
+                projectile = weapon.AddComponent<Spawn>();
+                break;
+            case MoveType.Parabola:
+                projectile = weapon.AddComponent<ParabolaShoot>();
+                break;
+            case MoveType.BackandForward:
+                projectile = weapon.AddComponent<ParabolaRotate>();
+                weapon.GetComponent<ParabolaRotate>().angleOffset = 0f;
+                break;
+            case MoveType.ParabolaRotate:
+                projectile = weapon.AddComponent<ParabolaRotate>();
+                weapon.GetComponent<ParabolaRotate>().angleOffset = 30f;
+                break;
+            case MoveType.Reflecting:
+                projectile = weapon.AddComponent<ReflectingShoot>();
+                break;
         }
 
-        aimer.LifeTime = weaponDataInStage.LifeTime;
-        aimer.Speed = weaponDataInStage.Speed;
-        aimer.Count = count;
 
-        hit = weapon.AddComponent<Hit>();
-        hit.damage = weaponDataInStage.Damage;
-        hit.pierceCount = weaponDataInStage.PierceCount;
-        hit.criticalChance = weaponDataInStage.CriticalChance;
-        hit.criticalValue = weaponDataInStage.CriticalValue;
-        hit.attackableLayer = LayerMask.GetMask("Enemy");
+        switch (weaponDataRef.WeaponAttckType)
+        {
+            case AttackType.Enter:
+                hit = weapon.AddComponent<HitOnEnter>();
+                break;
+            case AttackType.Stay:
+                hit = weapon.AddComponent<HitOnStay>();
+                break;
+            case AttackType.OneOff:
+                hit = weapon.AddComponent<HitOneOff>();
+                break;
+        }
 
-        weapon.transform.localScale = new Vector3 (weaponDataInStage.Range, weaponDataInStage.Range);
+        aimer.Index = count;
+        weapons.Add(weapon);
+
+        SetWeaponData();
+
+        OptionsOnCreate(weapon);
+        OptionsOnEnable(weapon);
 
         weapon.SetActive(true);
-        weapons.Add(weapon);
+    }
+
+    public void SetWeaponData()
+    {
+        foreach (var weapon in weapons)
+        {
+            aimer = weapon.GetComponent<IAimer>();
+            aimer.LifeTime = weaponDataInStage.LifeTime;
+            aimer.TotalCount = weaponDataInStage.BurstCount;
+
+            projectile = weapon.GetComponent<IProjectile>();
+            projectile.Range = weaponDataInStage.Range;
+            projectile.Size = weaponDataInStage.Size;
+            projectile.Speed = weaponDataInStage.Speed;
+
+            hit = weapon.GetComponent<IAttackable>();
+            hit.Damage = weaponDataInStage.Damage + typePassive.Damage;
+            hit.PierceCount = weaponDataInStage.PierceCount;
+            hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
+            hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
+            hit.AttackRate = weaponDataInStage.SingleAttackRate;
+            hit.Impact = weaponDataInStage.Impact;
+            hit.AttackableLayer = LayerMask.GetMask("Enemy");
+        }
     }
 
     public void LevelUpReady()
@@ -161,43 +239,58 @@ public class WeaponCreator : MonoBehaviour
         levelUpReady = true;
     }
 
-    public void LevelUp()
+    private void LevelUp()
     {
-        if(weaponDataInStage.Level < 5)
+        if(weaponDataInStage.Level >= 5)
         {
-            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
+            weaponDataInStage.Level = 5;
+            weaponUpgrader.Evolution(weapons);
         }
         else
         {
-            weaponUpgrader.Evolution(weapons);
+            weaponDataInStage = weaponUpgrader.UpgradeWeaponData(weaponDataInStage);
         }
 
-        int count = 0;
-        foreach (var weapon in weapons)
+        SetWeaponData();
+
+        levelUpReady = false;
+    }
+
+    private void OptionsOnCreate(GameObject weapon) //생성시 한번만 적용되는 옵션
+    {
+        foreach (var option in weaponDataInStage.Options)
         {
-            weapon.transform.localScale = new Vector3(weaponDataInStage.Range, weaponDataInStage.Range);
-            aimer = weapon.GetComponent<IAimer>();
-            aimer.LifeTime = weaponDataInStage.LifeTime;
-            aimer.Speed = weaponDataInStage.Speed;
-
-            hit = weapon.GetComponent<Hit>();
-            hit.damage = weaponDataInStage.Damage;
-            hit.pierceCount = weaponDataInStage.PierceCount;
-            hit.criticalChance = weaponDataInStage.CriticalChance;
-            hit.criticalValue = weaponDataInStage.CriticalValue;
-
-            switch (weaponDataRef.WeaponAttackType)
+            if (option == Option.FadeInOut)
             {
-                case Attack.Melee:
-                    break;
-                case Attack.Shoot:
-                    break;
-                case Attack.Rotate:
-                    weapon.GetComponent<Rotate>().angle = (360f / weaponDataInStage.BurstCount) * count;
-                    count++;
-                    break;
+                var fadeInOut = weapon.AddComponent<WeaponFadeInOut>();
+                fadeInOut.fadeInDuration = weaponDataInStage.FadeInRate;
+                fadeInOut.fadeOutDuration = weaponDataInStage.FadeOutRate;
+                fadeInOut.maxAlpha = weaponDataInStage.MaxAlpha;
+            }
+
+            if (option == Option.SecondAttack)
+            {
+                var enabler = weapon.AddComponent<EnableOnDest>();
+                enabler.SecondWeapon = secondWeaponPrefab;
+                enabler.maxCount = 3;
             }
         }
     }
 
+    private void OptionsOnEnable(GameObject weapon) //재활용 될때마다 적용되는 옵션
+    {
+        foreach (var option in weaponDataInStage.Options)
+        {
+            if (option == Option.Randomizer)
+            {
+                weapon.transform.position += new Vector3(Random.Range(-1, 1), Random.Range(-1, 1));
+            }
+        }
+    }
+
+    public void SetPassive(PassiveData typePassive, PassiveData commonPassive)
+    {
+        this.typePassive = typePassive;
+        this.commonPassive = commonPassive;
+    }
 }

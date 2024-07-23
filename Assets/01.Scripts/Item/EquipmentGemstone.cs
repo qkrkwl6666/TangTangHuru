@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class EquipmentGemstone : MonoBehaviour, IInGameItem
 {
@@ -34,7 +30,7 @@ public class EquipmentGemstone : MonoBehaviour, IInGameItem
     public void UseItem()
     {
         // 인게임 인벤토리에 들어가야 함
-        Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
+        //Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
         inventory.AddItem(this);
     }
 }

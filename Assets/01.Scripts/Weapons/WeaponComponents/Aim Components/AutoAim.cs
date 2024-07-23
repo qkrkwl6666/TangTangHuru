@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AutoAim : RangeDetecter, IAimer
@@ -8,7 +6,8 @@ public class AutoAim : RangeDetecter, IAimer
     public GameObject Player { get => player; }
     public float LifeTime { get; set; }
     public float Speed { get; set; }
-    public int Count { get; set; }
+    public int TotalCount { get; set; }
+    public int Index { get; set; }
 
     private void Awake()
     {
@@ -18,7 +17,12 @@ public class AutoAim : RangeDetecter, IAimer
 
     public Vector3 AimDirection()
     {
-        return GetNearest().normalized;
+        var getPos = GetNearest();
+        if (getPos == Vector3.zero)
+        {
+            getPos = new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        }
+        return getPos.normalized;
     }
 
 }

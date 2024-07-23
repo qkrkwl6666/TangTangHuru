@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,7 +29,7 @@ public class PlayerHealth : LivingEntity
         }
     }
 
-    public override void OnDamage(float damage)
+    public override void OnDamage(float damage, float impact)
     {
         if (dead || isInvincible)
             return;

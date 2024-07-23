@@ -1,8 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using TouchPhase = UnityEngine.InputSystem.TouchPhase;
-using UnityEngine.InputSystem.Interactions;
-using UnityEditor;
 
 public class Joystick : MonoBehaviour
 {

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class TilemapReposition : MonoBehaviour, IPlayerObserver
@@ -39,8 +36,6 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
             {
                 transform.Translate(Vector3.up * dirY * TileSize * 2);
             }
-
-
         }
     }
 

@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 
 public enum MonsterType
@@ -12,10 +7,10 @@ public enum MonsterType
     RangedAttackType,
     ChargeMeleeType,
 }
+
 public class Monster : LivingEntity, IPlayerObserver
 {
     public float MoveSpeed { get; private set; }
-
     public float Damage { get; private set; }
     public float Exp { get; private set; }
     public float Gold { get; private set; }

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ItemDetection : MonoBehaviour
 {
@@ -32,7 +30,7 @@ public class ItemDetection : MonoBehaviour
     private Treasure targetTreasure = null;
 
     // 보물 레이더
-    private float treasureDistance = 100f;
+    private float treasureDistance = 130f;
     private float prevTreasureDistance = int.MaxValue;
     private Treasure radarTreasure = null;
 
@@ -164,5 +162,11 @@ public class ItemDetection : MonoBehaviour
         float disValue = Mathf.InverseLerp(treasureDistance, 1f, distacne);
 
         gameUI.UpdateRadarBar(disValue);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, treasureDistance);
     }
 }
