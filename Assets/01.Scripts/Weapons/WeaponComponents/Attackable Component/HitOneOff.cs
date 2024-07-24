@@ -10,6 +10,7 @@ public class HitOneOff : MonoBehaviour, IAttackable
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
     public float AttackRate { get; set; }
+    public float Impact {  get; set; }
 
     private HashSet<Collider2D> contactedEnemies = new HashSet<Collider2D>();
 
@@ -42,7 +43,7 @@ public class HitOneOff : MonoBehaviour, IAttackable
             {
                 TotalDamage = Damage;
             }
-            other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
+            other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage, Impact);
 
             if (pierce > 0)
             {

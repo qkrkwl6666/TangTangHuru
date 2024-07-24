@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Spread : MonoBehaviour
+public class Spread : MonoBehaviour, IProjectile
 {
     public float spreadAngle = 15f;
 
@@ -8,6 +8,10 @@ public class Spread : MonoBehaviour
     float timer = 0f;
 
     IAimer currAimer;
+
+    public float Range { get; set; }
+    public float Size { get; set; }
+    public float Speed { get; set; }
 
     void Awake()
     {
@@ -18,6 +22,7 @@ public class Spread : MonoBehaviour
     private void OnEnable()
     {
         SetFireAngle();
+        transform.localScale = new Vector3(Size, Size);
     }
 
     private void SetFireAngle()
@@ -38,11 +43,11 @@ public class Spread : MonoBehaviour
             float radianAngle = currentAngle * Mathf.Deg2Rad;
             Vector2 direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
-            rb.velocity = direction * currAimer.Speed;
+            rb.velocity = direction * Speed;
         }
         else
         {
-            rb.velocity = pos * currAimer.Speed;
+            rb.velocity = pos * Speed;
         }
     }
 

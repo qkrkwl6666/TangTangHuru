@@ -9,17 +9,32 @@ public class RandomTarget : MonoBehaviour, IAimer
     public int TotalCount { get; set; }
     public int Index { get; set; }
 
-    private float range = 30f;
-    
-    public LayerMask targetLayer = LayerMask.GetMask("Enemy");
+    private float range = 20f;
+
+    public LayerMask targetLayer;
+
+    private void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        targetLayer = LayerMask.GetMask("Enemy");
+    }
 
     public Vector3 AimDirection()
     {
-        var targets = Physics2D.CircleCastAll(transform.position, range, Vector2.zero, 0, targetLayer);
+        var targets = Physics2D.CircleCastAll(Player.transform.position, range, Vector2.zero, 0, targetLayer);
 
-        var index = Random.Range(0, targets.Length);
+        Vector3 result = Vector3.zero;
 
-        Vector3 result = targets[index].transform.position;
+        if (targets.Length != 0)
+        {
+            var index = Random.Range(0, targets.Length);
+            result = targets[index].transform.position;
+        }
+        else
+        {
+            var rnd = new Vector3(Random.Range(-7, 7), Random.Range(-7, 7), 0);
+            result = Player.transform.position + rnd;
+        }
 
         return result;
     }
