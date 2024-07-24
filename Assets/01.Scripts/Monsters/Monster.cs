@@ -60,7 +60,7 @@ public class Monster : LivingEntity, IPlayerObserver
     // 몬스터 죽을 떄 호출 해야함
     public void PoolRelease()
     {
-        if(pool == null) Destroy(gameObject);
+        if (pool == null) Destroy(gameObject);
 
         pool.Release(gameObject);
     }

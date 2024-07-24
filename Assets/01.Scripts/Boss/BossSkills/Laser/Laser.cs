@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 using UnityEngine.Pool;
 using static LaserSkill;
@@ -48,11 +45,11 @@ public class Laser : MonoBehaviour
     {
         time += Time.deltaTime;
 
-        if(!attackable)
+        if (!attackable)
         {
             attackTime += Time.deltaTime;
 
-            if (attackTime >= attackDuration) 
+            if (attackTime >= attackDuration)
             {
                 attackable = true;
                 attackTime = 0f;
@@ -73,9 +70,9 @@ public class Laser : MonoBehaviour
             currentAngle = initialAngle;
         }
 
-        if(isRatation && rotationTime >= laserSetting.rotationTime)
+        if (isRatation && rotationTime >= laserSetting.rotationTime)
         {
-            if(currentIndex + 1 == laserSetting.rotationTypes.Count)
+            if (currentIndex + 1 == laserSetting.rotationTypes.Count)
             {
                 pool.Release(gameObject);
                 return;

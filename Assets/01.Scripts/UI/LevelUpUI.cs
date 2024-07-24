@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static WeaponData;
 
 public class LevelUpUI : MonoBehaviour
 {
@@ -20,12 +19,12 @@ public class LevelUpUI : MonoBehaviour
 
         foreach (var weaponCreator in passiveManager.weaponCreators) //갖고 있는 스킬
         {
-            if(weaponCreator.currLevel != 0 && weaponCreator.currLevel < 5)
+            if (weaponCreator.currLevel != 0 && weaponCreator.currLevel < 5)
             {
                 weaponList.Add(weaponCreator);
             }
         }
-        if (weaponList.Count < 5) 
+        if (weaponList.Count < 5)
         {
             foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
             {
@@ -45,7 +44,7 @@ public class LevelUpUI : MonoBehaviour
             }
         }
 
-        if(passiveList.Count < 5)
+        if (passiveList.Count < 5)
         {
             foreach (var passiveData in passiveManager.passiveDataList) //추가될 패시브
             {

@@ -43,7 +43,7 @@ public class WaveTable : DataTable
 
                 for (int i = 0; i < waveList.Count; i++)
                 {
-                    if(!waveTable.ContainsKey(waveList[i].stage.ToString()))
+                    if (!waveTable.ContainsKey(waveList[i].stage.ToString()))
                     {
                         waveTable.Add(waveList[i].stage.ToString(), new List<WaveData>());
                     }

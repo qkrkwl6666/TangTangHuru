@@ -36,7 +36,7 @@ public class LaserShoot : MonoBehaviour, IProjectile
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(redirectionTimer >= 0.07f)
+        if (redirectionTimer >= 0.07f)
         {
             SetDestination();
             redirectionTimer = 0f;

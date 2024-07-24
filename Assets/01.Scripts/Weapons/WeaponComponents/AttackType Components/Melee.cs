@@ -22,7 +22,7 @@ public class Melee : MonoBehaviour, IProjectile
 
         dir = currAimer.AimDirection();
 
-        if(currAimer.AimDirection() == currAimer.Player.transform.position)
+        if (currAimer.AimDirection() == currAimer.Player.transform.position)
         {
             dir = Vector3.zero; //방향이 플레이어 위치면 dir 0으로 설정. 중심에서 따라다니는 스킬
         }

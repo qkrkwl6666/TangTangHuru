@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 using CsvHelper;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using UnityEngine.AddressableAssets;
 using TextAsset = UnityEngine.TextAsset;
 
 public class BossData
@@ -27,7 +27,7 @@ public class BossData
 
     public List<(int, float)> GetBossSkillId()
     {
-        List<(int, float)> skills = new ();
+        List<(int, float)> skills = new();
 
         skills.Add((Skill1_Id, Skill1_Probability));
         skills.Add((Skill2_Id, Skill2_Probability));

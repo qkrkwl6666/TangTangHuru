@@ -27,7 +27,7 @@ public class Joystick : MonoBehaviour
         {
             case InputActionPhase.Performed:
                 {
-                    if(!isStarted)
+                    if (!isStarted)
                     {
                         isStarted = true;
                         UpdateJoystick(true, context.ReadValue<Vector2>());

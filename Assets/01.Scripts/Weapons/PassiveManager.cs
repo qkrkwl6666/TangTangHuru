@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,7 +68,7 @@ public class PassiveManager : MonoBehaviour
 
         foreach (var passiveData in currPassiveList)
         {
-            switch(passiveData.ItemType)
+            switch (passiveData.ItemType)
             {
                 case PassiveData.PassiveType.PowerType:
                     totalPowerPassive.Damage += passiveData.Damage * passiveData.Level;
@@ -101,6 +100,6 @@ public class PassiveManager : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 }

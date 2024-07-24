@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EmptyPassiveData : PassiveData
 {
     public new int Damage { get; set; } = 0;

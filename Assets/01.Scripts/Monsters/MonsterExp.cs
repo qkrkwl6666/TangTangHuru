@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class MonsterExp : MonoBehaviour , IPlayerObserver
+public class MonsterExp : MonoBehaviour, IPlayerObserver
 {
     private PlayerSubject playerSubject;
     private Transform playerTransform;
@@ -28,7 +28,7 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
 
                 pool.Release(gameObject);
                 return;
-            } 
+            }
         }
     }
 
@@ -69,6 +69,6 @@ public class MonsterExp : MonoBehaviour , IPlayerObserver
 
     public void Reset()
     {
-        
+
     }
 }

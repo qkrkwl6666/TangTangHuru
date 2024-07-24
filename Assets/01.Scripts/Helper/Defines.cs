@@ -12,6 +12,12 @@ public static class Defines
     public static readonly string obstacles = "Obstacles";
     public static readonly string rangeArea = "RangeArea";
 
+
+    public static readonly string loadingUI = "LoadingUI";
+    public static readonly string main = "Main";
+    public static readonly string inGame = "InGame";
+    public static readonly string joystick = "Joystick";
+
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
     public static readonly string body024 = "body_024";
@@ -56,8 +62,8 @@ public static class Defines
     public static readonly string dead = "dead";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
-    public static List<string> characterSkins = new ();
-    public static List<string> weaponSkins = new ();
+    public static List<string> characterSkins = new();
+    public static List<string> weaponSkins = new();
 
     public static void SetSkins()
     {

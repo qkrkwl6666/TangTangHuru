@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -34,14 +32,14 @@ public class Area : MonoBehaviour
 
         float currentScale = Mathf.InverseLerp(0f, duration, time) * scale;
 
-        transform.localScale = new Vector3 (currentScale, currentScale, currentScale);
+        transform.localScale = new Vector3(currentScale, currentScale, currentScale);
 
-        if (time >= duration) 
+        if (time >= duration)
         {
-            if(playerTransform != null)
+            if (playerTransform != null)
             {
                 float Distance = Vector2.Distance(transform.position, playerTransform.position);
-                if(Distance <= scale / 2)
+                if (Distance <= scale / 2)
                 {
                     playerTransform.GetComponent<IDamagable>().OnDamage(damage, 0);
                 }

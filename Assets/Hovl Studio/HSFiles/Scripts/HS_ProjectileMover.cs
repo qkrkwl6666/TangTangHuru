@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HS_ProjectileMover : MonoBehaviour
@@ -17,7 +16,7 @@ public class HS_ProjectileMover : MonoBehaviour
     [SerializeField] protected GameObject[] Detached;
     [SerializeField] protected ParticleSystem projectilePS;
     private bool startChecker = false;
-    [SerializeField]protected bool notDestroy = false;
+    [SerializeField] protected bool notDestroy = false;
 
     protected virtual void Start()
     {

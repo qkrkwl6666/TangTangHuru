@@ -17,8 +17,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector2 velocity;
 
-    Vector3 Left = new Vector3 (-1, 1, 1);
-    Vector3 Right = new Vector3 (1, 1, 1);
+    Vector3 Left = new Vector3(-1, 1, 1);
+    Vector3 Right = new Vector3(1, 1, 1);
 
     public GameObject viewPlayer;
 
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
         velocity = joystick.InputValue * moveSpeed * Time.deltaTime;
 
         transform.Translate(velocity);
-        
+
         state = (velocity == Vector2.zero) ? PlayerState.Idle : PlayerState.Run;
 
         if (joystick.InputValue.x < 0)

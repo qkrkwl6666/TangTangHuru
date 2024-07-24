@@ -1,12 +1,8 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static LaserSkill;
 
 public class LaserSkill : MonoBehaviour, IBossSkill
 {
@@ -21,7 +17,7 @@ public class LaserSkill : MonoBehaviour, IBossSkill
 
         public List<RotationType> rotationTypes = new List<RotationType>();
 
-        public void SetData(int laserCount, float rotationTime, 
+        public void SetData(int laserCount, float rotationTime,
             float yScale, float rotationSpeed, float lasetRate, float laserDistance)
         {
             this.laserCount = laserCount;
@@ -53,10 +49,10 @@ public class LaserSkill : MonoBehaviour, IBossSkill
     private IObjectPool<GameObject> pool;
 
     public float Damage { get; private set; }
-    public int SkillCount { get ; set ; }
-    public bool IsChange { get ; set ; }
-    public float SkillRate { get ; set ; }
-    public float DamageFactor { get ; set ; }
+    public int SkillCount { get; set; }
+    public bool IsChange { get; set; }
+    public float SkillRate { get; set; }
+    public float DamageFactor { get; set; }
 
     public LaserSetting laserSetting = new LaserSetting();
 
@@ -67,7 +63,7 @@ public class LaserSkill : MonoBehaviour, IBossSkill
         enabled = true;
 
         //레이저 생성
-        for (int i = 0; i < laserSetting.laserCount; i++) 
+        for (int i = 0; i < laserSetting.laserCount; i++)
         {
             float angle = ((360 / laserSetting.laserCount) * i) * Mathf.Deg2Rad;
             Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
@@ -90,10 +86,10 @@ public class LaserSkill : MonoBehaviour, IBossSkill
     }
 
     // 레이저 회전 방향 설정 해줘야함
-    public void SetLaser(int laserCount, float yScale, 
+    public void SetLaser(int laserCount, float yScale,
         float rotationSpeed, float laserDistance)
     {
-        laserSetting.SetData(laserCount, SkillCount, yScale, rotationSpeed, 
+        laserSetting.SetData(laserCount, SkillCount, yScale, rotationSpeed,
             SkillRate, laserDistance);
     }
 
@@ -112,8 +108,8 @@ public class LaserSkill : MonoBehaviour, IBossSkill
     public void SkillUpdate(float deltaTime)
     {
         time += deltaTime;
-        
-        if(time >= (SkillCount + laserSetting.laserRate) 
+
+        if (time >= (SkillCount + laserSetting.laserRate)
             * laserSetting.rotationTypes.Count && !IsChange)
         {
             Debug.Log("IsChange");

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ public class EnableOnDest : MonoBehaviour
 
     void Update()
     {
-        if(fired)
+        if (fired)
             return;
 
         if (timer >= (aimer.LifeTime - 0.1f))
@@ -65,7 +64,7 @@ public class EnableOnDest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        
+
     }
 
     private void Create()

@@ -10,7 +10,7 @@ public class ExpBar : MonoBehaviour
     private void Start()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
+        if (player != null)
         {
             playerExp = player.GetComponent<PlayerExp>();
             UpdateMaxValue();
@@ -27,7 +27,7 @@ public class ExpBar : MonoBehaviour
     {
         expSlider.value = playerExp.CurrExp;
     }
-    
+
     public void UpdateMaxValue()
     {
         expSlider.maxValue = playerExp.requiredExp;

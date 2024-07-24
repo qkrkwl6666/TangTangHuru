@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -41,7 +40,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        
+
     }
 
     public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
@@ -61,83 +60,83 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         GameObject monsterPrefab = op.Result;
 
-       if (!monsterPools.ContainsKey(monsterData.Monster_ID))
-       {
-           monsterPools[monsterData.Monster_ID] = new ObjectPool<GameObject>
-               ( () => 
-               {
-                   var go = Instantiate(monsterPrefab);
-                   var monsterScript = go.GetComponent<Monster>();
-                   monsterScript.SetPool(monsterPools[monsterData.Monster_ID]);
-                   //var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
-                   var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
-                   adp.Initialize(playerSubject);
-                   //ccm.Initialize(playerSubject);
-                   monsterScript.Initialize(playerSubject, monsterData);
+        if (!monsterPools.ContainsKey(monsterData.Monster_ID))
+        {
+            monsterPools[monsterData.Monster_ID] = new ObjectPool<GameObject>
+                (() =>
+                {
+                    var go = Instantiate(monsterPrefab);
+                    var monsterScript = go.GetComponent<Monster>();
+                    monsterScript.SetPool(monsterPools[monsterData.Monster_ID]);
+                    //var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+                    var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
+                    adp.Initialize(playerSubject);
+                    //ccm.Initialize(playerSubject);
+                    monsterScript.Initialize(playerSubject, monsterData);
 
-                   if (monsterData.Monster_Skill_Id == -1) return go;
+                    if (monsterData.Monster_Skill_Id == -1) return go;
 
-                   var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
-                   (DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
-                        .Monster_Skill_Id.ToString());
+                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
+                    (DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
+                         .Monster_Skill_Id.ToString());
 
-                   MonsterSkillAddComponent(go, skillData);
+                    MonsterSkillAddComponent(go, skillData);
 
-                   return go; 
-               },
-               (x) => 
-               { 
-                   monsters.Add(x);
-                   x.GetComponent<LivingEntity>().AwakeHealth();
-                   x.SetActive(true);
-               },
-               (x) => 
-               {
-                   monsters.Remove(x);
-                   x.SetActive(false); 
-               } ,
-               (x) => Destroy(x.gameObject),
-               true,
-               10, 200);
-       }
+                    return go;
+                },
+                (x) =>
+                {
+                    monsters.Add(x);
+                    x.GetComponent<LivingEntity>().AwakeHealth();
+                    x.SetActive(true);
+                },
+                (x) =>
+                {
+                    monsters.Remove(x);
+                    x.SetActive(false);
+                },
+                (x) => Destroy(x.gameObject),
+                true,
+                10, 200);
+        }
 
         switch (spawnType)
-       {
-           // 랜덤 생성
-           case 1:
-               for (int i = 0; i < spawnCount; i++)
-               {
-                   var monster = monsterPools[monsterData.Monster_ID].Get();
-                   monster.transform.position = RandomPosition(defaultDistance);
-                   monster.transform.rotation = Quaternion.identity;
-               }
-               break;
-           // 직선 생성
-           case 2:
-               var lineList = LinePosition(RandomPosition(lineSpawnDistance), spawnCount, 0f);
-       
-               for (int i = 0; i < spawnCount; i++)
-               {
-                   var monster = monsterPools[monsterData.Monster_ID].Get();
-                   monster.transform.position = lineList[i];
-                   monster.transform.rotation = Quaternion.identity;
-               }
-               break;
-           // 원 생성
-           case 3:
-               for (int i = 0; i < spawnCount; i++)
-               {
-                   var monster = monsterPools[monsterData.Monster_ID].Get();
-                   monster.transform.position = CirclePosition(spawnCount, i);
-                   monster.transform.rotation = Quaternion.identity;
-               }
-               break;
-       }
+        {
+            // 랜덤 생성
+            case 1:
+                for (int i = 0; i < spawnCount; i++)
+                {
+                    var monster = monsterPools[monsterData.Monster_ID].Get();
+                    monster.transform.position = RandomPosition(defaultDistance);
+                    monster.transform.rotation = Quaternion.identity;
+                }
+                break;
+            // 직선 생성
+            case 2:
+                var lineList = LinePosition(RandomPosition(lineSpawnDistance), spawnCount, 0f);
+
+                for (int i = 0; i < spawnCount; i++)
+                {
+                    var monster = monsterPools[monsterData.Monster_ID].Get();
+                    monster.transform.position = lineList[i];
+                    monster.transform.rotation = Quaternion.identity;
+                }
+                break;
+            // 원 생성
+            case 3:
+                for (int i = 0; i < spawnCount; i++)
+                {
+                    var monster = monsterPools[monsterData.Monster_ID].Get();
+                    monster.transform.position = CirclePosition(spawnCount, i);
+                    monster.transform.rotation = Quaternion.identity;
+                }
+                break;
+        }
 
     }
 
     // Todo : 몬스터 테이블 수정 
-    public void MonsterSkillAddComponent(GameObject monster , MonsterSkillData skillData)
+    public void MonsterSkillAddComponent(GameObject monster, MonsterSkillData skillData)
     {
         switch (skillData.Skill_Id)
         {
@@ -158,7 +157,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public void MonsterAllDead()
     {
 
-        foreach(var monster in monsters)
+        foreach (var monster in monsters)
         {
             monster.SetActive(false);
         }
@@ -170,13 +169,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + bossSpawnPosition;
 
-        Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed += 
-            (x) => 
+        Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed +=
+            (x) =>
             {
                 var monsterGo = x.Result;
                 monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
 
-                gameUI.SetActiveBossHpBar(true);  
+                gameUI.SetActiveBossHpBar(true);
             };
     }
 
@@ -223,7 +222,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (playerTransform == null) return Vector2.zero;
 
-        float angle = ((360 / spawnCount) * currentSpawnCount) * Mathf.Deg2Rad;     
+        float angle = ((360 / spawnCount) * currentSpawnCount) * Mathf.Deg2Rad;
 
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * circleSpawnDistance;
@@ -238,7 +237,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
         int padding = 3;
 
-        for(int i = 0; i < spawnCount; i++)
+        for (int i = 0; i < spawnCount; i++)
         {
             Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (padding * i);
             lines.Add(point + pos);

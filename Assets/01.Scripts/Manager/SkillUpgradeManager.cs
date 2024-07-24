@@ -6,7 +6,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
 
     private PlayerSubject playerSubject;
     private PlayerExp playerExp;
-    
+
 
     void Start()
     {

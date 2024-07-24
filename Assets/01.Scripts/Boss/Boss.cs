@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Xml;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Boss : LivingEntity, IPlayerObserver
@@ -189,7 +187,7 @@ public class Boss : LivingEntity, IPlayerObserver
         {
             currentProbability += probability;
 
-            if(random <= currentProbability)
+            if (random <= currentProbability)
             {
                 skill.Activate();
                 currentSkill = skill;

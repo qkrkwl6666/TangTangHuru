@@ -4,7 +4,7 @@ using UnityEngine.AddressableAssets;
 
 public class TreasureSpawnManager : MonoBehaviour
 {
-    public List<Treasure> treasures = new ();
+    public List<Treasure> treasures = new();
 
     public Well well = null;
 
@@ -43,7 +43,7 @@ public class TreasureSpawnManager : MonoBehaviour
 
         Vector2 randomPos = Vector2.zero;
 
-        while (!isSame) 
+        while (!isSame)
         {
             float randomDistance = Random.Range(minRadius, maxRadius);
 
@@ -57,13 +57,13 @@ public class TreasureSpawnManager : MonoBehaviour
 
                 foreach (var treasure in treasures)
                 {
-                    if(tr != null)
+                    if (tr != null)
                         if (treasure == tr) continue;
 
                     if (Vector2.Distance(treasure.transform.position,
                         randomPos) <= treasuresRadius)
                     {
-                        isSame = false; 
+                        isSame = false;
                         break;
                     }
                 }
@@ -80,7 +80,7 @@ public class TreasureSpawnManager : MonoBehaviour
         float totalProbability = 0f;
         float currentProbability = 0f;
 
-        foreach (var stone in stones) 
+        foreach (var stone in stones)
         {
             if (stone.id == -1) break;
 
@@ -106,8 +106,8 @@ public class TreasureSpawnManager : MonoBehaviour
                     // 장비 원석 , 강화석 , 자석
 
                     // 장비 원석 생성
-                    Addressables.InstantiateAsync(itemData.Prefab_Id).Completed += 
-                    (x) => 
+                    Addressables.InstantiateAsync(itemData.Prefab_Id).Completed +=
+                    (x) =>
                     {
                         var stone = x.Result;
                         var equip = stone.AddComponent<EquipmentGemstone>();
@@ -119,7 +119,7 @@ public class TreasureSpawnManager : MonoBehaviour
                     // 강화석 생성
                     int rand = Random.Range(treasureData.Min_Re_Stone, treasureData.Max_Re_Stone + 1);
 
-                    for(int i = 0; i < rand; i++)
+                    for (int i = 0; i < rand; i++)
                     {
                         Addressables.InstantiateAsync("Normal_Re_Stone").Completed +=
                         (x) =>
@@ -159,5 +159,5 @@ public class TreasureSpawnManager : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 350);
-    }        
+    }
 }

@@ -8,7 +8,7 @@ public class FixedAim : MonoBehaviour, IAimer
     public float LifeTime { get; set; }
     public float Speed { get; set; }
     public int TotalCount { get; set; }
-    public int Index {get; set; }
+    public int Index { get; set; }
 
     private float dir;
 

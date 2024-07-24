@@ -23,7 +23,7 @@ public class WeaponUpgrader : MonoBehaviour
                 upgradeStats = skillUpgradeData.Level2_Upgrade;
                 upgradeValue = skillUpgradeData.Level2_Value;
                 break;
-            case 3: 
+            case 3:
                 upgradeStats = skillUpgradeData.Level3_Upgrade;
                 upgradeValue = skillUpgradeData.Level3_Value;
                 break;
@@ -36,7 +36,7 @@ public class WeaponUpgrader : MonoBehaviour
         }
 
 
-        for(int i = 0; i < upgradeStats.Count; ++i)
+        for (int i = 0; i < upgradeStats.Count; ++i)
         {
             switch (upgradeStats[i])
             {

@@ -14,9 +14,9 @@ public class MonsterSpawnInfo
 
     public bool IsSpawn
     {
-        get 
-        { 
-            if(MonsterId != -1 && time >= MonsterDuration)
+        get
+        {
+            if (MonsterId != -1 && time >= MonsterDuration)
             {
                 time = 0f;
                 return true;

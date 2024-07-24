@@ -16,7 +16,7 @@ public class AttackState : IMonsterState
 
     public void Enter()
     {
-        if(prevTrackEntry != null)
+        if (prevTrackEntry != null)
         {
             prevTrackEntry.Complete -= OnAttackEndToWalk;
         }
@@ -27,12 +27,12 @@ public class AttackState : IMonsterState
 
     public void Exit()
     {
-        
+
     }
 
     public void Update(float deltaTime)
     {
-        
+
     }
 
     public void OnAttackEndToWalk(TrackEntry trackEntry)

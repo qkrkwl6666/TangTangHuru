@@ -32,7 +32,7 @@ public class PlayerSubject : MonoBehaviour
 
     public void AddObserver(IPlayerObserver playerObserver)
     {
-        if (playerObservers.Contains(playerObserver)) 
+        if (playerObservers.Contains(playerObserver))
             return;
 
         playerObservers.Add(playerObserver);

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 using CsvHelper;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using UnityEngine.AddressableAssets;
 using TextAsset = UnityEngine.TextAsset;
 
 public class MonsterData
@@ -40,7 +40,7 @@ public class MonsterTable : DataTable
             {
                 var records = csvReader.GetRecords<MonsterData>();
 
-                foreach(var record in records)
+                foreach (var record in records)
                 {
                     monsterTable.Add(record.Monster_ID.ToString(), record);
                 }

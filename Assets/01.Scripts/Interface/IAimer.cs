@@ -6,7 +6,7 @@ public interface IAimer
 
     float LifeTime { get; set; }
     int TotalCount { get; set; }
-    int Index {  get; set; }
+    int Index { get; set; }
 
     Vector3 AimDirection();
 }

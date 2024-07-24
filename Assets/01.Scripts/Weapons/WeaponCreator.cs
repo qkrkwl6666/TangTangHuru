@@ -246,7 +246,7 @@ public class WeaponCreator : MonoBehaviour
 
     private void LevelUp()
     {
-        if(weaponDataInStage.Level >= 5)
+        if (weaponDataInStage.Level >= 5)
         {
             weaponDataInStage.Level = 5;
             weaponUpgrader.Evolution(weapons);

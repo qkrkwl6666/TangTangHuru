@@ -20,7 +20,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         }
 
         playerSubject.AddObserver(this);
-    }  
+    }
 
     private void Awake()
     {

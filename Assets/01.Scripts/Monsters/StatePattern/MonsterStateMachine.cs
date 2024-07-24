@@ -6,7 +6,7 @@ public class MonsterStateMachine
     public WalkState walkState;
     public AttackState attackState;
 
-    public MonsterStateMachine(MonsterController monsterController, MonsterMoveType monsterMoveType) 
+    public MonsterStateMachine(MonsterController monsterController, MonsterMoveType monsterMoveType)
     {
         this.idleState = new IdleState(monsterController);
         this.walkState = new WalkState(monsterController, monsterMoveType);
@@ -19,7 +19,7 @@ public class MonsterStateMachine
         CurrentState.Enter();
     }
 
-    public void TransitionTo(IMonsterState monsterState) 
+    public void TransitionTo(IMonsterState monsterState)
     {
         CurrentState.Exit();
         CurrentState = monsterState;

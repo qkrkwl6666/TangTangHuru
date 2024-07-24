@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BacknForwardRound : MonoBehaviour, IProjectile
@@ -44,14 +42,14 @@ public class BacknForwardRound : MonoBehaviour, IProjectile
             gameObject.SetActive(false);
         }
         float lerpTime = timer / ForwardTime;
-        
+
         float angle = lerpTime * 2 * Mathf.PI;
         float cosAngle = Mathf.Cos(angle);
         float sinAngle = Mathf.Sin(angle);
 
-        Vector3 newPosition = parentTransform.position + currAimer.AimDirection() * (cosAngle * Range) + 
+        Vector3 newPosition = parentTransform.position + currAimer.AimDirection() * (cosAngle * Range) +
                               Quaternion.Euler(0, 0, angleOffset) * currAimer.AimDirection() * (sinAngle * Range * 0.5f);
-        
+
         transform.position = newPosition;
     }
 }

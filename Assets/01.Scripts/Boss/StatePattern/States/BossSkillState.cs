@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BossSkillState : BossState
 {
     public BossSkillState(Boss boss, MonsterView monsterView) : base(boss, monsterView)

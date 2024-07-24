@@ -6,7 +6,7 @@ public class IdleState : IMonsterState
     public IdleState(MonsterController monsterController)
     {
         this.monsterController = monsterController;
-        this.monsterView = monsterController.MonsterView; 
+        this.monsterView = monsterController.MonsterView;
     }
     public void Enter()
     {
@@ -15,11 +15,11 @@ public class IdleState : IMonsterState
 
     public void Exit()
     {
-        
+
     }
 
     public void Update(float deltaTime)
     {
-        
+
     }
 }
