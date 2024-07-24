@@ -111,7 +111,29 @@ public class Boss : LivingEntity, IPlayerObserver
                 case 500009:
                     {
                         var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(1.5f, 3f);
+                        bn.SetScaleDuration(1.5f, 2f);
+                    }
+                    break;
+                case 500010:
+                    {
+                        var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
+                        laser.SetLaser(1, 10f, 50f, 2f);
+                        laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
+                    }
+                    break;
+                case 500011:
+                    {
+                        var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
+                        laser.SetLaser(4, 10f, 50f, 2f);
+                        laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
+                    }
+                    break;
+                case 500012:
+                    {
+                        var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
+                        laser.SetLaser(4, 10f, 50f, 2f);
+                        laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
+                        laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Left);
                     }
                     break;
             }
@@ -149,6 +171,8 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public IBossSkill SelectSkill()
     {
+        Debug.Log("SelectSkill");
+
         if (currentSkill != null)
         {
             currentSkill.DeActivate();

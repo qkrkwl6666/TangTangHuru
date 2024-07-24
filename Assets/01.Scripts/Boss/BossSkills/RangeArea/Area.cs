@@ -59,7 +59,8 @@ public class Area : MonoBehaviour
 
     public void SetDamage(float damage)
     {
-        this.damage = damage; 
+        this.damage = damage;
+
     }
 
 }

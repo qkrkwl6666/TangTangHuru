@@ -96,7 +96,6 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
             IsChange = true;
             return;
         }
-
     }
 
     // Todo : 이름 변경 하기
