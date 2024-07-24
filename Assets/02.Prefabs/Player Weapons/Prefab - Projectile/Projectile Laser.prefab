@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6750992568746902541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &1121210511400993499
@@ -54,7 +55,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -172,3 +173,73 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!1001 &6746731412882757809
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 523357056575848133}
+    m_Modifications:
+    - target: {fileID: 1557811069740550, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_Name
+      value: Projectile 13 lightning
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 54496715902763870, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_CollisionDetection
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 135195918683395516, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+--- !u!4 &6750992568746902541 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4894478136417468, guid: e169186eaec8f4f41936afd7475bf028, type: 3}
+  m_PrefabInstance: {fileID: 6746731412882757809}
+  m_PrefabAsset: {fileID: 0}

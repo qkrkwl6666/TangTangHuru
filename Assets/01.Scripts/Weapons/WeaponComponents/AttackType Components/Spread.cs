@@ -4,7 +4,6 @@ public class Spread : MonoBehaviour, IProjectile
 {
     public float spreadAngle = 15f;
 
-    Rigidbody2D rb;
     float timer = 0f;
 
     IAimer currAimer;
@@ -13,9 +12,10 @@ public class Spread : MonoBehaviour, IProjectile
     public float Size { get; set; }
     public float Speed { get; set; }
 
+    Vector3 dir = Vector3.zero;
+
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         currAimer = GetComponent<IAimer>();
     }
 
@@ -43,11 +43,11 @@ public class Spread : MonoBehaviour, IProjectile
             float radianAngle = currentAngle * Mathf.Deg2Rad;
             Vector2 direction = new Vector2(Mathf.Cos(radianAngle), Mathf.Sin(radianAngle));
 
-            rb.velocity = direction * Speed;
+            dir = direction;
         }
         else
         {
-            rb.velocity = pos * Speed;
+            dir = pos;
         }
     }
 
@@ -64,6 +64,7 @@ public class Spread : MonoBehaviour, IProjectile
         }
         else
         {
+            transform.Translate(dir * Speed * Time.deltaTime, Space.World);
             timer += Time.deltaTime;
         }
     }

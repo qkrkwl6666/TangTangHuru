@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5867603526577471851}
   - component: {fileID: 472383371741177397}
-  - component: {fileID: 4642776682603058228}
   - component: {fileID: 3282488639268092684}
+  - component: {fileID: 4642776682603058228}
   m_Layer: 7
   m_Name: SubWeapon IceGround
   m_TagString: Untagged
@@ -41,29 +41,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2052190694396123609}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 1152390223990527742, guid: ab3b06c610d91064aac2c62b51d9a593, type: 3}
-  weaponDataRef: {fileID: 11400000, guid: 938d27b799ee82b44875f61b1b8df10e, type: 2}
-  secondWeaponPrefab: {fileID: 0}
-  currLevel: 0
---- !u!114 &4642776682603058228
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2052190694396123609}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 1152390223990527742, guid: ab3b06c610d91064aac2c62b51d9a593, type: 3}
-  weaponDataRef: {fileID: 11400000, guid: 5f5f272a3fde65649879a50d54ca2788, type: 2}
+  weaponDataRef: {fileID: 11400000, guid: 938d27b799ee82b44875f61b1b8df10e, type: 2}
   secondWeaponPrefab: {fileID: 0}
   currLevel: 0
 --- !u!114 &3282488639268092684
@@ -81,3 +65,19 @@ MonoBehaviour:
   skillUpgradeData: {fileID: 11400000, guid: 3fa77fd2e6230f643bdc2e5d59fb0950, type: 2}
   firstWeaponCreator: {fileID: 472383371741177397}
   finalWeaponCreator: {fileID: 4642776682603058228}
+--- !u!114 &4642776682603058228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052190694396123609}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 1152390223990527742, guid: ab3b06c610d91064aac2c62b51d9a593, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: 5f5f272a3fde65649879a50d54ca2788, type: 2}
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0

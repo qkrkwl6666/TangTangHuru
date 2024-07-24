@@ -11,7 +11,6 @@ public class Area : MonoBehaviour
     private float scale = 1f;
     private float duration = 1.5f;
     private float time = 0f;
-    private bool attackable = false;
 
     private Transform playerTransform;
 
@@ -27,7 +26,6 @@ public class Area : MonoBehaviour
     private void OnDisable()
     {
         time = 0f;
-        attackable = false;
     }
 
     private void Update()
