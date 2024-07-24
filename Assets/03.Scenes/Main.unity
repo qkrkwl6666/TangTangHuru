@@ -748,7 +748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c563bb7c40ba3d7408ff37e65f79d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 2
+  stage: 6
 --- !u!1 &574444444
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,7 +1593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c563bb7c40ba3d7408ff37e65f79d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stage: 5
+  stage: 7
 --- !u!114 &1430660480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1843,6 +1843,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2796435645275181743, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3653194690715785979, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
       propertyPath: m_Sprite
       value: 

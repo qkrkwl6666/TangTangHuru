@@ -45,7 +45,7 @@ public class Area : MonoBehaviour
                 float Distance = Vector2.Distance(transform.position, playerTransform.position);
                 if(Distance <= scale / 2)
                 {
-                    playerTransform.GetComponent<IDamagable>().OnDamage(damage);
+                    playerTransform.GetComponent<IDamagable>().OnDamage(damage, 0);
                 }
             }
             pool?.Release(gameObject);

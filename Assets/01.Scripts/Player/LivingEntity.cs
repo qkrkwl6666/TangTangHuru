@@ -8,6 +8,7 @@ public class LivingEntity : MonoBehaviour, IDamagable
     public bool dead { get; protected set; } // 사망 상태
 
     public Action<float> OnDamaged; //대미지 받았을때 이벤트
+    public Action<float> OnImpact; //넉백 받았을때 이벤트
 
     public Action onDeath; // 사망시 발동할 이벤트
 
@@ -30,13 +31,14 @@ public class LivingEntity : MonoBehaviour, IDamagable
         dead = newDead;
     }
 
-    public virtual void OnDamage(float damage)
+    public virtual void OnDamage(float damage, float impact)
     {
         //Debug.Log("아야! hp : " + health);
 
         health -= damage;
 
         OnDamaged?.Invoke(damage);
+        OnImpact?.Invoke(impact);
 
         if (health <= 0 && !dead)
         {

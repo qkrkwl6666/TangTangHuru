@@ -202,9 +202,9 @@ public class Boss : LivingEntity, IPlayerObserver
         Time.timeScale = timeScale;
     }
 
-    public override void OnDamage(float damage)
+    public override void OnDamage(float damage, float impact)
     {
-        base.OnDamage(damage);
+        base.OnDamage(damage, 0);
 
         GameUI.UpdateBossHpBar(health / startingHealth);
     }

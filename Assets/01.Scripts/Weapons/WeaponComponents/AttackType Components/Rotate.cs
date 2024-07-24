@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class Rotate : MonoBehaviour
+public class Rotate : MonoBehaviour, IProjectile
 {
-    public int burstCount = 0;
-    public int index = 0;
     private float angle = 0f;
 
     float timer = 0f;
-    float range = 2.5f;
 
     IAimer currAimer;
     Transform parentTransform;
+
+    public float Range { get; set; }
+    public float Size { get; set; }
+    public float Speed { get; set; }
 
     void Awake()
     {
@@ -21,6 +22,7 @@ public class Rotate : MonoBehaviour
     private void OnEnable()
     {
         angle = (360f / currAimer.TotalCount) * currAimer.Index;
+        transform.localScale = new Vector3(Size, Size);
     }
 
     private void OnDisable()
@@ -38,8 +40,8 @@ public class Rotate : MonoBehaviour
         {
             float radians = angle * Mathf.Deg2Rad;
              
-            float x = parentTransform.position.x + Mathf.Cos(radians) * range;
-            float y = parentTransform.position.y + Mathf.Sin(radians) * range;
+            float x = parentTransform.position.x + Mathf.Cos(radians) * Range;
+            float y = parentTransform.position.y + Mathf.Sin(radians) * Range;
 
             Vector3 newPosition = new Vector3(x, y, 0);
             transform.position = newPosition;
@@ -47,7 +49,7 @@ public class Rotate : MonoBehaviour
             Vector3 direction = (transform.position - parentTransform.position).normalized;
             transform.up = direction;  // 오브젝트가 항상 바깥을 보도록
 
-            angle += currAimer.Speed * Time.deltaTime;
+            angle += Speed * Time.deltaTime;
             timer += Time.deltaTime;
         }
     }

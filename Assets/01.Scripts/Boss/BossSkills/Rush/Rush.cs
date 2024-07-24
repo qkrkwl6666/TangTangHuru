@@ -99,7 +99,7 @@ public class Rush : MonoBehaviour, IBossSkill
 
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<IDamagable>().OnDamage(Damage);
+            collision.gameObject.GetComponent<IDamagable>().OnDamage(Damage, 0);
             IsChange = true;
 
             AwakeColor();
