@@ -3,8 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
+
+
 public class LaserSkill : MonoBehaviour, IBossSkill
 {
+    public enum RotationType
+    {
+        Right,
+        Left,
+    }
     private IObjectPool<GameObject> pool;
 
     int IBossSkill.SkillCount { get ; set ; }
@@ -13,6 +20,8 @@ public class LaserSkill : MonoBehaviour, IBossSkill
     float IBossSkill.DamageFactor { get ; set ; }
 
     float rotationTime = 0f;
+
+    public List<RotationType> rotationTypes = new List<RotationType>();
 
     void IBossSkill.Activate()
     {
