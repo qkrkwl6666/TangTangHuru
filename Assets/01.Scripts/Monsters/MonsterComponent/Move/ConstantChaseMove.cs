@@ -26,7 +26,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
     {
         monster = GetComponent<Monster>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        monster.OnImpact += NuckBack;
+        monster.OnDamaged += NuckBack;
     }
 
     private void FixedUpdate()
@@ -50,7 +50,7 @@ public class ConstantChaseMove : MonoBehaviour, IPlayerObserver
         if (playerTransform == null) return;
 
         playerSubject.RemoveObserver(this);
-        monster.OnImpact -= NuckBack;
+        monster.OnDamaged -= NuckBack;
     }
 
     private void NuckBack(float damage)

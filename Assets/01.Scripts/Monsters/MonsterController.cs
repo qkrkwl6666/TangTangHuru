@@ -1,10 +1,10 @@
-using System.Threading;
+using Spine.Unity;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
 {
     private PlayerSubject playerSubject;
-    
+
     private Vector2 playerDirection;
 
     public MonsterView MonsterView { get; private set; }
@@ -51,9 +51,9 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         MonsterStateMachine.Update(Time.deltaTime);
 
         if (slowed)
-        { 
+        {
             slowTimer += Time.deltaTime;
-            if(slowTimer > slowTime)
+            if (slowTimer > slowTime)
             {
                 currSpeed = moveSpeed;
                 slowed = false;
@@ -64,7 +64,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void FixedUpdate()
     {
-        
+
     }
 
     private void OnEnable()

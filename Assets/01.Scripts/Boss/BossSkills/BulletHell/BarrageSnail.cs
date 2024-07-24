@@ -11,9 +11,11 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     // 공격 주기 시간
     private float attackTime = 0f;
-    private float attackDuration = 0.1f;
+    private float attackDuration = 0.05f;
 
     private int currentSkillCount = 0;
+
+    private float ballSpeed = 7f;
 
     public float Damage {  get; set; }
     public int SkillCount { get; set; } = 3;
@@ -22,7 +24,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     public float DamageFactor { get; set; } = 0f;
 
     private int currentIndex = 0;
-    private int maxIndex = 20;
+    private int maxIndex = 30;
 
     private void Awake()
     {
@@ -66,14 +68,14 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     }
 
     public void Attack()
-    {
+    {;
         float angle = ((360 / maxIndex) * currentIndex) * Mathf.Deg2Rad;
         Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
         if (pool == null) return;
         var go = pool.Get();
 
-        go.GetComponent<Barrage>().Init(dir, transform, attackScale);
+        go.GetComponent<Barrage>().Init(dir, transform, attackScale, ballSpeed);
 
         currentIndex++;
 

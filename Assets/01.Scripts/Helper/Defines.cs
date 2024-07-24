@@ -7,6 +7,10 @@ public static class Defines
     public static readonly string snailBullet = "SnailBullet";
     public static readonly string treasure = "Treasure";
     public static readonly string well = "Well";
+    public static readonly string bossWall = "BossWall";
+    public static readonly string playBoss = "PlayBoss";
+    public static readonly string obstacles = "Obstacles";
+    public static readonly string rangeArea = "RangeArea";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
@@ -49,6 +53,7 @@ public static class Defines
     public static readonly string walk = "walk";
     public static readonly string attack = "attack";
     public static readonly string attack2 = "attack2";
+    public static readonly string dead = "dead";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new ();
