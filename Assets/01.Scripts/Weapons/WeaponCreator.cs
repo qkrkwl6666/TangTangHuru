@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
@@ -24,6 +25,7 @@ public class WeaponCreator : MonoBehaviour
 
     private bool levelUpReady = false;
 
+    private PassiveData EmptyData;
     private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
     private PassiveData commonPassive;
 
@@ -33,8 +35,12 @@ public class WeaponCreator : MonoBehaviour
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
         weaponDataInStage = Instantiate(weaponDataRef);
-        typePassive = new EmptyPassiveData();
-        commonPassive = new EmptyPassiveData();
+
+        Addressables.LoadAssetAsync<PassiveData>("EmptyPassiveData").Completed += (EmptyData) =>
+        {
+            typePassive = EmptyData.Result;
+            commonPassive = EmptyData.Result;
+        };
     }
 
     private void OnEnable()

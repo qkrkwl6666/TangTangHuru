@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3013188762494565310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 80060958835163889}
+  - component: {fileID: 4411345062486622436}
+  - component: {fileID: 2681439794620728788}
+  - component: {fileID: 3514018488366009518}
+  m_Layer: 7
+  m_Name: Weapon Axe
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &80060958835163889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3013188762494565310}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4411345062486622436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3013188762494565310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 3661404853983736829, guid: ea24b5c8ffea86643b71dc279e373a95, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: a29d23d87f49b604b9c0715bb143193b, type: 2}
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+--- !u!114 &2681439794620728788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3013188762494565310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91759e4e7d15c694d9809e011bd504a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skillUpgradeData: {fileID: 11400000, guid: 5196003af85e8cb4fb687cdd0657582f, type: 2}
+  firstWeaponCreator: {fileID: 4411345062486622436}
+  finalWeaponCreator: {fileID: 3514018488366009518}
+--- !u!114 &3514018488366009518
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3013188762494565310}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 3661404853983736829, guid: ea24b5c8ffea86643b71dc279e373a95, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: 01b5579e23b34f74cb153e6ad1207486, type: 2}
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
