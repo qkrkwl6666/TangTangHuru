@@ -5,7 +5,7 @@ public class Shoot : MonoBehaviour, IProjectile
     public IAimer currAimer;
 
     private float timer = 0f;
-    private Rigidbody2D rb;
+    private Vector3 dir = Vector3.zero;
 
     public float Range { get; set; }
     public float Size { get; set; }
@@ -13,7 +13,6 @@ public class Shoot : MonoBehaviour, IProjectile
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
         currAimer = GetComponent<IAimer>();
     }
 
@@ -22,9 +21,8 @@ public class Shoot : MonoBehaviour, IProjectile
         timer = 0f;
         transform.localScale = new Vector3(Size, Size);
 
-        var pos = currAimer.AimDirection();
-        transform.up = pos;
-        rb.velocity = pos * Speed;
+        dir = currAimer.AimDirection();
+        transform.up = dir;
     }
 
 
@@ -36,6 +34,7 @@ public class Shoot : MonoBehaviour, IProjectile
         }
         else
         {
+            transform.Translate(dir * Speed * Time.deltaTime, Space.World);
             timer += Time.deltaTime;
         }
     }

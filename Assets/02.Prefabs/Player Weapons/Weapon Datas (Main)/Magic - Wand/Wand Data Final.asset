@@ -14,14 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Sword
   level: 5
-  aimType: 4
+  weaponType: 0
+  aimType: 3
   moveType: 3
-  attackType: 1
+  attackType: 0
+  singleAttackRate: 0
   damage: 15
   criticalChance: 0
   criticalValue: 0
-  speed: 400
   range: 2
+  impact: 0.3
+  speed: 400
+  size: 1
   lifeTime: 10
   coolDown: 9.5
   burstCount: 6
@@ -30,4 +34,4 @@ MonoBehaviour:
   fadeInRate: 0.3
   fadeOutRate: 0.3
   maxAlpha: 0.8
-  Options: 00000000
+  Options: 

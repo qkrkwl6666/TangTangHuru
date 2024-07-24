@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponName: Crossbow
   level: 1
-  aimType: 0
+  weaponType: 0
+  aimType: 1
   moveType: 1
   attackType: 0
   singleAttackRate: 0
@@ -24,11 +25,11 @@ MonoBehaviour:
   range: 2
   impact: 5
   speed: 30
-  size: 1
+  size: 3
   lifeTime: 2.5
   coolDown: 2
-  burstCount: 1
-  burstRate: 0.2
+  burstCount: 3
+  burstRate: 0.5
   pierceCount: 99
   fadeInRate: 0
   fadeOutRate: 0

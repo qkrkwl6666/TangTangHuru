@@ -15,6 +15,7 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
     private Vector2 currPoint;
     private float timer = 0f;
 
+    Vector3 currPosition = Vector3.zero;
 
     private void Awake()
     {
@@ -29,8 +30,9 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
         dir = currAimer.AimDirection();
     }
 
-    void FixedUpdate()
+    void Update()
     {
+
         CheckBounds();
 
 
