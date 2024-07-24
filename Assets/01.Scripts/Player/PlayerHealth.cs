@@ -29,7 +29,7 @@ public class PlayerHealth : LivingEntity
         }
     }
 
-    public override void OnDamage(float damage, float impact)
+    public override void OnDamage(float damage)
     {
         if (dead || isInvincible)
             return;

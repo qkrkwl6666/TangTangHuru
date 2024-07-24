@@ -1,4 +1,4 @@
-using System.Threading;
+using Spine.Unity;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
@@ -10,17 +10,15 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public MonsterView MonsterView { get; private set; }
     public Transform PlayerTransform { get; private set; }
 
-    private float currSpeed = 2f;
     private float moveSpeed = 2f;
-    private bool slowed = false;
-    private float slowTimer = 0;
-    private float slowTime = 0;
-
     public Monster Monster { get; private set; }
 
     public MonsterMoveType MoveType { get; private set; } = MonsterMoveType.Chase;
 
     public MonsterStateMachine MonsterStateMachine { get; private set; }
+
+    private int updateInterval = 2;
+    private int frameCount = 0;
 
     private void Awake()
     {
@@ -33,7 +31,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
         MonsterStateMachine = new MonsterStateMachine(this, MoveType);
 
-        Monster = GetComponent<Monster>();
+        Monster = GetComponent<Monster>();  
     }
 
     private void Start()
@@ -43,40 +41,25 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
-
-
-        MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
-
-        MonsterStateMachine.Update(Time.deltaTime);
-
-        if (slowed)
-        { 
-            slowTimer += Time.deltaTime;
-            if(slowTimer > slowTime)
-            {
-                currSpeed = moveSpeed;
-                slowed = false;
-                slowTimer = 0;
-            }
+        frameCount++;
+        if (frameCount >= updateInterval)
+        {
+            MonsterStateMachine.Update(Time.deltaTime * updateInterval);
+            frameCount = 0;
         }
     }
 
     private void FixedUpdate()
     {
-        
+        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
+
+        MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
     }
 
     private void OnEnable()
     {
         // Todo : 여기서 자신의 위치 타이밍? 이 안맞을 수도 있음 
         playerDirection = (PlayerTransform.position - transform.position).normalized;
-        Monster.OnImpact += NuckBack;
-    }
-
-    private void OnDestroy()
-    {
-        Monster.OnImpact -= NuckBack;
     }
 
     public void ChasePlayer(float deltaTime)
@@ -85,37 +68,17 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
         Vector2 dir = (PlayerTransform.position - transform.position).normalized;
 
-        transform.Translate(dir * deltaTime * currSpeed);
+        transform.Translate(dir * deltaTime * moveSpeed);
     }
 
     public void MoveToInitialPlayerPosition(float deltaTime)
     {
-        transform.Translate(playerDirection * deltaTime * currSpeed);
+        transform.Translate(playerDirection * deltaTime * moveSpeed);
     }
 
     public void IObserverUpdate()
     {
         PlayerTransform = playerSubject.GetPlayerTransform;
-    }
-
-    public void Slow(float maxTime)
-    {
-        slowTimer = 0;
-        slowTime = maxTime;
-        currSpeed = moveSpeed * 0.5f;
-        slowed = true;
-    }
-    public void Stop(float maxTime)
-    {
-        slowTimer = 0;
-        slowTime = maxTime;
-        currSpeed = 0f;
-        slowed = true;
-    }
-
-    private void NuckBack(float impact)
-    {
-        transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
     }
 
 }

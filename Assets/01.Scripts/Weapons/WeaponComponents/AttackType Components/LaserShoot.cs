@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LaserShoot : MonoBehaviour, IProjectile
+public class LaserShoot : MonoBehaviour
 {
     private LayerMask attackableMask;
     private LineRenderer laser;
@@ -13,10 +13,6 @@ public class LaserShoot : MonoBehaviour, IProjectile
     private float redirectionTimer = 0f;
 
     private Vector2 endPoint;
-
-    public float Range { get; set; }
-    public float Size { get; set; }
-    public float Speed { get; set; }
 
     void Awake()
     {
@@ -36,7 +32,7 @@ public class LaserShoot : MonoBehaviour, IProjectile
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(redirectionTimer >= 0.07f)
+        if(redirectionTimer >= 0.1f)
         {
             SetDestination();
             redirectionTimer = 0f;
@@ -67,7 +63,7 @@ public class LaserShoot : MonoBehaviour, IProjectile
         }
         else
         {
-            endPoint = currAimer.Player.transform.position + currAimer.AimDirection() * Range;
+            endPoint = currAimer.Player.transform.position + currAimer.AimDirection() * 10f;
         }
     }
 

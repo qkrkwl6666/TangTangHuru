@@ -9,7 +9,6 @@ public class HitOnEnter : MonoBehaviour, IAttackable
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
     public float AttackRate { get; set; }
-    public float Impact { get; set; }
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -35,7 +34,7 @@ public class HitOnEnter : MonoBehaviour, IAttackable
                 TotalDamage = Damage;
             }
 
-            other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage, Impact);
+            other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage);
 
             if (pierce > 0)
             {

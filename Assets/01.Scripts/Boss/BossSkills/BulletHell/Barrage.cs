@@ -37,12 +37,13 @@ public class Barrage : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            other.gameObject.GetComponent<IDamagable>().OnDamage(damage, 0);
+            other.gameObject.GetComponent<IDamagable>().OnDamage(damage);
         }
     }
 
-    public void Init(Vector2 dir, Transform bossTransform, float attackCicle)
+    public void Init(Vector2 dir, Transform bossTransform, float attackCicle, float ballSpeed)
     {
+        this.speed = ballSpeed;
         this.dir = dir.normalized;
         this.bossTransform = bossTransform;
         circleScale = attackCicle;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class WaveShoot : MonoBehaviour, IProjectile
+public class WaveShoot : MonoBehaviour
 {
     public IAimer currAimer;
 
@@ -14,11 +14,6 @@ public class WaveShoot : MonoBehaviour, IProjectile
     private float frequency = 15f; // Ãâ··ÀÌ´Â ºóµµ
     private float magnitude = 2f; // Ãâ··ÀÌ´Â °­µµ
     private float currFrequency;
-
-    public float Range { get; set; }
-    public float Size { get; set; }
-    public float Speed { get; set; }
-
     //
 
     private void Awake()
@@ -30,14 +25,12 @@ public class WaveShoot : MonoBehaviour, IProjectile
     private void OnEnable()
     {
         timer = 0f;
-        transform.localScale = new Vector3(Size, Size);
-
         var pos = currAimer.AimDirection();
         transform.up = pos;
-        rb.velocity = pos * Speed;
+        rb.velocity = pos * currAimer.Speed;
 
         initialPosition = transform.position;
-        targetPosition = initialPosition + (Vector2)pos * Speed * currAimer.LifeTime;
+        targetPosition = initialPosition + (Vector2)pos * currAimer.Speed * currAimer.LifeTime;
 
         var dir = (currAimer.Index % 2) == 0 ? -1f : 1f;
         currFrequency = frequency * dir;

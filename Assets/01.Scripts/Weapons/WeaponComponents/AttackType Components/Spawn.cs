@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class Spawn : MonoBehaviour, IProjectile
+public class Spawn : MonoBehaviour
 {
+    public float range = 2f;
 
     float timer = 0f;
 
     IAimer currAimer;
-    Vector3 pos;
-    public float Range { get; set; }
-    public float Size { get; set; }
-    public float Speed { get; set; }
+    Vector3 dir;
 
     void Awake()
     {
@@ -21,10 +19,17 @@ public class Spawn : MonoBehaviour, IProjectile
         if (currAimer == null)
             return;
 
-        pos = currAimer.AimDirection();
+        dir = currAimer.AimDirection();
 
-        transform.position = pos;
-        transform.localScale = new Vector3(Size, Size);
+        if (dir == Vector3.zero)
+        {
+            dir = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0);
+        }
+
+        dir *= (range + 1);
+
+        transform.position = currAimer.Player.transform.position + dir;
+        transform.up = dir;
     }
 
     private void OnDisable()

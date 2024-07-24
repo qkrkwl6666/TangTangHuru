@@ -1,5 +1,5 @@
 public interface IDamagable
 {
-    void OnDamage(float damage, float impact);
+    void OnDamage(float damage);
 
 }
