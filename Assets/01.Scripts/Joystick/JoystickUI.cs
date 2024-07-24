@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,7 +10,6 @@ public class JoystickUI : MonoBehaviour
     public LayerMask worldLayerMask; // 월드 레이어 마스크
 
     private Vector2 pos;
-
     public Vector2 InputValue { get; private set; }
     private Vector2 startScreenPosition = Vector2.zero;
     private Vector2 currentScreenPosition = Vector3.zero;
@@ -35,16 +35,17 @@ public class JoystickUI : MonoBehaviour
         defaultAnchoredPosition = CurrentAnchoredPosition;
     }
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         //Debug.Log(InputValue);
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
-        //ntext.action.u
-
-        //if (EventSystem.current.IsPointerOverGameObject(context)) return;
-
         switch (context.phase)
         {
             case InputActionPhase.Performed:
@@ -153,6 +154,5 @@ public class JoystickUI : MonoBehaviour
         CurrentAnchoredPosition = defaultAnchoredPosition;
         CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
-
     }
 }

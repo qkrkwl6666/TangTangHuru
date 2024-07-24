@@ -8,6 +8,7 @@ public class LevelUpUI : MonoBehaviour
     public List<GameObject> options;
     public PassiveManager passiveManager;
 
+
     private void OnEnable()
     {
         List<WeaponCreator> weaponList = new List<WeaponCreator>();
