@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static WeaponData;
@@ -8,6 +9,9 @@ public class LevelUpUI : MonoBehaviour
     public List<GameObject> options;
     public PassiveManager passiveManager;
 
+    public List<TextMeshProUGUI> texts_Name;
+    public List<TextMeshProUGUI> texts_Desc;
+    public List<TextMeshProUGUI> texts_Level;
 
     private void OnEnable()
     {
@@ -50,8 +54,7 @@ public class LevelUpUI : MonoBehaviour
         }
 
 
-
-        foreach (GameObject option in options)
+        for (int i = 0; i < options.Count; i++)
         {
             var rnd = Random.Range(0, 10);
 
@@ -61,33 +64,40 @@ public class LevelUpUI : MonoBehaviour
 
                 if (passiveList[select].Level == 0)
                 {
-                    option.GetComponent<Button>().onClick.AddListener(()
+                    options[i].GetComponent<Button>().onClick.AddListener(()
                         => passiveManager.PassiveAdd(passiveList[select]));
                     Debug.Log("패시브 추가 선택지");
                 }
                 else
                 {
-                    option.GetComponent<Button>().onClick.AddListener(()
+                    options[i].GetComponent<Button>().onClick.AddListener(()
                          => passiveManager.PassiveLevelUp(passiveList[select]));
                     Debug.Log("패시브 강화 선택지");
                 }
+                texts_Name[i].text = passiveList[select].PassiveName;
+                texts_Desc[i].text = "패시브 설명(테이블 연결예정)";
+                texts_Level[i].text = passiveList[select].Level.ToString();
             }
             else //액티브 선택
             {
                 var select = Random.Range(0, weaponList.Count);
                 var weaponCreator = passiveManager.weaponCreators[select];
 
-                if(weaponCreator.currLevel == 0)
+                if (weaponCreator.currLevel == 0)
                 {
-                    option.GetComponent<Button>().onClick.AddListener(() 
+                    options[i].GetComponent<Button>().onClick.AddListener(()
                         => weaponCreator.gameObject.SetActive(true));
                     Debug.Log("액티브 추가 선택지");
                 }
                 else
                 {
-                    option.GetComponent<Button>().onClick.AddListener(weaponCreator.LevelUpReady);
+                    options[i].GetComponent<Button>().onClick.AddListener(weaponCreator.LevelUpReady);
                     Debug.Log("액티브 강화 선택지");
                 }
+                texts_Name[i].text = weaponCreator.weaponDataRef.WeaponName;
+                texts_Desc[i].text = "액티브 설명(테이블 연결예정)";
+                texts_Level[i].text = weaponCreator.weaponDataRef.Level.ToString();
+
             }
         }
     }
