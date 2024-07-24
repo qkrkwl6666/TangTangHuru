@@ -74,14 +74,14 @@ public class Boss : LivingEntity, IPlayerObserver
                     {
                         var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
 
-                        bn.SetCountScale(10, 0.1f);
+                        bn.SetCountScale(10, 1.0f);
                     }
                     break;
                 case 500002:
                     {
                         var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
 
-                        bn.SetCountScale(20, 0.07f);
+                        bn.SetCountScale(20, 0.7f);
                     }
                     break;
                 case 500003:

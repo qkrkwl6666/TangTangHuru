@@ -7,7 +7,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackScale = 0.15f;
+    private float attackScale = 0.8f;
 
     // 공격 주기 시간
     private float attackTime = 0f;
@@ -26,9 +26,15 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     private int currentIndex = 0;
     private int maxIndex = 30;
 
-    private void Awake()
+    public void Initialize(BossSkillData bossSkillData, float damage)
     {
-        Addressables.LoadAssetAsync<GameObject>(Defines.snailBullet).Completed += InstantiateSnailBullet;
+        Addressables.LoadAssetAsync<GameObject>(bossSkillData.Preafab_Id)
+            .Completed += InstantiateSnailBullet;
+
+        SkillCount = bossSkillData.Skill_Count;
+        DamageFactor = bossSkillData.Damage_Factor;
+        SkillRate = bossSkillData.Skill_Rate;
+        Damage = damage * DamageFactor;
         enabled = false;
     }
 
@@ -105,10 +111,5 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
         enabled = false;
         attackTime = 0f;
         currentSkillCount = 0;
-    }
-
-    public void Initialize(BossSkillData bossSkillData, float damage)
-    {
-        //throw new NotImplementedException();
     }
 }
