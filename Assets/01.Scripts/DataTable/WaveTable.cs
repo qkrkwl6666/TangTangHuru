@@ -24,6 +24,8 @@ public class WaveData
     public int monster3_Count { get; set; }
     public int monster3_Duration { get; set; }
     public int spawn3_Type { get; set; }
+
+    public float spawn_Distance { get; set; }
 }
 
 public class WaveTable : DataTable

@@ -9,7 +9,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    private float defaultDistance = 10f;
+    private float defaultDistance = 20f;
     private float circleSpawnDistance = 7f;
     private float lineSpawnDistance = 5f;
 
@@ -22,13 +22,14 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
     public int maxMonster = 200; // 필드 최대 몬스터 수
 
-    // 장애물 관련 변수들
+    // 보스 장애물 관련 변수들
     private int obstaclesCount = 90; // 장애물 개수
     private float obstaclesRadius = 20f;
 
     Vector2 bossSpawnPosition = Vector2.zero;
 
     private InGameUI gameUI;
+    private float currentSpawnDistance = 0f;
 
     private void Awake()
     {
@@ -43,12 +44,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     }
 
-    public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType)
+    public void CreateMonster(MonsterData monsterData, int spawnCount, int spawnType, float spawnDistance)
     {
         if (monsterData == null || monsters.Count >= maxMonster) return;
 
         this.spawnType = spawnType;
         this.spawnCount = spawnCount;
+        currentSpawnDistance = spawnDistance;
 
         //Debug.Log(monsterData.Monster_Prefab);
         var opHandle = Addressables.LoadAssetAsync<GameObject>(monsterData.Monster_Prefab.ToString());
@@ -107,13 +109,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 for (int i = 0; i < spawnCount; i++)
                 {
                     var monster = monsterPools[monsterData.Monster_ID].Get();
-                    monster.transform.position = RandomPosition(defaultDistance);
+                    monster.transform.position = RandomPosition();
                     monster.transform.rotation = Quaternion.identity;
                 }
                 break;
             // 직선 생성
             case 2:
-                var lineList = LinePosition(RandomPosition(lineSpawnDistance), spawnCount, 0f);
+                var lineList = LinePosition(RandomPosition(), spawnCount, 0f);
 
                 for (int i = 0; i < spawnCount; i++)
                 {
@@ -202,18 +204,58 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         if (playerTransform == null) return Vector2.zero;
 
-        Vector2 randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
-        Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+        // Todo : 임시 처리 하드코딩 변경 해야함
+
+        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250 
+            || playerTransform.position.y >= 250 || playerTransform.position.x <= -250)
+        {
+            playerTransform.transform.position = Vector2.zero;
+        }
+
+        Vector2 randomCirclePos;
+        Vector2 spawnPos;
+
+        while (true)
+        {
+            randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
+            spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+            if (spawnPos.x >= 250 || spawnPos.x <= -250 || spawnPos.y >= 250 || spawnPos.x <= -250)
+            {
+
+            }
+            else break;
+        }
 
         return spawnPos;
     }
 
-    public Vector2 RandomPosition(float distance)
+    public Vector2 RandomPosition()
     {
         if (playerTransform == null) return Vector2.zero;
+        Vector2 randomCirclePos;
+        Vector2 spawnPos;
 
-        Vector2 randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
-        Vector2 spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+        // Todo : 임시 처리 하드코딩 변경 해야함
+        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250
+            || playerTransform.position.y >= 250 || playerTransform.position.x <= -250)
+        {
+            playerTransform.transform.position = Vector2.zero;
+        }
+
+        while (true) 
+        {
+            float randomDistance = Random.Range(currentSpawnDistance / 2, currentSpawnDistance);
+
+            randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
+            spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+            if (spawnPos.x >= 250 || spawnPos.x <= -250 || spawnPos.y >= 250 || spawnPos.x <= -250)
+            {
+
+            }
+            else break;
+        }
 
         return spawnPos;
     }

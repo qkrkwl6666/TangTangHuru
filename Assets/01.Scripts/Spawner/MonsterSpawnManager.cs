@@ -20,6 +20,8 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private InGameUI gameUI;
 
+    private float currentSpawnDistance = 0f;
+
     private void Awake()
     {
         waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
@@ -67,7 +69,7 @@ public class MonsterSpawnManager : MonoBehaviour
         {
             monsterSpawnFactory.CreateMonster(DataTableManager.Instance.Get<MonsterTable>
                 (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()),
-                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType);
+                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType, currentSpawnDistance);
         }
     }
 
@@ -94,6 +96,7 @@ public class MonsterSpawnManager : MonoBehaviour
         {
             totalWaveTime = 0f;
             currentWaveData = waveDatas[waveIndex];
+            currentSpawnDistance = currentWaveData.spawn_Distance;
             UpdateSpawnInfos();
             waveIndex++;
         }

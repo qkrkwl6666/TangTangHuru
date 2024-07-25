@@ -24,14 +24,6 @@ public class GameManager : Singleton<GameManager>
         {
             joystickAction = joystick.Result;
             joystickAction.Disable();
-
-            Debug.Log("Joystick Action enabled: " + joystickAction.enabled);
-
-            // 모든 Action Map 비활성화 상태 확인
-            foreach (var map in joystickAction.actionMaps)
-            {
-                Debug.Log($"Action Map '{map.name}' enabled: {map.enabled}");
-            }
         };
     }
 
