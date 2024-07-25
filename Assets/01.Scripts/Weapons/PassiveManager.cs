@@ -23,7 +23,10 @@ public class PassiveManager : MonoBehaviour
     }
     public void PassiveAdd(PassiveData selected)
     {
-        currPassiveList.Add(selected);
+        var seletedPassive = selected;
+        seletedPassive.Level = 1;
+        currPassiveList.Add(seletedPassive);
+
         passiveDataList.Remove(selected);
         SetTotalPassive();
         PassiveEquip();

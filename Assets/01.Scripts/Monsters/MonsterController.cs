@@ -10,7 +10,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public Transform PlayerTransform { get; private set; }
 
     private float currSpeed = 2f;
-    private float moveSpeed = 2f;
+    public float MoveSpeed { get; set; } = 2f;
     private bool slowed = false;
     private float slowTimer = 0;
     private float slowTime = 0;
@@ -44,7 +44,6 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     {
         Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
 
-
         MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
 
         MonsterStateMachine.Update(Time.deltaTime);
@@ -54,7 +53,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
             slowTimer += Time.deltaTime;
             if (slowTimer > slowTime)
             {
-                currSpeed = moveSpeed;
+                currSpeed = MoveSpeed;
                 slowed = false;
                 slowTimer = 0;
             }
@@ -78,18 +77,20 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         Monster.OnImpact -= NuckBack;
     }
 
+    // Todo : currMove 가slowTimer > slowTime 일때만 MoveSpeed 에서 가져와서
+    // MoveSpeed 가 적용안되는 문제가 있습니다. 그래서 임시로 일단 MoveSpeed 넣었습니다.
     public void ChasePlayer(float deltaTime)
     {
         if (PlayerTransform == null) return;
 
         Vector2 dir = (PlayerTransform.position - transform.position).normalized;
 
-        transform.Translate(dir * deltaTime * currSpeed);
+        transform.Translate(dir * deltaTime * MoveSpeed);
     }
 
     public void MoveToInitialPlayerPosition(float deltaTime)
     {
-        transform.Translate(playerDirection * deltaTime * currSpeed);
+        transform.Translate(playerDirection * deltaTime * MoveSpeed);
     }
 
     public void IObserverUpdate()
@@ -101,7 +102,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     {
         slowTimer = 0;
         slowTime = maxTime;
-        currSpeed = moveSpeed * 0.5f;
+        currSpeed = MoveSpeed * 0.5f;
         slowed = true;
     }
     public void Stop(float maxTime)
