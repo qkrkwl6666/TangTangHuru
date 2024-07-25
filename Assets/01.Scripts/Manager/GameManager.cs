@@ -6,8 +6,14 @@ public class GameManager : Singleton<GameManager>
 {
     public int CurrentStage { get; private set; } = 1;
 
+    public string currentWeapon = "OneSword";
+
     // 로딩 UI 
     private GameObject loadingUI;
+
+    // 임시 용도
+    public string characterSkin = Defines.body033;
+    public string weaponSkin = Defines.weapon005;
 
     private void Awake()
     {
