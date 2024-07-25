@@ -65,16 +65,14 @@ public class LevelUpUI : MonoBehaviour
                 {
                     options[i].GetComponent<Button>().onClick.AddListener(()
                         => passiveManager.PassiveAdd(passiveList[select]));
-                    Debug.Log("패시브 추가 선택지");
                 }
                 else
                 {
                     options[i].GetComponent<Button>().onClick.AddListener(()
                          => passiveManager.PassiveLevelUp(passiveList[select]));
-                    Debug.Log("패시브 강화 선택지");
                 }
                 texts_Name[i].text = passiveList[select].PassiveName;
-                texts_Desc[i].text = "패시브 설명(테이블 연결예정)";
+                texts_Desc[i].text = "패시브 설명";
                 texts_Level[i].text = passiveList[select].Level.ToString();
             }
             else //액티브 선택
@@ -86,15 +84,13 @@ public class LevelUpUI : MonoBehaviour
                 {
                     options[i].GetComponent<Button>().onClick.AddListener(()
                         => weaponCreator.gameObject.SetActive(true));
-                    Debug.Log("액티브 추가 선택지");
                 }
                 else
                 {
                     options[i].GetComponent<Button>().onClick.AddListener(weaponCreator.LevelUpReady);
-                    Debug.Log("액티브 강화 선택지");
                 }
                 texts_Name[i].text = weaponCreator.weaponDataRef.WeaponName;
-                texts_Desc[i].text = "액티브 설명(테이블 연결예정)";
+                texts_Desc[i].text = "액티브 설명";
                 texts_Level[i].text = weaponCreator.weaponDataRef.Level.ToString();
 
             }
