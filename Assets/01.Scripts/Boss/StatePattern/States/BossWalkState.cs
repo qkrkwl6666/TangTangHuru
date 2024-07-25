@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 using Transform = UnityEngine.Transform;
 
 public class BossWalkState : BossState
 {
     private float coolDown;
     private float time = 0f;
-    private Transform playerTransform; 
+    private Transform playerTransform;
 
     public BossWalkState(Boss boss, MonsterView monsterView) : base(boss, monsterView)
     {
@@ -37,7 +34,7 @@ public class BossWalkState : BossState
     {
         time += deltaTime;
 
-        if (time >= coolDown) 
+        if (time >= coolDown)
         {
             boss.ChangeState(boss.skillState);
             return;

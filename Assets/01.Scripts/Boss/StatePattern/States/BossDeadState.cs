@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class BossDeadState : BossState
 {
     private float destoryDuration = 3f;
@@ -21,14 +17,14 @@ public class BossDeadState : BossState
 
     public override void Exit()
     {
-        
+
     }
 
     public override void Update(float deltaTime)
     {
         time += deltaTime;
 
-        if(time >= destoryDuration)
+        if (time >= destoryDuration)
         {
             boss.SetTimeScale(0f);
             boss.BossDestory();

@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class BarrageNormal : MonoBehaviour, IBossSkill
@@ -23,7 +23,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
     private void Awake()
     {
-        
+
     }
 
     public void SetCountScale(int count, float scale)
@@ -76,7 +76,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
         if (time >= SkillRate)
         {
             time = 0f;
-            Attack();   
+            Attack();
         }
     }
 
@@ -86,7 +86,7 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
 
         float randomCount = attackCount + Random.Range(0, randomAttackCount);
 
-        for (int i = 0; i < randomCount; i++) 
+        for (int i = 0; i < randomCount; i++)
         {
             CirlcePosition(i, randomCount);
         }
@@ -96,7 +96,6 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
             IsChange = true;
             return;
         }
-
     }
 
     // Todo : 이름 변경 하기

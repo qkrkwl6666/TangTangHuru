@@ -12,7 +12,7 @@ public class PlayerView : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     private void Start()
@@ -28,7 +28,7 @@ public class PlayerView : MonoBehaviour
 
         PlayerState currentState = controller.state;
 
-        if (currentState != previousState) 
+        if (currentState != previousState)
         {
             PlayAnimation(currentState);
         }

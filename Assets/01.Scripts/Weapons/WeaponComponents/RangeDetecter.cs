@@ -7,7 +7,7 @@ public class RangeDetecter : MonoBehaviour
 
     public Vector3 GetNearest()
     {
-         var targets = Physics2D.CircleCastAll(transform.position, range, Vector2.zero, 0, targetLayer);
+        var targets = Physics2D.CircleCastAll(transform.position, range, Vector2.zero, 0, targetLayer);
 
         float currdistance = float.MaxValue;
         Vector3 result = Vector3.zero;
@@ -19,7 +19,7 @@ public class RangeDetecter : MonoBehaviour
             {
                 currdistance = distance;
                 result = target.transform.position - transform.position;
-                
+
             }
         }
         return result;

@@ -1,8 +1,4 @@
-using Spine.Unity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 public class Rush : MonoBehaviour, IBossSkill
 {
@@ -87,7 +83,7 @@ public class Rush : MonoBehaviour, IBossSkill
             Attack();
         }
 
-        if(isRush && PlayerDir != Vector2.zero)
+        if (isRush && PlayerDir != Vector2.zero)
         {
             transform.Translate(PlayerDir * moveSpeed * Time.deltaTime);
         }

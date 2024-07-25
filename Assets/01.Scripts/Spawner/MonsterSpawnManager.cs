@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -21,6 +20,8 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private InGameUI gameUI;
 
+    private float currentSpawnDistance = 0f;
+
     private void Awake()
     {
         waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
@@ -34,7 +35,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
         NextWave();
 
-        OnStop += () => 
+        OnStop += () =>
         {
             IsStop = true;
             StartCoroutine(SpawnBoss());
@@ -45,17 +46,17 @@ public class MonsterSpawnManager : MonoBehaviour
     {
         totalWaveTime += Time.deltaTime;
 
-        if(IsStop) return;
+        if (IsStop) return;
 
         if (totalWaveTime >= currentWaveData.duration)
         {
             NextWave();
         }
 
-        foreach(var spawnData in monsterSpawnInfos.Values)
+        foreach (var spawnData in monsterSpawnInfos.Values)
         {
             spawnData.Update(Time.deltaTime);
-            if(spawnData.IsSpawn)
+            if (spawnData.IsSpawn)
             {
                 SpawnMonster(spawnData);
             }
@@ -64,11 +65,11 @@ public class MonsterSpawnManager : MonoBehaviour
 
     public void SpawnMonster(MonsterSpawnInfo monsterSpawnInfo)
     {
-        if(monsterSpawnInfo.IsValid)
+        if (monsterSpawnInfo.IsValid)
         {
             monsterSpawnFactory.CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-                (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()), 
-                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType);
+                (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()),
+                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType, currentSpawnDistance);
         }
     }
 
@@ -95,6 +96,7 @@ public class MonsterSpawnManager : MonoBehaviour
         {
             totalWaveTime = 0f;
             currentWaveData = waveDatas[waveIndex];
+            currentSpawnDistance = currentWaveData.spawn_Distance;
             UpdateSpawnInfos();
             waveIndex++;
         }
@@ -111,11 +113,11 @@ public class MonsterSpawnManager : MonoBehaviour
         monsterSpawnFactory.BossWallSpawn();
         GameObject playBoss = null;
 
-        Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) => 
+        Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) =>
         {
             gameUI.SetActiveExpBar(false);
             playBoss = x.Result;
-            Destroy(playBoss , 3f);
+            Destroy(playBoss, 3f);
         };
 
         yield return new WaitForSeconds(3f);

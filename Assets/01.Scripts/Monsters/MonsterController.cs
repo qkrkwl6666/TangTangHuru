@@ -1,4 +1,3 @@
-using Spine.Unity;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver

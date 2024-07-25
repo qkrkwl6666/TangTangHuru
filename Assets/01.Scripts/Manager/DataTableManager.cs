@@ -27,7 +27,7 @@ public class DataTableManager : Singleton<DataTableManager>
 
         DataTable bossTable = new BossTable();
         bossTable.Load(boss);
-        
+
         DataTable bossSkillTable = new BossSkillTable();
         bossSkillTable.Load(bossSkill);
 

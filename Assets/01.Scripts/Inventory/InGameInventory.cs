@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 
 public class InGameInventory : MonoBehaviour
 {
-    private List<IInGameItem> items = new ();
-    private List<Image> images = new ();
+    private List<IInGameItem> items = new();
+    private List<Image> images = new();
 
     private InGameUI gameUI;
     public int Kill { get; private set; }
@@ -23,10 +21,10 @@ public class InGameInventory : MonoBehaviour
 
     private void Awake()
     {
-        foreach (Transform image in transform) 
+        foreach (Transform image in transform)
         {
             var im = image.GetComponent<Image>();
-            im.color = new Color(255f, 255f,255f ,0f);
+            im.color = new Color(255f, 255f, 255f, 0f);
             images.Add(im);
         }
 
@@ -34,7 +32,7 @@ public class InGameInventory : MonoBehaviour
         OnKillAdd += AddKill;
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
-        
+
     }
 
     private void OnEnable()
@@ -62,11 +60,11 @@ public class InGameInventory : MonoBehaviour
     {
         items.Add(inGameItem);
 
-        foreach (Image image in images) 
+        foreach (Image image in images)
         {
             if (image.sprite != null) continue;
 
-            Addressables.LoadAssetAsync<Sprite>(inGameItem.TextureId).Completed += (x) => 
+            Addressables.LoadAssetAsync<Sprite>(inGameItem.TextureId).Completed += (x) =>
             {
                 image.sprite = x.Result;
                 image.color = new Color(255f, 255f, 255f, 1f);

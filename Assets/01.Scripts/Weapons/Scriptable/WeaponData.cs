@@ -133,7 +133,7 @@ public class WeaponData : ScriptableObject
 
     [SerializeField]
     private float burstRate;
-    public float BurstRate { get {  return burstRate; } set { burstRate = value; } }
+    public float BurstRate { get { return burstRate; } set { burstRate = value; } }
 
     [Header("관통 회수")]
     [SerializeField]

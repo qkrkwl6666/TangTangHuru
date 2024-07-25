@@ -7,7 +7,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    private float attackScale = 0.15f;
+    private float attackScale = 0.8f;
 
     // 공격 주기 시간
     private float attackTime = 0f;
@@ -17,7 +17,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     private float ballSpeed = 7f;
 
-    public float Damage {  get; set; }
+    public float Damage { get; set; }
     public int SkillCount { get; set; } = 3;
     public bool IsChange { get; set; } = false;
     public float SkillRate { get; set; } = 5f;
@@ -26,9 +26,15 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     private int currentIndex = 0;
     private int maxIndex = 30;
 
-    private void Awake()
+    public void Initialize(BossSkillData bossSkillData, float damage)
     {
-        Addressables.LoadAssetAsync<GameObject>(Defines.snailBullet).Completed += InstantiateSnailBullet;
+        Addressables.LoadAssetAsync<GameObject>(bossSkillData.Preafab_Id)
+            .Completed += InstantiateSnailBullet;
+
+        SkillCount = bossSkillData.Skill_Count;
+        DamageFactor = bossSkillData.Damage_Factor;
+        SkillRate = bossSkillData.Skill_Rate;
+        Damage = damage * DamageFactor;
         enabled = false;
     }
 
@@ -60,7 +66,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     {
         attackTime += deltaTime;
 
-        if(attackTime >= attackDuration)
+        if (attackTime >= attackDuration)
         {
             attackTime = 0f;
             Attack();
@@ -68,7 +74,8 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     }
 
     public void Attack()
-    {;
+    {
+        ;
         float angle = ((360 / maxIndex) * currentIndex) * Mathf.Deg2Rad;
         Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 
@@ -85,12 +92,12 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
             currentIndex = 0;
         }
 
-        if (currentSkillCount >= SkillCount) 
+        if (currentSkillCount >= SkillCount)
         {
             IsChange = true;
             return;
         }
-            
+
     }
 
     public void Activate()
@@ -104,10 +111,5 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
         enabled = false;
         attackTime = 0f;
         currentSkillCount = 0;
-    }
-
-    public void Initialize(BossSkillData bossSkillData, float damage)
-    {
-        //throw new NotImplementedException();
     }
 }

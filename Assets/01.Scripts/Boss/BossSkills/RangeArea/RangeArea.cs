@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -9,12 +7,12 @@ public class RangeArea : MonoBehaviour, IBossSkill
 {
     private IObjectPool<GameObject> pool;
 
-    public float Damage {  get; private set; }
+    public float Damage { get; private set; }
 
-    public int SkillCount { get ; set ; }
-    public bool IsChange { get ; set ; }
-    public float SkillRate { get ; set ; }
-    public float DamageFactor { get ; set ; }
+    public int SkillCount { get; set; }
+    public bool IsChange { get; set; }
+    public float SkillRate { get; set; }
+    public float DamageFactor { get; set; }
 
     private int currentSkillCount = 0;
 
@@ -89,7 +87,7 @@ public class RangeArea : MonoBehaviour, IBossSkill
     {
         time += deltaTime;
 
-        if (time >= SkillRate) 
+        if (time >= SkillRate)
         {
             Attack();
         }
@@ -105,7 +103,7 @@ public class RangeArea : MonoBehaviour, IBossSkill
         area.transform.position = randomPos;
         area.GetComponent<Area>().InitSkill(scale, boomDuration, playerTransform);
 
-        if (currentSkillCount >= SkillCount) 
+        if (currentSkillCount >= SkillCount)
         {
             IsChange = true;
         }

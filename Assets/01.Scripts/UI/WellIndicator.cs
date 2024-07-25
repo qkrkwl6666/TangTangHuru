@@ -26,12 +26,12 @@ public class WellIndicator : MonoBehaviour
             break;
         }
 
-        
+
     }
 
     private void Start()
     {
-        
+
     }
 
     private void Update()

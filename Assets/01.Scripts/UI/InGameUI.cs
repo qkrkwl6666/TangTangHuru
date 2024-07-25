@@ -81,14 +81,12 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         pauseUI.SetActive(false);
     }
 
-    #endregion
-
-    public void MainMenuButton()
+    public void ExitMainButton()
     {
-        SceneManager.LoadScene("Main");
+        GameManager.Instance.LoadSceneAsync(Defines.main);
     }
 
-    
+    #endregion
 
     public void SetActiveExpBar(bool active)
     {

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 using CsvHelper;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using UnityEngine.AddressableAssets;
 using TextAsset = UnityEngine.TextAsset;
 
 public class TreasureData
@@ -24,7 +24,7 @@ public class TreasureData
 
     public List<(int id, float prob)> GetEqupStones()
     {
-        List<(int, float)> list = new ();
+        List<(int, float)> list = new();
 
         list.Add((Item1_Id, Item1_Prob));
         list.Add((Item2_Id, Item2_Prob));

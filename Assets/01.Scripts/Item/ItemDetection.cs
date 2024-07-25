@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
 {
-    private LinkedList<GameObject> followMeItems = new ();
-    private List<GameObject> removeItems = new ();
+    private LinkedList<GameObject> followMeItems = new();
+    private List<GameObject> removeItems = new();
 
     public LayerMask itemLayerMask;
 
@@ -53,20 +53,20 @@ public class ItemDetection : MonoBehaviour
         {
             Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
 
-            foreach(var item in hitCollider)
+            foreach (var item in hitCollider)
             {
                 if (item == null) break;
-                
-                if(!followMeItems.Contains(item.gameObject))
+
+                if (!followMeItems.Contains(item.gameObject))
                 {
                     followMeItems.AddLast(item.gameObject);
                 }
-                    
+
             }
             time = 0f;
         }
 
-        foreach(var item in followMeItems)
+        foreach (var item in followMeItems)
         {
             var dir = (transform.position - item.transform.position).normalized;
             item.transform.Translate(dir * Time.deltaTime * followSpeed);
@@ -78,7 +78,7 @@ public class ItemDetection : MonoBehaviour
         }
 
         // 아이템 흭득 
-        foreach (var item in removeItems) 
+        foreach (var item in removeItems)
         {
             item.GetComponent<IInGameItem>().UseItem();
             followMeItems.Remove(item);
@@ -89,7 +89,7 @@ public class ItemDetection : MonoBehaviour
 
         removeItems.Clear();
 
-        for(int i = 0; i < hitCollider.Length; i ++)
+        for (int i = 0; i < hitCollider.Length; i++)
         {
             hitCollider[i] = null;
         }
@@ -97,11 +97,11 @@ public class ItemDetection : MonoBehaviour
         // 보물 상자 체크
         if (treasureList == null) return;
 
-        foreach(var treasure in treasureList)
+        foreach (var treasure in treasureList)
         {
             var distacne = Vector2.Distance(treasure.transform.position, transform.position);
 
-            if(distacne <= treasureDistance && distacne <= prevTreasureDistance)
+            if (distacne <= treasureDistance && distacne <= prevTreasureDistance)
             {
                 prevTreasureDistance = distacne;
                 radarTreasure = treasure;
@@ -152,7 +152,7 @@ public class ItemDetection : MonoBehaviour
     public void Radar()
     {
         // 레이더  
-        if (radarTreasure == null) 
+        if (radarTreasure == null)
         {
             gameUI.UpdateRadarBar(0f);
             return;
