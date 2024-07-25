@@ -23,14 +23,9 @@ public class PlayerController : MonoBehaviour
 
     public GameObject viewPlayer;
 
-    void Start()
+    private void Awake()
     {
-        joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // Todo : 임시 코드
-
-        switch(GameManager.Instance.currentWeapon)
+        switch (GameManager.Instance.currentWeapon)
         {
             case "OneSword":
                 weapons[0].SetActive(true);
@@ -51,6 +46,16 @@ public class PlayerController : MonoBehaviour
                 weapons[5].SetActive(true);
                 break;
         }
+    }
+
+    void Start()
+    {
+        joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
+        // Todo : 임시 코드
+
+
     }
 
     void FixedUpdate()
