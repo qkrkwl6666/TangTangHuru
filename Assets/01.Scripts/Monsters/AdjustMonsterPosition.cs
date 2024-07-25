@@ -19,7 +19,7 @@ public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
         if (time >= duration)
         {
             time = 0f;
-            if(Vector2.Distance(transform.position, (Vector2)playerTransfrom.position) >= playerDistanceDifference)
+            if (Vector2.Distance(transform.position, (Vector2)playerTransfrom.position) >= playerDistanceDifference)
             {
                 transform.position = MonsterSpawnFactory.RandomPosition(playerTransfrom, defaultDistance);
             }

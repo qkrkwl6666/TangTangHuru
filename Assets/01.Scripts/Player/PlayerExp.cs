@@ -27,7 +27,7 @@ public class PlayerExp : MonoBehaviour
 
         //Debug.Log("현재 경험치 : " + currExp);
 
-        if(currExp > requiredExp)
+        if (currExp > requiredExp)
         {
             currExp -= requiredExp;
 

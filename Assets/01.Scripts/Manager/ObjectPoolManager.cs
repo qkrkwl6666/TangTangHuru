@@ -24,7 +24,7 @@ public class ObjectPoolManager : MonoBehaviour
         GameObject expPrefab = op.Result;
 
         expPool = new ObjectPool<GameObject>
-            ( () => 
+            (() =>
             {
                 var go = Instantiate(expPrefab);
                 go.GetComponent<MonsterExp>().pool = expPool;

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using static WeaponData;
 
 public class WeaponCreator : MonoBehaviour
@@ -24,25 +25,27 @@ public class WeaponCreator : MonoBehaviour
 
     private bool levelUpReady = false;
 
+    private PassiveData EmptyData;
     private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
     private PassiveData commonPassive;
 
-
-    private void Awake()
-    {
-
-    }
+    public int currLevel = 0;
 
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
         weaponDataInStage = Instantiate(weaponDataRef);
-        typePassive = new EmptyPassiveData();
-        commonPassive = new EmptyPassiveData();
+
+        Addressables.LoadAssetAsync<PassiveData>("EmptyPassiveData").Completed += (EmptyData) =>
+        {
+            typePassive = EmptyData.Result;
+            commonPassive = EmptyData.Result;
+        };
     }
 
     private void OnEnable()
     {
+        currLevel = 1;
         SpawnCoroutine = Spawn();
         StartCoroutine(SpawnCoroutine);
     }
@@ -230,18 +233,20 @@ public class WeaponCreator : MonoBehaviour
             hit.AttackRate = weaponDataInStage.SingleAttackRate;
             hit.Impact = weaponDataInStage.Impact;
             hit.AttackableLayer = LayerMask.GetMask("Enemy");
+
         }
     }
 
     public void LevelUpReady()
     {
         weaponDataInStage.Level++;
+        currLevel = weaponDataInStage.Level;
         levelUpReady = true;
     }
 
     private void LevelUp()
     {
-        if(weaponDataInStage.Level >= 5)
+        if (weaponDataInStage.Level >= 5)
         {
             weaponDataInStage.Level = 5;
             weaponUpgrader.Evolution(weapons);

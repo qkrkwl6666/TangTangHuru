@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using UnityEngine.AddressableAssets;
 using CsvHelper;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using UnityEngine.AddressableAssets;
 using TextAsset = UnityEngine.TextAsset;
 
 public class BossData
@@ -13,7 +13,7 @@ public class BossData
     public float Boss_Damage { get; set; }
     public float Boss_MoveSpeed { get; set; }
     public float Boss_Cooldown { get; set; }
-
+    public int Gold { get; set; }
     public int Skill1_Id { get; set; }
     public float Skill1_Probability { get; set; }
     public int Skill2_Id { get; set; }
@@ -27,7 +27,7 @@ public class BossData
 
     public List<(int, float)> GetBossSkillId()
     {
-        List<(int, float)> skills = new ();
+        List<(int, float)> skills = new();
 
         skills.Add((Skill1_Id, Skill1_Probability));
         skills.Add((Skill2_Id, Skill2_Probability));

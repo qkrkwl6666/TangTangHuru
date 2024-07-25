@@ -18,18 +18,18 @@ public class PlayerHealth : LivingEntity
     // Update is called once per frame
     void Update()
     {
-        if(isInvincible)
+        if (isInvincible)
         {
             timer += Time.deltaTime;
 
-            if(timer > invincibleTime)
+            if (timer > invincibleTime)
             {
                 isInvincible = false;
             }
         }
     }
 
-    public override void OnDamage(float damage, float impact)
+    public override void OnDamage(float damage, float Impact)
     {
         if (dead || isInvincible)
             return;

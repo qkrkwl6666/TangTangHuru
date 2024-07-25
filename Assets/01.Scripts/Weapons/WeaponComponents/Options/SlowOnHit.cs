@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SlowOnHit : MonoBehaviour
@@ -67,6 +65,10 @@ public class SlowOnHit : MonoBehaviour
 
     public void OnSlow(Collider2D other)
     {
-        other.gameObject.GetComponent<MonsterController>().Slow(1);
+        var controller = other.gameObject.GetComponent<MonsterController>();
+        if (controller != null)
+        {
+            controller.Slow(1);
+        }
     }
 }

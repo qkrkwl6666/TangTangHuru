@@ -10,7 +10,7 @@ public class ExpBar : MonoBehaviour
     private void Start()
     {
         var player = GameObject.FindGameObjectWithTag("Player");
-        if(player != null)
+        if (player != null)
         {
             playerExp = player.GetComponent<PlayerExp>();
             UpdateMaxValue();
@@ -22,11 +22,12 @@ public class ExpBar : MonoBehaviour
 
     }
 
+    // Todo : 나중에 옵저버 패턴으로 갱신 될때만 가져오기
     private void FixedUpdate()
     {
         expSlider.value = playerExp.CurrExp;
     }
-    
+
     public void UpdateMaxValue()
     {
         expSlider.maxValue = playerExp.requiredExp;

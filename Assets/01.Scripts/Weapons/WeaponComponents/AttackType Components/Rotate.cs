@@ -35,11 +35,11 @@ public class Rotate : MonoBehaviour, IProjectile
         if (timer > currAimer.LifeTime)
         {
             gameObject.SetActive(false);
-        } 
+        }
         else
         {
             float radians = angle * Mathf.Deg2Rad;
-             
+
             float x = parentTransform.position.x + Mathf.Cos(radians) * Range;
             float y = parentTransform.position.y + Mathf.Sin(radians) * Range;
 

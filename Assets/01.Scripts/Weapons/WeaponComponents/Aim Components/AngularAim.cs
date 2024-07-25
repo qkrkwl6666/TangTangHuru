@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AngularAim : MonoBehaviour, IAimer
@@ -37,4 +35,3 @@ public class AngularAim : MonoBehaviour, IAimer
         return direction;
     }
 }
-  

@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHealth : LivingEntity
@@ -17,10 +16,10 @@ public class EnemyHealth : LivingEntity
 
     }
 
-    public override void OnDamage(float damage, float impact)
+    public override void OnDamage(float damage, float Impact)
     {
 
-       // Debug.Log("아야! hp : " + health);
+        // Debug.Log("아야! hp : " + health);
 
         health -= damage;
         hpBar.value -= damage;

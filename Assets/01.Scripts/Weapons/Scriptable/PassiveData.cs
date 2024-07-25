@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Passive Data", menuName = "Scriptable Object/Passive Data", order = int.MaxValue)]
 public class PassiveData : ScriptableObject
@@ -36,7 +34,7 @@ public class PassiveData : ScriptableObject
     [Header("레벨")]
     [SerializeField]
     private int level;
-    public int Level { get { return level; } set { level = value; } } 
+    public int Level { get { return level; } set { level = value; } }
 
     [Header("대미지 크기")]
     [SerializeField]

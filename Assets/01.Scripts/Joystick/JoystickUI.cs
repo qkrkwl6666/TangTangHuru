@@ -9,7 +9,6 @@ public class JoystickUI : MonoBehaviour
     public LayerMask worldLayerMask; // 월드 레이어 마스크
 
     private Vector2 pos;
-
     public Vector2 InputValue { get; private set; }
     private Vector2 startScreenPosition = Vector2.zero;
     private Vector2 currentScreenPosition = Vector3.zero;
@@ -17,8 +16,8 @@ public class JoystickUI : MonoBehaviour
     public RectTransform canvasRectTransform;
     public RectTransform circleRine;
     private Vector2 defaultAnchoredPosition = Vector2.zero;
-    private Vector2 CurrentAnchoredPosition 
-    { 
+    private Vector2 CurrentAnchoredPosition
+    {
         get { return GetComponent<RectTransform>().anchoredPosition; }
         set { GetComponent<RectTransform>().anchoredPosition = value; }
     }
@@ -30,9 +29,18 @@ public class JoystickUI : MonoBehaviour
     // 터치 최대 길이
     private float joystickRadius = 30;
 
+    // 처음 입력 버퍼 제거 변수들
+    private int inputbuffer = 4;
+    private int currentBuffer = 0;
+
     private void Awake()
     {
         defaultAnchoredPosition = CurrentAnchoredPosition;
+    }
+
+    private void Start()
+    {
+
     }
 
     private void Update()
@@ -41,9 +49,10 @@ public class JoystickUI : MonoBehaviour
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
-        //ntext.action.u
+        currentBuffer++;
 
-        //if (EventSystem.current.IsPointerOverGameObject(context)) return;
+        if (currentBuffer < inputbuffer) return;
+
 
         switch (context.phase)
         {
@@ -153,6 +162,5 @@ public class JoystickUI : MonoBehaviour
         CurrentAnchoredPosition = defaultAnchoredPosition;
         CurrentAnchoredPosition += context.ReadValue<Vector2>() * joystickRadius;
         InputValue = context.ReadValue<Vector2>();
-
     }
 }

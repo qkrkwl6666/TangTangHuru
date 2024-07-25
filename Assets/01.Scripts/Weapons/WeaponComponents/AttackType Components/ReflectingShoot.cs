@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ReflectingShoot : MonoBehaviour, IProjectile
@@ -15,6 +13,7 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
     private Vector2 currPoint;
     private float timer = 0f;
 
+    Vector3 currPosition = Vector3.zero;
 
     private void Awake()
     {
@@ -29,8 +28,9 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
         dir = currAimer.AimDirection();
     }
 
-    void FixedUpdate()
+    void Update()
     {
+
         CheckBounds();
 
 
@@ -52,7 +52,7 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
 
         if (position.x > currPoint.x + screenBounds.x || position.x < currPoint.x - screenBounds.x)
         {
-            dir.x = -dir.x; 
+            dir.x = -dir.x;
             position.x = Mathf.Clamp(position.x, currPoint.x - screenBounds.x, currPoint.x + screenBounds.x);
         }
         if (position.y > currPoint.y + screenBounds.y || position.y < currPoint.y - screenBounds.y)

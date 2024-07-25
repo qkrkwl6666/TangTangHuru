@@ -6,13 +6,13 @@ public class StageTime : MonoBehaviour
     public TextMeshProUGUI timeText;
     public MonsterSpawnManager monsterSpawnManager;
 
-    public bool IsStop {  get; private set; }
+    public bool IsStop { get; private set; }
 
     private readonly float endTime = 600f;
 
     float currTime = 0f;
     string minuteText;
-    string secondText; 
+    string secondText;
 
     void Start()
     {
@@ -25,7 +25,7 @@ public class StageTime : MonoBehaviour
 
         currTime += Time.deltaTime;
 
-        if(currTime >= endTime)
+        if (currTime >= endTime)
         {
             monsterSpawnManager.OnStop?.Invoke();
             IsStop = true;
@@ -38,6 +38,6 @@ public class StageTime : MonoBehaviour
         minuteText = Mathf.FloorToInt(minute).ToString("D2");
         secondText = Mathf.FloorToInt(second).ToString("D2");
 
-        timeText.text = minuteText+":" + secondText;
+        timeText.text = minuteText + ":" + secondText;
     }
 }

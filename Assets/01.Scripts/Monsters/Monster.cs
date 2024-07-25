@@ -11,9 +11,10 @@ public enum MonsterType
 public class Monster : LivingEntity, IPlayerObserver
 {
     public float MoveSpeed { get; private set; }
+
     public float Damage { get; private set; }
     public float Exp { get; private set; }
-    public float Gold { get; private set; }
+    public int Gold { get; private set; }
     public float TotalCooldown { get; private set; }
     public float Range { get; private set; }
 
@@ -24,8 +25,6 @@ public class Monster : LivingEntity, IPlayerObserver
     {
         this.playerSubject = playerSubject;
     }
-
-
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
     {
         this.playerSubject = playerSubject;
@@ -47,6 +46,8 @@ public class Monster : LivingEntity, IPlayerObserver
         //Debug.Log("몬스터 경험치 할당 : " + Exp);
 
         playerSubject.AddObserver(this);
+
+        AwakeHealth();
     }
 
     private IObjectPool<GameObject> pool;
@@ -59,7 +60,7 @@ public class Monster : LivingEntity, IPlayerObserver
     // 몬스터 죽을 떄 호출 해야함
     public void PoolRelease()
     {
-        if(pool == null) Destroy(gameObject);
+        if (pool == null) Destroy(gameObject);
 
         pool.Release(gameObject);
     }
@@ -71,6 +72,9 @@ public class Monster : LivingEntity, IPlayerObserver
         {
             onDeath();
         }
+
+        InGameInventory.OnCoinAdd?.Invoke((int)Gold);
+        InGameInventory.OnKillAdd?.Invoke();
 
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);

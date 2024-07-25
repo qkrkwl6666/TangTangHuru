@@ -24,25 +24,26 @@ public class Barrage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!attackable) return;
-        
+
         OnAttack(collision);
     }
 
     public void SetDamage(float damage)
     {
-        this.damage = damage; 
+        this.damage = damage;
     }
 
     public void OnAttack(Collider2D other)
     {
-        if(other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player")
         {
             other.gameObject.GetComponent<IDamagable>().OnDamage(damage, 0);
         }
     }
 
-    public void Init(Vector2 dir, Transform bossTransform, float attackCicle)
+    public void Init(Vector2 dir, Transform bossTransform, float attackCicle, float ballSpeed)
     {
+        this.speed = ballSpeed;
         this.dir = dir.normalized;
         this.bossTransform = bossTransform;
         circleScale = attackCicle;
@@ -58,7 +59,7 @@ public class Barrage : MonoBehaviour
         time += Time.deltaTime;
         attackTime += Time.deltaTime;
 
-        if(attackTime >= atkRate && !attackable)
+        if (attackTime >= atkRate && !attackable)
         {
             attackTime = 0f;
             attackable = true;
@@ -75,6 +76,6 @@ public class Barrage : MonoBehaviour
 
     public void SetObjectPool(IObjectPool<GameObject> pool)
     {
-        this.pool = pool; 
+        this.pool = pool;
     }
 }

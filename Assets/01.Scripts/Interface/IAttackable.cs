@@ -9,8 +9,8 @@ public interface IAttackable
     public float CriticalChance { get; set; }
     public float CriticalValue { get; set; }
     public float TotalDamage { get; set; }
-    public float AttackRate {  get; set; }
-    public float Impact {  get; set; }
+    public float AttackRate { get; set; }
+    public float Impact { get; set; }
 
     void OnAttack(Collider2D other);
 

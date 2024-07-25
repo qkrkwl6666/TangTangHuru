@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using CsvHelper;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using UnityEngine.AddressableAssets;
@@ -19,7 +19,7 @@ public class BossSkillTable : DataTable
 
     public BossSkillData Get(string name)
     {
-        if(!bossSkillTable.ContainsKey(name)) return null;
+        if (!bossSkillTable.ContainsKey(name)) return null;
 
         return bossSkillTable[name];
     }

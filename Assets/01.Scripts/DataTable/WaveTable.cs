@@ -24,6 +24,8 @@ public class WaveData
     public int monster3_Count { get; set; }
     public int monster3_Duration { get; set; }
     public int spawn3_Type { get; set; }
+
+    public float spawn_Distance { get; set; }
 }
 
 public class WaveTable : DataTable
@@ -43,7 +45,7 @@ public class WaveTable : DataTable
 
                 for (int i = 0; i < waveList.Count; i++)
                 {
-                    if(!waveTable.ContainsKey(waveList[i].stage.ToString()))
+                    if (!waveTable.ContainsKey(waveList[i].stage.ToString()))
                     {
                         waveTable.Add(waveList[i].stage.ToString(), new List<WaveData>());
                     }

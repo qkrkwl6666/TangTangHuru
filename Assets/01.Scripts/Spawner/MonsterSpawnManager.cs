@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class MonsterSpawnManager : MonoBehaviour
 {
@@ -16,6 +18,10 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private MonsterSpawnFactory monsterSpawnFactory = null;
 
+    private InGameUI gameUI;
+
+    private float currentSpawnDistance = 0f;
+
     private void Awake()
     {
         waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
@@ -23,14 +29,16 @@ public class MonsterSpawnManager : MonoBehaviour
 
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
 
+        gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+
         InitializeSpawnInfos();
 
         NextWave();
 
-        OnStop += () => 
+        OnStop += () =>
         {
             IsStop = true;
-            SpawnBoss();
+            StartCoroutine(SpawnBoss());
         };
     }
 
@@ -38,17 +46,17 @@ public class MonsterSpawnManager : MonoBehaviour
     {
         totalWaveTime += Time.deltaTime;
 
-        if(IsStop) return;
+        if (IsStop) return;
 
         if (totalWaveTime >= currentWaveData.duration)
         {
             NextWave();
         }
 
-        foreach(var spawnData in monsterSpawnInfos.Values)
+        foreach (var spawnData in monsterSpawnInfos.Values)
         {
             spawnData.Update(Time.deltaTime);
-            if(spawnData.IsSpawn)
+            if (spawnData.IsSpawn)
             {
                 SpawnMonster(spawnData);
             }
@@ -57,11 +65,11 @@ public class MonsterSpawnManager : MonoBehaviour
 
     public void SpawnMonster(MonsterSpawnInfo monsterSpawnInfo)
     {
-        if(monsterSpawnInfo.IsValid)
+        if (monsterSpawnInfo.IsValid)
         {
             monsterSpawnFactory.CreateMonster(DataTableManager.Instance.Get<MonsterTable>
-                (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()), 
-                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType);
+                (DataTableManager.monster).GetMonsterData(monsterSpawnInfo.MonsterId.ToString()),
+                monsterSpawnInfo.MonsterCount, monsterSpawnInfo.SpawnType, currentSpawnDistance);
         }
     }
 
@@ -88,6 +96,7 @@ public class MonsterSpawnManager : MonoBehaviour
         {
             totalWaveTime = 0f;
             currentWaveData = waveDatas[waveIndex];
+            currentSpawnDistance = currentWaveData.spawn_Distance;
             UpdateSpawnInfos();
             waveIndex++;
         }
@@ -98,9 +107,20 @@ public class MonsterSpawnManager : MonoBehaviour
         }
     }
 
-    public void SpawnBoss()
+    public IEnumerator SpawnBoss()
     {
         monsterSpawnFactory.MonsterAllDead();
+        monsterSpawnFactory.BossWallSpawn();
+        GameObject playBoss = null;
+
+        Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) =>
+        {
+            gameUI.SetActiveExpBar(false);
+            playBoss = x.Result;
+            Destroy(playBoss, 3f);
+        };
+
+        yield return new WaitForSeconds(3f);
 
         var bossStageData = DataTableManager.Instance.Get<BossStageTable>
             (DataTableManager.stageBoss).GetBossData(GameManager.Instance.CurrentStage.ToString());
@@ -109,6 +129,7 @@ public class MonsterSpawnManager : MonoBehaviour
             .GetBossData(bossStageData.Boss_Id.ToString());
 
         monsterSpawnFactory.CreateBoss(bossData);
+
     }
 
 
