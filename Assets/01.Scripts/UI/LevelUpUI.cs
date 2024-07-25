@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
+    public IconLoader iconLoader;
     public List<GameObject> options;
     public PassiveManager passiveManager;
 
@@ -15,6 +16,7 @@ public class LevelUpUI : MonoBehaviour
     WeaponCreator mainWeapon;
     List<WeaponCreator> weaponList = new List<WeaponCreator>();
     List<PassiveData> passiveList = new List<PassiveData>();
+
 
     private void OnEnable()
     {
@@ -40,13 +42,21 @@ public class LevelUpUI : MonoBehaviour
                     options[i].GetComponent<Button>().onClick.AddListener(()
                          => passiveManager.PassiveLevelUp(passiveList[select]));
                 }
+                Icons[i].sprite = iconLoader.SetIconByName("IconPassive");
                 texts_Name[i].text = passiveList[select].PassiveName;
-                texts_Desc[i].text = "패시브 설명";
+                texts_Desc[i].text = passiveList[select].PassiveDesc;
             }
             else //액티브 선택
             {
                 int index = Random.Range(0, weaponList.Count);
                 var weaponCreator = passiveManager.weaponCreators[index];
+
+                string selectedName = weaponCreator.weaponDataRef.WeaponName;
+                string selectedLevel = (weaponCreator.currLevel + 1).ToString();
+                
+                Icons[i].sprite = iconLoader.SetIconByName("Icon" + selectedName);
+                texts_Name[i].text = stringMgr.Get(selectedName + "_Name_Lv" + selectedLevel).Text;
+                texts_Desc[i].text = stringMgr.Get(selectedName + "_Desc_Lv" + selectedLevel).Text;
 
                 if (weaponCreator.currLevel == 0)
                 {
@@ -58,11 +68,10 @@ public class LevelUpUI : MonoBehaviour
                 {
                     options[i].GetComponent<Button>().onClick.AddListener(weaponCreator.LevelUpReady);
                 }
-                texts_Name[i].text = weaponCreator.weaponDataRef.WeaponName;
-                texts_Desc[i].text = "액티브 설명";
-
             }
         }
+
+
     }
 
     private void OnDisable()

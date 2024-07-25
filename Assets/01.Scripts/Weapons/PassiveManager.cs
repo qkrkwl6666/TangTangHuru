@@ -10,7 +10,7 @@ public class PassiveManager : MonoBehaviour
 
     public PassiveData passiveData;
 
-    WeaponCreator currMainWeapon;
+    public WeaponCreator currMainWeapon;
 
     PassiveData totalPowerPassive;
     PassiveData totalSpeedPassive;

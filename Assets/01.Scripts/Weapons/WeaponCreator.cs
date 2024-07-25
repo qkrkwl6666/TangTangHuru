@@ -106,7 +106,8 @@ public class WeaponCreator : MonoBehaviour
             {
                 LevelUp();
             }
-            yield return new WaitForSeconds(weaponDataInStage.CoolDown - typePassive.CoolDown);
+            var coolReduce = weaponDataInStage.CoolDown * typePassive.CoolDown;
+            yield return new WaitForSeconds(weaponDataInStage.CoolDown - coolReduce);
         }
     }
 
