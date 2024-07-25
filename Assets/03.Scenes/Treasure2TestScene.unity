@@ -272,14 +272,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 427635004328437768, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: f1e1b5f4ecefb034f98b8d7cf5823d1a, type: 2}
     - target: {fileID: 821171427352453415, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1201044592604539288, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: e96ccf8f57b64c0478bc892bff8a2977, type: 2}
+    - target: {fileID: 1595060279043138317, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1884427977634433171, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2115528886827910971, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cc59dac03f0df545bd8cd7a32e97b45, type: 2}
     - target: {fileID: 2364806144273083525, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -320,13 +336,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2501858004039481305, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9613370c077697a478bb8f76e32eb607, type: 2}
+    - target: {fileID: 3157502537409948230, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 25a92af337f3401478462708f9f9d565, type: 2}
     - target: {fileID: 3207407585417475704, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3233027378912604985, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 70f874a8bfb3ccf409a8817c3b7f76be, type: 2}
+    - target: {fileID: 3393964784791332718, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: f5c2163777df4fa48b125beef2261055, type: 2}
     - target: {fileID: 3502777865133575423, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_Name
       value: PlayerW
+      objectReference: {fileID: 0}
+    - target: {fileID: 3597890204392545211, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4369410791929698337, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4483609725841164632, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_IsActive
@@ -452,8 +492,20 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5700859270559023472, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: weaponDataRef
+      value: 
+      objectReference: {fileID: 11400000, guid: 66d79861ad938504dbb4c955268ba709, type: 2}
     - target: {fileID: 5807854245389139394, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6469530201942816735, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6711689209520114308, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6730022085649740168, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
@@ -476,6 +528,10 @@ PrefabInstance:
       propertyPath: skillUpgradeData
       value: 
       objectReference: {fileID: 11400000, guid: f62aa6a7065c2ca4c80088a648dd833f, type: 2}
+    - target: {fileID: 7981525620836902059, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f287f5e6c212474fa06e413c7cc4963, type: 2}
     - target: {fileID: 8057815302956663617, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -484,6 +540,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8228269653063290830, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 13ae9f34f12f44d4e8a7bd1ee4bc7e6a, type: 2}
     - target: {fileID: 9080060265205120307, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: currLevel
       value: 2
@@ -598,7 +658,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 716909216}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
