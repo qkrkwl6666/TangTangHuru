@@ -277,7 +277,7 @@ public class WeaponCreator : MonoBehaviour
             {
                 var enabler = weapon.AddComponent<EnableOnDest>();
                 enabler.SecondWeapon = secondWeaponPrefab;
-                enabler.maxCount = 3;
+                enabler.maxCount = weaponDataInStage.SecondAtkCount;
             }
         }
     }
