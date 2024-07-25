@@ -19,7 +19,9 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
     {
         currAimer = GetComponent<IAimer>();
         mainCamera = Camera.main;
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+        screenBounds.y = mainCamera.orthographicSize * 2f;
+        screenBounds.x = screenBounds.y * ((float)Screen.width / Screen.height);
+        screenBounds *= 0.5f;
     }
 
     private void OnEnable()
@@ -30,9 +32,7 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
 
     void Update()
     {
-
         CheckBounds();
-
 
         if (timer > currAimer.LifeTime)
         {
@@ -60,8 +60,8 @@ public class ReflectingShoot : MonoBehaviour, IProjectile
             dir.y = -dir.y;
             position.y = Mathf.Clamp(position.y, currPoint.y - screenBounds.y, currPoint.y + screenBounds.y);
         }
-        transform.position = position;
 
+        transform.position = position;
         transform.Translate(dir * Speed * Time.deltaTime);
     }
 }

@@ -38,9 +38,9 @@ public class LaserShoot : MonoBehaviour, IProjectile
     {
         if (redirectionTimer >= 0.07f)
         {
-            SetDestination();
             redirectionTimer = 0f;
         }
+        SetDestination();
 
         laser.SetPosition(0, currAimer.Player.transform.position);
         laser.SetPosition(1, endPoint);

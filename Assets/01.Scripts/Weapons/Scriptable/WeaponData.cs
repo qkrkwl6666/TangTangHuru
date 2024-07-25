@@ -140,7 +140,13 @@ public class WeaponData : ScriptableObject
     private int pierceCount;
     public int PierceCount { get { return pierceCount; } set { pierceCount = value; } }
 
+    [Header("투사체 부가옵션")]
+    public Option[] Options;
 
+    [Header("착탄 공격 옵션 물체 개수")]
+    [SerializeField]
+    private int secondAtkCount;
+    public int SecondAtkCount { get { return secondAtkCount; } set { secondAtkCount = value; } }
     [Header("시각효과")]
     [SerializeField]
     private float fadeInRate;
@@ -151,9 +157,6 @@ public class WeaponData : ScriptableObject
     [SerializeField]
     private float maxAlpha;
     public float MaxAlpha { get { return maxAlpha; } set { maxAlpha = value; } }
-
-    [Header("투사체 부가옵션")]
-    public Option[] Options;
 
 }
 
