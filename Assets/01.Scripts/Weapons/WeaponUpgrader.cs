@@ -61,6 +61,9 @@ public class WeaponUpgrader : MonoBehaviour
                 case SkillUp.LifeTime:
                     dataInStage.LifeTime = upgradeValue[i];
                     break;
+                case SkillUp.Size:
+                    dataInStage.Size = upgradeValue[i];
+                    break;
 
             }
         }

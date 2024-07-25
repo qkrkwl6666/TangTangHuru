@@ -19,6 +19,7 @@ public class SkillUpgradeData : ScriptableObject
         BurstCount,
         PierceCount,
         LifeTime,
+        Size,
     }
 
     [SerializeField]
