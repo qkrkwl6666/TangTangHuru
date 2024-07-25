@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8487660616661893686}
   m_Layer: 7
   m_Name: SubWeapon Reflect
-  m_TagString: Untagged
+  m_TagString: WeaponCreator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,12 +41,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7336767381534908727}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: 4d40042e844733748b6419f7f297c930, type: 3}
+  weaponPrefab: {fileID: 3661404853983736829, guid: 2f077d0def8299d4aaeab5a0a529d2ee, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 93cd638dda5047f46bec53dbd611b415, type: 2}
   secondWeaponPrefab: {fileID: 0}
   currLevel: 0
@@ -72,12 +72,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7336767381534908727}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: 093daece5db41aa41a576dcefc518062, type: 3}
-  weaponDataRef: {fileID: 11400000, guid: 4dae129520d593c49822bd892b04d019, type: 2}
-  secondWeaponPrefab: {fileID: 0}
+  weaponPrefab: {fileID: 3661404853983736829, guid: 2f077d0def8299d4aaeab5a0a529d2ee, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: 25fe00afa6e2b5c45a690816abc30c34, type: 2}
+  secondWeaponPrefab: {fileID: 3661404853983736829, guid: 26a522e35c202aa428b56e70768e5577, type: 3}
   currLevel: 0

@@ -10,6 +10,8 @@ public class PassiveManager : MonoBehaviour
 
     public PassiveData passiveData;
 
+    WeaponCreator currMainWeapon;
+
     PassiveData totalPowerPassive;
     PassiveData totalSpeedPassive;
     PassiveData totalNoneTypePassive;
@@ -17,9 +19,15 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
+        currMainWeapon = GameObject.FindGameObjectWithTag("MainWeapon").GetComponent<WeaponCreator>();
+        if(currMainWeapon == null)
+        {
+            Debug.LogError("No Main Weapon!");
+        }
         totalPowerPassive = Instantiate(passiveData);
         totalSpeedPassive = Instantiate(passiveData);
         totalNoneTypePassive = Instantiate(passiveData);
+        weaponCreators.Add(currMainWeapon);
     }
     public void PassiveAdd(PassiveData selected)
     {
