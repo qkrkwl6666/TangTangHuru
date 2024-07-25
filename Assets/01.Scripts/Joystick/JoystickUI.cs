@@ -49,10 +49,10 @@ public class JoystickUI : MonoBehaviour
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
+        Debug.Log(currentBuffer);
         currentBuffer++;
 
         if (currentBuffer < inputbuffer) return;
-
 
         switch (context.phase)
         {

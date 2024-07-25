@@ -4,8 +4,6 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    private InputActionAsset joystickAction;
-
     public int CurrentStage { get; private set; } = 1;
 
     // ·Îµù UI 
@@ -18,12 +16,6 @@ public class GameManager : Singleton<GameManager>
             loadingUI = loadUIGo.Result;
             loadingUI.SetActive(false);
             DontDestroyOnLoad(loadingUI);
-        };
-
-        Addressables.LoadAssetAsync<InputActionAsset>(Defines.joystick).Completed += (joystick) =>
-        {
-            joystickAction = joystick.Result;
-            joystickAction.Disable();
         };
     }
 
