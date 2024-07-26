@@ -44,7 +44,7 @@ public class JoystickUI : MonoBehaviour
 
     private void Start()
     {
-
+        
     }
 
     private void Update()
@@ -55,8 +55,12 @@ public class JoystickUI : MonoBehaviour
     {
         currentBuffer++;
 
+        if (levelUpUI == null || gameOverUI == null || pauseUI == null)
+            return;
+
         if (currentBuffer < inputbuffer || levelUpUI.activeSelf 
-            || gameOverUI.activeSelf || pauseUI.activeSelf) return;
+            || gameOverUI.activeSelf || pauseUI.activeSelf) 
+            return;
 
         switch (context.phase)
         {
