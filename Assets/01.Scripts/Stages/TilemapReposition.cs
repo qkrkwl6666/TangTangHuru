@@ -13,30 +13,26 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
         playerSubject.AddObserver(this);
     }
 
+    private void Update()
+    {
+        float diffX = playerTransform.position.x - transform.position.x;
+        float diffY = playerTransform.position.y - transform.position.y;
+
+        if(Mathf.Abs(diffX) > TileSize)
+        {
+            float dirX = diffX > 0 ? 1 : -1;
+            transform.Translate(Vector3.right * dirX * TileSize * 2);
+        }
+        if (Mathf.Abs(diffY) > TileSize)
+        {
+            float dirY = diffY > 0 ? 1 : -1;
+            transform.Translate(Vector3.up * dirY * TileSize * 2);
+        }
+    }
+
     public void IObserverUpdate()
     {
         playerTransform = playerSubject.GetPlayerTransform;
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Area"))
-        {
-            float diffX = playerTransform.position.x - transform.position.x;
-            float diffY = playerTransform.position.y - transform.position.y;
-
-            float dirX = diffX > 0 ? 1 : -1;
-            float dirY = diffY > 0 ? 1 : -1;
-
-            if (Mathf.Abs(diffX) > Mathf.Abs(diffY))
-            {
-                transform.Translate(Vector3.right * dirX * TileSize * 2);
-            }
-            else
-            {
-                transform.Translate(Vector3.up * dirY * TileSize * 2);
-            }
-        }
     }
 
 
