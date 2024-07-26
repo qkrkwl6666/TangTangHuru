@@ -33,6 +33,8 @@ public class JoystickUI : MonoBehaviour
     private int inputbuffer = 4;
     private int currentBuffer = 0;
 
+    public bool isUI = false;
+
     private void Awake()
     {
         defaultAnchoredPosition = CurrentAnchoredPosition;
@@ -51,7 +53,7 @@ public class JoystickUI : MonoBehaviour
     {
         currentBuffer++;
 
-        if (currentBuffer < inputbuffer) return;
+        if (currentBuffer < inputbuffer || isUI) return;
 
         switch (context.phase)
         {
