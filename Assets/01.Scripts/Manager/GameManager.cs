@@ -4,12 +4,16 @@ using UnityEngine.InputSystem;
 
 public class GameManager : Singleton<GameManager>
 {
-    private InputActionAsset joystickAction;
-
     public int CurrentStage { get; private set; } = 1;
+
+    public string currentWeapon = "OneSword";
 
     // 로딩 UI 
     private GameObject loadingUI;
+
+    // 임시 용도
+    public string characterSkin = Defines.body033;
+    public string weaponSkin = Defines.weapon005;
 
     private void Awake()
     {
@@ -18,12 +22,6 @@ public class GameManager : Singleton<GameManager>
             loadingUI = loadUIGo.Result;
             loadingUI.SetActive(false);
             DontDestroyOnLoad(loadingUI);
-        };
-
-        Addressables.LoadAssetAsync<InputActionAsset>(Defines.joystick).Completed += (joystick) =>
-        {
-            joystickAction = joystick.Result;
-            joystickAction.Disable();
         };
     }
 

@@ -24,7 +24,7 @@ public class Spawn : MonoBehaviour, IProjectile
         pos = currAimer.AimDirection();
 
         transform.position = pos;
-        transform.localScale = new Vector3(Size, Size);
+        transform.localScale = new Vector3(Size, Size, Size);
     }
 
     private void OnDisable()

@@ -5,8 +5,8 @@ using UnityEngine.InputSystem;
 
 public class JoystickUI : MonoBehaviour
 {
-    public LayerMask uiLayerMask;   // UI ·¹ÀÌ¾î ¸¶½ºÅ©
-    public LayerMask worldLayerMask; // ¿ùµå ·¹ÀÌ¾î ¸¶½ºÅ©
+    public LayerMask uiLayerMask;   // UI ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
+    public LayerMask worldLayerMask; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
 
     private Vector2 pos;
     public Vector2 InputValue { get; private set; }
@@ -26,10 +26,10 @@ public class JoystickUI : MonoBehaviour
 
     private bool isStarted = false;
 
-    // ÅÍÄ¡ ÃÖ´ë ±æÀÌ
+    // ï¿½ï¿½Ä¡ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½
     private float joystickRadius = 30;
 
-    // Ã³À½ ÀÔ·Â ¹öÆÛ Á¦°Å º¯¼öµé
+    // Ã³ï¿½ï¿½ ï¿½Ô·ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private int inputbuffer = 4;
     private int currentBuffer = 0;
 
@@ -53,13 +53,12 @@ public class JoystickUI : MonoBehaviour
 
         if (currentBuffer < inputbuffer) return;
 
-
         switch (context.phase)
         {
             case InputActionPhase.Performed:
                 {
-                    if (IsTouchOverUI(context.ReadValue<Vector2>()))
-                        return;
+                    //if (IsTouchOverUI(context.ReadValue<Vector2>()))
+                    //    return;
 
                     if (!isStarted)
                     {
@@ -96,7 +95,7 @@ public class JoystickUI : MonoBehaviour
         {
             if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
             {
-                // UI ·¹ÀÌ¾î ¸¶½ºÅ©¿¡ ÇØ´çÇÏ´Â ¿ÀºêÁ§Æ®°¡ ÀÖÀ½
+                // UI ï¿½ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½Å©ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 return true;
             }
         }

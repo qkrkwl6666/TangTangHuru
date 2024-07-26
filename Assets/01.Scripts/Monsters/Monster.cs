@@ -45,6 +45,8 @@ public class Monster : LivingEntity, IPlayerObserver
 
         //Debug.Log("몬스터 경험치 할당 : " + Exp);
 
+        GetComponent<MonsterController>().MoveSpeed = monsterData.Monster_MoveSpeed;
+
         playerSubject.AddObserver(this);
 
         AwakeHealth();

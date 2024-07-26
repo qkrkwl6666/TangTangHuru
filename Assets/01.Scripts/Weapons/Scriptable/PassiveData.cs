@@ -31,6 +31,11 @@ public class PassiveData : ScriptableObject
     private PassiveType itemType;
     public PassiveType ItemType { get { return itemType; } }
 
+    [Header("설명")]
+    [SerializeField]
+    private string passiveDesc;
+    public string PassiveDesc { get { return passiveDesc; } }
+
     [Header("레벨")]
     [SerializeField]
     private int level;
