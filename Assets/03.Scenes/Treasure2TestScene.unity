@@ -1771,6 +1771,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
+--- !u!1 &1995487200 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3089520575350304686, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
+  m_PrefabInstance: {fileID: 1995487199}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1995487201 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6328732778972552535, guid: dc6ba4018e018bd41aa89cbfa4302a14, type: 3}
+  m_PrefabInstance: {fileID: 1995487199}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1995514011 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3597890204392545211, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
@@ -1893,6 +1903,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: JoystickUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5922625858492698281, guid: 9bd30cf566625ec43aedba8f3d98aa7f, type: 3}
+      propertyPath: pauseUI
+      value: 
+      objectReference: {fileID: 1995487201}
+    - target: {fileID: 5922625858492698281, guid: 9bd30cf566625ec43aedba8f3d98aa7f, type: 3}
+      propertyPath: levelUpUI
+      value: 
+      objectReference: {fileID: 1995487200}
+    - target: {fileID: 5922625858492698281, guid: 9bd30cf566625ec43aedba8f3d98aa7f, type: 3}
+      propertyPath: gameOverUI
+      value: 
+      objectReference: {fileID: 1179419099}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -17,13 +17,8 @@ public class LevelUpUI : MonoBehaviour
     List<WeaponCreator> weaponList = new List<WeaponCreator>();
     List<PassiveData> passiveList = new List<PassiveData>();
 
-    public JoystickUI joystickUI;
-
-
     private void OnEnable()
     {
-        joystickUI.isUI = true;
-
         var stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
         SetOptions();
@@ -80,8 +75,6 @@ public class LevelUpUI : MonoBehaviour
 
     private void OnDisable()
     {
-        joystickUI.isUI = false;
-
         foreach (GameObject option in options)
         {
             option.GetComponent<Button>().onClick.RemoveAllListeners();
