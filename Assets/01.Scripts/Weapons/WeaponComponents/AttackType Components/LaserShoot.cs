@@ -33,15 +33,9 @@ public class LaserShoot : MonoBehaviour, IProjectile
         SetDestination();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        if (redirectionTimer >= 0.07f)
-        {
-            redirectionTimer = 0f;
-        }
         SetDestination();
-
         laser.SetPosition(0, currAimer.Player.transform.position);
         laser.SetPosition(1, endPoint);
         attackCollider.gameObject.transform.position = endPoint;

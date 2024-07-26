@@ -34,7 +34,6 @@ Transform:
   - {fileID: 6807664417137905117}
   - {fileID: 2013455163105963789}
   - {fileID: 5969024780408951259}
-  - {fileID: 4138740168162941734}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &1121210511400993499
@@ -186,6 +185,10 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8326530197514568301, guid: 212740f90ffb9a9448f12480cde1617c, type: 3}
       propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8326530197679423528, guid: 212740f90ffb9a9448f12480cde1617c, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8326530197679423529, guid: 212740f90ffb9a9448f12480cde1617c, type: 3}
@@ -372,72 +375,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4010256083003072, guid: 615088eacaff4b64287bbfc46f42594b, type: 3}
   m_PrefabInstance: {fileID: 2017337218708949453}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &4142823526899391166
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 523357056575848133}
-    m_Modifications:
-    - target: {fileID: 1685241947682710, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_Name
-      value: (Opt)Effect_50_PierceArrows(ForEffectScene)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1685241947682710, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -30.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
---- !u!4 &4138740168162941734 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4932740059627928, guid: 837f2f72ef5bf0045b5668f944f9e42f, type: 3}
-  m_PrefabInstance: {fileID: 4142823526899391166}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5964789898658835907
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -449,6 +386,10 @@ PrefabInstance:
     - target: {fileID: 1236215947091048, guid: 154683133b84e294cb428038b140b1cf, type: 3}
       propertyPath: m_Name
       value: (Opt)Effect_50_PowerCharge
+      objectReference: {fileID: 0}
+    - target: {fileID: 1650213783937434, guid: 154683133b84e294cb428038b140b1cf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1657858749146956, guid: 154683133b84e294cb428038b140b1cf, type: 3}
       propertyPath: m_IsActive

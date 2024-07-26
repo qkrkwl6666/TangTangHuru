@@ -34,6 +34,8 @@ public class PlayerHealth : LivingEntity
         if (dead || isInvincible)
             return;
 
+        //Handheld.Vibrate();
+
         health -= damage;
         hpBar.value -= damage;
 
