@@ -267,7 +267,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         float angle = ((360 / spawnCount) * currentSpawnCount) * Mathf.Deg2Rad;
 
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-        Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * circleSpawnDistance;
+        Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * currentSpawnDistance;
 
         return spawnPos;
     }
