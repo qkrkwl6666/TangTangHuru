@@ -100,7 +100,7 @@ public class LevelUpUI : MonoBehaviour
             }
         }
 
-        if (weaponCount < 5)
+        if (weaponCount < 4)
         {
             foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
             {
