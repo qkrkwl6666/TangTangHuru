@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 895377270242177277}
   m_Layer: 7
   m_Name: SubWeapon Lightning
-  m_TagString: Untagged
+  m_TagString: WeaponCreator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4750151247913766988
 Transform:
   m_ObjectHideFlags: 0
@@ -41,12 +41,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2346333954202177011}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: 059bf81dbf77619458102cabf20397c6, type: 3}
+  weaponPrefab: {fileID: 3661404853983736829, guid: 489e7f94513ca9b4180e3eed8db9187b, type: 3}
   weaponDataRef: {fileID: 11400000, guid: e7429943510c8264cad40cf0f997e5b1, type: 2}
   secondWeaponPrefab: {fileID: 0}
   currLevel: 0
@@ -72,12 +72,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2346333954202177011}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: d82a1f01134292e488cb4f70c59f1840, type: 3}
+  weaponPrefab: {fileID: 3890470082822750988, guid: 3751e605901271f4cac83701c741706a, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 48af19f021c87c04ebc7679458e6b2f5, type: 2}
-  secondWeaponPrefab: {fileID: 0}
+  secondWeaponPrefab: {fileID: 3661404853983736829, guid: 8fd23ded5c72261478239492779a9ec5, type: 3}
   currLevel: 0

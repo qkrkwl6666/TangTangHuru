@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8454338103515070635}
   - component: {fileID: 2666138695872154725}
-  - component: {fileID: 5397442760502085111}
   - component: {fileID: 2748913981200939830}
+  - component: {fileID: 5397442760502085111}
   m_Layer: 7
   m_Name: SubWeapon Granede
-  m_TagString: Untagged
+  m_TagString: WeaponCreator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -46,25 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: e6ba1e1711936c146a8b088a136661c9, type: 3}
+  weaponPrefab: {fileID: 3661404853983736829, guid: cd7b2c04a8ba1e5438e23cf6e3b9fedd, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 8a8ac998780963340976e140cf3d188a, type: 2}
   secondWeaponPrefab: {fileID: 3661404853983736829, guid: ab6dcbf9451173d4c9ec33c2ed96247b, type: 3}
-  currLevel: 0
---- !u!114 &5397442760502085111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 116386578459240744}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: 4d40042e844733748b6419f7f297c930, type: 3}
-  weaponDataRef: {fileID: 11400000, guid: 8e9fbda179d479e40a4918132766a12e, type: 2}
-  secondWeaponPrefab: {fileID: 0}
   currLevel: 0
 --- !u!114 &2748913981200939830
 MonoBehaviour:
@@ -81,3 +65,19 @@ MonoBehaviour:
   skillUpgradeData: {fileID: 11400000, guid: 3fa77fd2e6230f643bdc2e5d59fb0950, type: 2}
   firstWeaponCreator: {fileID: 2666138695872154725}
   finalWeaponCreator: {fileID: 5397442760502085111}
+--- !u!114 &5397442760502085111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116386578459240744}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 3661404853983736829, guid: 1b55e8f8cc498134f9d8870bfd64e7b5, type: 3}
+  weaponDataRef: {fileID: 11400000, guid: 586464e45d0a53b4393d3a707a2021ba, type: 2}
+  secondWeaponPrefab: {fileID: 3661404853983736829, guid: ab6dcbf9451173d4c9ec33c2ed96247b, type: 3}
+  currLevel: 0

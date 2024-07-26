@@ -3,13 +3,13 @@ using UnityEngine;
 public class HitOnEnter : MonoBehaviour, IAttackable
 {
     public LayerMask AttackableLayer { get; set; }
-    public float Damage { get; set; }
-    public float PierceCount { get; set; }
-    public float CriticalChance { get; set; }
-    public float CriticalValue { get; set; }
-    public float TotalDamage { get; set; }
-    public float AttackRate { get; set; }
-    public float Impact { get; set; }
+    public float Damage { get; set; } = 10f;
+    public float PierceCount { get; set; } = 0f;
+    public float CriticalChance { get; set; } = 10f;
+    public float CriticalValue { get; set; } = 10f;
+    public float TotalDamage { get; set; } = 10f;
+    public float AttackRate { get; set; } = 0f;
+    public float Impact { get; set; } = 0f;
 
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -19,6 +19,8 @@ public class HitOnEnter : MonoBehaviour, IAttackable
 
     public void OnAttack(Collider2D other)
     {
+        AttackableLayer = LayerMask.GetMask("Enemy");
+
         var pierce = PierceCount;
 
         if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)

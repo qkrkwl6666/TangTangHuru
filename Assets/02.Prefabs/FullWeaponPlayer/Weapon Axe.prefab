@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3514018488366009518}
   m_Layer: 7
   m_Name: Weapon Axe
-  m_TagString: Untagged
+  m_TagString: WeaponCreator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -41,12 +41,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3013188762494565310}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPrefab: {fileID: 3661404853983736829, guid: ea24b5c8ffea86643b71dc279e373a95, type: 3}
+  weaponPrefab: {fileID: 5354017150541339573, guid: 3009f0f834cf771488ecd98da0022bf1, type: 3}
   weaponDataRef: {fileID: 11400000, guid: a29d23d87f49b604b9c0715bb143193b, type: 2}
   secondWeaponPrefab: {fileID: 0}
   currLevel: 0
@@ -72,7 +72,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3013188762494565310}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf9619e0f6d305f4c8297600b1a1d8ec, type: 3}
   m_Name: 

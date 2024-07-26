@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GradualSizeChange : MonoBehaviour
 {
+    public float maxSize = 2f;
+
     private IAimer currAimer;
 
     private Vector3 baseScale = Vector3.zero;
@@ -48,7 +50,7 @@ public class GradualSizeChange : MonoBehaviour
 
     private void Grow()
     {
-        size = Mathf.Lerp(0.5f, 2.5f, timer / currAimer.LifeTime);
+        size = Mathf.Lerp(0.5f, maxSize, timer / currAimer.LifeTime);
         gameObject.transform.localScale = baseScale * size;
     }
 }
