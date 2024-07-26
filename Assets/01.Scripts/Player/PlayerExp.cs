@@ -31,6 +31,8 @@ public class PlayerExp : MonoBehaviour
         {
             currExp -= requiredExp;
 
+            requiredExp += (requiredExp * 0.1f);
+
             //레벨업 메소드 호출
             levelinStage++;
             OnLevelChanged?.Invoke(levelinStage);
