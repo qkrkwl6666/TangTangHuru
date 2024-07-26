@@ -42,7 +42,7 @@ public class LevelUpUI : MonoBehaviour
                          => passiveManager.PassiveLevelUp(passiveList[select]));
                 }
                 Icons[i].sprite = iconLoader.SetIconByName("IconPassive");
-                texts_Name[i].text = passiveList[select].PassiveName;
+                texts_Name[i].text = passiveList[select].PassiveName +" "+ (passiveList[select].Level + 1) + "레벨";
                 texts_Desc[i].text = passiveList[select].PassiveDesc;
             }
             else //액티브 선택
