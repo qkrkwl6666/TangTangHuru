@@ -37,6 +37,8 @@ public class JoystickUI : MonoBehaviour
     public GameObject gameOverUI;
     public GameObject pauseUI;
 
+    bool pointerOverUI = false;
+
     private void Awake()
     {
         defaultAnchoredPosition = CurrentAnchoredPosition;
@@ -53,6 +55,7 @@ public class JoystickUI : MonoBehaviour
     }
     public void OnJoyStick(InputAction.CallbackContext context)
     {
+
         currentBuffer++;
 
         if (levelUpUI == null || gameOverUI == null || pauseUI == null)
@@ -66,8 +69,8 @@ public class JoystickUI : MonoBehaviour
         {
             case InputActionPhase.Performed:
                 {
-                    //if (IsTouchOverUI(context.ReadValue<Vector2>()))
-                    //    return;
+                    if (IsTouchOverUI(context.ReadValue<Vector2>()))
+                        return;
 
                     if (!isStarted)
                     {
@@ -102,9 +105,10 @@ public class JoystickUI : MonoBehaviour
 
         foreach (var result in results)
         {
+            Debug.Log(result.gameObject.layer);
+
             if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
             {
-                // UI ���̾� ����ũ�� �ش��ϴ� ������Ʈ�� ����
                 return true;
             }
         }

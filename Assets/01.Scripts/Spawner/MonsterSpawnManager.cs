@@ -115,7 +115,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
         Addressables.InstantiateAsync(Defines.playBoss).Completed += (x) =>
         {
-            gameUI.SetActiveExpBar(false);
+            //gameUI.SetActiveExpBar(false);
             playBoss = x.Result;
             Destroy(playBoss, 3f);
         };
