@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
@@ -14,6 +15,20 @@ public class GameManager : Singleton<GameManager>
     // 임시 용도
     public string characterSkin = Defines.body033;
     public string weaponSkin = Defines.weapon005;
+
+    // 인 게임 아이템 저장 컨테이너
+    private List<IInGameItem> inGameItems = new ();
+
+    public void InGameItemClear()
+    {
+        inGameItems.Clear();
+    }
+
+    public void AddinGameItem(IInGameItem item)
+    {
+        inGameItems.Add(item);
+    }
+
 
     private void Awake()
     {

@@ -164,11 +164,11 @@ public class ItemDetection : MonoBehaviour
         gameUI.UpdateRadarBar(disValue);
     }
 
-    public void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, treasureDistance);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 20f);
-    }
+    // public void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.red;
+    //     Gizmos.DrawWireSphere(transform.position, treasureDistance);
+    //     Gizmos.color = Color.yellow;
+    //     Gizmos.DrawWireSphere(transform.position, 20f);
+    // }
 }

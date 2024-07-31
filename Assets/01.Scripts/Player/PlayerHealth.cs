@@ -34,7 +34,7 @@ public class PlayerHealth : LivingEntity
         if (dead || isInvincible)
             return;
 
-        //Handheld.Vibrate();
+        Debug.Log("OnDamage");
 
         health -= damage;
         hpBar.value -= damage;

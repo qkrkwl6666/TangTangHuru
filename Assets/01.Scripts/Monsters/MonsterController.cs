@@ -29,15 +29,21 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         playerSubject.AddObserver(this);
 
         MonsterView = GetComponentInChildren<MonsterView>();
+        Monster = GetComponent<Monster>();
 
         MonsterStateMachine = new MonsterStateMachine(this, MoveType);
+    }
 
-        Monster = GetComponent<Monster>();
+    public void Initialize()
+    {
+
     }
 
     private void Start()
     {
         MonsterStateMachine.Initialize(MonsterStateMachine.walkState);
+
+        Debug.Log(MoveSpeed);
     }
 
     private void Update()

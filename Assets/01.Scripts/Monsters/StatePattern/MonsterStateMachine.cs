@@ -4,13 +4,13 @@ public class MonsterStateMachine
 
     public IdleState idleState;
     public WalkState walkState;
-    public AttackState attackState;
+    //public AttackState attackState;
 
     public MonsterStateMachine(MonsterController monsterController, MonsterMoveType monsterMoveType)
     {
         this.idleState = new IdleState(monsterController);
         this.walkState = new WalkState(monsterController, monsterMoveType);
-        this.attackState = new AttackState(monsterController);
+        //this.attackState = new AttackState(monsterController);
     }
 
     public void Initialize(IMonsterState monsterState)

@@ -1,4 +1,6 @@
+using Spine.Unity;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -31,12 +33,16 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private InGameUI gameUI;
     private float currentSpawnDistance = 0f;
 
+    private MonsterSkeletonSharing monsterSkeletonSharing;
+
     private void Awake()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+
+        monsterSkeletonSharing = GameObject.FindWithTag("MonsterSkeletonSharing").GetComponent<MonsterSkeletonSharing>();
     }
 
     private void Update()
@@ -68,13 +74,28 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 (() =>
                 {
                     var go = Instantiate(monsterPrefab);
+
+                    // MonsterView 생성
+                    var monsterView = go.AddComponent<MonsterView>();
+                    var animation = monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
+                    animation.Wait();
+                    monsterView.skeletonAnimation = animation.Result;
+
+                    var skeletonRenderer = go.AddComponent<SkeletonRenderer>();
+                    skeletonRenderer.skeletonDataAsset = monsterSkeletonSharing.monsterSkeletonDataAsset[monsterData.Monster_Prefab.ToString()];
+                    skeletonRenderer.Initialize(false);
+
                     var monsterScript = go.GetComponent<Monster>();
                     monsterScript.SetPool(monsterPools[monsterData.Monster_ID]);
-                    //var ccm = go.AddComponent<ConstantChaseMove>(); // 움직임 스크립트 추가
+
                     var adp = go.AddComponent<AdjustMonsterPosition>(); // 위치 조정 스크립트 추가
                     adp.Initialize(playerSubject);
-                    //ccm.Initialize(playerSubject);
+
                     monsterScript.Initialize(playerSubject, monsterData);
+
+                    // 몬스터 컨트롤러 생성
+                    var mc = go.AddComponent<MonsterController>();
+                    mc.MoveSpeed = monsterData.Monster_MoveSpeed;
 
                     if (monsterData.Monster_Skill_Id == -1) return go;
 
@@ -135,6 +156,13 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 break;
         }
 
+    }
+
+    async Task<SkeletonAnimation> GetMonsterWithAnimationAsync(MonsterData monsterData)
+    {
+        var animation = await monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
+        
+        return animation;
     }
 
     // Todo : 몬스터 테이블 수정 

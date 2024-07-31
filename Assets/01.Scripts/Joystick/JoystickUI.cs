@@ -105,8 +105,6 @@ public class JoystickUI : MonoBehaviour
 
         foreach (var result in results)
         {
-            Debug.Log(result.gameObject.layer);
-
             if (result.gameObject.layer == LayerMask.NameToLayer("UI"))
             {
                 return true;
