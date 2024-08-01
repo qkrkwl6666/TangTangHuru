@@ -69,11 +69,11 @@ public class JoystickUI : MonoBehaviour
         {
             case InputActionPhase.Performed:
                 {
-                    if (IsTouchOverUI(context.ReadValue<Vector2>()))
-                        return;
-
                     if (!isStarted)
                     {
+                        if (IsTouchOverUI(context.ReadValue<Vector2>()))
+                            return;
+
                         isStarted = true;
                         UpdateJoystick(true, context.ReadValue<Vector2>());
                     }

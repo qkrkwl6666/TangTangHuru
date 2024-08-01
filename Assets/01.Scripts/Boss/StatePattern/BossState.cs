@@ -2,12 +2,12 @@ public abstract class BossState
 {
     protected Boss boss;
     protected IBossSkill currentBossSkill;
-    protected MonsterView monsterView;
+    protected BossView bossView;
 
-    public BossState(Boss boss, MonsterView monsterView)
+    public BossState(Boss boss, BossView bossView)
     {
         this.boss = boss;
-        this.monsterView = monsterView;
+        this.bossView = bossView;
     }
 
     public abstract void Enter();

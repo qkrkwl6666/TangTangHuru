@@ -10,7 +10,7 @@ public class IdleState : IMonsterState
     }
     public void Enter()
     {
-        monsterView.PlayAnimation(Defines.idle, true);
+        //monsterView.PlayAnimation(Defines.idle, true);
     }
 
     public void Exit()

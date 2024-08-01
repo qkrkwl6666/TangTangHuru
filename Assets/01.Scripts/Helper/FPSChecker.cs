@@ -8,6 +8,12 @@ public class FPSChecker : MonoBehaviour
 
     float deltaTime = 0.0f;
 
+    float time = 0f;
+    float timetotal = 0f;
+    float fpsDuration = 60f;
+    float totalFps = 0f;
+    bool isFps = false;
+
     private void Start()
     {
         fFont_Size = fFont_Size == 0 ? 50 : fFont_Size;
@@ -16,6 +22,15 @@ public class FPSChecker : MonoBehaviour
     void Update()
     {
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+
+        time += Time.deltaTime;
+        timetotal += Time.deltaTime;
+
+        if (time >= fpsDuration && !isFps)
+        {
+            Debug.Log($"1분 평균 프레임 : {totalFps / 60}");
+            isFps = true;
+        }
     }
 
     void OnGUI()
@@ -32,5 +47,11 @@ public class FPSChecker : MonoBehaviour
         float fps = 1.0f / deltaTime;
         string text = string.Format("{0:0.0} ms ({1:0.} fps)", msec, fps);
         GUI.Label(rect, text, style);
+
+        if (timetotal >= 1f)
+        {
+            totalFps += fps;
+            timetotal = 0f;
+        }
     }
 }

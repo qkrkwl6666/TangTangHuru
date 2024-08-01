@@ -75,15 +75,12 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 {
                     var go = Instantiate(monsterPrefab);
 
-                    // MonsterView 생성
-                    var monsterView = go.AddComponent<MonsterView>();
-                    var animation = monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
-                    animation.Wait();
-                    monsterView.skeletonAnimation = animation.Result;
+                    var skeletonRenderer = go.GetComponentInChildren<SkeletonRenderer>();
 
-                    var skeletonRenderer = go.AddComponent<SkeletonRenderer>();
-                    skeletonRenderer.skeletonDataAsset = monsterSkeletonSharing.monsterSkeletonDataAsset[monsterData.Monster_Prefab.ToString()];
-                    skeletonRenderer.Initialize(false);
+                    monsterSkeletonSharing.AddSkeletonRenderers(monsterData.Monster_Prefab.ToString(), skeletonRenderer);
+
+                    var monsterView = go.AddComponent<MonsterView>();
+                    monsterView.skeletonRenderer = skeletonRenderer;
 
                     var monsterScript = go.GetComponent<Monster>();
                     monsterScript.SetPool(monsterPools[monsterData.Monster_ID]);
@@ -158,12 +155,12 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     }
 
-    async Task<SkeletonAnimation> GetMonsterWithAnimationAsync(MonsterData monsterData)
-    {
-        var animation = await monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
+    //async Task<SkeletonAnimation> GetMonsterWithAnimationAsync(MonsterData monsterData)
+    //{
+    //    var animation = await monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
         
-        return animation;
-    }
+    //    return animation;
+    //}
 
     // Todo : 몬스터 테이블 수정 
     public void MonsterSkillAddComponent(GameObject monster, MonsterSkillData skillData)

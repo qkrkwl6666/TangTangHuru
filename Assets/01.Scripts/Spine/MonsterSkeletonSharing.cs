@@ -1,20 +1,25 @@
+using Spine;
 using Spine.Unity;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
 public class MonsterSkeletonSharing : MonoBehaviour
 {
     private Dictionary<string, SkeletonAnimation> monsterSkeletonAnimation = new ();
-    public Dictionary<string, SkeletonDataAsset> monsterSkeletonDataAsset = new ();
     private Dictionary<string, TaskCompletionSource<SkeletonAnimation>> loadingTasks = new();
-    public List<SkeletonRenderer> skeletonRenderers = new List<SkeletonRenderer>();
 
-    private Spine.AnimationState sharedAnimationState;
+    private Dictionary<string , List<SkeletonRenderer>> skeletonRenderers = new ();
+    private Dictionary<string, Spine.AnimationState> sharedAnimationState = new ();
+
+    private int frameDuration = 5;
+    private int currentFrame = 0;
+    private float deltaTime = 0f;
 
     private void Awake()
     {
@@ -23,63 +28,62 @@ public class MonsterSkeletonSharing : MonoBehaviour
 
     private void Update()
     {
-        foreach (var skeletonAnimation in monsterSkeletonAnimation) 
+        currentFrame++;
+        deltaTime += Time.deltaTime;
+        
+        if (currentFrame >= frameDuration)
         {
-            skeletonAnimation.Value.Update(Time.deltaTime);
+            foreach(var animationState in sharedAnimationState)
+            {
+                animationState.Value.Update(deltaTime);
+            }
+        
+            foreach (var skeletonRendererList in skeletonRenderers)
+            {
+                string key = skeletonRendererList.Key;
+
+                foreach(var skeletonRenderer in skeletonRendererList.Value)
+                {
+                    sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
+                    skeletonRenderer.skeleton.UpdateWorldTransform();
+                }
+            }
+        
+            currentFrame = 0;
+            deltaTime = 0f;
         }
-
-        foreach(var skeletonRender in skeletonRenderers)
-        {
-            sharedAnimationState.Apply(skeletonRender.skeleton);
-
-            skeletonRender.skeleton.UpdateWorldTransform();
-        }
-
 
     }
 
-    public async Task<SkeletonAnimation> GetSkeletonAnimationAsync(string key)
+    // 스켈레톤 렌더러에 없으면 Spine.AnimationState 생성하고 애니메이션 세팅 하기
+    public void AddSkeletonRenderers(string key, SkeletonRenderer skeletonRenderer)
     {
-        // 이미 있으면 return
-        if (monsterSkeletonAnimation.TryGetValue(key, out SkeletonAnimation animation)) 
+        if (skeletonRenderers.ContainsKey(key))
         {
-            return animation;
+            skeletonRenderers[key].Add(skeletonRenderer);
+            return;
         }
 
-        // 현재 로딩 중인 작업 체크
-        if (loadingTasks.TryGetValue(key, out var existingTask))
-        {
-            return await existingTask.Task;
-        }
+        // 없으면 생성
+        //skeletonRenderers.ad
 
-        var tcs = new TaskCompletionSource<SkeletonAnimation>();
-        loadingTasks[key] = tcs;
+        skeletonRenderers[key] = new List<SkeletonRenderer>();
+        skeletonRenderers[key].Add(skeletonRenderer);
 
-        try
-        {
-            var skeletonDataAsset = await Addressables.LoadAssetAsync<SkeletonDataAsset>($"{key}{Defines.skeletonData}").Task;
-            var sharing = new GameObject($"Shared Skeleton - {key}").AddComponent<SkeletonAnimation>();
-            sharing.skeletonDataAsset = skeletonDataAsset;
-            monsterSkeletonDataAsset.Add(key, skeletonDataAsset);
-            sharing.Initialize(false);
+        sharedAnimationState.Add(key, new Spine.AnimationState(skeletonRenderer
+            .skeletonDataAsset.GetAnimationStateData()));
 
-            monsterSkeletonAnimation[key] = sharing;
-            tcs.SetResult(sharing);
-            loadingTasks.Remove(key);
+        sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
+        skeletonRenderer.skeleton.UpdateWorldTransform();
 
-            sharedAnimationState = new Spine.AnimationState(skeletonDataAsset.GetAnimationStateData());
+        // 애니메이션 설정
+        skeletonRenderer.skeleton.SetToSetupPose();
 
-            sharedAnimationState.SetAnimation(0, Defines.walk, true);
+        // 스켈레톤 데이터에서 애니메이션 가져오기
+        Spine.Animation animation = skeletonRenderer.skeleton.Data.
+            FindAnimation(Defines.walk);
 
-            return sharing;
-        }
-        catch(Exception ex)
-        {
-            tcs.SetException(ex);
-            loadingTasks.Remove(key);
-            throw;
-        }
+        sharedAnimationState[key].SetAnimation(0, animation, true);
     }
-
 
 }
