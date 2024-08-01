@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6324643987662284773}
-  - component: {fileID: 4622060989842559800}
   - component: {fileID: 4597992169737917719}
   - component: {fileID: 278204235815676503}
-  - component: {fileID: 1083988670648405032}
+  - component: {fileID: 4198067810291095553}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -35,19 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7719025847992780045}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4622060989842559800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 389662622043314279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 1083988670648405032}
 --- !u!33 &4597992169737917719
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1083988670648405032
+--- !u!114 &4198067810291095553
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,14 +93,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 389662622043314279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 4510d670023a8a240a61534a443a9683, type: 2}
   initialSkinName: 001
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -132,9 +118,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: attack
-  loop: 0
-  timeScale: 1
 --- !u!1 &3232474763179573515
 GameObject:
   m_ObjectHideFlags: 0

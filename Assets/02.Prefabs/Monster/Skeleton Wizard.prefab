@@ -133,10 +133,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3746601643493796701}
-  - component: {fileID: 2594259231793985942}
   - component: {fileID: 8768746381036460407}
   - component: {fileID: 5675191995521745482}
-  - component: {fileID: 5961522991990328978}
+  - component: {fileID: 1527448129495693898}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -159,19 +158,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6231886055042058532}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2594259231793985942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3650079460904660309}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 5961522991990328978}
 --- !u!33 &8768746381036460407
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -222,23 +208,23 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5961522991990328978
+--- !u!114 &1527448129495693898
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3650079460904660309}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 4b939be99a45279488e007d48da271e6, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -256,6 +242,3 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: walk
-  loop: 0
-  timeScale: 1

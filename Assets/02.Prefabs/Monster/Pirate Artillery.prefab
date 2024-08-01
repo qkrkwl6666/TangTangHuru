@@ -133,10 +133,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4662278550259887565}
-  - component: {fileID: 5863453082969420968}
   - component: {fileID: 760058713678841414}
   - component: {fileID: 3274018379051003311}
-  - component: {fileID: 8043823248157621156}
+  - component: {fileID: 4586691039287673964}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -159,19 +158,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 943534664799577347}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5863453082969420968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5775912644750363603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 8043823248157621156}
 --- !u!33 &760058713678841414
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -199,8 +185,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 0ce1661e087bf274cb2ccaa55646e4a7, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -222,7 +207,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8043823248157621156
+--- !u!114 &4586691039287673964
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -231,14 +216,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5775912644750363603}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 85b599e297c3bdb41b141cfadaa42191, type: 2}
   initialSkinName: 001
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -256,6 +241,3 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: walk
-  loop: 0
-  timeScale: 1
