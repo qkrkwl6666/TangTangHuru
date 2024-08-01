@@ -5,30 +5,26 @@ using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour
 {
-    private Image slotImage;
-    // Start is called before the first frame update
-    void Start()
-    {
-        slotImage = GetComponent<Image>();
-        var slot = slotImage.GetComponentInChildren<Draggable>();
-        if(slot == null)
-        {
-            Empty();
-        }
-    }
 
+    public Image slotIcon;
+    private Image slotFrame;
+
+    private void Start()
+    {
+        slotFrame = GetComponent<Image>();
+    }
 
     public void Highlighted()
     {
-        slotImage.color = Color.yellow;
+        slotIcon.color = Color.yellow;
     }
     public void Filled()
     {
-        slotImage.color = Color.white;
+        slotIcon.color = Color.white;
     }
     public void Empty()
     {
-        slotImage.color = Color.gray;
+        slotIcon.color = Color.gray;
     }
 
 

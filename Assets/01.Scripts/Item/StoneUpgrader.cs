@@ -22,33 +22,33 @@ public class StoneUpgrader : MonoBehaviour
 
     private void OnEnable()
     {
-        int stoneNum = GameManager.Instance.currSaveData.reinforce_Stone;
-        int orbPieceNum = GameManager.Instance.currSaveData.orb_Piece;
-        int orbNum = GameManager.Instance.currSaveData.orb_Normal;
+        //int stoneNum = GameManager.Instance.currSaveData.reinforce_Stone;
+        //int orbPieceNum = GameManager.Instance.currSaveData.orb_Piece;
+        //int orbNum = GameManager.Instance.currSaveData.orb_Normal;
 
-        int draggableNum = stoneNum + orbPieceNum + orbNum;
+        //int draggableNum = stoneNum + orbPieceNum + orbNum;
 
-        for (int i = 0; i < draggableNum; i++)
-        {
-            slots.Add(Instantiate(slotPrefab));
-            slots[i].transform.SetParent(content.transform);
+        //for (int i = 0; i < draggableNum; i++)
+        //{
+        //    slots.Add(Instantiate(slotPrefab));
+        //    slots[i].transform.SetParent(content.transform);
 
-            if(i < stoneNum)
-            {
-                item = Instantiate(stonePrefab);
-            }
-            else if(i >= stoneNum && i < stoneNum + orbNum)
-            {
-                item = Instantiate(orbPiecePrefab);
-            }
-            else
-            {
-                item = Instantiate(orbPrefab);
-            }
-            item.transform.SetParent(slots[i].transform);
-            item.transform.position = slots[i].transform.position;
-            itemList.Add(item);
-        }
+        //    if(i < stoneNum)
+        //    {
+        //        item = Instantiate(stonePrefab);
+        //    }
+        //    else if(i >= stoneNum && i < stoneNum + orbNum)
+        //    {
+        //        item = Instantiate(orbPiecePrefab);
+        //    }
+        //    else
+        //    {
+        //        item = Instantiate(orbPrefab);
+        //    }
+        //    item.transform.SetParent(slots[i].transform);
+        //    item.transform.position = slots[i].transform.position;
+        //    itemList.Add(item);
+        //}
 
     }
 

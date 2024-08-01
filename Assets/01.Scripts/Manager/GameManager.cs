@@ -10,9 +10,9 @@ public class SaveData
 
     public int equip_GemStone;
     public int reinforce_Stone = 3;
-    public int orb_Piece = 1;
     public int orb_Normal = 2;
-    public int Orb_Rare = 3;
+    public int orb_Rare = 3;
+    public int orb_Epic = 3;
 }
 
 
