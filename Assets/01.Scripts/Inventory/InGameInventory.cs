@@ -54,6 +54,19 @@ public class InGameInventory : MonoBehaviour
     public void GameClear()
     {
         gameUI.SetGameClearUI(Coin, Kill);
+
+        foreach(var item in items)
+        {
+            switch (item.ItemType)
+            {
+                case ItemType.ReinforcedStone:
+                    GameManager.Instance.currSaveData.reinforce_Stone++;
+                    break;
+                case ItemType.EquipmentGemstone:
+                    GameManager.Instance.currSaveData.equip_GemStone++;
+                    break;
+            }
+        }
     }
 
     public void AddItem(IInGameItem inGameItem)

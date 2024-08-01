@@ -6,15 +6,15 @@ public class PassiveManager : MonoBehaviour
     public List<WeaponCreator> weaponCreators;
 
     public List<PassiveData> passiveDataList;
+    public List<PassiveData> inGamePassiveList = new(); //데이터 리스트 카피
     public List<PassiveData> currPassiveList = new();
 
-    public PassiveData passiveData;
+    public PassiveData emptyPassiveData;
 
-    public WeaponCreator currMainWeapon;
-
-    PassiveData totalPowerPassive;
-    PassiveData totalSpeedPassive;
-    PassiveData totalNoneTypePassive;
+    private WeaponCreator currMainWeapon;
+    private PassiveData totalPowerPassive;
+    private PassiveData totalSpeedPassive;
+    private PassiveData totalNoneTypePassive;
 
 
     void Start()
@@ -24,9 +24,14 @@ public class PassiveManager : MonoBehaviour
         {
             Debug.LogError("No Main Weapon!");
         }
-        totalPowerPassive = Instantiate(passiveData);
-        totalSpeedPassive = Instantiate(passiveData);
-        totalNoneTypePassive = Instantiate(passiveData);
+
+        for(int i = 0; i < passiveDataList.Count; i++)
+        {
+            inGamePassiveList.Add(Instantiate(passiveDataList[i]));
+        }
+        totalPowerPassive = Instantiate(emptyPassiveData);
+        totalSpeedPassive = Instantiate(emptyPassiveData);
+        totalNoneTypePassive = Instantiate(emptyPassiveData);
         weaponCreators.Add(currMainWeapon);
     }
     public void PassiveAdd(PassiveData selected)
@@ -35,7 +40,7 @@ public class PassiveManager : MonoBehaviour
         seletedPassive.Level = 1;
         currPassiveList.Add(seletedPassive);
 
-        passiveDataList.Remove(selected);
+        inGamePassiveList.Remove(selected);
         SetTotalPassive();
         PassiveEquip();
         return;
