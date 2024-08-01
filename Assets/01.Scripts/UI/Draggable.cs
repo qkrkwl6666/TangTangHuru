@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Transform originalParent;
+    private ItemSlotUI currSlot;
+
+    private bool itemSelected;
 
     private void Awake()
     {
@@ -15,11 +18,31 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        originalParent = transform.parent;
+        var selectedSlot = originalParent.GetComponent<ItemSlotUI>();
+        if (selectedSlot == null)
+            return;
+
+        if (itemSelected)
+        {
+            selectedSlot.Filled();
+            itemSelected = false;
+        }
+        else
+        {
+            selectedSlot.Highlighted();
+            itemSelected = true;
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
         transform.SetParent(transform.root);
         canvasGroup.blocksRaycasts = false;
+        currSlot = originalParent.GetComponent<ItemSlotUI>();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -37,9 +60,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         else
         {
-            var currSlot = eventData.pointerEnter.GetComponent<ItemSlotUI>();
+            itemSelected = false;
+            currSlot.Empty();
+
+            currSlot = eventData.pointerEnter.GetComponent<ItemSlotUI>();
             transform.SetParent(currSlot.transform);
             transform.position = currSlot.transform.position;
+            currSlot.Filled();
         }
     }
 
@@ -56,4 +83,5 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             return null;
         }
     }
+
 }
