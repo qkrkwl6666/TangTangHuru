@@ -10,7 +10,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Transform originalParent;
     private ItemSlotUI currSlot;
 
-    private bool itemSelected;
+    public bool itemSelected;
+
 
     private void Awake()
     {

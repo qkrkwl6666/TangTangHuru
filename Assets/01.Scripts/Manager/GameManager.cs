@@ -8,10 +8,11 @@ public class SaveData
     public float player_Exp;
     public int stage_Record;
 
-    public int reinforce_Stone;
-    public int orb_Piece;
-    public int orb_Normal;
-    public int Orb_Rare;
+    public int equip_GemStone;
+    public int reinforce_Stone = 3;
+    public int orb_Piece = 1;
+    public int orb_Normal = 2;
+    public int Orb_Rare = 3;
 }
 
 

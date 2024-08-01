@@ -3,47 +3,58 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class StoneUpgrader : MonoBehaviour, IDropHandler
+public class StoneUpgrader : MonoBehaviour
 {
-    public GameObject currentItem;
+    public Button craftButton;
+    public Draggable stonePrefab;
+    public Draggable orbPiecePrefab;
+    public Draggable orbPrefab;
+    public ItemSlotUI slotPrefab;
     public ItemSlotUI upgradeSlot;
-    public Button upgradeButton;
 
-    public ItemSlotUI[] slots;
+    public GameObject content;
+    public List<ItemSlotUI> slots = new();
 
-    private void Start()
+    private GameObject currentItem;
+    private Draggable item;
+    private List<Draggable> itemList;
+
+
+    private void OnEnable()
     {
-        slots = GetComponentsInChildren<ItemSlotUI>();
-    }
+        int stoneNum = GameManager.Instance.currSaveData.reinforce_Stone;
+        int orbPieceNum = GameManager.Instance.currSaveData.orb_Piece;
+        int orbNum = GameManager.Instance.currSaveData.orb_Normal;
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (eventData.pointerEnter == upgradeSlot)
+        int draggableNum = stoneNum + orbPieceNum + orbNum;
+
+        for (int i = 0; i < draggableNum; i++)
         {
-            Draggable draggableItem = eventData.pointerDrag.GetComponent<Draggable>();
-            if (draggableItem != null)
+            slots.Add(Instantiate(slotPrefab));
+            slots[i].transform.SetParent(content.transform);
+
+            if(i < stoneNum)
             {
-                // 현재 슬롯이 비어있는지 확인
-                if (currentItem == null)
-                {
-                    currentItem = draggableItem.gameObject;
-                    draggableItem.transform.SetParent(transform);
-                    draggableItem.transform.position = transform.position;
-                }
-                else
-                {
-
-                }
+                item = Instantiate(stonePrefab);
             }
+            else if(i >= stoneNum && i < stoneNum + orbNum)
+            {
+                item = Instantiate(orbPiecePrefab);
+            }
+            else
+            {
+                item = Instantiate(orbPrefab);
+            }
+            item.transform.SetParent(slots[i].transform);
+            item.transform.position = slots[i].transform.position;
+            itemList.Add(item);
         }
+
     }
 
-        public void OnDrop(PointerEventData eventData)
-    {
-        if (eventData.pointerDrag == upgradeSlot)
-        {
-            
-        }
-    }
+
+
+
+
 
 }
