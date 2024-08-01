@@ -59,10 +59,10 @@ public class InGameInventory : MonoBehaviour
         {
             switch (item.ItemType)
             {
-                case ItemType.ReinforcedStone:
+                case IItemType.ReinforcedStone:
                     GameManager.Instance.currSaveData.reinforce_Stone++;
                     break;
-                case ItemType.EquipmentGemstone:
+                case IItemType.EquipmentGemstone:
                     GameManager.Instance.currSaveData.equip_GemStone++;
                     break;
             }
