@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Reflection;
 
 namespace GAP_ParticleSystemController
 {
 
-	public static class SaveParticleSystemScript{		
+    public static class SaveParticleSystemScript{		
 
 		public static void SaveVFX (GameObject prefabVFX, List<ParticleSystemOriginalSettings> psOriginalSettingsList) {
 #if UNITY_2018_3_OR_NEWER
