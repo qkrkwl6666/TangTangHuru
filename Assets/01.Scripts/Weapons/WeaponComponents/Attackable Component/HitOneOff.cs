@@ -21,7 +21,7 @@ public class HitOneOff : MonoBehaviour, IAttackable
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (!contactedEnemies.Contains(other))
+        if (other.gameObject.activeSelf && !contactedEnemies.Contains(other))
         {
             OnAttack(other);
             contactedEnemies.Add(other);

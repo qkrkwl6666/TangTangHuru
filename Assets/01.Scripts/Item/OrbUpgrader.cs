@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,8 +47,8 @@ public class OrbUpgrader : MonoBehaviour
         if (!CheckUpgradable())
             return;
 
-        GameManager.Instance.currSaveData.orb_Normal -= 3;
-        GameManager.Instance.currSaveData.orb_Rare++;
+        GameManager.Instance.currSaveData.orb_Atk_Rare -= 3;
+        GameManager.Instance.currSaveData.orb_Atk_Epic++;
         popUp_OrbList.ResetOn();
 
         for (int i = 0; i < upgradeSlots.Length; i++)

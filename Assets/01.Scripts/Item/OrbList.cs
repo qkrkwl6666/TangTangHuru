@@ -21,39 +21,44 @@ public class OrbList : MonoBehaviour
     private bool reset = true;
     private int lastIndex;
 
+    private OrbData orbData;
+
     private void OnEnable()
     {
         if (!reset)
             return;
 
-        for(int i = 0; i < orbList.Count; i++)
+        for (int i = 0; i < orbList.Count; i++)
         {
             orbList[i].UnSelected();
             orbList[i].gameObject.SetActive(false);
         }
 
-        int orbNum = GameManager.Instance.currSaveData.orb_Normal;
-        int orbRareNum = GameManager.Instance.currSaveData.orb_Rare;
-        int orbEpicNum = GameManager.Instance.currSaveData.orb_Epic;
+        int orbRareNum = GameManager.Instance.currSaveData.orb_Atk_Rare;
+        int orbEpicNum = GameManager.Instance.currSaveData.orb_Atk_Epic;
+        int orbLegendNum = GameManager.Instance.currSaveData.orb_Atk_Legend;
 
-        activeNum = orbNum + orbRareNum + orbEpicNum;
+        activeNum = orbRareNum + orbEpicNum + orbLegendNum;
 
         for (int i = 0; i < activeNum; i++)
         {
-            if (i < orbNum)
+            if (i < orbRareNum)
             {
+                orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData("610001");
                 orbList[i].iconImage.sprite = Icon_Orb.sprite;
                 orbList[i].orbId = 1;
                 orbList[i].descripton.text = "노멀 오브 / 보통 능력치";
             }
-            else if (i >= orbNum && i < orbRareNum + orbNum)
+            else if (i >= orbRareNum && i < orbRareNum + orbEpicNum)
             {
+                orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData("610001");
                 orbList[i].iconImage.sprite = Icon_OrbRare.sprite;
                 orbList[i].orbId = 2;
                 orbList[i].descripton.text = "레어 오브 / 좋은 능력치";
             }
             else
             {
+                orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData("610001");
                 orbList[i].iconImage.sprite = Icon_OrbEpic.sprite;
                 orbList[i].orbId = 3;
                 orbList[i].descripton.text = "에픽 오브 / 엄청 좋은 능력치";
