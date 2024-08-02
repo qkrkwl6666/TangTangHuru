@@ -15,7 +15,10 @@ public class MainInventory : MonoBehaviour
         //var ab = allItem[ItemType.Bow][TierType.Rare][0];
     }
 
-    //public void 
+    public void MainInventoryAddItem(string itemId)
+    {
+
+    }
 
 
 }
