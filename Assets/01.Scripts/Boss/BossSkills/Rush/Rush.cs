@@ -20,12 +20,12 @@ public class Rush : MonoBehaviour, IBossSkill
     private Boss boss;
     private bool isRush = false;
 
-    private MonsterView monsterView;
+    private BossView bossView;
 
     private void Awake()
     {
         boss = GetComponent<Boss>();
-        monsterView = GetComponentInChildren<MonsterView>();
+        bossView = GetComponentInChildren<BossView>();
     }
 
     public void Activate()
@@ -62,7 +62,7 @@ public class Rush : MonoBehaviour, IBossSkill
         isRush = true;
         PlayerDir = (boss.PlayerTransform.position - transform.position).normalized;
         dashRate /= 2;
-        monsterView.PlayAnimation(Defines.walk);
+        bossView.PlayAnimation(Defines.walk);
     }
 
     public void SkillUpdate(float deltaTime)
@@ -72,9 +72,9 @@ public class Rush : MonoBehaviour, IBossSkill
         if (!isRush)
         {
             float r = Mathf.InverseLerp(0f, SkillRate, time);
-            monsterView.skeletonAnimation.skeleton.R = r;
-            monsterView.skeletonAnimation.skeleton.G = 0.2f;
-            monsterView.skeletonAnimation.skeleton.B = 0.2f;
+            bossView.skeletonAnimation.skeleton.R = r;
+            bossView.skeletonAnimation.skeleton.G = 0.2f;
+            bossView.skeletonAnimation.skeleton.B = 0.2f;
         }
 
         if (time >= dashRate && !isRush)
@@ -103,7 +103,7 @@ public class Rush : MonoBehaviour, IBossSkill
         }
 
         // Todo : 애니메이션이 작동중이면 멈춰야함
-        monsterView.PlayAnimation(Defines.idle, true);
+        bossView.PlayAnimation(Defines.idle, true);
         if (currentSkillCount >= SkillCount)
         {
             IsChange = true;
@@ -118,9 +118,9 @@ public class Rush : MonoBehaviour, IBossSkill
 
     public void AwakeColor()
     {
-        monsterView.skeletonAnimation.skeleton.R = 1f;
-        monsterView.skeletonAnimation.skeleton.G = 1f;
-        monsterView.skeletonAnimation.skeleton.B = 1f;
+        bossView.skeletonAnimation.skeleton.R = 1f;
+        bossView.skeletonAnimation.skeleton.G = 1f;
+        bossView.skeletonAnimation.skeleton.B = 1f;
     }
 
 }

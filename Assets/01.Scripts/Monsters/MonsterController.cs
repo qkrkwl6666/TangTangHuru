@@ -1,3 +1,4 @@
+using Spine.Unity;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
@@ -29,10 +30,14 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         playerSubject.AddObserver(this);
 
         MonsterView = GetComponentInChildren<MonsterView>();
+        Monster = GetComponent<Monster>();
 
         MonsterStateMachine = new MonsterStateMachine(this, MoveType);
+    }
 
-        Monster = GetComponent<Monster>();
+    public void Initialize()
+    {
+
     }
 
     private void Start()
@@ -42,12 +47,9 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
 
-        MonsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
 
         MonsterStateMachine.Update(Time.deltaTime);
-
         if (slowed)
         {
             slowTimer += Time.deltaTime;
@@ -62,7 +64,9 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void FixedUpdate()
     {
+        Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
 
+        MonsterView.skeletonRenderer.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
     }
 
     private void OnEnable()

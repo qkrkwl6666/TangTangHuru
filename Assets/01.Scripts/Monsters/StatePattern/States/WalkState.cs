@@ -14,6 +14,9 @@ public class WalkState : IMonsterState
 
     private MonsterMoveType monsterMoveType;
 
+    private float attackInterval = 1f;
+    private float time = 0f;
+
     public WalkState(MonsterController monsterController, MonsterMoveType monsterMoveType)
     {
         this.monsterMoveType = monsterMoveType;
@@ -21,11 +24,13 @@ public class WalkState : IMonsterState
 
         monsterView = monsterController.MonsterView;
         playerTransform = monsterController.PlayerTransform;
+
+        attackInterval = monsterController.Monster.AttackInterval;
     }
 
     public void Enter()
     {
-        monsterView.PlayAnimation(Defines.walk, true);
+        //monsterView.PlayAnimation(Defines.walk, true);
     }
 
     public void Exit()
@@ -36,15 +41,18 @@ public class WalkState : IMonsterState
     public void Update(float deltaTime)
     {
         float dis = Vector2.Distance(playerTransform.position, monsterView.transform.position);
-
-        if (dis <= monsterController.Monster.Range)
+        
+        time += deltaTime;
+        
+        if (dis <= monsterController.Monster.Range && time >= attackInterval)
         {
-            monsterController.MonsterStateMachine.TransitionTo
-                (monsterController.MonsterStateMachine.attackState);
-
-            return;
+            // monsterController.MonsterStateMachine.TransitionTo
+            //     (monsterController.MonsterStateMachine.attackState);
+        
+            monsterController.PlayerTransform.GetComponent<IDamagable>().OnDamage(monsterController.Monster.Damage, 0);
+            time = 0f;
         }
-
+        
         switch (monsterMoveType)
         {
             case MonsterMoveType.Chase:

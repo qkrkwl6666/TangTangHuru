@@ -7,7 +7,7 @@ public class BossWalkState : BossState
     private float time = 0f;
     private Transform playerTransform;
 
-    public BossWalkState(Boss boss, MonsterView monsterView) : base(boss, monsterView)
+    public BossWalkState(Boss boss, BossView bossView) : base(boss, bossView)
     {
         coolDown = boss.Cooldown;
         playerTransform = boss.PlayerTransform;
@@ -17,11 +17,11 @@ public class BossWalkState : BossState
     {
         if (boss.Speed <= 0)
         {
-            monsterView.PlayAnimation(Defines.idle, true);
+            bossView.PlayAnimation(Defines.idle, true);
         }
         else
         {
-            monsterView.PlayAnimation(Defines.walk, true);
+            bossView.PlayAnimation(Defines.walk, true);
         }
     }
 

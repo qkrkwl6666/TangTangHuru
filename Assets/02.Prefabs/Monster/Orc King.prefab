@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9116988230477410688}
-  - component: {fileID: 5997175546124205476}
   - component: {fileID: 5498732904777915785}
   - component: {fileID: 200942094244718437}
-  - component: {fileID: 1511779614765898447}
+  - component: {fileID: 5311073373765662036}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -35,19 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7058955797459216627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5997175546124205476
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1811895518632142838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 1511779614765898447}
 --- !u!33 &5498732904777915785
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -75,8 +61,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 791530185660e1c44bd24f173bd7c86d, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +83,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1511779614765898447
+--- !u!114 &5311073373765662036
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,14 +92,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1811895518632142838}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 0203f4ce44836754fbf203c011f61e49, type: 2}
   initialSkinName: 001
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -132,9 +117,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: walk
-  loop: 0
-  timeScale: 1
 --- !u!1 &3495183457257036553
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +127,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7058955797459216627}
   - component: {fileID: 7138758330275021144}
-  - component: {fileID: 4599414691441912434}
   - component: {fileID: 7408979009900059428}
   - component: {fileID: 3249871039756675990}
   - component: {fileID: 1398225997525742673}
@@ -186,18 +167,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
---- !u!114 &4599414691441912434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3495183457257036553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d07422c6daa019d4f9664d445dc9abc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7408979009900059428
 MonoBehaviour:
   m_ObjectHideFlags: 0

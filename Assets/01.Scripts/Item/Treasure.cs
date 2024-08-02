@@ -8,7 +8,7 @@ public class Treasure : MonoBehaviour, IInGameItem
 
     public int ItemId { get; set; }
     public string Name { get; set; }
-    public ItemType ItemType { get; set; }
+    public IItemType ItemType { get; set; }
     public string TextureId { get; set; }
 
     public void AddItem(GameObject item)

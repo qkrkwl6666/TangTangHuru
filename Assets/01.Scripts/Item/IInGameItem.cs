@@ -1,4 +1,4 @@
-public enum ItemType
+public enum IItemType
 {
     Magnet = 0,
     Experience,
@@ -11,7 +11,7 @@ public interface IInGameItem
 {
     public int ItemId { get; set; }
     public string Name { get; set; }
-    public ItemType ItemType { get; set; }
+    public IItemType ItemType { get; set; }
     public string TextureId { get; set; }
     public void UseItem();
     public void GetItem();

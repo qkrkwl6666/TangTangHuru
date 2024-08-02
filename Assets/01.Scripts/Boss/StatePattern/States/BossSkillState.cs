@@ -1,6 +1,6 @@
 public class BossSkillState : BossState
 {
-    public BossSkillState(Boss boss, MonsterView monsterView) : base(boss, monsterView)
+    public BossSkillState(Boss boss, BossView bossView) : base(boss, bossView)
     {
 
     }
@@ -9,7 +9,7 @@ public class BossSkillState : BossState
     {
         currentBossSkill = boss.SelectSkill();
 
-        monsterView.PlayAnimation(Defines.idle, true);
+        bossView.PlayAnimation(Defines.idle, true);
     }
 
     public override void Exit()

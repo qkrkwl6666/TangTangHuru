@@ -30,13 +30,13 @@ public class Boss : LivingEntity, IPlayerObserver
     public BossDeadState deadState;
 
     // View
-    private MonsterView monsterView;
+    private BossView bossView;
 
     public InGameUI GameUI { get; private set; }
 
     private void Awake()
     {
-        monsterView = GetComponentInChildren<MonsterView>();
+        bossView = GetComponentInChildren<BossView>();
         GameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
     }
 
@@ -52,9 +52,9 @@ public class Boss : LivingEntity, IPlayerObserver
         Speed = bossData.Boss_MoveSpeed;
         Gold = bossData.Gold;
 
-        walkState = new BossWalkState(this, monsterView);
-        skillState = new BossSkillState(this, monsterView);
-        deadState = new BossDeadState(this, monsterView);
+        walkState = new BossWalkState(this, bossView);
+        skillState = new BossSkillState(this, bossView);
+        deadState = new BossDeadState(this, bossView);
 
         SetBossSkill(bossData);
 
@@ -164,7 +164,7 @@ public class Boss : LivingEntity, IPlayerObserver
     {
         Vector2 dir = (PlayerTransform.position - gameObject.transform.position).normalized;
 
-        monsterView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
+        bossView.skeletonAnimation.skeleton.ScaleX = dir.x < 0 ? -1f : 1f;
     }
 
     public IBossSkill SelectSkill()

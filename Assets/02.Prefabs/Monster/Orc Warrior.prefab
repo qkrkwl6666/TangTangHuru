@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7882638789126833239}
   - component: {fileID: 4514218795965268307}
-  - component: {fileID: 1213963553630064475}
   - component: {fileID: 252846335034916636}
   - component: {fileID: 4100057015912008370}
   - component: {fileID: 1839756353304938389}
@@ -51,18 +50,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
---- !u!114 &1213963553630064475
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3598151273094888158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d07422c6daa019d4f9664d445dc9abc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &252846335034916636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,10 +133,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8524120499789176285}
-  - component: {fileID: 1483880544503960492}
   - component: {fileID: 6932570864598706262}
   - component: {fileID: 4500850306510882576}
-  - component: {fileID: 1276518162929984185}
+  - component: {fileID: 3285433824305597470}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -172,19 +158,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 7882638789126833239}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1483880544503960492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7120008436890096130}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 1276518162929984185}
 --- !u!33 &6932570864598706262
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -235,7 +208,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1276518162929984185
+--- !u!114 &3285433824305597470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -244,14 +217,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7120008436890096130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: f1462c3640a4e814f975582660defb3b, type: 2}
   initialSkinName: 001
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -269,6 +242,3 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: walk
-  loop: 0
-  timeScale: 1

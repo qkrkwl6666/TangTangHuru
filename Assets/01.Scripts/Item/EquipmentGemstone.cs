@@ -4,7 +4,7 @@ public class EquipmentGemstone : MonoBehaviour, IInGameItem
 {
     public int ItemId { get; set; }
     public string Name { get; set; } = string.Empty;
-    public ItemType ItemType { get; set; } = ItemType.EquipmentGemstone;
+    public IItemType ItemType { get; set; } = IItemType.EquipmentGemstone;
     public string TextureId { get; set; }
 
     private InGameInventory inventory;

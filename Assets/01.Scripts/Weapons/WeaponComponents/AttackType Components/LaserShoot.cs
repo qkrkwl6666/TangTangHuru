@@ -33,15 +33,9 @@ public class LaserShoot : MonoBehaviour, IProjectile
         SetDestination();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        if (redirectionTimer >= 0.07f)
-        {
-            redirectionTimer = 0f;
-        }
         SetDestination();
-
         laser.SetPosition(0, currAimer.Player.transform.position);
         laser.SetPosition(1, endPoint);
         attackCollider.gameObject.transform.position = endPoint;
@@ -59,7 +53,7 @@ public class LaserShoot : MonoBehaviour, IProjectile
 
     void SetDestination()
     {
-        laserHit = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), 10f, attackableMask);
+        laserHit = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, attackableMask);
 
         if (laserHit.collider != null)
         {

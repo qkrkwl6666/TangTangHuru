@@ -32,7 +32,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     // 조이스틱 UI
     public GameObject joystickUI;
-    public GameObject circleUI;
 
     // 게임 클리어 UI
     public TextMeshProUGUI goldText;
@@ -57,7 +56,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         coinUI.gameObject.SetActive(false);
         stageTimer.gameObject.SetActive(false);
         joystickUI.gameObject.SetActive(false);
-        circleUI.gameObject.SetActive(false);
 
         clearUI.gameObject.SetActive(true);
     }

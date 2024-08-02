@@ -18,6 +18,8 @@ public class Monster : LivingEntity, IPlayerObserver
     public float TotalCooldown { get; private set; }
     public float Range { get; private set; }
 
+    public float AttackInterval { get; private set; } = 1f; // 공격 주기
+
     public PlayerSubject playerSubject;
     private Transform playerTransform;
 
@@ -42,10 +44,7 @@ public class Monster : LivingEntity, IPlayerObserver
         Gold = monsterData.Monster_Gold;
         TotalCooldown = monsterData.Cooldown;
         Range = monsterData.Range;
-
-        //Debug.Log("몬스터 경험치 할당 : " + Exp);
-
-        GetComponent<MonsterController>().MoveSpeed = monsterData.Monster_MoveSpeed;
+        AttackInterval = monsterData.AttackInterval;
 
         playerSubject.AddObserver(this);
 

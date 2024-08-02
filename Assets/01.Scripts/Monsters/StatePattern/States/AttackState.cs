@@ -21,7 +21,7 @@ public class AttackState : IMonsterState
             prevTrackEntry.Complete -= OnAttackEndToWalk;
         }
 
-        monsterView.PlayAnimation(Defines.attack, false).Complete += OnAttackEndToWalk;
+        //monsterView.PlayAnimation(Defines.attack, false).Complete += OnAttackEndToWalk;
 
     }
 

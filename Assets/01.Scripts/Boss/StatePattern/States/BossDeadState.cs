@@ -3,13 +3,13 @@ public class BossDeadState : BossState
     private float destoryDuration = 3f;
     private float time = 0f;
 
-    public BossDeadState(Boss boss, MonsterView monsterView) : base(boss, monsterView)
+    public BossDeadState(Boss boss, BossView bossView) : base(boss, bossView)
     {
     }
 
     public override void Enter()
     {
-        monsterView.PlayAnimation(Defines.dead).Complete += (x) =>
+        bossView.PlayAnimation(Defines.dead).Complete += (x) =>
         {
             boss.GameUI.ActiveGameClearUI();
         };

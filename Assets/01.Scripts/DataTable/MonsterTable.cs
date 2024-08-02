@@ -18,6 +18,7 @@ public class MonsterData
     public int Monster_Skill_Id { get; set; }
     public float Cooldown { get; set; }
     public float Range { get; set; }
+    public float AttackInterval { get; set; }
 }
 
 public class MonsterTable : DataTable

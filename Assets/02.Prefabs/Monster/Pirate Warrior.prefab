@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 609003388750975362}
-  - component: {fileID: 6356819409709177911}
   - component: {fileID: 6128220419589543394}
   - component: {fileID: 6454499154726270057}
-  - component: {fileID: 2523417296828607022}
+  - component: {fileID: 5824129013994548639}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -35,19 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1860222036811262639}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6356819409709177911
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5083565121872003817}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 814ef6f39ddaf2f4ab72207cb59af1b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 2523417296828607022}
 --- !u!33 &6128220419589543394
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -98,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2523417296828607022
+--- !u!114 &5824129013994548639
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,14 +93,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 5083565121872003817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 962b4ac1551b87943937a226cb6e5678, type: 2}
   initialSkinName: 001
   initialFlipX: 0
   initialFlipY: 0
-  updateWhenInvisible: 0
+  updateWhenInvisible: 3
   separatorSlotNames: []
   zSpacing: 0
   useClipping: 1
@@ -132,9 +118,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: walk
-  loop: 0
-  timeScale: 1
 --- !u!1 &5929513288582837129
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,7 +128,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1860222036811262639}
   - component: {fileID: 3985410447614018740}
-  - component: {fileID: 2437877871142726598}
   - component: {fileID: 3211744330661480177}
   - component: {fileID: 5442528283398671694}
   - component: {fileID: 7822935839138689439}
@@ -186,18 +168,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
---- !u!114 &2437877871142726598
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929513288582837129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d07422c6daa019d4f9664d445dc9abc0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3211744330661480177
 MonoBehaviour:
   m_ObjectHideFlags: 0
