@@ -18,6 +18,14 @@ public class MainUI : MonoBehaviour
 
     public TextMeshProUGUI mainStageText;
 
+    public void MainStageUIButton()
+    {
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive(UIObject.Stage == (UIObject)i);
+        }
+    }
+
     public void StageSelectSetActiveTrue()
     {
         uiGameObjects[(int)UIObject.Stage].SetActive(false);
@@ -50,6 +58,17 @@ public class MainUI : MonoBehaviour
             (DataTableManager.stage).GetData(GameManager.Instance.CurrentStage + 1).Title;
 
         uiGameObjects[(int)UIObject.Stage].SetActive(true);
+    }
+
+    #endregion
+
+    #region 인벤토리 UI
+    public void InventoryUIButton()
+    {
+        for(int i = 0; i < uiGameObjects.Count; i ++)
+        {
+            uiGameObjects[i].SetActive(UIObject.Inventory == (UIObject)i);
+        }
     }
 
     #endregion

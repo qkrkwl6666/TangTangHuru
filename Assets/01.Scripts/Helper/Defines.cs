@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class Defines
 {
@@ -19,6 +20,15 @@ public static class Defines
     public static readonly string skeletonData = "SkeletonData";
     public static readonly string stageImage = "StageImage";
     public static readonly string emptyRect = "EmptyRect";
+
+    // 아웃라이너 컬러
+    public static readonly Color blueColor = new Color(2, 19, 52);
+    public static readonly Color greenColor = new Color(20, 46, 34);
+    public static readonly Color orangeColor = new Color(45, 30, 18);
+    public static readonly Color purpleColor = new Color(33, 13, 52);
+    public static readonly Color redColor = new Color(39, 10, 8);
+    public static readonly Color whiteColor = new Color(255, 255, 255);
+    public static readonly Color yellowColor = new Color(40, 36, 29);
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";

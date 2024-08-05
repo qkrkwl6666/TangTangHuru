@@ -46,7 +46,7 @@ public class StageSelectionUI : MonoBehaviour
         EnhancedTouchSupport.Enable();
 
         scrollCoroutine = StartCoroutine(ScrollCheck());
-        Debug.Log(GameManager.Instance.CurrentStage);
+        //Debug.Log(GameManager.Instance.CurrentStage);
         if (isFirstEnable == false)
         {
             InitStageUI();
