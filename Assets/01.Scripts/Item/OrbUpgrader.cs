@@ -31,7 +31,7 @@ public class OrbUpgrader : MonoBehaviour
     {
         if(currSlot.isSelected)
         {
-            UndoSelect();
+            UndoSelect(currSlot);
         }
         else
         {
@@ -54,9 +54,9 @@ public class OrbUpgrader : MonoBehaviour
         popUp_OrbPanel.currSlot.SetOrbInfo(popUp_OrbPanel.orbList[index]);
         popUp_OrbPanel.gameObject.SetActive(false);
     }
-    public void UndoSelect()
+    public void UndoSelect(ItemSlotUI slot)
     {
-        popUp_OrbPanel.currSlot.ClearInfo();
+        slot.ClearInfo();
     }
 
     private void Upgrade()
