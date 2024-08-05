@@ -10,15 +10,14 @@ using UnityEngine.AddressableAssets;
 public class OrbData
 {
     public int Orb_ID { get; set; }
-    public string Orb_Name { get; set; }
+    public string Orb_Type { get; set; }
+    public string Orb_Desc { get; set; }
     public string Orb_Texture { get; set; }
     public int Orb_Level { get; set; }
-    public int Orb_Type { get; set; }
     public int Orb_Atk { get; set; }
     public int Orb_Hp { get; set; }
     public int Orb_Def { get; set; }
     public int Orb_Dodge { get; set; }
-
 }
 
 

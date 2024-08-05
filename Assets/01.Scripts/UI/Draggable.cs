@@ -28,12 +28,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         if (itemSelected)
         {
-            selectedSlot.Filled();
             itemSelected = false;
         }
         else
         {
-            selectedSlot.Highlighted();
             itemSelected = true;
         }
     }
@@ -62,12 +60,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         else
         {
             itemSelected = false;
-            currSlot.Empty();
 
             currSlot = eventData.pointerEnter.GetComponent<ItemSlotUI>();
             transform.SetParent(currSlot.transform);
             transform.position = currSlot.transform.position;
-            currSlot.Filled();
         }
     }
 

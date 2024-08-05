@@ -1,11 +1,10 @@
-
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-
-public class OrbList : MonoBehaviour
+public class OrbPanel : MonoBehaviour
 {
+    public OrbUpgrader upgrader;
     public GameObject content;
     public List<OrbDesc> orbList;
 
@@ -14,11 +13,6 @@ public class OrbList : MonoBehaviour
     private int activeNum = 0;
 
     private bool reset = true;
-    private string iconImageID;
-
-    private OrbTable orbTable;
-
-    private List<Image> orbIconList = new();
 
     private void OnEnable()
     {
@@ -56,27 +50,10 @@ public class OrbList : MonoBehaviour
             orbList[i].gameObject.SetActive(true);
 
             int currIndex = i;
-            orbList[i].GetComponentInChildren<Button>().onClick.AddListener(() => SelectOrb(currIndex));
+            orbList[i].GetComponentInChildren<Button>().onClick.AddListener(() => upgrader.SelectOrbInPanel(currIndex));
         }
 
         reset = false;
-    }
-
-    public void UndoSelect()
-    {
-        for (int i = 0; i < activeNum; i++)
-        {
-
-        }
-    }
-
-    private void SelectOrb(int index)
-    {
-        orbList[index].Seleted();
-        orbList[index].Connect(currSlot);
-        currSlot.SetId(610001);
-        gameObject.SetActive(false);
-        
     }
 
     public void ResetOn()

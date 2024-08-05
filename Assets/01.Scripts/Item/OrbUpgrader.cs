@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,12 +6,8 @@ public class OrbUpgrader : MonoBehaviour
 {
     public ItemSlotUI[] upgradeSlots;
     public Button upgradeButton;
-    public OrbList popUp_OrbList;
+    public OrbPanel popUp_OrbPanel;
     public GameObject popUp_Notice;
-
-    public Image prefab_Orb;
-    public Image prefab_RareOrb;
-    public Image prefab_EpicOrb;
 
     private int firstItemId;
 
@@ -20,7 +17,7 @@ public class OrbUpgrader : MonoBehaviour
 
         foreach (var slot in upgradeSlots)
         {
-            slot.GetComponent<Button>().onClick.AddListener(() => PopUpOrbList(slot));
+            slot.GetComponent<Button>().onClick.AddListener(() => SlotSelected(slot));
         }
 
         upgradeButton.onClick.AddListener(Upgrade);
@@ -30,16 +27,36 @@ public class OrbUpgrader : MonoBehaviour
     {
     }
 
-    private void PopUpOrbList(ItemSlotUI slot)
+    private void SlotSelected(ItemSlotUI currSlot)
     {
-        if(slot.currItemId != 0)
+        if(currSlot.isSelected)
         {
-            slot.currItemId = 0;
-            slot.slotIcon.gameObject.SetActive(false);
+            UndoSelect();
+        }
+        else
+        {
+            PopUpOrbPanel(currSlot);
         }
 
-        popUp_OrbList.gameObject.SetActive(true);
-        popUp_OrbList.currSlot = slot;
+    }
+
+
+    private void PopUpOrbPanel(ItemSlotUI slot)
+    {
+        popUp_OrbPanel.currSlot = slot;
+        popUp_OrbPanel.gameObject.SetActive(true);
+    }
+
+
+
+    public void SelectOrbInPanel(int index)
+    {
+        popUp_OrbPanel.currSlot.SetOrbInfo(popUp_OrbPanel.orbList[index]);
+        popUp_OrbPanel.gameObject.SetActive(false);
+    }
+    public void UndoSelect()
+    {
+        popUp_OrbPanel.currSlot.ClearInfo();
     }
 
     private void Upgrade()
@@ -49,18 +66,19 @@ public class OrbUpgrader : MonoBehaviour
 
         GameManager.Instance.currSaveData.orb_Atk_Rare -= 3;
         GameManager.Instance.currSaveData.orb_Atk_Epic++;
-        popUp_OrbList.ResetOn();
+
+        popUp_OrbPanel.ResetOn();
 
         for (int i = 0; i < upgradeSlots.Length; i++)
         {
-            upgradeSlots[i].slotIcon.gameObject.SetActive(false);
+            upgradeSlots[i].ClearInfo();
         }
         popUp_Notice.SetActive(true);
     }
 
     private bool CheckUpgradable()
     {
-        if (upgradeSlots == null || upgradeSlots.Length == 0)
+        if (upgradeSlots == null || upgradeSlots.Length < 2)
             return false;
 
         firstItemId = upgradeSlots[0].currItemId;
@@ -76,4 +94,7 @@ public class OrbUpgrader : MonoBehaviour
 
         return true;
     }
+
+
+
 }
