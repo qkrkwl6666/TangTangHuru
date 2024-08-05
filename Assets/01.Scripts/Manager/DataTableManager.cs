@@ -13,9 +13,13 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string treasure = "Treasure";
     public static readonly string item = "Item";
     public static readonly string String = "String";
+    public static readonly string stage = "Stage";
 
     private void Awake()
     {
+        DataTable stageTable = new StageTable();
+        stageTable.Load(stage);
+
         DataTable waveTable = new WaveTable();
         waveTable.Load(stageWave);
 
@@ -42,6 +46,8 @@ public class DataTableManager : Singleton<DataTableManager>
 
         DataTable stringTable = new StringTable();
         stringTable.Load(String);
+
+        tables.Add(stage, stageTable);
 
         tables.Add(stageWave, waveTable);
         tables.Add(monster, monsterTable);

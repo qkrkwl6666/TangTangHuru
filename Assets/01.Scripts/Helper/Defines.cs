@@ -12,12 +12,13 @@ public static class Defines
     public static readonly string obstacles = "Obstacles";
     public static readonly string rangeArea = "RangeArea";
 
-
     public static readonly string loadingUI = "LoadingUI";
     public static readonly string main = "Main";
     public static readonly string inGame = "InGame";
     public static readonly string joystick = "Joystick";
     public static readonly string skeletonData = "SkeletonData";
+    public static readonly string stageImage = "StageImage";
+    public static readonly string emptyRect = "EmptyRect";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
