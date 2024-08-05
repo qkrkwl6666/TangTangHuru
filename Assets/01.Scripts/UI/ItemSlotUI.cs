@@ -15,8 +15,8 @@ public class ItemSlotUI : MonoBehaviour
     {
         connected = orbDesc;
         connected.Seleted();
-        var orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData(connected.orbId.ToString());
-        Addressables.LoadAssetAsync<Sprite>(orbData.Orb_Texture).Completed += (x) =>
+        var itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(connected.orbId.ToString());
+        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             slotIcon.sprite = x.Result;
             slotIcon.gameObject.SetActive(true);
