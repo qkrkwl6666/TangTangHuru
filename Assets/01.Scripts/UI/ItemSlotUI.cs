@@ -19,9 +19,7 @@ public class ItemSlotUI : MonoBehaviour
     {
         currItemId = id;
 
-        string textureName = "IconOrbNormal";
-
-        Addressables.LoadAssetAsync<Sprite>(textureName).Completed += (x) =>
+        Addressables.LoadAssetAsync<Sprite>(currItemId).Completed += (x) =>
         {
             slotIcon.sprite = x.Result;
             slotIcon.color = new Color(255f, 255f, 255f, 1f);

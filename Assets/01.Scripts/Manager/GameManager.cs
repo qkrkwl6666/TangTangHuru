@@ -11,8 +11,9 @@ public class SaveData
     public int equip_GemStone;
     public int reinforce_Stone = 3;
     public int orb_Atk_Rare = 6;
-    public int orb_Atk_Epic = 0;
-    public int orb_Atk_Legend = 0;
+    public int orb_Atk_Epic = 1;
+    public int orb_Atk_Unique = 2;
+    public int orb_Atk_Legend = 1;
 
 }
 

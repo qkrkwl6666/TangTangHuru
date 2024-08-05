@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class OrbDesc : MonoBehaviour
@@ -19,8 +20,11 @@ public class OrbDesc : MonoBehaviour
     public void SetInfo(int orbId)
     {
         orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData(orbId.ToString());
-        //iconImage.sprite = orbData.Orb_Texture; //어드레서블로 가져오기
         descripton.text = orbData.Orb_Name;
+        Addressables.LoadAssetAsync<Sprite>(orbData.Orb_Texture).Completed += (x) =>
+        {
+            iconImage.sprite = x.Result;
+        };
     }
 
 
