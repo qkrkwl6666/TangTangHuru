@@ -1,34 +1,45 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
 
 public class ItemSlotUI : MonoBehaviour
 {
-    private Image slotImage;
-    // Start is called before the first frame update
-    void Start()
+    public int currItemId;
+    public Image slotIcon;
+   
+
+    private void Start()
     {
-        slotImage = GetComponent<Image>();
-        var slot = slotImage.GetComponentInChildren<Draggable>();
-        if(slot == null)
-        {
-            Empty();
-        }
+
     }
 
+    public void SetId(int id)
+    {
+        currItemId = id;
+
+        string textureName = "IconOrbNormal";
+
+        Addressables.LoadAssetAsync<Sprite>(textureName).Completed += (x) =>
+        {
+            slotIcon.sprite = x.Result;
+            slotIcon.color = new Color(255f, 255f, 255f, 1f);
+            slotIcon.gameObject.SetActive(true);
+        };
+    }
 
     public void Highlighted()
     {
-        slotImage.color = Color.yellow;
+        slotIcon.color = Color.yellow;
     }
     public void Filled()
     {
-        slotImage.color = Color.white;
+        slotIcon.color = Color.white;
     }
     public void Empty()
     {
-        slotImage.color = Color.gray;
+        slotIcon.color = Color.gray;
     }
 
 

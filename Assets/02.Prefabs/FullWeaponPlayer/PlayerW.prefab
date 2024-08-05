@@ -135,9 +135,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4bb3e054af96e384ca762bfcdf005722, type: 2}
   - {fileID: 11400000, guid: e15c5f9f03fd6f44eb5588d9d3a3c921, type: 2}
   - {fileID: 11400000, guid: ad81a776acb98ca4bbad0e8485d4e3e7, type: 2}
+  inGamePassiveList: []
   currPassiveList: []
-  passiveData: {fileID: 11400000, guid: 814487a725745fb409f5b83c0a0452d5, type: 2}
-  currMainWeapon: {fileID: 0}
+  emptyPassiveData: {fileID: 11400000, guid: 814487a725745fb409f5b83c0a0452d5, type: 2}
 --- !u!1 &3502777865133575423
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +273,13 @@ MonoBehaviour:
   joystick: {fileID: 0}
   velocity: {x: 0, y: 0}
   viewPlayer: {fileID: 3901226454514501112}
+  weapons:
+  - {fileID: 8227739536834067175}
+  - {fileID: 5299917278487251666}
+  - {fileID: 4483609725841164632}
+  - {fileID: 3207407585417475704}
+  - {fileID: 3597890204392545211}
+  - {fileID: 6469530201942816735}
 --- !u!114 &3625545275131843166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,6 +446,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6879232477542761832}
+  - {fileID: 5808887129712165499}
   m_Father: {fileID: 2364806144273083525}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7457898150139531656
@@ -922,6 +930,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 3282488639268092684, guid: 066a9b88b3cf8cd42b028958259fc7fd, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 25a92af337f3401478462708f9f9d565, type: 2}
     - target: {fileID: 4642776682603058228, guid: 066a9b88b3cf8cd42b028958259fc7fd, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -1003,6 +1015,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2748913981200939830, guid: 6c47e52089f0a234d94df05920728592, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 70f874a8bfb3ccf409a8817c3b7f76be, type: 2}
     - target: {fileID: 8454338103515070635, guid: 6c47e52089f0a234d94df05920728592, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1128,11 +1144,20 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9001170810864055673, guid: e9f68ada87695be4994a1a926450aa9a, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f287f5e6c212474fa06e413c7cc4963, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9f68ada87695be4994a1a926450aa9a, type: 3}
+--- !u!1 &3597890204392545211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2576270635297655401, guid: e9f68ada87695be4994a1a926450aa9a, type: 3}
+  m_PrefabInstance: {fileID: 1310132332166058450}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6044292321051785732 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4742050429031590870, guid: e9f68ada87695be4994a1a926450aa9a, type: 3}
@@ -1146,6 +1171,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2364806144273083525}
     m_Modifications:
+    - target: {fileID: 2742776098122346999, guid: 0ef8ee3787c8cf945a542e82c92f5f08, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3019c7efbd139c1498892f7582e014f9, type: 2}
     - target: {fileID: 5791284036918694656, guid: 0ef8ee3787c8cf945a542e82c92f5f08, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1301,6 +1330,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
+    - target: {fileID: 2703906516270339317, guid: 38d858950daa9e34d99f32d4ead359d9, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: e96ccf8f57b64c0478bc892bff8a2977, type: 2}
     - target: {fileID: 3627542256827211676, guid: 38d858950daa9e34d99f32d4ead359d9, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1427,10 +1460,77 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 260fed1e5fa92774aa9fc1c358f1b9a7, type: 3}
+--- !u!1 &4483609725841164632 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 404786791682942992, guid: 260fed1e5fa92774aa9fc1c358f1b9a7, type: 3}
+  m_PrefabInstance: {fileID: 4298382632992366920}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8685823094533493852 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4840474798280307988, guid: 260fed1e5fa92774aa9fc1c358f1b9a7, type: 3}
   m_PrefabInstance: {fileID: 4298382632992366920}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4467651494693508240
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 624529200815266430}
+    m_Modifications:
+    - target: {fileID: 1703763626124238011, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+--- !u!4 &5808887129712165499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7970554731664119531, guid: 11ec5a161384e4d489cbe9bd0d6258de, type: 3}
+  m_PrefabInstance: {fileID: 4467651494693508240}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4906367032436475011
 PrefabInstance:
@@ -1448,6 +1548,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainWeapon
       objectReference: {fileID: 0}
+    - target: {fileID: 4754016799603076235, guid: f9f7c9f8fbb6fa6489ae57d15fad9e33, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: f1e1b5f4ecefb034f98b8d7cf5823d1a, type: 2}
     - target: {fileID: 7573162258409682406, guid: f9f7c9f8fbb6fa6489ae57d15fad9e33, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1500,6 +1604,11 @@ PrefabInstance:
 --- !u!4 &3247003114979930469 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7573162258409682406, guid: f9f7c9f8fbb6fa6489ae57d15fad9e33, type: 3}
+  m_PrefabInstance: {fileID: 4906367032436475011}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6469530201942816735 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2152309005713027932, guid: f9f7c9f8fbb6fa6489ae57d15fad9e33, type: 3}
   m_PrefabInstance: {fileID: 4906367032436475011}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6943963040704360812
@@ -1571,6 +1680,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33aba093dd467b54cbe55d536cdf4829, type: 3}
+--- !u!1 &5299917278487251666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3013188762494565310, guid: 33aba093dd467b54cbe55d536cdf4829, type: 3}
+  m_PrefabInstance: {fileID: 6943963040704360812}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7008030503313912733 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 80060958835163889, guid: 33aba093dd467b54cbe55d536cdf4829, type: 3}
@@ -1636,6 +1750,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5589294057440400794, guid: 04be1ecdee5ec804da9269cf0bcb462b, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: f5c2163777df4fa48b125beef2261055, type: 2}
     - target: {fileID: 6900824778094902924, guid: 04be1ecdee5ec804da9269cf0bcb462b, type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -1709,6 +1827,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1708203158283413971, guid: b381736f7314a8646806f4222ca2c47f, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 13ae9f34f12f44d4e8a7bd1ee4bc7e6a, type: 2}
+    - target: {fileID: 3069743362600986477, guid: b381736f7314a8646806f4222ca2c47f, type: 3}
+      propertyPath: weaponDataRef
+      value: 
+      objectReference: {fileID: 11400000, guid: 66d79861ad938504dbb4c955268ba709, type: 2}
     - target: {fileID: 4080502987571391641, guid: b381736f7314a8646806f4222ca2c47f, type: 3}
       propertyPath: m_Name
       value: SubWeapon AngularShot
@@ -1792,7 +1918,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2217747789894988746, guid: 9137a75c4405b03459ff96c87daecd2c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2217747789894988746, guid: 9137a75c4405b03459ff96c87daecd2c, type: 3}
       propertyPath: m_TagString
@@ -1806,6 +1932,11 @@ PrefabInstance:
 --- !u!4 &7360422140263487859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 778191076398993502, guid: 9137a75c4405b03459ff96c87daecd2c, type: 3}
+  m_PrefabInstance: {fileID: 7848024111580662061}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8227739536834067175 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2217747789894988746, guid: 9137a75c4405b03459ff96c87daecd2c, type: 3}
   m_PrefabInstance: {fileID: 7848024111580662061}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7998980091137291651
@@ -1864,6 +1995,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8239837253449052856, guid: f692746a08f57fd439288d0088ab16f2, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5cc59dac03f0df545bd8cd7a32e97b45, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1941,6 +2076,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6547171004275916195, guid: 35ee7f649b8666d4595e190100d706c8, type: 3}
+      propertyPath: skillUpgradeData
+      value: 
+      objectReference: {fileID: 11400000, guid: 9613370c077697a478bb8f76e32eb607, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2031,6 +2170,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2733f6564e371eb4daf8ccd3258f62c9, type: 3}
+--- !u!1 &3207407585417475704 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5797067399564984634, guid: 2733f6564e371eb4daf8ccd3258f62c9, type: 3}
+  m_PrefabInstance: {fileID: 9002785958422263618}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6470450917050393282 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2683013924072297856, guid: 2733f6564e371eb4daf8ccd3258f62c9, type: 3}

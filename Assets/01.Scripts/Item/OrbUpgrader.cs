@@ -1,66 +1,82 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class OrbUpgrader : MonoBehaviour
 {
-    public Button craftButton;
+    public ItemSlotUI[] upgradeSlots;
+    public Button upgradeButton;
+    public OrbList popUp_OrbList;
+    public GameObject popUp_Notice;
 
-    public Image prefab_Stone;
     public Image prefab_Orb;
     public Image prefab_RareOrb;
     public Image prefab_EpicOrb;
 
-    public ItemSlotUI slotPrefab;
-    public ItemSlotUI upgradeSlot;
-    public List<ItemSlotUI> slots = new();
-
+    private int firstItemId;
 
     private void OnEnable()
     {
-        int stoneNum = GameManager.Instance.currSaveData.reinforce_Stone;
-        int orbPieceNum = GameManager.Instance.currSaveData.orb_Piece;
-        int orbNum = GameManager.Instance.currSaveData.orb_Normal;
+        upgradeSlots = GetComponentsInChildren<ItemSlotUI>();
 
-        int draggableNum = stoneNum + orbPieceNum + orbNum;
+        foreach (var slot in upgradeSlots)
+        {
+            slot.GetComponent<Button>().onClick.AddListener(() => PopUpOrbList(slot));
+        }
 
-        //for (int i = 0; i < draggableNum; i++)
-        //{
-        //    slots.Add(Instantiate(slotPrefab));
-        //    slots[i].transform.SetParent(content.transform);
-
-        //    if (i < stoneNum)
-        //    {
-        //        item = Instantiate(stonePrefab);
-        //    }
-        //    else if (i >= stoneNum && i < stoneNum + orbNum)
-        //    {
-        //        item = Instantiate(orbPiecePrefab);
-        //    }
-        //    else
-        //    {
-        //        item = Instantiate(orbPrefab);
-        //    }
-        //    item.transform.SetParent(slots[i].transform);
-        //    item.transform.position = slots[i].transform.position;
-        //    itemList.Add(item);
-        //}
-
-        craftButton.onClick.AddListener(Craft);
+        upgradeButton.onClick.AddListener(Upgrade);
     }
 
     private void OnDisable()
     {
-        craftButton.onClick.RemoveAllListeners();
     }
 
-    private void OnTransformChildrenChanged()
+    private void PopUpOrbList(ItemSlotUI slot)
     {
+        if(slot.currItemId != 0)
+        {
+            slot.currItemId = 0;
+            slot.slotIcon.gameObject.SetActive(false);
+        }
 
+        popUp_OrbList.gameObject.SetActive(true);
+        popUp_OrbList.currSlot = slot;
     }
 
-    private void Craft()
+    private void Upgrade()
     {
+        if (!CheckUpgradable())
+            return;
+
+        GameManager.Instance.currSaveData.orb_Normal -= 3;
+        GameManager.Instance.currSaveData.orb_Rare++;
+        popUp_OrbList.ResetOn();
+
+        for (int i = 0; i < upgradeSlots.Length; i++)
+        {
+            upgradeSlots[i].slotIcon.gameObject.SetActive(false);
+        }
+        popUp_Notice.SetActive(true);
+    }
+
+    private bool CheckUpgradable()
+    {
+        if (upgradeSlots == null || upgradeSlots.Length == 0)
+            return false;
+
+        firstItemId = upgradeSlots[0].currItemId;
+
+        for (int i = 1; i < upgradeSlots.Length; i++)
+        {
+            if (upgradeSlots[i].currItemId != firstItemId)
+            {
+                Debug.Log("배치된 오브가 모두 같아야 한다.");
+                return false;
+            }
+        }
+
+        return true;
     }
 }

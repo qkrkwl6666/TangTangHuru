@@ -10,11 +10,12 @@ public class MainInventory : MonoBehaviour
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
     private Dictionary<PlayerEquipment, Item> playerEquipment = new ();
 
-
     private void Awake()
     {
         //var ab = allItem[ItemType.Bow][TierType.Rare][0];
     }
+
+    //public void 
 
 
 }
