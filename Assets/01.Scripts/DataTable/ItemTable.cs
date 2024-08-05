@@ -24,6 +24,31 @@ public class ItemData
     public float CoolDown { get; set; }
     public float Criticalper { get; set; }
     public float Criticaldam { get; set; }
+
+    public ItemData DeepCopy()
+    {
+        ItemData newItemData = new ItemData();
+
+        newItemData.Item_Id = this.Item_Id;
+        newItemData.Name_Id = this.Name_Id;
+        newItemData.Prefab_Id = this.Prefab_Id;
+        newItemData.Desc_Id = this.Desc_Id;
+        newItemData.Texture_Id = this.Texture_Id;
+        newItemData.Spine_Id = this.Spine_Id;
+        newItemData.Outline = this.Outline;
+        newItemData.Item_Type = this.Item_Type;
+        newItemData.Item_Tier = this.Item_Tier;
+        newItemData.Damage = this.Damage;
+        newItemData.Defense = this.Defense;
+        newItemData.Hp = this.Hp;
+        newItemData.Dodge = this.Dodge;
+        newItemData.Damagecal = this.Damagecal;
+        newItemData.CoolDown = this.CoolDown;
+        newItemData.Criticalper = this.Criticalper;
+        newItemData.Criticaldam = this.Criticaldam;
+
+        return newItemData;
+    }
 }
 
 public class ItemTable : DataTable
