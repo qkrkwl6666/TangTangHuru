@@ -22,13 +22,24 @@ public static class Defines
     public static readonly string emptyRect = "EmptyRect";
 
     // 아웃라이너 컬러
-    public static readonly Color blueColor = new Color(2, 19, 52);
-    public static readonly Color greenColor = new Color(20, 46, 34);
-    public static readonly Color orangeColor = new Color(45, 30, 18);
-    public static readonly Color purpleColor = new Color(33, 13, 52);
-    public static readonly Color redColor = new Color(39, 10, 8);
-    public static readonly Color whiteColor = new Color(255, 255, 255);
-    public static readonly Color yellowColor = new Color(40, 36, 29);
+    public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
+    public static readonly Color greenColor = new Color(20 / 255f, 46 / 255f, 34 / 255f);
+    public static readonly Color orangeColor = new Color(45 / 255f, 30 / 255f, 18 / 255f);
+    public static readonly Color purpleColor = new Color(33 / 255f, 13 / 255f, 52 / 255f);
+    public static readonly Color redColor = new Color(39 / 255f, 10 / 255f, 8 / 255f);
+    public static readonly Color whiteColor = Color.white;
+    public static readonly Color yellowColor = new Color(40 / 255f, 36 / 255f, 29 / 255f);
+
+    //// 아웃 라이너 
+    //public static readonly string outlineBlue = "Outline_Blue";
+    //public static readonly string outlineGreen = "Outline_Green";
+    //public static readonly string outlineOrange = "Outline_Orange";
+    //public static readonly string outlinePurple = "Outline_Purple";
+    //public static readonly string outlineRed = "Outline_Red";
+    //public static readonly string outlineWhite = "Outline_White";
+    //public static readonly string outlineYellow = "Outline_Yellow";
+
+    public static readonly string itemSlot = "ItemSlot";
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";

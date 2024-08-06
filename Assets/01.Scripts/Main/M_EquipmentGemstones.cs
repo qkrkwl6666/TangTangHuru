@@ -7,15 +7,17 @@ public class M_EquipmentGemstones : Item
 {
     public int ItemId { get; set ; }
     public int InstanceId { get ; set ; }
-    public ItemTier Tier { get ; set ; }
-
-    public ItemData itemData { get; set ; }
+    public ItemType ItemType { get; set; }
+    public ItemTier ItemTier { get ; set ; }
+    public ItemData itemData { get ; set ; }
 
     public void SetItemData(ItemData itemData, int instanceId)
     {
         ItemId = itemData.Item_Id;
         InstanceId = instanceId;
-        Tier = (ItemTier)itemData.Item_Tier;
+
+        this.ItemType = (ItemType)itemData.Item_Type;
+        this.ItemTier = (ItemTier)itemData.Item_Tier;
 
         this.itemData = itemData.DeepCopy();
     }

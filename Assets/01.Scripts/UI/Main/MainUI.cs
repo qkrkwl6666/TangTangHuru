@@ -63,9 +63,14 @@ public class MainUI : MonoBehaviour
     #endregion
 
     #region 인벤토리 UI
+
+    public MainInventory mainInventory;
+
     public void InventoryUIButton()
     {
-        for(int i = 0; i < uiGameObjects.Count; i ++)
+        mainInventory.RefreshItemSlotUI();
+
+        for (int i = 0; i < uiGameObjects.Count; i ++)
         {
             uiGameObjects[i].SetActive(UIObject.Inventory == (UIObject)i);
         }
