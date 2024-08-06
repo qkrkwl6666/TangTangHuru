@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class M_EquipmentGemstones : Item
+public class M_Item : Item
 {
     public int ItemId { get; set ; }
     public int InstanceId { get ; set ; }

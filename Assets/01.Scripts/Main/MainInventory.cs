@@ -92,17 +92,16 @@ public class MainInventory : MonoBehaviour
             allItem[itemType][itemTier].Add(mainItem);
             return;
         }
-
     }
 
     public Item MakeItem(ItemData itemData)
     {
-        M_EquipmentGemstones m_EquipmentGemstones = new M_EquipmentGemstones();
-        int instanceId = m_EquipmentGemstones.GetHashCode() + Random.Range(1, 100000);
+        M_Item m_item = new M_Item();
+        int instanceId = m_item.GetHashCode() + Random.Range(1, 100000);
 
-        m_EquipmentGemstones.SetItemData(itemData, instanceId);
+        m_item.SetItemData(itemData, instanceId);
 
-        return m_EquipmentGemstones;
+        return m_item;
 
         //switch (itemData.Item_Type)
         //{
