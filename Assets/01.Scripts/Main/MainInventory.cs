@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
@@ -19,9 +20,15 @@ public class MainInventory : MonoBehaviour
 
     public Transform content;
 
+    // 아이템 랜덤 테스트 코드 
     public List<int> items = new ();
 
     private MainUI mainUI;
+
+    // 무기 UI 
+    public Image weaponOutlineImage;
+    public Image weaponIconImage;
+    public Image weaponBgImage;
 
     private void Awake()
     {
@@ -49,6 +56,11 @@ public class MainInventory : MonoBehaviour
         items.Add(600004);
         items.Add(600005);
         items.Add(600006);
+    }
+
+    private void Start()
+    {
+        SaveDataLoadMainInventory();
     }
 
     public void CreateEquipmentGem()
@@ -95,6 +107,26 @@ public class MainInventory : MonoBehaviour
         {
             allItem[itemType][itemTier].Add(mainItem);
             return;
+        }
+    }
+
+    public void SaveInventory()
+    {
+        SaveManager.SaveDataV1.allItem.Clear();
+
+        SaveManager.SaveDataV1.Gold = 0;
+        SaveManager.SaveDataV1.Diamond = 0;
+        SaveManager.SaveDataV1.CurrentStage = 1;
+
+        foreach (var itemTypeDir in allItem) 
+        { 
+            foreach(var itemTierDir in itemTypeDir.Value)
+            {
+                foreach(var item in itemTierDir.Value) 
+                {
+                    SaveManager.SaveDataV1.allItem.Add(item);
+                }
+            }
         }
     }
 
@@ -273,6 +305,25 @@ public class MainInventory : MonoBehaviour
 
     // 소모품 아이템 삭제
 
+    public void SaveMainInventory()
+    {
+        SaveInventory();
+
+        SaveManager.Instance.SaveGame(SaveManager.SaveDataV1);
+    }
+
+
+    public void SaveDataLoadMainInventory()
+    {
+        var items = SaveManager.SaveDataV1.allItem;
+
+        foreach (var item in items) 
+        {
+            MainInventoryAddItem(item.ItemId.ToString());
+        }
+
+        RefreshItemSlotUI();
+    }
 }
 
 public enum ItemType
