@@ -21,9 +21,13 @@ public class MainInventory : MonoBehaviour
 
     public List<int> items = new ();
 
+    private MainUI mainUI;
+
     private void Awake()
     {
         //var ab = allItem[ItemType.Bow][TierType.Rare][0];
+
+        mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
         items.Add(200001);
         items.Add(200002);
@@ -206,7 +210,7 @@ public class MainInventory : MonoBehaviour
                 {
                     var go = itemGo.Result;
 
-                    go.GetComponent<M_UISlot>().SetItemData(item.itemData);
+                    go.GetComponent<M_UISlot>().SetItemData(item.itemData, mainUI);
                     go.GetComponent<M_UISlot>().SetItemDataConsumable(item.itemData, itemCount);
 
                     itemSlotUI.Add(item.ItemId, (item, go));
@@ -227,7 +231,7 @@ public class MainInventory : MonoBehaviour
             {
                 var go = itemGo.Result;
 
-                go.GetComponent<M_UISlot>().SetItemData(item.itemData);
+                go.GetComponent<M_UISlot>().SetItemData(item.itemData, mainUI);
 
                 itemSlotUI.Add(item.InstanceId, (item, go));
             };

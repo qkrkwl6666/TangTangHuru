@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public static class Defines
 {
@@ -30,14 +32,13 @@ public static class Defines
     public static readonly Color whiteColor = Color.white;
     public static readonly Color yellowColor = new Color(40 / 255f, 36 / 255f, 29 / 255f);
 
-    //// 아웃 라이너 
-    //public static readonly string outlineBlue = "Outline_Blue";
-    //public static readonly string outlineGreen = "Outline_Green";
-    //public static readonly string outlineOrange = "Outline_Orange";
-    //public static readonly string outlinePurple = "Outline_Purple";
-    //public static readonly string outlineRed = "Outline_Red";
-    //public static readonly string outlineWhite = "Outline_White";
-    //public static readonly string outlineYellow = "Outline_Yellow";
+    // 무기 스텟 텍스트
+    public static readonly string damage = "공격력 : ";
+    public static readonly string attackCoolTime = "공격 속도 : ";
+    public static readonly string criticalChance = "치명타 확률 : ";
+    public static readonly string criticalDamage = "치명타 피해 : ";
+
+    // 방어구 스텟 텍스트
 
     public static readonly string itemSlot = "ItemSlot";
 
@@ -126,5 +127,28 @@ public static class Defines
 
     }
 
+    public static Color GetColor(string key)
+    {
+        switch (key) 
+        {
+            case "Outline_Blue":
+                return Defines.blueColor;
+            case "Outline_Green":
+                return Defines.greenColor;
+            case "Outline_Orange":
+                return Defines.orangeColor;
+            case "Outline_Purple":
+                return Defines.purpleColor;
+            case "Outline_Red":
+                return Defines.redColor;
+            case "Outline_White":
+                return Defines.whiteColor;
+            case "Outline_Yellow":
+                return Defines.yellowColor;
+
+            default:
+                return Defines.blueColor;
+        }
+    }
 
 }

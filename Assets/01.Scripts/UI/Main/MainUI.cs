@@ -83,6 +83,22 @@ public class MainUI : MonoBehaviour
         SaveDataV1 saveDataV1 = new SaveDataV1();
         //saveDataV1.allItem
     }
+
+    #region UI ÆË¾÷
+
+    public EquipPopUp EquipPopUp; 
+
+    public void SetActiveEquipPopUpUI(bool active)
+    {
+        EquipPopUp.gameObject.SetActive(active);
+    }
+
+    public void SetEquipPopData(ItemData itemData)
+    {
+        EquipPopUp.SetItemUI(itemData);
+    }
+
+    #endregion
 }
 
 public enum UIObject

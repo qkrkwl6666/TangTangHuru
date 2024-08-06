@@ -18,9 +18,13 @@ public class M_UISlot : MonoBehaviour
 
     private bool isConsumable = false;
 
-    public void SetItemData(ItemData itemData)
+    public MainUI mainUI;
+
+    public void SetItemData(ItemData itemData, MainUI mainUI)
     {
         this.itemData = itemData;
+
+        this.mainUI = mainUI;
 
         // UI 아이템 데이터 에 맞춰서 설정
 
@@ -65,7 +69,7 @@ public class M_UISlot : MonoBehaviour
 
     public void SetItemDataConsumable(ItemData itemData, int itemCount)
     {
-        SetItemData(itemData);
+        SetItemData(itemData, mainUI);
 
         // 소모품 개수 새서 텍스트 오브젝트 활성화 해주고 개수 넣어주기
         textGameobject.SetActive(true);
@@ -78,6 +82,17 @@ public class M_UISlot : MonoBehaviour
         // 현재 아이템 타입에 맞는 UI 팝업 띄우고 현재 아이템 데이터 정보 팝업으로
         // 넘기기 여기서 isConsumable 에 따라서 팝업 정보 다르게 띄우기
 
+        switch(itemData.Item_Type)
+        {
+            case (int)ItemType.Weapon:
+                mainUI.SetEquipPopData(itemData);
+                mainUI.SetActiveEquipPopUpUI(true);
+                break;
+            case (int)ItemType.Helmet:
+            case (int)ItemType.Armor:
+            case (int)ItemType.Shose:
 
+                break;
+        }
     }
 }
