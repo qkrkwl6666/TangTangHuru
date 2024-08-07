@@ -9,7 +9,6 @@ public class PlayerSubject : MonoBehaviour
     private LivingEntity playerLivingEntity;
     private PlayerExp playerExp;
 
-
     public LivingEntity GetPlayerLivingEntity { get { return playerLivingEntity; } }
     public Transform GetPlayerTransform { get { return playerObject.transform; } }
     public PlayerExp GetPlayerExp { get { return playerExp; } }
