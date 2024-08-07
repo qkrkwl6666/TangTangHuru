@@ -22,18 +22,8 @@ public class M_Item : Item
         this.itemData = itemData.DeepCopy();
     }
 
-    public void EquipItem()
-    {
-        
-    }
-
     public void GetItemInfo()
     {
-        
-    }
 
-    public void UnEquipItem()
-    {
-        
     }
 }

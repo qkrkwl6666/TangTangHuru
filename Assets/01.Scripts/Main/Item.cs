@@ -8,8 +8,8 @@ public interface Item
 
     public ItemData itemData { get; set; }
 
-    public void EquipItem();    // 장비 장착
-    public void UnEquipItem();  // 장비 해제
+    //public void EquipItem();    // 장비 장착
+    //public void UnEquipItem();  // 장비 해제
 
     public void GetItemInfo(); // 아이템 정보 리턴
 

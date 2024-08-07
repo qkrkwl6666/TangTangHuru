@@ -42,6 +42,13 @@ public static class Defines
 
     public static readonly string itemSlot = "ItemSlot";
 
+    // 오브 개수 제한
+    public static int normalOrbCount = 0;
+    public static int rareOrbCount = 1;
+    public static int epicOrbCount = 2;
+    public static int uniqueOrbCount = 3;
+    public static int legendaryOrbCount = 4;
+
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
     public static readonly string body024 = "body_024";

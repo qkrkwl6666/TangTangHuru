@@ -10,6 +10,13 @@ public class M_Weapon : Item
     public ItemTier ItemTier { get ; set ; }
     public ItemData itemData { get ; set ; }
 
+    public List<Item> orbs { get ; set ; } // 보유하고 있는 오브
+
+    public void GetItemInfo()
+    {
+        
+    }
+
     public void SetItemData(ItemData itemData, int instanceId)
     {
         ItemId = itemData.Item_Id;
@@ -19,18 +26,9 @@ public class M_Weapon : Item
         this.itemData = itemData.DeepCopy();
     }
 
-    public void EquipItem()
+    public void UpgradeWeapon()
     {
-        
+
     }
 
-    public void GetItemInfo()
-    {
-        
-    }
-
-    public void UnEquipItem()
-    {
-        
-    }
 }
