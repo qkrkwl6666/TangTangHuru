@@ -128,7 +128,7 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     for (int i = 0; i < rand; i++)
                     {
-                        Addressables.InstantiateAsync("Normal_Re_Stone").Completed +=
+                        Addressables.InstantiateAsync("Re_Stone").Completed +=
                         (x) =>
                         {
                             var restoneGo = x.Result;
