@@ -26,7 +26,7 @@ public class StageSelectionUI : MonoBehaviour
 
     // 스테이지 UI 
 
-    private int currentStage = 0; // Todo : 나중에 세이브된 스테이지 awake때 로드
+    private int currentStage = 0; // Todo : 나중에 세이브된 스테이지 awake때 로드 1로 시작하자
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
 

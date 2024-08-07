@@ -9,7 +9,7 @@ public class EquipPopUp : MonoBehaviour
 
     // 버튼
     public Button EquipButton;   // 장착
-    public Button UnEquip;   // 장착 해제
+    public Button UnEquipButton;   // 장착 해제
     public Button UpgradeButton; // 강화
     public Button TierUpButton; // 승급
 
@@ -36,20 +36,25 @@ public class EquipPopUp : MonoBehaviour
     public TextMeshProUGUI itemStatusText4;
 
     private MainInventory mainInventory;
+    public MainUI mainUI;
 
     private void Start()
     {
         mainInventory = GameObject.FindWithTag("MainInventory").GetComponent<MainInventory>();  
     }
 
-    public void SetItemUI(Item item)
+    public void SetItemUI(Item item, bool isEquip = true)
     {
         currentItem = item;
 
         if(currentItem == null)
         {
             Debug.Log("currentItem is null");
+            return;
         }
+
+        EquipButton.gameObject.SetActive(isEquip);
+        UnEquipButton.gameObject.SetActive(!isEquip);
 
         UpgradeButton.interactable = !(currentItem.itemData.CurrentUpgrade >= 10);
 
@@ -105,7 +110,7 @@ public class EquipPopUp : MonoBehaviour
     {
         currentItem = null;
 
-        gameObject.SetActive(false);
+        mainUI.SetActiveEquipPopUpUI(false);
     }
 
     public void OnUpgradeButton()
@@ -138,11 +143,15 @@ public class EquipPopUp : MonoBehaviour
     public void OnEquipEquipmentButton()
     {
         mainInventory.EquipItem(currentItem);
+
+        mainUI.SetActiveEquipPopUpUI(false);
     }
 
     // 장비 장착 해제
     public void OnUnequipEquipmentButton()
     {
+        mainInventory.UnequipItem(currentItem);
 
+        mainUI.SetActiveEquipPopUpUI(false);
     }
 }

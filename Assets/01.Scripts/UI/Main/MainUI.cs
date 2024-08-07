@@ -89,12 +89,39 @@ public class MainUI : MonoBehaviour
 
     public void SetActiveEquipPopUpUI(bool active)
     {
-        EquipPopUp.gameObject.SetActive(active);
+        if (active) 
+        {
+            EquipPopUp.gameObject.SetActive(active);
+            var seq = DOTween.Sequence();
+
+            seq.Append(EquipPopUp.transform.DOScale(1.1f, 0.2f));
+            seq.Append(EquipPopUp.transform.DOScale(1f, 0.1f));
+
+            seq.Play();
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+
+            seq.Append(EquipPopUp.transform.DOScale(0.0f, 0.1f));
+
+            seq.onComplete += () => 
+            {
+                EquipPopUp.gameObject.SetActive(active);
+            };
+
+            seq.Play();
+        }
     }
 
     public void SetEquipPopData(Item item)
     {
         EquipPopUp.SetItemUI(item);
+    }
+
+    public void SetUnequipPopData(Item item)
+    {
+        EquipPopUp.SetItemUI(item, false);
     }
 
     #endregion

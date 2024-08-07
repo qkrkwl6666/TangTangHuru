@@ -100,4 +100,11 @@ public class M_UISlot : MonoBehaviour
                 break;
         }
     }
+
+    // 무기 해제 팝업
+    public void OnWeaponSlotButton()
+    {
+        mainUI.SetUnequipPopData(item);
+        mainUI.SetActiveEquipPopUpUI(true);
+    }
 }

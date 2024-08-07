@@ -12,16 +12,17 @@ public class MainInventory : MonoBehaviour
     private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new ();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
+    // Todo : 로드 시 playerEquipment 에 등록된 item은 itemslot에서 비활성화 해줘야함
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
 
-    // 장비 UI
-    [SerializeField] private SerializableDictionary<PlayerEquipment, List<Image>> equipmentUI = new ();
-    public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트
-    public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI 
-    public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI
+    public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
+    public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI           접근시 (PlayerEquipment) - 1
+    public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
+
+    public List<M_UISlot> equipmentSlotUI = new ();
 
 
-    // 현재 생성된 UI 슬롯 아이템
+    // 현재 생성된 UI 슬롯 아이템z
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
 
     // 소모품 아이템 컨테이너
@@ -384,26 +385,19 @@ public class MainInventory : MonoBehaviour
     {
         if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
 
+        // 기존 장비 장착 중이라면 장착 해제
+
+        if(playerEquipment.ContainsKey((PlayerEquipment)item.ItemType))
+        {
+            UnequipItem(playerEquipment[(PlayerEquipment)item.ItemType].Item1);
+        }
+
         slot.ItemSlot.SetActive(false);
 
-        defaultEquipmentSlotUI[item.itemData.Item_Type].SetActive(false);
+        defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
 
-        var images = equipmentUI[(PlayerEquipment)item.itemData.Item_Type];
-
-        images[0].color = Defines.GetColor(item.itemData.Outline);
-
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed
-            += (sprite) =>
-            {
-                images[1].sprite = sprite.Result;
-            };
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Outline).Completed
-            += (sprite) =>
-            {
-                images[2].sprite = sprite.Result;
-
-                EquipmentSlotUI[item.itemData.Item_Type].SetActive(true);
-            };
+        equipmentSlotUI[item.itemData.Item_Type - 1].SetItemData(item, mainUI);
+        equipmentSlotUI[item.itemData.Item_Type - 1].gameObject.SetActive(true);
 
         playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
     }
@@ -412,10 +406,10 @@ public class MainInventory : MonoBehaviour
     {
         playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
 
-        playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (null, null);
+        playerEquipment.Remove((PlayerEquipment)item.itemData.Item_Type);
 
-        defaultEquipmentSlotUI[item.itemData.Item_Type].SetActive(true);
-        EquipmentSlotUI[item.itemData.Item_Type].SetActive(false);
+        defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(true);
+        EquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
     }
 }
 
