@@ -42,6 +42,16 @@ public static class Defines
 
     public static readonly string itemSlot = "ItemSlot";
 
+    // 장비 슬롯 텍스처
+    public static readonly string equipSlotArmor = "EquipSlotArmor";
+    public static readonly string equipSlotBg = "EquipSlotBg";
+    public static readonly string equipSlotBoots = "EquipSlotBoots";
+    public static readonly string equipSlotBorder = "EquipSlotBorder";
+    public static readonly string equipSlotHelmet = "EquipSlotHelmet";
+    public static readonly string equipSlotInnerBorder = "EquipSlotInnerBorder";
+    public static readonly string equipSlotSword = "EquipSlotInnerBorder";
+
+
     // 오브 개수 제한
     public static int normalOrbCount = 0;
     public static int rareOrbCount = 1;

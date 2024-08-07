@@ -54,6 +54,8 @@ public class M_Weapon : Item
         itemData.CoolDown = initCooldown;
         itemData.CriticalChance = initCriticalChance;
         itemData.Criticaldam = initCriticalDamage;
+
+        // UI Àû¿ë
     }
 
 }

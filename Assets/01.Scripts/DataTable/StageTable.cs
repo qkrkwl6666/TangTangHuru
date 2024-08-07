@@ -30,7 +30,7 @@ public class StageTable : DataTable
         return null;
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -46,7 +46,7 @@ public class StageTable : DataTable
             }
 
             OnStageSelectionUIInit?.Invoke();
-
+            tableLoaded?.Invoke();
         };
     }
 }

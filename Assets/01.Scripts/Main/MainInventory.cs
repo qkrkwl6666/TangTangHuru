@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -10,7 +12,14 @@ public class MainInventory : MonoBehaviour
     private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new ();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
-    private Dictionary<PlayerEquipment, Item> playerEquipment = new ();
+    private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
+
+    // 장비 UI
+    [SerializeField] private SerializableDictionary<PlayerEquipment, List<Image>> equipmentUI = new ();
+    public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트
+    public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI 
+    public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI
+
 
     // 현재 생성된 UI 슬롯 아이템
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
@@ -29,6 +38,8 @@ public class MainInventory : MonoBehaviour
     public Image weaponOutlineImage;
     public Image weaponIconImage;
     public Image weaponBgImage;
+
+    public Action OnMainInventorySaveLoaded;
 
     private void Awake()
     {
@@ -60,12 +71,18 @@ public class MainInventory : MonoBehaviour
 
     private void Start()
     {
+        DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory; 
+    }
+
+    public void CoSaveDataLoadMainInventory()
+    {
         StartCoroutine(SaveDataLoadMainInventory());
     }
 
+
     public void CreateEquipmentGem()
     {
-        int random = Random.Range(0, items.Count);
+        int random = UnityEngine.Random.Range(0, items.Count);
 
         MainInventoryAddItem(items[random].ToString(), 0);
     }
@@ -139,7 +156,7 @@ public class MainInventory : MonoBehaviour
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
 
-                    int instanceId = m_weaponItem.GetHashCode() + Random.Range(1, 100000);
+                    int instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
 
                     m_weaponItem.SetItemData(itemData, instanceId);
 
@@ -158,7 +175,7 @@ public class MainInventory : MonoBehaviour
             case 6: // 강화석
                 {
                     M_Item m_item = new M_Item();
-                    int instanceId = m_item.GetHashCode() + Random.Range(1, 100000);
+                    int instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
 
                     m_item.SetItemData(itemData, instanceId);
 
@@ -175,7 +192,7 @@ public class MainInventory : MonoBehaviour
     // 아이템을 획득시
     public void RefreshItemSlotUI()
     {
-        float firstTime = Time.time;
+        //float firstTime = Time.time;
 
         // 소모품 개수 초기화
         var keys = new List<string>(consumableItems.Keys);
@@ -229,9 +246,9 @@ public class MainInventory : MonoBehaviour
             }
         }
 
-        float time = Time.time - firstTime;
+        //float time = Time.time - firstTime;
 
-        Debug.Log($"걸린 시간 : {time}");
+        //Debug.Log($"걸린 시간 : {time}");
     }
 
     public void CreateOrUpdateItemSlot(Item item, bool isConsumable = false, int itemCount = 0)
@@ -266,8 +283,14 @@ public class MainInventory : MonoBehaviour
 
                 go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
 
+                go.GetComponent<M_UISlot>().SetEquipUpgradeUI(item);
+
                 itemSlotUI.Add(item.InstanceId, (item, go));
             };
+        }
+        else
+        {
+            itemSlotUI[item.InstanceId].ItemSlot.GetComponent<M_UISlot>().SetEquipUpgradeUI(item);
         }
     }
 
@@ -325,7 +348,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         foreach (var itemSlot in itemSlotUI)
         {
@@ -350,6 +373,49 @@ public class MainInventory : MonoBehaviour
         }
 
         RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.3f);
+
+        OnMainInventorySaveLoaded?.Invoke();
+    }
+
+    // 장비 장착
+    public void EquipItem(Item item)
+    {
+        if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
+
+        slot.ItemSlot.SetActive(false);
+
+        defaultEquipmentSlotUI[item.itemData.Item_Type].SetActive(false);
+
+        var images = equipmentUI[(PlayerEquipment)item.itemData.Item_Type];
+
+        images[0].color = Defines.GetColor(item.itemData.Outline);
+
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed
+            += (sprite) =>
+            {
+                images[1].sprite = sprite.Result;
+            };
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Outline).Completed
+            += (sprite) =>
+            {
+                images[2].sprite = sprite.Result;
+
+                EquipmentSlotUI[item.itemData.Item_Type].SetActive(true);
+            };
+
+        playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+    }
+
+    public void UnequipItem(Item item)
+    {
+        playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
+
+        playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (null, null);
+
+        defaultEquipmentSlotUI[item.itemData.Item_Type].SetActive(true);
+        EquipmentSlotUI[item.itemData.Item_Type].SetActive(false);
     }
 }
 
@@ -376,7 +442,7 @@ public enum ItemTier
 public enum PlayerEquipment
 {
     Weapon = 1,
-    Helmet, // 투구
-    Armor, // 갑옷
-    Shoes, // 신발
+    Helmet = 2, // 투구
+    Armor = 3, // 갑옷
+    Shoes = 4, // 신발
 }

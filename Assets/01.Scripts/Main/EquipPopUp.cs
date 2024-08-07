@@ -35,6 +35,13 @@ public class EquipPopUp : MonoBehaviour
     public TextMeshProUGUI itemStatusText3;
     public TextMeshProUGUI itemStatusText4;
 
+    private MainInventory mainInventory;
+
+    private void Start()
+    {
+        mainInventory = GameObject.FindWithTag("MainInventory").GetComponent<MainInventory>();  
+    }
+
     public void SetItemUI(Item item)
     {
         currentItem = item;
@@ -124,5 +131,18 @@ public class EquipPopUp : MonoBehaviour
         }
 
         SetItemUI(currentItem);
+        mainInventory.RefreshItemSlotUI();
+    }
+
+    // 장비 장착 버튼
+    public void OnEquipEquipmentButton()
+    {
+        mainInventory.EquipItem(currentItem);
+    }
+
+    // 장비 장착 해제
+    public void OnUnequipEquipmentButton()
+    {
+
     }
 }

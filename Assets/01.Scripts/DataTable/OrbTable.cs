@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -31,7 +32,7 @@ public class OrbTable : DataTable
         return orbTable[orbID];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -45,6 +46,8 @@ public class OrbTable : DataTable
                     orbTable.Add(record.Orb_ID.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 }

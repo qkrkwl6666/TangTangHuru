@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.IO;
 using UnityEngine;
 
@@ -13,6 +14,11 @@ public class SaveManager : Singleton<SaveManager>
     private void Awake()
     {
         LoadGame();
+    }
+
+    private void Start()
+    {
+
     }
 
     private string SaveDirectory
