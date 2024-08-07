@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class PickUpExp : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public float checkRadius = 15f;
+    public float checkInterval = 30f;
+
+    private void Start()
     {
-        
+        InvokeRepeating(nameof(CheckNearbyObjects), 0f, checkInterval);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void CheckNearbyObjects()
     {
-        
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, checkRadius);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            MonsterExp monsterExp = hitCollider.GetComponent<MonsterExp>();
+
+            if (monsterExp != null)
+            {
+                monsterExp.SetTarget(transform);
+            }
+        }
     }
 }
