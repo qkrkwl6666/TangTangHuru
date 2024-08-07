@@ -1,9 +1,4 @@
 using Newtonsoft.Json;
-using Spine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using UnityEngine;
 
@@ -14,8 +9,6 @@ public class SaveManager : Singleton<SaveManager>
     public static readonly int SaveVersion = 1;
 
     public static readonly string SaveName = "AutoSave.json";
-
-
 
     private void Awake()
     {

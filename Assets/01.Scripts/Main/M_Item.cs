@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static UnityEditor.Progress;
-
 public class M_Item : Item
 {
     public int ItemId { get; set ; }
@@ -19,7 +14,7 @@ public class M_Item : Item
         this.ItemType = (ItemType)itemData.Item_Type;
         this.ItemTier = (ItemTier)itemData.Item_Tier;
 
-        this.itemData = itemData.DeepCopy();
+        this.itemData = itemData;
     }
 
     public void GetItemInfo()

@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TMPro;
-using Unity.VisualScripting;
 
 public class StageSelectionUI : MonoBehaviour
 {

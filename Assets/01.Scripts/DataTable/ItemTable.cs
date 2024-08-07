@@ -22,8 +22,18 @@ public class ItemData
     public float Dodge { get; set; }
     public float Damagecal { get; set; }
     public float CoolDown { get; set; }
-    public float Criticalper { get; set; }
+    public float CriticalChance { get; set; }
     public float Criticaldam { get; set; }
+
+    // 무기 강화 수치
+    public float UpDamage { get; set; }
+    public float UpCoolDown { get; set; }
+    public float UpCriticalChance { get; set; }
+    public float UpCriticalDam { get; set; }
+
+    // 무기 방어구 강화 단계
+    public int CurrentUpgrade = 0;
+
 
     public ItemData DeepCopy()
     {
@@ -44,7 +54,7 @@ public class ItemData
         newItemData.Dodge = this.Dodge;
         newItemData.Damagecal = this.Damagecal;
         newItemData.CoolDown = this.CoolDown;
-        newItemData.Criticalper = this.Criticalper;
+        newItemData.CriticalChance = this.CriticalChance;
         newItemData.Criticaldam = this.Criticaldam;
 
         return newItemData;

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -93,9 +92,9 @@ public class MainUI : MonoBehaviour
         EquipPopUp.gameObject.SetActive(active);
     }
 
-    public void SetEquipPopData(ItemData itemData)
+    public void SetEquipPopData(Item item)
     {
-        EquipPopUp.SetItemUI(itemData);
+        EquipPopUp.SetItemUI(item);
     }
 
     #endregion

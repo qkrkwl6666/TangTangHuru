@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class M_Weapon : Item
 {
@@ -21,14 +19,41 @@ public class M_Weapon : Item
     {
         ItemId = itemData.Item_Id;
         InstanceId = instanceId;
+
+        ItemType = (ItemType)itemData.Item_Type;
         ItemTier = (ItemTier)itemData.Item_Tier;
 
-        this.itemData = itemData.DeepCopy();
+        this.itemData = itemData;
     }
 
-    public void UpgradeWeapon()
+    public void UpgradeWeapon(int UpgradeCount)
     {
+        if(UpgradeCount == 0 && itemData.CurrentUpgrade >= 10) return;
 
+        var initItemData = DataTableManager.Instance.Get<ItemTable>
+            (DataTableManager.item).GetItemData(itemData.Item_Id.ToString());
+
+        float initDamage = initItemData.Damage;
+        float initCooldown = initItemData.CoolDown;
+        float initCriticalChance = initItemData.CriticalChance;
+        float initCriticalDamage = initItemData.Criticaldam;
+
+        for (int i = 0; i < UpgradeCount; i++)
+        {
+            initDamage += initItemData.Damage * initItemData.UpDamage;
+            initCooldown -= initItemData.CoolDown * initItemData.UpCoolDown;
+            initCriticalChance += initItemData.CriticalChance * initItemData.UpCriticalChance;
+            initCriticalDamage += initItemData.Criticaldam * initItemData.UpCriticalDam;
+        }
+
+        if (initCooldown <= 0) initCooldown = 0.1f;
+
+        itemData.CurrentUpgrade = UpgradeCount;
+
+        itemData.Damage = initDamage;
+        itemData.CoolDown = initCooldown;
+        itemData.CriticalChance = initCriticalChance;
+        itemData.Criticaldam = initCriticalDamage;
     }
 
 }

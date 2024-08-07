@@ -1,8 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
 {
@@ -60,24 +60,25 @@ public class MainInventory : MonoBehaviour
 
     private void Start()
     {
-        SaveDataLoadMainInventory();
+        StartCoroutine(SaveDataLoadMainInventory());
     }
 
     public void CreateEquipmentGem()
     {
         int random = Random.Range(0, items.Count);
 
-        MainInventoryAddItem(items[random].ToString());
-
-        RefreshItemSlotUI();
+        MainInventoryAddItem(items[random].ToString(), 0);
     }
 
-    public void MainInventoryAddItem(string itemId)
+    public void MainInventoryAddItem(string itemId, int itemLevel = 0)
     {
+        // 깊은 복사 저장
         var item = DataTableManager.Instance.Get<ItemTable>
-            (DataTableManager.item).GetItemData(itemId);
+            (DataTableManager.item).GetItemData(itemId).DeepCopy();
 
         if (item == null) return;
+
+        item.CurrentUpgrade = itemLevel;
 
         ItemType itemType = (ItemType)item.Item_Type;
         ItemTier itemTier = (ItemTier)item.Item_Tier;
@@ -132,40 +133,41 @@ public class MainInventory : MonoBehaviour
 
     public Item MakeItem(ItemData itemData)
     {
-        M_Item m_item = new M_Item();
-        int instanceId = m_item.GetHashCode() + Random.Range(1, 100000);
+        switch (itemData.Item_Type)
+        {
+            case 1: // 무기
+                {
+                    M_Weapon m_weaponItem = new M_Weapon();
 
-        m_item.SetItemData(itemData, instanceId);
+                    int instanceId = m_weaponItem.GetHashCode() + Random.Range(1, 100000);
 
-        return m_item;
+                    m_weaponItem.SetItemData(itemData, instanceId);
 
-        //switch (itemData.Item_Type)
-        //{
-        //    case 1: // 무기
+                    return m_weaponItem;
+                }
+            case 2: // 투구
 
-        //        break;
-        //    case 2: // 투구
+                break;
+            case 3: // 갑옷
 
-        //        break;
-        //    case 3: // 갑옷
+                break;
+            case 4: // 신발
 
-        //        break;
-        //    case 4: // 신발
+                break;
+            case 5: // 장비 원석
+            case 6: // 강화석
+                {
+                    M_Item m_item = new M_Item();
+                    int instanceId = m_item.GetHashCode() + Random.Range(1, 100000);
 
-        //        break;
-        //    case 5: // 장비 원석
-        //        //M_EquipmentGemstones m_EquipmentGemstones = new M_EquipmentGemstones();
-        //        //int instanceId = m_EquipmentGemstones.GetHashCode() + Random.Range(1, 100000);
+                    m_item.SetItemData(itemData, instanceId);
 
-        //        //m_EquipmentGemstones.SetItemData(itemData, instanceId);  
-                
-        //        //return m_EquipmentGemstones;
-        //    case 6: // 강화석
+                    return m_item;
+                }
 
-        //        break;
-        //}
+        }
 
-        //return null;
+        return null;
     }
 
     // 현재 가지고 있는 아이템 ui 에 생성 이미 생성된 아이템 ui라면 넘기기
@@ -242,17 +244,16 @@ public class MainInventory : MonoBehaviour
                 {
                     var go = itemGo.Result;
 
-                    go.GetComponent<M_UISlot>().SetItemData(item.itemData, mainUI);
-                    go.GetComponent<M_UISlot>().SetItemDataConsumable(item.itemData, itemCount);
+                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
+                    go.GetComponent<M_UISlot>().SetItemDataConsumable(item, itemCount);
 
                     itemSlotUI.Add(item.ItemId, (item, go));
                 };
             }
             else
             {
-                itemSlotUI[item.ItemId].ItemSlot.GetComponent<M_UISlot>().SetItemDataConsumable(item.itemData, itemCount);
+                itemSlotUI[item.ItemId].ItemSlot.GetComponent<M_UISlot>().SetItemDataConsumable(item, itemCount);
             }
-
 
             return;
         }
@@ -263,7 +264,7 @@ public class MainInventory : MonoBehaviour
             {
                 var go = itemGo.Result;
 
-                go.GetComponent<M_UISlot>().SetItemData(item.itemData, mainUI);
+                go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
 
                 itemSlotUI.Add(item.InstanceId, (item, go));
             };
@@ -313,13 +314,39 @@ public class MainInventory : MonoBehaviour
     }
 
 
-    public void SaveDataLoadMainInventory()
+    public IEnumerator SaveDataLoadMainInventory()
     {
         var items = SaveManager.SaveDataV1.allItem;
 
         foreach (var item in items) 
         {
-            MainInventoryAddItem(item.ItemId.ToString());
+            MainInventoryAddItem(item.ItemId.ToString(), item.itemData.CurrentUpgrade);
+        }
+
+        RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.5f);
+
+        foreach (var itemSlot in itemSlotUI)
+        {
+            var item = itemSlot.Value.Item1;
+
+            switch (item.itemData.Item_Type)
+            {
+                case (int)ItemType.Weapon:
+                    var weaponItem = item as M_Weapon;
+
+                    if (weaponItem == null) yield break;
+
+                    weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade);
+
+                    break;
+
+                case (int)ItemType.Helmet:
+                case (int)ItemType.Armor:
+                case (int)ItemType.Shose:
+                    break;
+            }
         }
 
         RefreshItemSlotUI();

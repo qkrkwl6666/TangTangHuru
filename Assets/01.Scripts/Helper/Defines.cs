@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public static class Defines
 {
@@ -37,6 +35,8 @@ public static class Defines
     public static readonly string attackCoolTime = "공격 속도 : ";
     public static readonly string criticalChance = "치명타 확률 : ";
     public static readonly string criticalDamage = "치명타 피해 : ";
+
+    public static int MaxUpgrade = 10;
 
     // 방어구 스텟 텍스트
 

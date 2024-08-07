@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,7 +5,7 @@ using UnityEngine.UI;
 
 public class EquipPopUp : MonoBehaviour
 {
-    public ItemData itemData;
+    public Item currentItem;
 
     // 버튼
     public Button EquipButton;   // 장착
@@ -37,17 +35,26 @@ public class EquipPopUp : MonoBehaviour
     public TextMeshProUGUI itemStatusText3;
     public TextMeshProUGUI itemStatusText4;
 
-    public void SetItemUI(ItemData itemData)
+    public void SetItemUI(Item item)
     {
+        currentItem = item;
+
+        if(currentItem == null)
+        {
+            Debug.Log("currentItem is null");
+        }
+
+        UpgradeButton.interactable = !(currentItem.itemData.CurrentUpgrade >= 10);
+
         // 아이템 이미지
-        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += 
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += 
             (texture) =>
         {
             itemImage.sprite = texture.Result;
         };
 
         // 아이템 아웃라이너
-        Addressables.LoadAssetAsync<Sprite>(itemData.Outline).Completed +=
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Outline).Completed +=
              (texture) =>
         {
             outlineImage.sprite = texture.Result;
@@ -55,22 +62,22 @@ public class EquipPopUp : MonoBehaviour
 
         // 아이템 배경
 
-        bgImage.color = Defines.GetColor(itemData.Outline);
+        bgImage.color = Defines.GetColor(item.itemData.Outline);
 
         titleText.text = DataTableManager.Instance.Get<StringTable>
-            (DataTableManager.String).Get(itemData.Name_Id.ToString()).Text;
+            (DataTableManager.String).Get(item.itemData.Name_Id.ToString()).Text + $" +{item.itemData.CurrentUpgrade}";
 
         itemDescText.text = DataTableManager.Instance.Get<StringTable>
-            (DataTableManager.String).Get(itemData.Desc_Id.ToString()).Text;
+            (DataTableManager.String).Get(item.itemData.Desc_Id.ToString()).Text;
 
         // 아이템 스텟 텍스트 설정
-        switch (itemData.Item_Type)
+        switch (item.itemData.Item_Type)
         {
             case (int)ItemType.Weapon:
-                itemStatusText1.text = Defines.damage + itemData.Damage;
-                itemStatusText2.text = Defines.attackCoolTime + itemData.CoolDown;
-                itemStatusText3.text = Defines.criticalChance + itemData.Criticalper;
-                itemStatusText3.text = Defines.criticalDamage + itemData.Criticaldam;
+                itemStatusText1.text = Defines.damage + item.itemData.Damage;
+                itemStatusText2.text = Defines.attackCoolTime + item.itemData.CoolDown;
+                itemStatusText3.text = Defines.criticalChance + item.itemData.CriticalChance + "%";
+                itemStatusText4.text = Defines.criticalDamage + item.itemData.Criticaldam + "%";
 
                 break;
             case (int)ItemType.Helmet:
@@ -84,10 +91,38 @@ public class EquipPopUp : MonoBehaviour
     private void Awake()
     {
         CencelButton.onClick.AddListener(OnCencelButton);
+        UpgradeButton.onClick.AddListener(OnUpgradeButton);
     }
 
     public void OnCencelButton()
     {
+        currentItem = null;
+
         gameObject.SetActive(false);
+    }
+
+    public void OnUpgradeButton()
+    {
+        if(currentItem == null) return;
+
+        switch(currentItem.ItemType)
+        {
+            case ItemType.Weapon:
+                var weaponItem = currentItem as M_Weapon;
+
+                if(weaponItem == null) return;
+
+                weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);
+
+                Debug.Log("무기 업그레이드");
+                break;
+
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                break;
+        }
+
+        SetItemUI(currentItem);
     }
 }
