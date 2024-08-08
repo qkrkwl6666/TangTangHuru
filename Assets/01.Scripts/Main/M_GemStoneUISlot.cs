@@ -5,49 +5,89 @@ using UnityEngine.UI;
 
 public class M_GemStoneUISlot : MonoBehaviour
 {
-    public Item item;
+    public ItemData itemData;
 
-    private UnityEngine.UI.Button gemStoneButton;
+    public UnityEngine.UI.Button gemStoneButton;
+    public UnityEngine.UI.Button subButton;
 
-    public TextMeshProUGUI itemCountText;
+    public TextMeshProUGUI itemTotalCountText;
+    public TextMeshProUGUI itemCurrentCountText;
+
     public Image itemIcon;
     public Image outline;
     public Image background;
     public GameObject foucs;
 
+    private EquipmentAppraisal equipmentAppraisal;
+
     private void Awake()
     {
-        gemStoneButton = GetComponent<Button>();
-
         gemStoneButton.onClick.AddListener(OnGemStoneButton);
+        subButton.onClick.AddListener(OnSubButton);
     }
 
-    public void SetItemData(Item item)
+    public void SetItemData(ItemData itemData, EquipmentAppraisal equipmentAppraisal)
     {
-        this.item = item;
+        this.itemData = itemData;
+        this.equipmentAppraisal = equipmentAppraisal;
 
         // 아이템 아이콘
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += (texture) =>
+        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (texture) =>
         {
             itemIcon.sprite = texture.Result;
         };
 
         // 테두리 아이콘
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Outline).Completed += (texture) =>
+        Addressables.LoadAssetAsync<Sprite>(itemData.Outline).Completed += (texture) =>
         {
             outline.sprite = texture.Result;
         };
 
-        background.color = Defines.GetColor(item.itemData.Outline);
+        background.color = Defines.GetColor(itemData.Outline);
     }
 
     public void RefreshItemCount(int itemCount)
     {
-        itemCountText.text = itemCount.ToString();
+        itemCurrentCountText.text = "0 /";
+        itemTotalCountText.text = $" {itemCount}";
+    }
+
+    public void RefreshCurrentCount(int itemCount, int maxCount) 
+    {
+        itemCurrentCountText.text = $"{itemCount} /";
+        itemTotalCountText.text = $" {maxCount}";
     }
 
     public void OnGemStoneButton()
     {
+        bool isAdd = equipmentAppraisal.AddGemStone((ItemTier)itemData.Item_Tier);
 
+        if (isAdd)
+        {
+            RefreshCurrentCount(equipmentAppraisal
+                .GetSelectGemStoneCount((ItemTier)itemData.Item_Tier), 
+                equipmentAppraisal
+                .GetMaxGemStoneCount((ItemTier)itemData.Item_Tier));
+
+            subButton.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnSubButton()
+    {
+        bool isSub = equipmentAppraisal.SubGemStone((ItemTier)itemData.Item_Tier);
+
+        if (isSub)
+        {
+            RefreshCurrentCount(equipmentAppraisal
+                .GetSelectGemStoneCount((ItemTier)itemData.Item_Tier),
+                equipmentAppraisal
+                .GetMaxGemStoneCount((ItemTier)itemData.Item_Tier));
+
+            int currentCount = equipmentAppraisal
+                .GetSelectGemStoneCount((ItemTier)itemData.Item_Tier);
+
+            if (currentCount <= 0) subButton.gameObject.SetActive(false);
+        }
     }
 }

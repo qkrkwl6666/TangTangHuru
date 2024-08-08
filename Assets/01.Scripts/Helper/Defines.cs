@@ -41,6 +41,7 @@ public static class Defines
     // 방어구 스텟 텍스트
 
     public static readonly string itemSlot = "ItemSlot";
+    public static readonly string gemStoneSlot = "GemStoneSlot";
 
     // 장비 슬롯 텍스처
     public static readonly string equipSlotArmor = "EquipSlotArmor";

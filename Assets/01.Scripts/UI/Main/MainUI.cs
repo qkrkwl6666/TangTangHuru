@@ -88,6 +88,14 @@ public class MainUI : MonoBehaviour
         GameManager.Instance.StartGame();
     }
 
+    public void OpenUI(int uiPanel)
+    {
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive((UIObject)uiPanel == (UIObject)i);
+        }
+    }
+
     #region UI 팝업
 
     public EquipPopUp EquipPopUp; 
@@ -130,6 +138,22 @@ public class MainUI : MonoBehaviour
     }
 
     #endregion
+
+    #region 장비 감정 
+
+    public EquipmentAppraisal equipmentAppraisal;
+
+    public void EquipmentAppraisalUIButton()
+    {
+        equipmentAppraisal.RefreshGemStoneSlotUI();
+
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive(UIObject.EquipmentAppraisal == (UIObject)i);
+        }
+    }
+
+    #endregion
 }
 
 public enum UIObject
@@ -137,4 +161,5 @@ public enum UIObject
     Stage = 0,
     StageSelect = 1,
     Inventory = 2,
+    EquipmentAppraisal = 3,
 }
