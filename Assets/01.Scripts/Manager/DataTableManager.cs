@@ -30,6 +30,8 @@ public class DataTableManager : Singleton<DataTableManager>
 
     public Action OnAllTableLoaded;
 
+    public bool isTableLoad = false;
+
     private int loadTableCount = 0;
 
     public int tableCount = 0;
@@ -92,6 +94,8 @@ public class DataTableManager : Singleton<DataTableManager>
 
     public void TableLoadCompleted()
     {
+        UnityEngine.Debug.Log("TableLoadCompleted");
+
         loadTableCount++;
 
         //UnityEngine.Debug.Log(loadTableCount);
@@ -99,6 +103,7 @@ public class DataTableManager : Singleton<DataTableManager>
         if (loadTableCount >= tables.Count) 
         {
             OnAllTableLoaded?.Invoke();
+            isTableLoad = true;
         }
     }
 

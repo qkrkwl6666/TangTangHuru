@@ -22,14 +22,18 @@ public class EquipmentAppraisal : MonoBehaviour
     {
         // 원석 아이템 슬롯 생성
 
-        DataTableManager.Instance.OnAllTableLoaded += CreateGemstoneSlot;
-
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += CreateGemstoneSlot;
+        else
+        {
+            CreateGemstoneSlot();
+        }
         //CreateGemstoneSlot();
     }
 
     private void OnDestroy()
     {
-        DataTableManager.Instance.OnAllTableLoaded -= CreateGemstoneSlot;
+        
     }
 
     public void RefreshGemStoneSlotUI()

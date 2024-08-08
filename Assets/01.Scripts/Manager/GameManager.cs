@@ -18,7 +18,6 @@ public class SaveData
 
 }
 
-
 public class GameManager : Singleton<GameManager>
 {
     public SaveData currSaveData = new();
@@ -26,10 +25,8 @@ public class GameManager : Singleton<GameManager>
 
     public string currentWeapon = "OneSword";
 
-    // 메인 인벤토리 
-
     // 로딩 UI 
-    private GameObject loadingUI;
+    public GameObject loadingUI;
     
     // 임시 용도
     public string characterSkin = Defines.body033;
@@ -59,6 +56,8 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
+        Debug.Log("GameManagerStart");
+
         mainInventory = GameObject.FindWithTag("MainInventory")
             .GetComponent<MainInventory>();
 
@@ -67,6 +66,10 @@ public class GameManager : Singleton<GameManager>
 
     public void InitSaveLoaded()
     {
+        // Todo : 코드 교체 필요 
+        mainInventory = GameObject.FindWithTag("MainInventory")
+            .GetComponent<MainInventory>();
+
         mainInventory.gameObject.SetActive(false);
         loadingUI.SetActive(false);
     }
@@ -76,11 +79,14 @@ public class GameManager : Singleton<GameManager>
     {
         loadingUI.SetActive(true);
 
+        // 저장
+        mainInventory.SaveMainInventory();
+
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-            Debug.Log("SS");
-            //DataTableManager.Instance.OnAllTableLoaded?.Invoke();
-            loadingUI.SetActive(false);
+            //Todo : 메인 씬 이름 변경시 변경 필요
+            if(sceneName != "InventoryScene")
+                loadingUI.SetActive(false);
         };
     }
 
@@ -92,6 +98,14 @@ public class GameManager : Singleton<GameManager>
     public void ChangeStage(int stage)
     {
         CurrentStage = stage;
+    }
+
+    public void SceneSaveInventory()
+    {
+
+
+        //this.allItem = allItem;
+        //this.playerEquipment = playerEquipment;
     }
 
 }

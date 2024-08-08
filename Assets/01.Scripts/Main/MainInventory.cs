@@ -21,7 +21,7 @@ public class MainInventory : MonoBehaviour
 
     public List<M_UISlot> equipmentSlotUI = new ();
 
-    // 현재 생성된 UI 슬롯 아이템z
+    // 현재 생성된 UI 슬롯 아이템
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
 
     // 소모품 아이템 컨테이너
@@ -71,12 +71,18 @@ public class MainInventory : MonoBehaviour
 
     private void Start()
     {
-        DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory; 
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory;
+        else
+        {
+            Debug.Log("세이브 이미 로드 완료됨");
+            StartCoroutine(SceneLoadMainInventory());
+        }
     }
 
     private void OnDestroy()
     {
-        DataTableManager.Instance.OnAllTableLoaded -= CoSaveDataLoadMainInventory;
+        
     }   
 
     public void CoSaveDataLoadMainInventory()
@@ -383,6 +389,49 @@ public class MainInventory : MonoBehaviour
 
         OnMainInventorySaveLoaded?.Invoke();
     }
+
+    public IEnumerator SceneLoadMainInventory()
+    {
+        var items = SaveManager.SaveDataV1.allItem;
+
+        foreach (var item in items)
+        {
+            MainInventoryAddItem(item.ItemId.ToString(), item.itemData.CurrentUpgrade);
+        }
+
+        RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.3f);
+
+        foreach (var itemSlot in itemSlotUI)
+        {
+            var item = itemSlot.Value.Item1;
+
+            switch (item.itemData.Item_Type)
+            {
+                case (int)ItemType.Weapon:
+                    var weaponItem = item as M_Weapon;
+
+                    if (weaponItem == null) yield break;
+
+                    weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade);
+
+                    break;
+
+                case (int)ItemType.Helmet:
+                case (int)ItemType.Armor:
+                case (int)ItemType.Shose:
+                    break;
+            }
+        }
+
+        RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.3f);
+
+        GameManager.Instance.InitSaveLoaded();
+    }
+
 
     // 장비 장착
     public void EquipItem(Item item)
