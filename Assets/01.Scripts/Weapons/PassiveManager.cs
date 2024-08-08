@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class PassiveManager : MonoBehaviour
 {
     public List<WeaponCreator> weaponCreators;
+    public List<WeaponCreator> currWeaponCreators;
 
     public List<PassiveData> passiveDataList;
     public List<PassiveData> inGamePassiveList = new(); //데이터 리스트 카피
@@ -12,27 +14,41 @@ public class PassiveManager : MonoBehaviour
     public PassiveData emptyPassiveData;
 
     private WeaponCreator currMainWeapon;
+    private WeaponCreator[] currSubWeapon;
     private PassiveData totalPowerPassive;
     private PassiveData totalSpeedPassive;
     private PassiveData totalNoneTypePassive;
 
+    private ItemData itemData;
 
     void Start()
     {
         currMainWeapon = GameObject.FindGameObjectWithTag("MainWeapon").GetComponent<WeaponCreator>();
+        var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
+
+        foreach( var sub in subs)
+        {
+            currWeaponCreators.Add(sub.GetComponent<WeaponCreator>());
+            //To-Do. 아직 여기서 제거가 안됨. 
+            weaponCreators.Remove(sub.GetComponent<WeaponCreator>()); 
+        }
         if(currMainWeapon == null)
         {
             Debug.LogError("No Main Weapon!");
         }
+        else
+        {
+            currWeaponCreators.Add(currMainWeapon);
+        }
 
-        for(int i = 0; i < passiveDataList.Count; i++)
+
+        for (int i = 0; i < passiveDataList.Count; i++)
         {
             inGamePassiveList.Add(Instantiate(passiveDataList[i]));
         }
         totalPowerPassive = Instantiate(emptyPassiveData);
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
-        weaponCreators.Add(currMainWeapon);
     }
     public void PassiveAdd(PassiveData selected)
     {
@@ -62,7 +78,7 @@ public class PassiveManager : MonoBehaviour
 
     public void PassiveEquip()
     {
-        foreach (var weaponCreator in weaponCreators)
+        foreach (var weaponCreator in currWeaponCreators)
         {
             switch (weaponCreator.weaponDataRef.WeaponType)
             {
@@ -112,10 +128,5 @@ public class PassiveManager : MonoBehaviour
         data.CoolDown = 0;
         data.CriticalChance = 0;
         data.CriticalValue = 0;
-    }
-
-    void Update()
-    {
-
     }
 }

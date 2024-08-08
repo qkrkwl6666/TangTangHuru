@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
+    public GameObject player;
     public IconLoader iconLoader;
     public PassiveManager passiveManager;
 
@@ -38,26 +39,19 @@ public class LevelUpUI : MonoBehaviour
 
         var weaponCount = 0;
 
-        foreach (var weaponCreator in passiveManager.weaponCreators) //선택 가능한 모든 액티브 목록
+        foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
         {
-            if (weaponCreator.currLevel > 0) //보유중
+            weaponCount++; //보유중 숫자
+            if (weaponCreator.currLevel < 5)
             {
-                weaponCount++; //보유중 숫자
-                if (weaponCreator.currLevel < 5)
-                {
-                    weaponList.Add(weaponCreator);
-                }
+                weaponList.Add(weaponCreator);
             }
         }
-
         if (weaponCount < 5)
         {
             foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
             {
-                if (weaponCreator.currLevel == 0)
-                {
-                    weaponList.Add(weaponCreator);
-                }
+                weaponList.Add(weaponCreator);
             }
         }
 
@@ -128,8 +122,11 @@ public class LevelUpUI : MonoBehaviour
 
                 if (selectedCreator.currLevel == 0)
                 {
+                    //Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                    //=> selectedCreator.gameObject.SetActive(true));
+
                     Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                        => selectedCreator.gameObject.SetActive(true));
+                        => CreateSkill(selectedCreator));
                 }
                 else
                 {
@@ -140,4 +137,12 @@ public class LevelUpUI : MonoBehaviour
 
     }
 
+
+    private void CreateSkill(WeaponCreator creator)
+    {
+        var skill = Instantiate(creator);
+        skill.transform.SetParent(player.transform, false);
+        passiveManager.currWeaponCreators.Add(skill);
+        passiveManager.weaponCreators.Remove(creator);
+    }
 }
