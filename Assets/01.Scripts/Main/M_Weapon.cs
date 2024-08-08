@@ -8,6 +8,7 @@ public class M_Weapon : Item
     public ItemTier ItemTier { get ; set ; }
     public ItemData itemData { get ; set ; }
 
+    public List<Item> subWeapons { get ; set ; } // 가지고 있는 무기
     public List<Item> orbs { get ; set ; } // 보유하고 있는 오브
 
     public void GetItemInfo()
@@ -56,6 +57,11 @@ public class M_Weapon : Item
         itemData.Criticaldam = initCriticalDamage;
 
         // UI 적용
+    }
+
+    public List<Item> GetSubWeapon()
+    {
+        return subWeapons;
     }
 
 }
