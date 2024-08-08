@@ -54,7 +54,7 @@ public class MainUI : MonoBehaviour
         uiGameObjects[(int)UIObject.StageSelect].SetActive(false);
 
         mainStageText.text = DataTableManager.Instance.Get<StageTable>
-            (DataTableManager.stage).GetData(GameManager.Instance.CurrentStage + 1).Title;
+            (DataTableManager.stage).GetData(GameManager.Instance.CurrentStage).Title;
 
         uiGameObjects[(int)UIObject.Stage].SetActive(true);
     }
@@ -81,6 +81,11 @@ public class MainUI : MonoBehaviour
     {
         SaveDataV1 saveDataV1 = new SaveDataV1();
         //saveDataV1.allItem
+    }
+
+    public void GameStart()
+    {
+        GameManager.Instance.StartGame();
     }
 
     #region UI ÆË¾÷

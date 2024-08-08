@@ -11,8 +11,8 @@ public class M_UISlot : MonoBehaviour
 
     public TextMeshProUGUI itemCountText;
     public Image itemIcon;
-    public Image Outline;
-    public Image Background;
+    public Image outline;
+    public Image background;
 
     private bool isConsumable = false;
 
@@ -35,32 +35,32 @@ public class M_UISlot : MonoBehaviour
         // 테두리 아이콘
         Addressables.LoadAssetAsync<Sprite>(item.itemData.Outline).Completed += (texture) =>
         {
-            Outline.sprite = texture.Result;
+            outline.sprite = texture.Result;
         };
 
         // 배경 색깔
         switch(item.itemData.Outline)
         {
             case "Outline_Blue":
-                Background.color = Defines.blueColor;
+                background.color = Defines.blueColor;
                 break;
             case "Outline_Green":
-                Background.color = Defines.greenColor;
+                background.color = Defines.greenColor;
                 break;
             case "Outline_Orange":
-                Background.color = Defines.orangeColor;
+                background.color = Defines.orangeColor;
                 break;
             case "Outline_Purple":
-                Background.color = Defines.purpleColor;
+                background.color = Defines.purpleColor;
                 break;
             case "Outline_Red":
-                Background.color = Defines.redColor;
+                background.color = Defines.redColor;
                 break;
             case "Outline_White":
-                Background.color = Defines.whiteColor;
+                background.color = Defines.whiteColor;
                 break;
             case "Outline_Yellow":
-                Background.color = Defines.yellowColor;
+                background.color = Defines.yellowColor;
                 break;
         }
     }

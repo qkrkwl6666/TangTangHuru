@@ -21,7 +21,6 @@ public class MainInventory : MonoBehaviour
 
     public List<M_UISlot> equipmentSlotUI = new ();
 
-
     // ÇöÀç »ý¼ºµÈ UI ½½·Ô ¾ÆÀÌÅÛz
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
 
@@ -411,6 +410,19 @@ public class MainInventory : MonoBehaviour
         defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(true);
         EquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
     }
+
+    public int GetItemCount(ItemType itemType, ItemTier itemTier)
+    {
+        if (allItem.ContainsKey(itemType))
+        {
+            if(allItem[itemType].ContainsKey(itemTier))
+            {
+                return allItem[itemType][itemTier].Count;
+            }
+        }
+
+        return default;
+    }
 }
 
 public enum ItemType
@@ -435,8 +447,8 @@ public enum ItemTier
 
 public enum PlayerEquipment
 {
-    Weapon = 1,
+    Weapon = 1, // ¹«±â
     Helmet = 2, // Åõ±¸
-    Armor = 3, // °©¿Ê
-    Shoes = 4, // ½Å¹ß
+    Armor = 3,  // °©¿Ê
+    Shoes = 4,  // ½Å¹ß
 }

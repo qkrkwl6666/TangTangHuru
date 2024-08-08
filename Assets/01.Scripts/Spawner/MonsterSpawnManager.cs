@@ -25,7 +25,7 @@ public class MonsterSpawnManager : MonoBehaviour
     private void Awake()
     {
         waveDatas = DataTableManager.Instance.Get<WaveTable>(DataTableManager.stageWave).
-            waveTable[GameManager.Instance.CurrentStage.ToString()];
+            waveTable[(GameManager.Instance.CurrentStage).ToString()];
 
         monsterSpawnFactory = GetComponent<MonsterSpawnFactory>();
 
@@ -123,7 +123,7 @@ public class MonsterSpawnManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         var bossStageData = DataTableManager.Instance.Get<BossStageTable>
-            (DataTableManager.stageBoss).GetBossData(GameManager.Instance.CurrentStage.ToString());
+            (DataTableManager.stageBoss).GetBossData((GameManager.Instance.CurrentStage - 1).ToString());
 
         var bossData = DataTableManager.Instance.Get<BossTable>(DataTableManager.boss)
             .GetBossData(bossStageData.Boss_Id.ToString());

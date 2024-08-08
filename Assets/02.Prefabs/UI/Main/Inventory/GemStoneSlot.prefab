@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6651135381802701989}
   - component: {fileID: 9093132851313719678}
-  - component: {fileID: 2964292893479560659}
   m_Layer: 5
-  m_Name: ItemSlot
+  m_Name: GemStoneSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -86,7 +85,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2964292893479560659}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: M_UISlot, Assembly-CSharp
         m_MethodName: ItemSlotButton
         m_Mode: 1
@@ -98,24 +97,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2964292893479560659
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 184833401355053519}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 908a911abd3800d41931c9067ad64152, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textGameobject: {fileID: 5923382076514627877}
-  itemCountText: {fileID: 1526173068459607766}
-  itemIcon: {fileID: 4457196083989684029}
-  outline: {fileID: 3431067526649313135}
-  background: {fileID: 2704550746879350313}
-  mainUI: {fileID: 0}
 --- !u!1 &758825511381945244
 GameObject:
   m_ObjectHideFlags: 0
@@ -150,8 +131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0999756, y: 0}
-  m_SizeDelta: {x: 18, y: 16}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 10, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8648553206029210086
 CanvasRenderer:
@@ -300,8 +281,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0999756, y: 0}
-  m_SizeDelta: {x: -10.409714, y: -12.60968}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6611775901736269040
 CanvasRenderer:
@@ -619,7 +600,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4072054039014747106
 RectTransform:
   m_ObjectHideFlags: 0
@@ -750,8 +731,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: 0}
-  m_SizeDelta: {x: 76, y: 67}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &509727822387714566
 CanvasRenderer:
