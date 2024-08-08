@@ -74,6 +74,11 @@ public class MainInventory : MonoBehaviour
         DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory; 
     }
 
+    private void OnDestroy()
+    {
+        DataTableManager.Instance.OnAllTableLoaded -= CoSaveDataLoadMainInventory;
+    }   
+
     public void CoSaveDataLoadMainInventory()
     {
         StartCoroutine(SaveDataLoadMainInventory());

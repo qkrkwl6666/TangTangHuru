@@ -27,6 +27,11 @@ public class EquipmentAppraisal : MonoBehaviour
         //CreateGemstoneSlot();
     }
 
+    private void OnDestroy()
+    {
+        DataTableManager.Instance.OnAllTableLoaded -= CreateGemstoneSlot;
+    }
+
     public void RefreshGemStoneSlotUI()
     {
         allGemStone = mainInventory.GetItemTypes(ItemType.EquipmentGem);

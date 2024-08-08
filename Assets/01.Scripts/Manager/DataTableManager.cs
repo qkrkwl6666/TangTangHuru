@@ -28,7 +28,7 @@ public class DataTableManager : Singleton<DataTableManager>
 
     public event Action OnTableLoaded;
 
-    public event Action OnAllTableLoaded;
+    public Action OnAllTableLoaded;
 
     private int loadTableCount = 0;
 
@@ -96,7 +96,7 @@ public class DataTableManager : Singleton<DataTableManager>
 
         //UnityEngine.Debug.Log(loadTableCount);
 
-        if (loadTableCount == tables.Count) 
+        if (loadTableCount >= tables.Count) 
         {
             OnAllTableLoaded?.Invoke();
         }

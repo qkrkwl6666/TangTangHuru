@@ -26,6 +26,8 @@ public class GameManager : Singleton<GameManager>
 
     public string currentWeapon = "OneSword";
 
+    // 메인 인벤토리 
+
     // 로딩 UI 
     private GameObject loadingUI;
     
@@ -76,6 +78,8 @@ public class GameManager : Singleton<GameManager>
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
+            Debug.Log("SS");
+            //DataTableManager.Instance.OnAllTableLoaded?.Invoke();
             loadingUI.SetActive(false);
         };
     }
