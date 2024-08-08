@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -32,7 +33,7 @@ public class WaveTable : DataTable
 {
     public Dictionary<string, List<WaveData>> waveTable { get; private set; } = new();
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -53,6 +54,8 @@ public class WaveTable : DataTable
                     waveTable[waveList[i].stage.ToString()].Add(waveList[i]);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 }

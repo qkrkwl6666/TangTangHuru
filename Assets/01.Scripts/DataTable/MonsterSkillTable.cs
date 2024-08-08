@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -23,7 +24,7 @@ public class MonsterSkillTable : DataTable
 
         return monsterSkillTable[skillId];
     }
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -37,6 +38,8 @@ public class MonsterSkillTable : DataTable
                     monsterSkillTable.Add(record.Skill_Id.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 }

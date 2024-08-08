@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -27,10 +28,13 @@ public class GameManager : Singleton<GameManager>
 
     // 로딩 UI 
     private GameObject loadingUI;
-
+    
     // 임시 용도
     public string characterSkin = Defines.body033;
     public string weaponSkin = Defines.weapon005;
+
+    // UI 
+    public MainInventory mainInventory;
 
     // 인 게임 아이템 저장 컨테이너
     private List<IInGameItem> inGameItems = new ();
@@ -45,15 +49,24 @@ public class GameManager : Singleton<GameManager>
         inGameItems.Add(item);
     }
 
-
     private void Awake()
     {
-        Addressables.InstantiateAsync(Defines.loadingUI).Completed += (loadUIGo) =>
-        {
-            loadingUI = loadUIGo.Result;
-            loadingUI.SetActive(false);
-            DontDestroyOnLoad(loadingUI);
-        };
+        loadingUI = GameObject.FindWithTag("Loading");
+        DontDestroyOnLoad(loadingUI);
+    }
+
+    private void Start()
+    {
+        mainInventory = GameObject.FindWithTag("MainInventory")
+            .GetComponent<MainInventory>();
+
+        mainInventory.OnMainInventorySaveLoaded += InitSaveLoaded;
+    }
+
+    public void InitSaveLoaded()
+    {
+        mainInventory.gameObject.SetActive(false);
+        loadingUI.SetActive(false);
     }
 
     // Defines 에서 호출 ex) Defines.main 

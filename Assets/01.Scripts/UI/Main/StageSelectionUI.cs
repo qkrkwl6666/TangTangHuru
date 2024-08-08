@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TMPro;
-using Unity.VisualScripting;
 
 public class StageSelectionUI : MonoBehaviour
 {
@@ -27,7 +26,7 @@ public class StageSelectionUI : MonoBehaviour
 
     // 스테이지 UI 
 
-    private int currentStage = 0; // Todo : 나중에 세이브된 스테이지 awake때 로드
+    private int currentStage = 1; // Todo : 나중에 세이브된 스테이지 awake때 로드 1로 시작하자
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI descText;
 
@@ -46,7 +45,7 @@ public class StageSelectionUI : MonoBehaviour
         EnhancedTouchSupport.Enable();
 
         scrollCoroutine = StartCoroutine(ScrollCheck());
-        Debug.Log(GameManager.Instance.CurrentStage);
+        //Debug.Log(GameManager.Instance.CurrentStage);
         if (isFirstEnable == false)
         {
             InitStageUI();
@@ -55,7 +54,7 @@ public class StageSelectionUI : MonoBehaviour
         else
         {
             // 게임매니저 스테이지로 중앙 초기화
-            CenterOnStage(stageRects[GameManager.Instance.CurrentStage]);
+            CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
         }
     }
 
@@ -72,9 +71,9 @@ public class StageSelectionUI : MonoBehaviour
             scrollCoroutine = null;
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
-        GameManager.Instance.CurrentStage = currentStage;
 
-        Debug.Log(GameManager.Instance.CurrentStage);
+
+        GameManager.Instance.CurrentStage = currentStage;
     }
 
     private void Start()
@@ -147,7 +146,7 @@ public class StageSelectionUI : MonoBehaviour
             {
                 nearestDistance = distance;
                 nearestStage = stageRects[i];
-                currentStage = i;
+                currentStage = i + 1;
             }
         }
 
@@ -155,8 +154,8 @@ public class StageSelectionUI : MonoBehaviour
         {
             CenterOnStage(nearestStage);
 
-            titleText.text = stageTable[(currentStage + 1).ToString()].Title;
-            descText.text = stageTable[(currentStage + 1).ToString()].Desc;
+            titleText.text = stageTable[(currentStage).ToString()].Title;
+            descText.text = stageTable[(currentStage).ToString()].Desc;
             
         }
     }
@@ -209,7 +208,7 @@ public class StageSelectionUI : MonoBehaviour
 
                 if(name == stageTable.Count - 1)
                 {
-                    CenterOnStage(stageRects[GameManager.Instance.CurrentStage]);
+                    CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
                 }
             };
         }

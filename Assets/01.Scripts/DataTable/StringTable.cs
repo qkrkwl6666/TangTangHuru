@@ -1,8 +1,11 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using TextAsset = UnityEngine.TextAsset;
 
 public class StringData
@@ -22,7 +25,7 @@ public class StringTable : DataTable
         return stringTable[id];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -36,6 +39,9 @@ public class StringTable : DataTable
                     stringTable.Add(record.String_Id.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
+
 }

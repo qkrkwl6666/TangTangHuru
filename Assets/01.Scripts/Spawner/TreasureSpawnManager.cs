@@ -25,7 +25,7 @@ public class TreasureSpawnManager : MonoBehaviour
     private void Awake()
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
-            .GetTreasure(GameManager.Instance.CurrentStage.ToString());
+            .GetTreasure((GameManager.Instance.CurrentStage).ToString()); // stage name
 
         SpawnWall();
 
