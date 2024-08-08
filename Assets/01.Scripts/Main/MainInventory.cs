@@ -47,26 +47,26 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        items.Add(200001);
-        items.Add(200002);
-        items.Add(200003);
-        items.Add(200004);
-        items.Add(200005);
-        items.Add(200101);
-        items.Add(200102);
-        items.Add(200103);
-        items.Add(200104);
-        items.Add(200105);
-        items.Add(210001);
-        items.Add(210002);
-        items.Add(210003);
-        items.Add(210004);
+        //items.Add(200001);
+        //items.Add(200002);
+        //items.Add(200003);
+        //items.Add(200004);
+        //items.Add(200005);
+        //items.Add(200101);
+        //items.Add(200102);
+        //items.Add(200103);
+        //items.Add(200104);
+        //items.Add(200105);
+        //items.Add(210001);
+        //items.Add(210002);
+        //items.Add(210003);
+        //items.Add(210004);
         items.Add(600001);
         items.Add(600002);
         items.Add(600003);
         items.Add(600004);
         items.Add(600005);
-        items.Add(600006);
+        //items.Add(600006);
     }
 
     private void Start()

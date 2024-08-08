@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
@@ -8,6 +9,10 @@ public class EquipmentAppraisal : MonoBehaviour
     public MainInventory mainInventory;
 
     private Dictionary<ItemTier, GameObject> gemStoneSlotUI = new();
+
+    private Dictionary<ItemTier, int> selectGemStone = new();
+
+    private Dictionary<ItemTier, List<Item>> allGemStone;
 
     public Transform content;
 
@@ -24,11 +29,18 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public void RefreshGemStoneSlotUI()
     {
-        var gemStoneDic = mainInventory.GetItemTypes(ItemType.EquipmentGem);
+        allGemStone = mainInventory.GetItemTypes(ItemType.EquipmentGem);
 
-        for(int i = 0; i < gemStoneDic.Count; i++)
+        foreach(var gemStone in gemStoneSlotUI)
         {
-            var items = gemStoneDic[(ItemTier)i];
+            gemStone.Value.gameObject.SetActive(false);
+        }
+
+        foreach(var gemStone in allGemStone)
+        {
+            gemStoneSlotUI[gemStone.Key].SetActive(true);
+            gemStoneSlotUI[gemStone.Key].GetComponent<M_GemStoneUISlot>()
+                .RefreshItemCount(allGemStone[gemStone.Key].Count);
         }
 
         /*
@@ -38,15 +50,16 @@ public class EquipmentAppraisal : MonoBehaviour
             Unique,
             Legendary
          */
-
-        foreach (var itemTier in gemStoneDic)
-        {
-
-        }
     }
 
     public void CreateGemstoneSlot()
     {
+        // selectGemStone 초기 세팅
+        for (int i = 0; i < (int)ItemTier.Count; i++)
+        {
+            selectGemStone.Add((ItemTier)i, 0);
+        }
+
         for(int i = 0; i < (int)ItemTier.Count; i++)
         {
             int tempItemId = defaultGemStoneItemId;
@@ -60,8 +73,10 @@ public class EquipmentAppraisal : MonoBehaviour
                     var item = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                     .GetItemData(tempItemId.ToString());
 
-                    gemStone.GetComponent<M_GemStoneUISlot>().SetItemData(item);
+                    gemStone.GetComponent<M_GemStoneUISlot>().SetItemData(item, this);
                     gemStoneSlotUI.Add(tempType, gemStone);
+
+                    gemStone.SetActive(false);
                 };
 
             defaultGemStoneItemId++;
@@ -73,5 +88,40 @@ public class EquipmentAppraisal : MonoBehaviour
     public void SortGemStoneSlotUI()
     {
 
+    }
+
+    public int GetSelectGemStoneCount(ItemTier itemTier)
+    {
+        return selectGemStone[itemTier];
+    }
+
+    public int GetMaxGemStoneCount(ItemTier itemTier)
+    {
+        if(allGemStone.ContainsKey(itemTier))
+        {
+            return allGemStone[itemTier].Count;
+        }
+
+        return default;
+    }
+
+    public bool AddGemStone(ItemTier itemTier)
+    {
+        if (selectGemStone[itemTier] >= allGemStone[itemTier].Count)
+            return false;
+
+        selectGemStone[itemTier]++;
+
+        return true;
+    }
+
+    public bool SubGemStone(ItemTier itemTier)
+    {
+        if (selectGemStone[itemTier] <= 0)
+            return false;
+
+        selectGemStone[itemTier]--;
+
+        return true;
     }
 }

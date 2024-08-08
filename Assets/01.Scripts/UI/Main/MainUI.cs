@@ -138,6 +138,22 @@ public class MainUI : MonoBehaviour
     }
 
     #endregion
+
+    #region 장비 감정 
+
+    public EquipmentAppraisal equipmentAppraisal;
+
+    public void EquipmentAppraisalUIButton()
+    {
+        equipmentAppraisal.RefreshGemStoneSlotUI();
+
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive(UIObject.EquipmentAppraisal == (UIObject)i);
+        }
+    }
+
+    #endregion
 }
 
 public enum UIObject
