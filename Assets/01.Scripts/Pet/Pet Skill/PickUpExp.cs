@@ -5,10 +5,20 @@ using UnityEngine;
 public class PickUpExp : MonoBehaviour
 {
     public float checkRadius = 15f;
-    public float checkInterval = 30f;
+    private float checkInterval = 20f;
 
+    public bool isEvolved = false;
     private void Start()
     {
+        if (isEvolved)
+        {
+            checkInterval = 10f;
+        }
+        else
+        {
+            checkInterval = 20f;
+        }
+
         InvokeRepeating(nameof(CheckNearbyObjects), 0f, checkInterval);
     }
 

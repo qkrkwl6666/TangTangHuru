@@ -14,71 +14,13 @@ public class LevelUpUI : MonoBehaviour
     List<WeaponCreator> weaponList = new List<WeaponCreator>();
     List<PassiveData> passiveList = new List<PassiveData>();
 
+    StringTable stringMgr;
+
     private void OnEnable()
     {
-        var stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
-
+        stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
         SetAllOptions();
-
-
-        List<int> PassiveOrActive = new List<int>();
-        for (int i = 0; i < 3; i++)
-        {
-            PassiveOrActive.Add(Random.Range(0, 10));
-        }
-
-        List<int> passiveNums = Enumerable.Range(0, passiveList.Count).ToList();
-        List<int> activeNums = Enumerable.Range(0, weaponList.Count).ToList();
-        var random = new System.Random();
-        passiveNums = passiveNums.OrderBy(x => random.Next()).ToList();
-        activeNums = activeNums.OrderBy(x => random.Next()).ToList();
-
-        for (int i = 0; i < Options_UI.Count; i++)
-        {
-
-            if (PassiveOrActive[i] < 4) //패시브 선택
-            {
-                var select = passiveNums[i];
-                if (passiveList[select].Level == 0)
-                {
-                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                        => passiveManager.PassiveAdd(passiveList[select]));
-                }
-                else
-                {
-                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                         => passiveManager.PassiveLevelUp(passiveList[select]));
-                }
-
-                Options_UI[i].text_Name.text = passiveList[select].PassiveName + " " + (passiveList[select].Level + 1) + "레벨";
-                Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("IconPassive");
-                Options_UI[i].text_Desc.text = passiveList[select].PassiveDesc;
-            }
-            else //액티브 선택
-            {
-
-                var selectedCreator = weaponList[activeNums[i]];
-
-                string selectedName = selectedCreator.weaponDataRef.WeaponName;
-                string selectedLevel = (selectedCreator.currLevel + 1).ToString();
-
-                Options_UI[i].text_Name.text = stringMgr.Get(selectedName + "_Name_Lv" + selectedLevel).Text;
-                Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("Icon" + selectedName);
-                Options_UI[i].text_Desc.text = stringMgr.Get(selectedName + "_Desc_Lv" + selectedLevel).Text;
-
-                if (selectedCreator.currLevel == 0)
-                {
-                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                        => selectedCreator.gameObject.SetActive(true));
-                }
-                else
-                {
-                    Options_UI[i].GetComponent<Button>().onClick.AddListener(selectedCreator.LevelUpReady);
-                }
-            }
-        }
-
-
+        SetSelectables();
     }
 
     private void OnDisable()
@@ -136,10 +78,65 @@ public class LevelUpUI : MonoBehaviour
         }
     }
 
-    private void SetSelectable()
+    public void SetSelectables()
     {
 
+        List<int> PassiveOrActive = new List<int>();
+        for (int i = 0; i < 3; i++)
+        {
+            PassiveOrActive.Add(Random.Range(0, 10));
+        }
 
+        List<int> passiveNums = Enumerable.Range(0, passiveList.Count).ToList();
+        List<int> activeNums = Enumerable.Range(0, weaponList.Count).ToList();
+        var random = new System.Random();
+        passiveNums = passiveNums.OrderBy(x => random.Next()).ToList();
+        activeNums = activeNums.OrderBy(x => random.Next()).ToList();
+
+        for (int i = 0; i < Options_UI.Count; i++)
+        {
+
+            if (PassiveOrActive[i] < 4) //패시브 선택
+            {
+                var select = passiveNums[i];
+                if (passiveList[select].Level == 0)
+                {
+                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                        => passiveManager.PassiveAdd(passiveList[select]));
+                }
+                else
+                {
+                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                         => passiveManager.PassiveLevelUp(passiveList[select]));
+                }
+
+                Options_UI[i].text_Name.text = passiveList[select].PassiveName + " " + (passiveList[select].Level + 1) + "레벨";
+                Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("IconPassive");
+                Options_UI[i].text_Desc.text = passiveList[select].PassiveDesc;
+            }
+            else //액티브 선택
+            {
+
+                var selectedCreator = weaponList[activeNums[i]];
+
+                string selectedName = selectedCreator.weaponDataRef.WeaponName;
+                string selectedLevel = (selectedCreator.currLevel + 1).ToString();
+
+                Options_UI[i].text_Name.text = stringMgr.Get(selectedName + "_Name_Lv" + selectedLevel).Text;
+                Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("Icon" + selectedName);
+                Options_UI[i].text_Desc.text = stringMgr.Get(selectedName + "_Desc_Lv" + selectedLevel).Text;
+
+                if (selectedCreator.currLevel == 0)
+                {
+                    Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                        => selectedCreator.gameObject.SetActive(true));
+                }
+                else
+                {
+                    Options_UI[i].GetComponent<Button>().onClick.AddListener(selectedCreator.LevelUpReady);
+                }
+            }
+        }
 
     }
 

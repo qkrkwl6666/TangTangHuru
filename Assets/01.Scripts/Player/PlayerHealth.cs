@@ -46,4 +46,16 @@ public class PlayerHealth : LivingEntity
 
         Vibration.Vibrate(0.1f);
     }
+
+
+    public override void Die()
+    {
+        if (onDeath != null)
+        {
+            onDeath();
+        }
+
+        StopAllCoroutines();
+        dead = true;
+    }
 }
