@@ -5,11 +5,11 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
-    public GameObject player;
     public IconLoader iconLoader;
-    public PassiveManager passiveManager;
-
     public List<LevelUpOption> Options_UI;
+
+    private GameObject player;
+    private PassiveManager passiveManager;
 
     WeaponCreator mainWeapon;
     List<WeaponCreator> weaponList = new List<WeaponCreator>();
@@ -19,6 +19,11 @@ public class LevelUpUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            passiveManager = player.GetComponentInChildren<PassiveManager>();
+        }
         stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
         SetAllOptions();
         SetSelectables();
@@ -136,7 +141,6 @@ public class LevelUpUI : MonoBehaviour
         }
 
     }
-
 
     private void CreateSkill(WeaponCreator creator)
     {
