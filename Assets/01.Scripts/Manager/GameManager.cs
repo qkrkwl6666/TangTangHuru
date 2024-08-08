@@ -22,7 +22,7 @@ public class SaveData
 public class GameManager : Singleton<GameManager>
 {
     public SaveData currSaveData = new();
-    public int CurrentStage { get; set; } = 0;
+    public int CurrentStage { get; set; } = 1;
 
     public string currentWeapon = "OneSword";
 
