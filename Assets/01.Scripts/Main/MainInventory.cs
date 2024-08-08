@@ -423,6 +423,21 @@ public class MainInventory : MonoBehaviour
 
         return default;
     }
+
+    public Dictionary<ItemTier, List<Item>> GetItemTypes(ItemType itemType)
+    {
+        if(!allItem.ContainsKey(itemType)) return null;
+
+        return allItem[itemType];
+    }
+
+    public List<Item> GetItemTypesTier(ItemType itemType, ItemTier itemTier)
+    {
+        if (!allItem.ContainsKey(itemType)) return null;
+        if (!allItem[itemType].ContainsKey(itemTier)) return null;
+
+        return allItem[itemType][itemTier];
+    }
 }
 
 public enum ItemType
@@ -442,7 +457,8 @@ public enum ItemTier
     Rare,
     Epic,
     Unique,
-    Legendary
+    Legendary,
+    Count
 }
 
 public enum PlayerEquipment

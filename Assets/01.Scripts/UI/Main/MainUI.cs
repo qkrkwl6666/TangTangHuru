@@ -88,6 +88,14 @@ public class MainUI : MonoBehaviour
         GameManager.Instance.StartGame();
     }
 
+    public void OpenUI(int uiPanel)
+    {
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive((UIObject)uiPanel == (UIObject)i);
+        }
+    }
+
     #region UI ÆË¾÷
 
     public EquipPopUp EquipPopUp; 
@@ -137,4 +145,5 @@ public enum UIObject
     Stage = 0,
     StageSelect = 1,
     Inventory = 2,
+    EquipmentAppraisal = 3,
 }
