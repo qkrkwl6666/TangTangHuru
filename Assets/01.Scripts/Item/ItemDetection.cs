@@ -20,6 +20,9 @@ public class ItemDetection : MonoBehaviour
 
     private InGameUI gameUI;
 
+    public TreasureBar treasureBarPrefab;
+    private GameObject treasureBar;
+
     // 보물 상자
     private float targetDistance = 1f; // 보물 아이템 거리
     private float treasureTime = 0f;
@@ -41,10 +44,13 @@ public class ItemDetection : MonoBehaviour
             .GetComponent<TreasureSpawnManager>().treasures;
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
+        treasureBar = Instantiate(treasureBarPrefab.gameObject);
+        treasureBar.transform.SetParent(gameObject.transform, false);
     }
 
     public void Update()
     {
+        var bar = treasureBar.GetComponent<TreasureBar>();
         time += Time.deltaTime;
         prevTreasureDistance = int.MaxValue;
         targetTreasure = null;
@@ -99,18 +105,18 @@ public class ItemDetection : MonoBehaviour
 
         foreach (var treasure in treasureList)
         {
-            var distacne = Vector2.Distance(treasure.transform.position, transform.position);
+            var distance = Vector2.Distance(treasure.transform.position, transform.position);
 
-            if (distacne <= treasureDistance && distacne <= prevTreasureDistance)
+            if (distance <= treasureDistance && distance <= prevTreasureDistance)
             {
-                prevTreasureDistance = distacne;
+                prevTreasureDistance = distance;
                 radarTreasure = treasure;
             }
 
-            if (distacne <= targetDistance)
+            if (distance <= targetDistance)
             {
                 opening = true;
-                gameUI.SetActiveTreasureBar(true);
+                bar.SetActiveTreasureBar(true);
                 targetTreasure = treasure;
                 break;
             }
@@ -124,8 +130,8 @@ public class ItemDetection : MonoBehaviour
 
         if (!opening)
         {
-            gameUI.SetActiveTreasureBar(false);
-            gameUI.UpdateTreasureBar(0f);
+            bar.SetActiveTreasureBar(false);
+            bar.UpdateTreasureBar(0f);
             treasureTime = 0f;
             return;
         }
@@ -134,12 +140,12 @@ public class ItemDetection : MonoBehaviour
 
         float value = Mathf.InverseLerp(0f, treasureDuration, treasureTime);
         //treasureBar.value = value;
-        gameUI.UpdateTreasureBar(value);
+        bar.UpdateTreasureBar(value);
 
         if (treasureTime >= treasureDuration)
         {
-            gameUI.SetActiveTreasureBar(false);
-            gameUI.UpdateTreasureBar(0f);
+            bar.SetActiveTreasureBar(false);
+            bar.UpdateTreasureBar(0f);
             treasureTime = 0f;
             opening = false;
             targetTreasure.UseItem();
@@ -147,6 +153,7 @@ public class ItemDetection : MonoBehaviour
             targetTreasure = null;
             radarTreasure = null;
         }
+
     }
 
     public void Radar()
