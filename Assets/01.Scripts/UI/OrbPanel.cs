@@ -24,6 +24,9 @@ public class OrbPanel : MonoBehaviour
             orbList[i].gameObject.SetActive(false);
         }
 
+        //이걸로 개수 받아와서 목록 출력하고, 인벤토리 조합결과 AddItem메소드로 추가하기
+        var rareOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Rare);
+
         int orbRareNum = GameManager.Instance.currSaveData.orb_Atk_Rare;
         int orbEpicNum = GameManager.Instance.currSaveData.orb_Atk_Epic;
         int orbUniqueNum = GameManager.Instance.currSaveData.orb_Atk_Unique;

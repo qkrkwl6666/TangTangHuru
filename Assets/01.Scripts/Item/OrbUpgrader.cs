@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class OrbUpgrader : MonoBehaviour
 {
+    public MainInventory inventory;
     public ItemSlotUI[] upgradeSlots;
     public Button upgradeButton;
     public OrbPanel popUp_OrbPanel;
