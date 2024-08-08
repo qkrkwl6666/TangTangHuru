@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -22,8 +23,18 @@ public class ItemData
     public float Dodge { get; set; }
     public float Damagecal { get; set; }
     public float CoolDown { get; set; }
-    public float Criticalper { get; set; }
+    public float CriticalChance { get; set; }
     public float Criticaldam { get; set; }
+
+    // 무기 강화 수치
+    public float UpDamage { get; set; }
+    public float UpCoolDown { get; set; }
+    public float UpCriticalChance { get; set; }
+    public float UpCriticalDam { get; set; }
+
+    // 무기 방어구 강화 단계
+    public int CurrentUpgrade = 0;
+
 
     public ItemData DeepCopy()
     {
@@ -44,7 +55,7 @@ public class ItemData
         newItemData.Dodge = this.Dodge;
         newItemData.Damagecal = this.Damagecal;
         newItemData.CoolDown = this.CoolDown;
-        newItemData.Criticalper = this.Criticalper;
+        newItemData.CriticalChance = this.CriticalChance;
         newItemData.Criticaldam = this.Criticaldam;
 
         return newItemData;
@@ -62,7 +73,7 @@ public class ItemTable : DataTable
         return itemTable[item_Id];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -76,6 +87,8 @@ public class ItemTable : DataTable
                     itemTable.Add(record.Item_Id.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 

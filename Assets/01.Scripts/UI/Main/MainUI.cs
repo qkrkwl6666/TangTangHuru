@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -17,6 +16,14 @@ public class MainUI : MonoBehaviour
     #region 메인 스테이지 UI
 
     public TextMeshProUGUI mainStageText;
+
+    public void MainStageUIButton()
+    {
+        for (int i = 0; i < uiGameObjects.Count; i++)
+        {
+            uiGameObjects[i].SetActive(UIObject.Stage == (UIObject)i);
+        }
+    }
 
     public void StageSelectSetActiveTrue()
     {
@@ -54,11 +61,70 @@ public class MainUI : MonoBehaviour
 
     #endregion
 
+    #region 인벤토리 UI
+
+    public MainInventory mainInventory;
+
+    public void InventoryUIButton()
+    {
+        mainInventory.RefreshItemSlotUI();
+
+        for (int i = 0; i < uiGameObjects.Count; i ++)
+        {
+            uiGameObjects[i].SetActive(UIObject.Inventory == (UIObject)i);
+        }
+    }
+
+    #endregion
+
     public void SaveButton()
     {
         SaveDataV1 saveDataV1 = new SaveDataV1();
         //saveDataV1.allItem
     }
+
+    #region UI 팝업
+
+    public EquipPopUp EquipPopUp; 
+
+    public void SetActiveEquipPopUpUI(bool active)
+    {
+        if (active) 
+        {
+            EquipPopUp.gameObject.SetActive(active);
+            var seq = DOTween.Sequence();
+
+            seq.Append(EquipPopUp.transform.DOScale(1.1f, 0.2f));
+            seq.Append(EquipPopUp.transform.DOScale(1f, 0.1f));
+
+            seq.Play();
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+
+            seq.Append(EquipPopUp.transform.DOScale(0.0f, 0.1f));
+
+            seq.onComplete += () => 
+            {
+                EquipPopUp.gameObject.SetActive(active);
+            };
+
+            seq.Play();
+        }
+    }
+
+    public void SetEquipPopData(Item item)
+    {
+        EquipPopUp.SetItemUI(item);
+    }
+
+    public void SetUnequipPopData(Item item)
+    {
+        EquipPopUp.SetItemUI(item, false);
+    }
+
+    #endregion
 }
 
 public enum UIObject

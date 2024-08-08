@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public static class Defines
 {
@@ -19,6 +20,44 @@ public static class Defines
     public static readonly string skeletonData = "SkeletonData";
     public static readonly string stageImage = "StageImage";
     public static readonly string emptyRect = "EmptyRect";
+
+    // 아웃라이너 컬러
+    public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
+    public static readonly Color greenColor = new Color(20 / 255f, 46 / 255f, 34 / 255f);
+    public static readonly Color orangeColor = new Color(45 / 255f, 30 / 255f, 18 / 255f);
+    public static readonly Color purpleColor = new Color(33 / 255f, 13 / 255f, 52 / 255f);
+    public static readonly Color redColor = new Color(39 / 255f, 10 / 255f, 8 / 255f);
+    public static readonly Color whiteColor = Color.white;
+    public static readonly Color yellowColor = new Color(40 / 255f, 36 / 255f, 29 / 255f);
+
+    // 무기 스텟 텍스트
+    public static readonly string damage = "공격력 : ";
+    public static readonly string attackCoolTime = "공격 속도 : ";
+    public static readonly string criticalChance = "치명타 확률 : ";
+    public static readonly string criticalDamage = "치명타 피해 : ";
+
+    public static int MaxUpgrade = 10;
+
+    // 방어구 스텟 텍스트
+
+    public static readonly string itemSlot = "ItemSlot";
+
+    // 장비 슬롯 텍스처
+    public static readonly string equipSlotArmor = "EquipSlotArmor";
+    public static readonly string equipSlotBg = "EquipSlotBg";
+    public static readonly string equipSlotBoots = "EquipSlotBoots";
+    public static readonly string equipSlotBorder = "EquipSlotBorder";
+    public static readonly string equipSlotHelmet = "EquipSlotHelmet";
+    public static readonly string equipSlotInnerBorder = "EquipSlotInnerBorder";
+    public static readonly string equipSlotSword = "EquipSlotInnerBorder";
+
+
+    // 오브 개수 제한
+    public static int normalOrbCount = 0;
+    public static int rareOrbCount = 1;
+    public static int epicOrbCount = 2;
+    public static int uniqueOrbCount = 3;
+    public static int legendaryOrbCount = 4;
 
     // 마법사 캐릭터 스킨
     public static readonly string body001 = "body_001";
@@ -105,5 +144,28 @@ public static class Defines
 
     }
 
+    public static Color GetColor(string key)
+    {
+        switch (key) 
+        {
+            case "Outline_Blue":
+                return Defines.blueColor;
+            case "Outline_Green":
+                return Defines.greenColor;
+            case "Outline_Orange":
+                return Defines.orangeColor;
+            case "Outline_Purple":
+                return Defines.purpleColor;
+            case "Outline_Red":
+                return Defines.redColor;
+            case "Outline_White":
+                return Defines.whiteColor;
+            case "Outline_Yellow":
+                return Defines.yellowColor;
+
+            default:
+                return Defines.blueColor;
+        }
+    }
 
 }

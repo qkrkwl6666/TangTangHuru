@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -50,7 +51,7 @@ public class BossTable : DataTable
         return bossTable[bossId];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -64,6 +65,8 @@ public class BossTable : DataTable
                     bossTable.Add(record.Boss_Id.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 }
