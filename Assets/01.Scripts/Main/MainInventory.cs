@@ -522,3 +522,8 @@ public enum PlayerEquipment
     Armor = 3,  // °©¿Ê
     Shoes = 4,  // ½Å¹ß
 }
+
+public enum WeaponType
+{
+
+}

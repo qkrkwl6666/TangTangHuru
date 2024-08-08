@@ -19,11 +19,12 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string orb = "Orb"; 
     public static readonly string String = "String";
     public static readonly string stage = "Stage";
+    public static readonly string appraise = "Appraise";
 
     public static readonly string[] TableNames = 
     {
         "StageWave", "Monster", "MonsterSkill", "Boss", "BossSkill", "StageBoss",
-        "Treasure", "Item", "Orb", "String", "Stage"
+        "Treasure", "Item", "Orb", "String", "Stage", "Appraise"
     };
 
     public event Action OnTableLoaded;
@@ -75,6 +76,9 @@ public class DataTableManager : Singleton<DataTableManager>
         DataTable stringTable = new StringTable();
         stringTable.Load(String, OnTableLoaded);
 
+        DataTable appraiseTable = new AppraiseTable();
+        appraiseTable.Load(appraise, OnTableLoaded);
+
         tables.Add(stage, stageTable);
 
         tables.Add(stageWave, waveTable);
@@ -90,15 +94,12 @@ public class DataTableManager : Singleton<DataTableManager>
         tables.Add(orb, orbTable);
 
         tables.Add(String, stringTable);
+        tables.Add(appraise, appraiseTable);
     }
 
     public void TableLoadCompleted()
     {
-        UnityEngine.Debug.Log("TableLoadCompleted");
-
         loadTableCount++;
-
-        //UnityEngine.Debug.Log(loadTableCount);
 
         if (loadTableCount >= tables.Count) 
         {
