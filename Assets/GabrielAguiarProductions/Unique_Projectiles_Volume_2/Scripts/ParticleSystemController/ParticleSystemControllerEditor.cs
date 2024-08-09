@@ -1,12 +1,11 @@
-﻿namespace GAP_ParticleSystemController{
-	using System.Collections;
-	using System.Collections.Generic;
-	using UnityEngine;
+﻿namespace GAP_ParticleSystemController
+{
+    using UnityEngine;
 
-	#if UNITY_EDITOR
-	using UnityEditor;
+#if UNITY_EDITOR
+    using UnityEditor;
 
-	[CustomEditor(typeof(ParticleSystemController))]
+    [CustomEditor(typeof(ParticleSystemController))]
 	public class ParticleSystemControllerEditor : Editor
 	{
 		public override void OnInspectorGUI()

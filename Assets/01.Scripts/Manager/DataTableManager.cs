@@ -11,11 +11,16 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string bossSkill = "BossSkill";
     public static readonly string stageBoss = "StageBoss";
     public static readonly string treasure = "Treasure";
-    public static readonly string item = "Item";
+    public static readonly string item = "Item"; 
+    public static readonly string orb = "Orb"; 
     public static readonly string String = "String";
+    public static readonly string stage = "Stage";
 
     private void Awake()
     {
+        DataTable stageTable = new StageTable();
+        stageTable.Load(stage);
+
         DataTable waveTable = new WaveTable();
         waveTable.Load(stageWave);
 
@@ -40,8 +45,13 @@ public class DataTableManager : Singleton<DataTableManager>
         DataTable itemTable = new ItemTable();
         itemTable.Load(item);
 
+        DataTable orbTable = new OrbTable();
+        orbTable.Load(orb);
+
         DataTable stringTable = new StringTable();
         stringTable.Load(String);
+
+        tables.Add(stage, stageTable);
 
         tables.Add(stageWave, waveTable);
         tables.Add(monster, monsterTable);
@@ -53,6 +63,7 @@ public class DataTableManager : Singleton<DataTableManager>
 
         tables.Add(treasure, treasureTable);
         tables.Add(item, itemTable);
+        tables.Add(orb, orbTable);
 
         tables.Add(String, stringTable);
     }

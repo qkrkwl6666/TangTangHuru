@@ -8,10 +8,47 @@ using TextAsset = UnityEngine.TextAsset;
 public class ItemData
 {
     public int Item_Id { get; set; }
-    public string Prefab_Id { get; set; }
     public string Name_Id { get; set; }
+    public string Prefab_Id { get; set; }
     public string Desc_Id { get; set; }
     public string Texture_Id { get; set; }
+    public string Spine_Id { get; set; }
+    public string Outline { get; set; }
+    public int Item_Type { get; set; }
+    public int Item_Tier { get; set; }
+    public float Damage { get; set; }
+    public float Defense { get; set; }
+    public float Hp { get; set; }
+    public float Dodge { get; set; }
+    public float Damagecal { get; set; }
+    public float CoolDown { get; set; }
+    public float Criticalper { get; set; }
+    public float Criticaldam { get; set; }
+
+    public ItemData DeepCopy()
+    {
+        ItemData newItemData = new ItemData();
+
+        newItemData.Item_Id = this.Item_Id;
+        newItemData.Name_Id = this.Name_Id;
+        newItemData.Prefab_Id = this.Prefab_Id;
+        newItemData.Desc_Id = this.Desc_Id;
+        newItemData.Texture_Id = this.Texture_Id;
+        newItemData.Spine_Id = this.Spine_Id;
+        newItemData.Outline = this.Outline;
+        newItemData.Item_Type = this.Item_Type;
+        newItemData.Item_Tier = this.Item_Tier;
+        newItemData.Damage = this.Damage;
+        newItemData.Defense = this.Defense;
+        newItemData.Hp = this.Hp;
+        newItemData.Dodge = this.Dodge;
+        newItemData.Damagecal = this.Damagecal;
+        newItemData.CoolDown = this.CoolDown;
+        newItemData.Criticalper = this.Criticalper;
+        newItemData.Criticaldam = this.Criticaldam;
+
+        return newItemData;
+    }
 }
 
 public class ItemTable : DataTable

@@ -1,10 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace GAP_ParticleSystemController{
+namespace GAP_ParticleSystemController
+{
 
-	[System.Serializable]
+    [System.Serializable]
 	public class ParticleSystemOriginalSettings
 	{
 		public SerializableMinMaxGradient _startColor;

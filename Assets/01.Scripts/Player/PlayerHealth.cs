@@ -43,5 +43,7 @@ public class PlayerHealth : LivingEntity
         }
 
         isInvincible = true;
+
+        Vibration.Vibrate(0.1f);
     }
 }

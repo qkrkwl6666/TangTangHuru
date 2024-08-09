@@ -9,17 +9,19 @@ public class SaveData
     public int stage_Record;
 
     public int equip_GemStone;
-    public int reinforce_Stone = 3;
-    public int orb_Normal = 6;
-    public int orb_Rare = 0;
-    public int orb_Epic = 0;
+    public int reinforce_Stone = 40;
+    public int orb_Atk_Rare = 1;
+    public int orb_Atk_Epic = 1;
+    public int orb_Atk_Unique = 2;
+    public int orb_Atk_Legend = 1;
+
 }
 
 
 public class GameManager : Singleton<GameManager>
 {
     public SaveData currSaveData = new();
-    public int CurrentStage { get; private set; } = 1;
+    public int CurrentStage { get; set; } = 0;
 
     public string currentWeapon = "OneSword";
 

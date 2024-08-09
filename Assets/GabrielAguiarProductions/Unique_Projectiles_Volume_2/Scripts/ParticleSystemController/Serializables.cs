@@ -10,9 +10,10 @@
 using UnityEngine;
 using System;
 
-namespace GAP_ParticleSystemController{
+namespace GAP_ParticleSystemController
+{
 
-	[Serializable]
+    [Serializable]
 	public class SerializableMinMaxGradient{
 		public SerializableColor color;
 		public SerializableColor colorMax;
