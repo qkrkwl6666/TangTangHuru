@@ -145,6 +145,27 @@ public static class Defines
 
     }
 
+    public static WeaponType RandomWeaponType()
+    {
+        int random = UnityEngine.Random.Range(0, (int)WeaponType.Count);
+
+        switch (random)
+        {
+            case 0:
+                return WeaponType.Axe;
+            case 1:
+                return WeaponType.Bow;
+            case 2:
+                return WeaponType.Crossbow;
+            case 3:
+                return WeaponType.Wand;
+            case 4:
+                return WeaponType.Staff;
+            default:
+                return WeaponType.Axe;
+        }
+    }
+
     public static Color GetColor(string key)
     {
         switch (key) 

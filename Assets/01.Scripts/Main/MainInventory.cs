@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -47,26 +48,26 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        //items.Add(200001);
-        //items.Add(200002);
-        //items.Add(200003);
-        //items.Add(200004);
-        //items.Add(200005);
-        //items.Add(200101);
-        //items.Add(200102);
-        //items.Add(200103);
-        //items.Add(200104);
-        //items.Add(200105);
-        //items.Add(210001);
-        //items.Add(210002);
-        //items.Add(210003);
-        //items.Add(210004);
+        items.Add(200001);
+        items.Add(200002);
+        items.Add(200003);
+        items.Add(200004);
+        items.Add(200005);
+        items.Add(200101);
+        items.Add(200102);
+        items.Add(200103);
+        items.Add(200104);
+        items.Add(200105);
+        items.Add(210001);
+        items.Add(210002);
+        items.Add(210003);
+        items.Add(210004);
         items.Add(600001);
         items.Add(600002);
         items.Add(600003);
         items.Add(600004);
         items.Add(600005);
-        //items.Add(600006);
+
     }
 
     private void Start()
@@ -101,13 +102,14 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem(items[random].ToString(), 0);
     }
 
-    public void MainInventoryAddItem(string itemId, int itemLevel = 0)
+    public Item MainInventoryAddItem(string itemId, int itemLevel = 0)
     {
         // 깊은 복사 저장
+
         var item = DataTableManager.Instance.Get<ItemTable>
             (DataTableManager.item).GetItemData(itemId).DeepCopy();
 
-        if (item == null) return;
+        if (item == null) return null;
 
         item.CurrentUpgrade = itemLevel;
 
@@ -123,7 +125,7 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
 
         // 아이템 타입이 있고 아이템 티어가 없다면 
@@ -132,13 +134,13 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
 
         // 아이템 타입과 아이템 티어가 있다면
         {
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
     }
 
@@ -167,6 +169,7 @@ public class MainInventory : MonoBehaviour
         switch (itemData.Item_Type)
         {
             case 1: // 무기
+            case 8: // 펫 Todo : 임시
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
 
@@ -195,6 +198,7 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
+
 
         }
 
@@ -231,6 +235,7 @@ public class MainInventory : MonoBehaviour
                         case ItemType.Helmet:
                         case ItemType.Armor:
                         case ItemType.Shose:
+                        case ItemType.Pet: // Todo 임시
                             CreateOrUpdateItemSlot(itemList[i]);
                             break;
 
@@ -343,6 +348,11 @@ public class MainInventory : MonoBehaviour
 
     // 소모품 아이템 삭제
 
+    public void RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
+    {
+
+    }
+
     public void SaveMainInventory()
     {
         SaveInventory();
@@ -365,6 +375,11 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("210001", 1);
         MainInventoryAddItem("210101", 1);
         MainInventoryAddItem("220001", 1);
+
+        MainInventoryAddItem("710001", 1);
+        MainInventoryAddItem("710002", 1);
+        MainInventoryAddItem("710003", 1);
+        MainInventoryAddItem("710004", 1);
 
 
         RefreshItemSlotUI();
@@ -450,6 +465,14 @@ public class MainInventory : MonoBehaviour
 
         // 기존 장비 장착 중이라면 장착 해제
 
+        // Todo : 임시
+        if(ItemType.Pet == item.ItemType)
+        {
+            playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+            return;
+        }
+
+
         if(playerEquipment.ContainsKey((PlayerEquipment)item.ItemType))
         {
             UnequipItem(playerEquipment[(PlayerEquipment)item.ItemType].Item1);
@@ -506,6 +529,8 @@ public class MainInventory : MonoBehaviour
 
         return allItem[itemType][itemTier];
     }
+
+
 }
 
 public enum ItemType
@@ -517,6 +542,7 @@ public enum ItemType
     EquipmentGem = 5, // 장비 원석
     ReinforcedStone = 6, // 강화석
     Orb = 7, // 오브
+    Pet = 8, // 펫
 }
 
 public enum ItemTier
@@ -536,6 +562,7 @@ public enum PlayerEquipment
     Armor = 3,  // 갑옷
     Shoes = 4,  // 신발
     other = 5,
+    Pet = 8, // 펫
 }
 
 public enum WeaponType

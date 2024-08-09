@@ -20,8 +20,16 @@ public class EquipmentAppraisal : MonoBehaviour
     public Transform content;
 
     private int defaultGemStoneItemId = 600001;
+    private int defaultAppraisalItemId = 290001;
+
+    public AppraisalPopUp appraisalPopUp;
 
     public Button appraisalButton;
+
+    private void Awake()
+    {
+        appraisalButton.onClick.AddListener(OnAppraisal);
+    }
 
     private void Start()
     {
@@ -141,20 +149,21 @@ public class EquipmentAppraisal : MonoBehaviour
         return true;
     }
 
-    public void RandomItemCreate(AppraiseData appraiseData)
+    public Item RandomItemCreate(AppraiseData appraiseData)
     {
         List<(ItemType type, ItemTier tier, float prob)> list = new();
+
+        float totalProbability = 0f;
+        float currentProbability = 0f;
 
         foreach (var appraise in appraiseData.GetAppraiseData())
         {
             if (appraise.prob != -1)
             {
                 list.Add(appraise);
+                totalProbability += appraise.prob;
             }
         }
-
-        float totalProbability = 0f;
-        float currentProbability = 0f;
 
         float random = Random.Range(0, totalProbability);
 
@@ -173,7 +182,13 @@ public class EquipmentAppraisal : MonoBehaviour
 
         // 아이템 생성후 정보 띄우기
 
+        return mainInventory.MainInventoryAddItem(itemId.ToString());
+
     }
+
+    //
+    // WeaponType 쪽 데이터 테이블 매니저 에서 무기 타입 매개변수로 전달하면 
+    // 자동으로 무기 타입 중에서 랜덤으로 뽑는 메서드 만들기
 
     public int SelectItem(ItemType itemType, ItemTier itemTier)
     {
@@ -184,11 +199,12 @@ public class EquipmentAppraisal : MonoBehaviour
             case ItemType.Weapon:
                 maxCount = (int)WeaponType.Count;
 
-                int random = Random.Range(1, maxCount + 1);
+                int random = Random.Range(1, maxCount);
 
-                int itemId = (int)WeaponType.Axe + random;
+                int itemId = (int)Defines.RandomWeaponType() + random;
 
-                Debug.Log(itemId);
+                //WeaponType weaponType = Defines.RandomWeaponType();
+
                 return itemId;
 
             case ItemType.Helmet:
@@ -200,6 +216,35 @@ public class EquipmentAppraisal : MonoBehaviour
 
         return default;
 
+    }
+
+    // 감정 버튼 누르면 호출
+    public void OnAppraisal()
+    {
+        // 내가 현재 선택한 원석들 가져와서 한번에 다 뽑고 n번 팝업창 띄우기
+
+        List<Item> itemList = new ();
+
+        foreach(var appraisal in selectGemStone)
+        {
+            for(int i = 0; i < appraisal.Value; i++)
+            {
+                int appraiseId = defaultAppraisalItemId + (int)appraisal.Key;
+
+                AppraiseData appraiseData = DataTableManager.Instance
+                    .Get<AppraiseTable>(DataTableManager.appraise)
+                    .GetData(appraiseId.ToString());
+
+                Item item = RandomItemCreate(appraiseData);
+
+                itemList.Add(item);
+            }
+        }
+
+        appraisalPopUp.gameObject.SetActive(true);
+        appraisalPopUp.SetPopUp(itemList);
+
+        //mainInventory.RemoveItem()
     }
 
 }
