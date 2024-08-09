@@ -25,28 +25,46 @@ public class OrbPanel : MonoBehaviour
         }
 
         //이걸로 개수 받아와서 목록 출력하고, 인벤토리 조합결과 AddItem메소드로 추가하기
+        //오브 수정되어야 함. 타입이 두개 (타입1-오브, 타입2-어디 전용 오브인지)
         var rareOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Rare);
-
-        int orbRareNum = GameManager.Instance.currSaveData.orb_Atk_Rare;
-        int orbEpicNum = GameManager.Instance.currSaveData.orb_Atk_Epic;
-        int orbUniqueNum = GameManager.Instance.currSaveData.orb_Atk_Unique;
-
-        activeNum = orbRareNum + orbEpicNum + orbUniqueNum;
+        if(rareOrbList != null)
+        {
+            activeNum += rareOrbList.Count;
+        }
+        var epicOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Unique);
+        if (epicOrbList != null)
+        {
+            activeNum += epicOrbList.Count;
+        }
+        var uniqueOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Epic);
+        if (uniqueOrbList != null)
+        {
+            activeNum += uniqueOrbList.Count;
+        }
+        var LegendOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Legendary);
+        if (LegendOrbList != null)
+        {
+            activeNum += LegendOrbList.Count;
+        }
 
 
         for (int i = 0; i < activeNum; i++)
         {
-            if (i < orbRareNum)
+            if (i < rareOrbList.Count)
             {
-                orbList[i].SetInfo(610003);
+                orbList[i].SetInfo(610001);
             }
-            else if (i >= orbRareNum && i < orbRareNum + orbEpicNum)
+            else if (i >= uniqueOrbList.Count && i < uniqueOrbList.Count + uniqueOrbList.Count)
             {
                 orbList[i].SetInfo(610002);
             }
+            else if( i > (activeNum - LegendOrbList.Count))
+            {
+                orbList[i].SetInfo(610003);
+            }
             else
             {
-                orbList[i].SetInfo(610001);
+                orbList[i].SetInfo(610004);
             }
 
             orbList[i].gameObject.SetActive(true);
