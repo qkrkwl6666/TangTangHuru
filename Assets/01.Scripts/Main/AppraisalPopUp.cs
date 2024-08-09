@@ -26,13 +26,27 @@ public class AppraisalPopUp : MonoBehaviour
     private MainInventory mainInventory;
     public MainUI mainUI;
 
+    private List<Item> currentItemList;
+    private int currentItemIndex;
+    private bool isProcessingItems;
+
     // Todo : 서브 무기 슬롯도 나중에 추가
 
     private void Start()
     {
-        mainInventory = GameObject.FindWithTag("MainInventory").GetComponent<MainInventory>();
+        //mainInventory = GameObject.FindWithTag("MainInventory").GetComponent<MainInventory>();
 
         confirmButton.onClick.AddListener(OnConfirmButton);
+    }
+
+    private void Update()
+    {
+        // 모든 아이템 처리가 끝났는지 확인
+        if (isProcessingItems && currentItemIndex >= currentItemList.Count)
+        {
+            isProcessingItems = false;
+            gameObject.SetActive(false);
+        }
     }
 
     public void SetItemUI(Item item, bool isEquip = true)
@@ -79,8 +93,31 @@ public class AppraisalPopUp : MonoBehaviour
         }
     }
 
+    public void SetPopUp(List<Item> itemList)
+    {
+        currentItemList = itemList;
+        currentItemIndex = 0;
+        isProcessingItems = true;
+        ShowNextItem();
+    }
+
+    private void ShowNextItem()
+    {
+        if (currentItemIndex < currentItemList.Count)
+        {
+            SetItemUI(currentItemList[currentItemIndex]);
+            gameObject.SetActive(true);
+        }
+        else
+        {
+            isProcessingItems = false;
+            gameObject.SetActive(false);
+        }
+    }
+
     public void OnConfirmButton()
     {
-        gameObject.SetActive(false);
+        currentItemIndex++;
+        ShowNextItem();
     }
 }

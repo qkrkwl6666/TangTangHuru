@@ -7,7 +7,6 @@ public class M_Weapon : Item
     public ItemType ItemType { get; set; }
     public ItemTier ItemTier { get ; set ; }
     public ItemData itemData { get ; set ; }
-
     public List<Item> subWeapons { get ; set ; } // 가지고 있는 무기
     public List<Item> orbs { get ; set ; } // 보유하고 있는 오브
 

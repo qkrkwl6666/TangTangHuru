@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -98,13 +99,14 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem(items[random].ToString(), 0);
     }
 
-    public void MainInventoryAddItem(string itemId, int itemLevel = 0)
+    public Item MainInventoryAddItem(string itemId, int itemLevel = 0)
     {
         // 깊은 복사 저장
+
         var item = DataTableManager.Instance.Get<ItemTable>
             (DataTableManager.item).GetItemData(itemId).DeepCopy();
 
-        if (item == null) return;
+        if (item == null) return null;
 
         item.CurrentUpgrade = itemLevel;
 
@@ -120,7 +122,7 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
 
         // 아이템 타입이 있고 아이템 티어가 없다면 
@@ -129,13 +131,13 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
 
         // 아이템 타입과 아이템 티어가 있다면
         {
             allItem[itemType][itemTier].Add(mainItem);
-            return;
+            return mainItem;
         }
     }
 
@@ -496,6 +498,8 @@ public class MainInventory : MonoBehaviour
 
         return allItem[itemType][itemTier];
     }
+
+
 }
 
 public enum ItemType
