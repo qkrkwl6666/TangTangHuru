@@ -186,6 +186,10 @@ public class EquipmentAppraisal : MonoBehaviour
 
     }
 
+    //
+    // WeaponType 쪽 데이터 테이블 매니저 에서 무기 타입 매개변수로 전달하면 
+    // 자동으로 무기 타입 중에서 랜덤으로 뽑는 메서드 만들기
+
     public int SelectItem(ItemType itemType, ItemTier itemTier)
     {
         int maxCount = 0;
@@ -198,8 +202,6 @@ public class EquipmentAppraisal : MonoBehaviour
                 int random = Random.Range(1, maxCount);
 
                 int itemId = (int)Defines.RandomWeaponType() + random;
-
-                Debug.Log(itemId);
 
                 //WeaponType weaponType = Defines.RandomWeaponType();
 
@@ -241,6 +243,8 @@ public class EquipmentAppraisal : MonoBehaviour
 
         appraisalPopUp.gameObject.SetActive(true);
         appraisalPopUp.SetPopUp(itemList);
+
+        //mainInventory.RemoveItem()
     }
 
 }
