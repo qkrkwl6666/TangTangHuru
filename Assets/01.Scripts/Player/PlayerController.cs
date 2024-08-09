@@ -23,38 +23,12 @@ public class PlayerController : MonoBehaviour
 
     public GameObject viewPlayer;
 
-    private void Awake()
-    {
-        switch (GameManager.Instance.currentWeapon)
-        {
-            case "OneSword":
-                weapons[0].SetActive(true);
-                break;
-            case "Axe":
-                weapons[1].SetActive(true);
-                break;
-            case "Bow":
-                weapons[2].SetActive(true);
-                break;
-            case "Crossbow":
-                weapons[3].SetActive(true);
-                break;
-            case "Wand":
-                weapons[4].SetActive(true);
-                break;
-            case "Staff":
-                weapons[5].SetActive(true);
-                break;
-        }
-    }
+
 
     void Start()
     {
         joystick = GameObject.FindWithTag("GameController").GetComponent<JoystickUI>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // Todo : 임시 코드
-
 
     }
 
@@ -75,10 +49,5 @@ public class PlayerController : MonoBehaviour
             viewPlayer.transform.localScale = Right;
         }
     }
-
-    // Todo : 임시용 코드
-    public List<GameObject> weapons = new List<GameObject>();
-
-
 
 }

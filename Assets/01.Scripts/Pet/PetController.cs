@@ -12,6 +12,8 @@ public class PetController : MonoBehaviour
     private Vector3 targetPosition;
     private float timer;
 
+    private bool isSettled = false;
+
     void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -47,7 +49,16 @@ public class PetController : MonoBehaviour
         timer += Time.deltaTime;
         if (timer >= updateInterval)
         {
-            SetRandomTargetPosition();
+            if (!isSettled)
+            {
+                SetRandomTargetPosition();
+                timer = 0f;
+            }
+        }
+
+        if(timer >= 8f)
+        {
+            isSettled = false;
             timer = 0f;
         }
     }
@@ -56,6 +67,34 @@ public class PetController : MonoBehaviour
     {
         Vector3 randomDirection = Random.insideUnitSphere * detectionRadius;
         randomDirection.z = 0;
-        targetPosition = playerTransform.position + randomDirection;
+        var difference = Vector3.Distance(playerTransform.position, randomDirection);
+
+        if (difference < 2)
+        {
+            targetPosition = transform.position;
+        }
+        else
+        {
+            targetPosition = playerTransform.position + randomDirection;
+        }
+
+        if(targetPosition.x < transform.position.x)
+        {
+            var scale = gameObject.transform.localScale;
+            scale.x = 1;
+            gameObject.transform.localScale = scale;
+        }
+        else
+        {
+            var scale = gameObject.transform.localScale;
+            scale.x = -1;
+            gameObject.transform.localScale = scale;
+        }
+    }
+
+    public void SetTargetPosition(Vector3 postion)
+    {
+        targetPosition = postion;
+        isSettled = true;
     }
 }
