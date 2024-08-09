@@ -53,7 +53,9 @@ public class EquipmentAppraisal : MonoBehaviour
     {
         allGemStone = mainInventory.GetItemTypes(ItemType.EquipmentGem);
 
-        foreach(var gemStone in gemStoneSlotUI)
+        if (allGemStone == null) return;
+
+        foreach (var gemStone in gemStoneSlotUI)
         {
             gemStone.Value.gameObject.SetActive(false);
         }
