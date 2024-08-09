@@ -24,7 +24,6 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
-        PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
         WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
 
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
@@ -43,12 +42,30 @@ public class PassiveManager : MonoBehaviour
         totalPowerPassive = Instantiate(emptyPassiveData);
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
+
+        
+        if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Pet))
+        {
+            PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
+        }
+
     }
 
     public void PetAdd(Item item)
     {
         var parent = GetComponentInParent<PlayerController>().gameObject;
-        Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
+        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
+        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
+        {
+            if (obj.Status == AsyncOperationStatus.Succeeded)
+            {
+                Debug.Log("Succeed to instantiate the pet.");
+            }
+            else
+            {
+                Debug.Log("Failed to instantiate the pet.");
+            }
+        };
     }
 
     public void WeaponAdd(Item item)
