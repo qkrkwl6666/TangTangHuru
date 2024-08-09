@@ -453,6 +453,8 @@ public class MainInventory : MonoBehaviour
         equipmentSlotUI[item.itemData.Item_Type - 1].gameObject.SetActive(true);
 
         playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+
+        GameManager.Instance.playerEquipment = playerEquipment;
     }
 
     public void UnequipItem(Item item)
@@ -463,6 +465,8 @@ public class MainInventory : MonoBehaviour
 
         defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(true);
         EquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
+
+        GameManager.Instance.playerEquipment = playerEquipment;
     }
 
     public int GetItemCount(ItemType itemType, ItemTier itemTier)
@@ -525,5 +529,11 @@ public enum PlayerEquipment
 
 public enum WeaponType
 {
+    Axe = 200001,
+    Bow = 210001,
+    Crossbow = 210101,
+    Wand = 220001,
+    Staff = 220101,
 
+    Count = 5,
 }

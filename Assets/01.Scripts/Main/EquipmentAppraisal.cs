@@ -158,7 +158,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
         float random = Random.Range(0, totalProbability);
 
-        
+        int itemId = 0;
 
         foreach (var appraise in list)
         {
@@ -166,9 +166,39 @@ public class EquipmentAppraisal : MonoBehaviour
 
             if (random <= currentProbability)
             {
-
+                itemId = SelectItem(appraise.type, appraise.tier);
+                break;
             }
         }
+
+        // 아이템 생성후 정보 띄우기
+
+    }
+
+    public int SelectItem(ItemType itemType, ItemTier itemTier)
+    {
+        int maxCount = 0;
+
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                maxCount = (int)WeaponType.Count;
+
+                int random = Random.Range(1, maxCount + 1);
+
+                int itemId = (int)WeaponType.Axe + random;
+
+                Debug.Log(itemId);
+                return itemId;
+
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+
+                return default;
+        }
+
+        return default;
 
     }
 

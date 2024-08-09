@@ -25,6 +25,9 @@ public class GameManager : Singleton<GameManager>
 
     public string currentWeapon = "OneSword";
 
+    // 플레이어 장착
+    public Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
+
     // 로딩 UI 
     public GameObject loadingUI;
     
@@ -41,6 +44,11 @@ public class GameManager : Singleton<GameManager>
     public void InGameItemClear()
     {
         inGameItems.Clear();
+    }
+
+    private void Update()
+    {
+        
     }
 
     public void AddinGameItem(IInGameItem item)
