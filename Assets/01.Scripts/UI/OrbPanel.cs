@@ -29,52 +29,55 @@ public class OrbPanel : MonoBehaviour
             orbList[i].gameObject.SetActive(false);
         }
 
-        //이걸로 개수 받아와서 목록 출력하고, 인벤토리 조합결과 AddItem메소드로 추가하기
-        //오브 수정되어야 함. 타입이 두개 (타입1-오브, 타입2-어디 전용 오브인지)
-        var rareOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Rare);
-        if(rareOrbList != null)
+
+        for(int i = 1; i <= 4; i++)
         {
-            //foreach(Item orb in rareOrbList)
-            //{
-            //    orb.itemData.Damage
-            //}
-            activeNum += rareOrbList.Count;
-        }
-        var epicOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Unique);
-        if (epicOrbList != null)
-        {
-            activeNum += epicOrbList.Count;
-        }
-        var uniqueOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Epic);
-        if (uniqueOrbList != null)
-        {
-            activeNum += uniqueOrbList.Count;
-        }
-        var LegendOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Legendary);
-        if (LegendOrbList != null)
-        {
-            activeNum += LegendOrbList.Count;
+            var invenOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, (ItemTier)i);
+            if (invenOrbList != null)
+            {
+                foreach (Item orb in invenOrbList)
+                {
+                    if (orb.itemData.Damage > 0)
+                    {
+                        atkOrbList.Add(orb);
+                    }
+                    else if(orb.itemData.Defense > 0)
+                    {
+                        defOrbList.Add(orb);
+                    }
+                    else if (orb.itemData.Hp > 0)
+                    {
+                        HpOrbList.Add(orb);
+                    }
+                    else
+                    {
+                        dodgeOrbList.Add(orb);
+                    }
+                }
+                activeNum += invenOrbList.Count;
+            }
         }
 
+        
 
         for (int i = 0; i < activeNum; i++)
         {
-            if (i < rareOrbList.Count)
-            {
-                orbList[i].SetInfo(610001);
-            }
-            else if (i >= uniqueOrbList.Count && i < uniqueOrbList.Count + uniqueOrbList.Count)
-            {
-                orbList[i].SetInfo(610002);
-            }
-            else if( i > (activeNum - LegendOrbList.Count))
-            {
-                orbList[i].SetInfo(610003);
-            }
-            else
-            {
-                orbList[i].SetInfo(610004);
-            }
+            //if (i < rareOrbList.Count)
+            //{
+            //    orbList[i].SetInfo(610001);
+            //}
+            //else if (i >= uniqueOrbList.Count && i < uniqueOrbList.Count + uniqueOrbList.Count)
+            //{
+            //    orbList[i].SetInfo(610002);
+            //}
+            //else if (i > (activeNum - LegendOrbList.Count))
+            //{
+            //    orbList[i].SetInfo(610003);
+            //}
+            //else
+            //{
+            //    orbList[i].SetInfo(610004);
+            //}
 
             orbList[i].gameObject.SetActive(true);
 
