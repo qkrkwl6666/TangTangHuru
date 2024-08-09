@@ -386,6 +386,12 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem("710002", 1);
             MainInventoryAddItem("710003", 1);
             MainInventoryAddItem("710004", 1);
+
+            //오브 테스트용
+            MainInventoryAddItem("610001", 1);
+            MainInventoryAddItem("610001", 1);
+            MainInventoryAddItem("610001", 1);
+            MainInventoryAddItem("610002", 1);
         }
 
         RefreshItemSlotUI();

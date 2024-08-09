@@ -13,6 +13,11 @@ public class OrbPanel : MonoBehaviour
 
     private bool reset = true;
 
+    private List<Item> atkOrbList;
+    private List<Item> defOrbList;
+    private List<Item> HpOrbList;
+    private List<Item> dodgeOrbList;
+
     private void OnEnable()
     {
         if (!reset)
@@ -29,6 +34,10 @@ public class OrbPanel : MonoBehaviour
         var rareOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Rare);
         if(rareOrbList != null)
         {
+            //foreach(Item orb in rareOrbList)
+            //{
+            //    orb.itemData.Damage
+            //}
             activeNum += rareOrbList.Count;
         }
         var epicOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, ItemTier.Unique);
