@@ -169,6 +169,7 @@ public class MainInventory : MonoBehaviour
         switch (itemData.Item_Type)
         {
             case 1: // 무기
+            case 8: // 펫 Todo : 임시
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
 
@@ -197,6 +198,7 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
+
 
         }
 
@@ -233,6 +235,7 @@ public class MainInventory : MonoBehaviour
                         case ItemType.Helmet:
                         case ItemType.Armor:
                         case ItemType.Shose:
+                        case ItemType.Pet: // Todo 임시
                             CreateOrUpdateItemSlot(itemList[i]);
                             break;
 
@@ -373,6 +376,11 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("210101", 1);
         MainInventoryAddItem("220001", 1);
 
+        MainInventoryAddItem("710001", 1);
+        MainInventoryAddItem("710002", 1);
+        MainInventoryAddItem("710003", 1);
+        MainInventoryAddItem("710004", 1);
+
 
         RefreshItemSlotUI();
 
@@ -456,6 +464,14 @@ public class MainInventory : MonoBehaviour
         if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
 
         // 기존 장비 장착 중이라면 장착 해제
+
+        // Todo : 임시
+        if(ItemType.Pet == item.ItemType)
+        {
+            playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+            return;
+        }
+
 
         if(playerEquipment.ContainsKey((PlayerEquipment)item.ItemType))
         {
