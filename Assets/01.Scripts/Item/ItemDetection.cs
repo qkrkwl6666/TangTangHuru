@@ -44,7 +44,8 @@ public class ItemDetection : MonoBehaviour
             .GetComponent<TreasureSpawnManager>().treasures;
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
-        treasureBar = Instantiate(treasureBarPrefab.gameObject);
+        var tBar = Instantiate(treasureBarPrefab);
+        treasureBar = tBar.gameObject;
         treasureBar.transform.SetParent(gameObject.transform, false);
     }
 
