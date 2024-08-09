@@ -78,6 +78,9 @@ public class MainInventory : MonoBehaviour
             Debug.Log("세이브 이미 로드 완료됨");
             StartCoroutine(SceneLoadMainInventory());
         }
+
+        //임시코드
+
     }
 
     private void OnDestroy()
@@ -357,6 +360,13 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem(item.ItemId.ToString(), item.itemData.CurrentUpgrade);
         }
 
+        MainInventoryAddItem("200001", 1);
+        MainInventoryAddItem("200101", 1);
+        MainInventoryAddItem("210001", 1);
+        MainInventoryAddItem("210101", 1);
+        MainInventoryAddItem("220001", 1);
+
+
         RefreshItemSlotUI();
 
         yield return new WaitForSeconds(0.3f);
@@ -525,6 +535,7 @@ public enum PlayerEquipment
     Helmet = 2, // 투구
     Armor = 3,  // 갑옷
     Shoes = 4,  // 신발
+    other = 5,
 }
 
 public enum WeaponType

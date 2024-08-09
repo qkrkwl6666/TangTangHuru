@@ -47,7 +47,6 @@ public class PassiveManager : MonoBehaviour
     public void WeaponAdd(Item item)
     {
         var parent = GetComponentInParent<PlayerController>().gameObject;
-        //Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
 
         var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
         handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
@@ -56,7 +55,6 @@ public class PassiveManager : MonoBehaviour
             {
                 GameObject mainWeapon = obj.Result;
                 currWeaponCreators.Add(mainWeapon.GetComponent<WeaponCreator>());
-                Debug.Log("Weapon instantiated and added to the list.");
             }
             else
             {
