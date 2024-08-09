@@ -375,17 +375,19 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem(item.ItemId.ToString(), item.itemData.CurrentUpgrade);
         }
 
-        //MainInventoryAddItem("200001", 1);
-        //MainInventoryAddItem("200101", 1);
-        //MainInventoryAddItem("210001", 1);
-        //MainInventoryAddItem("210101", 1);
-        //MainInventoryAddItem("220001", 1);
+        if(items.Count == 0)
+        {
+            MainInventoryAddItem("200001", 1);
+            MainInventoryAddItem("200101", 1);
+            MainInventoryAddItem("210001", 1);
+            MainInventoryAddItem("210101", 1);
+            MainInventoryAddItem("220001", 1);
 
-        //MainInventoryAddItem("710001", 1);
-        //MainInventoryAddItem("710002", 1);
-        //MainInventoryAddItem("710003", 1);
-        //MainInventoryAddItem("710004", 1);
-
+            MainInventoryAddItem("710001", 1);
+            MainInventoryAddItem("710002", 1);
+            MainInventoryAddItem("710003", 1);
+            MainInventoryAddItem("710004", 1);
+        }
 
         RefreshItemSlotUI();
 
