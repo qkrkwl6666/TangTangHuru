@@ -21,7 +21,7 @@ public class MainInventory : MonoBehaviour
 
     public List<M_UISlot> equipmentSlotUI = new ();
 
-    // 현재 생성된 UI 슬롯 아이템z
+    // 현재 생성된 UI 슬롯 아이템
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
 
     // 소모품 아이템 컨테이너
@@ -71,8 +71,19 @@ public class MainInventory : MonoBehaviour
 
     private void Start()
     {
-        DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory; 
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory;
+        else
+        {
+            Debug.Log("세이브 이미 로드 완료됨");
+            StartCoroutine(SceneLoadMainInventory());
+        }
     }
+
+    private void OnDestroy()
+    {
+        
+    }   
 
     public void CoSaveDataLoadMainInventory()
     {
@@ -379,6 +390,49 @@ public class MainInventory : MonoBehaviour
         OnMainInventorySaveLoaded?.Invoke();
     }
 
+    public IEnumerator SceneLoadMainInventory()
+    {
+        var items = SaveManager.SaveDataV1.allItem;
+
+        foreach (var item in items)
+        {
+            MainInventoryAddItem(item.ItemId.ToString(), item.itemData.CurrentUpgrade);
+        }
+
+        RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.3f);
+
+        foreach (var itemSlot in itemSlotUI)
+        {
+            var item = itemSlot.Value.Item1;
+
+            switch (item.itemData.Item_Type)
+            {
+                case (int)ItemType.Weapon:
+                    var weaponItem = item as M_Weapon;
+
+                    if (weaponItem == null) yield break;
+
+                    weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade);
+
+                    break;
+
+                case (int)ItemType.Helmet:
+                case (int)ItemType.Armor:
+                case (int)ItemType.Shose:
+                    break;
+            }
+        }
+
+        RefreshItemSlotUI();
+
+        yield return new WaitForSeconds(0.3f);
+
+        GameManager.Instance.InitSaveLoaded();
+    }
+
+
     // 장비 장착
     public void EquipItem(Item item)
     {
@@ -399,6 +453,8 @@ public class MainInventory : MonoBehaviour
         equipmentSlotUI[item.itemData.Item_Type - 1].gameObject.SetActive(true);
 
         playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+
+        GameManager.Instance.playerEquipment = playerEquipment;
     }
 
     public void UnequipItem(Item item)
@@ -409,6 +465,8 @@ public class MainInventory : MonoBehaviour
 
         defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(true);
         EquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
+
+        GameManager.Instance.playerEquipment = playerEquipment;
     }
 
     public int GetItemCount(ItemType itemType, ItemTier itemTier)
@@ -467,4 +525,15 @@ public enum PlayerEquipment
     Helmet = 2, // 투구
     Armor = 3,  // 갑옷
     Shoes = 4,  // 신발
+}
+
+public enum WeaponType
+{
+    Axe = 200001,
+    Bow = 210001,
+    Crossbow = 210101,
+    Wand = 220001,
+    Staff = 220101,
+
+    Count = 5,
 }

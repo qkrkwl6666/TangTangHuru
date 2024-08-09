@@ -75,7 +75,5 @@ public class SaveManager : Singleton<SaveManager>
             return saveData;
         }
 
-
-
     }
 }

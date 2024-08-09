@@ -23,6 +23,8 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
+        WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
+
         currMainWeapon = GameObject.FindGameObjectWithTag("MainWeapon").GetComponent<WeaponCreator>();
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
 
@@ -49,7 +51,15 @@ public class PassiveManager : MonoBehaviour
         totalPowerPassive = Instantiate(emptyPassiveData);
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
+
+
     }
+
+    public void WeaponAdd(Item item)
+    {
+        Addressables.InstantiateAsync(item.itemData.Prefab_Id);
+    }
+
     public void PassiveAdd(PassiveData selected)
     {
         var seletedPassive = selected;

@@ -73,7 +73,7 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     public void ExitMainButton()
     {
-        GameManager.Instance.LoadSceneAsync(Defines.main);
+        GameManager.Instance.LoadSceneAsync("InventoryScene");
     }
 
     #endregion

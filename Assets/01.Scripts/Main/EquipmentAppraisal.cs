@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 
 public class EquipmentAppraisal : MonoBehaviour
 {
@@ -14,17 +15,30 @@ public class EquipmentAppraisal : MonoBehaviour
 
     private Dictionary<ItemTier, List<Item>> allGemStone;
 
+    private List<int> appraisalId = new();
+
     public Transform content;
 
     private int defaultGemStoneItemId = 600001;
+
+    public Button appraisalButton;
 
     private void Start()
     {
         // 원석 아이템 슬롯 생성
 
-        DataTableManager.Instance.OnAllTableLoaded += CreateGemstoneSlot;
-
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += CreateGemstoneSlot;
+        else
+        {
+            CreateGemstoneSlot();
+        }
         //CreateGemstoneSlot();
+    }
+
+    private void OnDestroy()
+    {
+        
     }
 
     public void RefreshGemStoneSlotUI()
@@ -82,12 +96,14 @@ public class EquipmentAppraisal : MonoBehaviour
             defaultGemStoneItemId++;
         }
 
+        var apprasieTable = DataTableManager.Instance.Get<AppraiseTable>(DataTableManager.appraise).appraiseTable;
+
+        foreach(var apprasie in apprasieTable)
+        {
+            appraisalId.Add(apprasie.Value.Id);
+        }
+
         gameObject.SetActive(false);
-    }
-
-    public void SortGemStoneSlotUI()
-    {
-
     }
 
     public int GetSelectGemStoneCount(ItemTier itemTier)
@@ -124,4 +140,66 @@ public class EquipmentAppraisal : MonoBehaviour
 
         return true;
     }
+
+    public void RandomItemCreate(AppraiseData appraiseData)
+    {
+        List<(ItemType type, ItemTier tier, float prob)> list = new();
+
+        foreach (var appraise in appraiseData.GetAppraiseData())
+        {
+            if (appraise.prob != -1)
+            {
+                list.Add(appraise);
+            }
+        }
+
+        float totalProbability = 0f;
+        float currentProbability = 0f;
+
+        float random = Random.Range(0, totalProbability);
+
+        int itemId = 0;
+
+        foreach (var appraise in list)
+        {
+            currentProbability += appraise.prob;
+
+            if (random <= currentProbability)
+            {
+                itemId = SelectItem(appraise.type, appraise.tier);
+                break;
+            }
+        }
+
+        // 아이템 생성후 정보 띄우기
+
+    }
+
+    public int SelectItem(ItemType itemType, ItemTier itemTier)
+    {
+        int maxCount = 0;
+
+        switch (itemType)
+        {
+            case ItemType.Weapon:
+                maxCount = (int)WeaponType.Count;
+
+                int random = Random.Range(1, maxCount + 1);
+
+                int itemId = (int)WeaponType.Axe + random;
+
+                Debug.Log(itemId);
+                return itemId;
+
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+
+                return default;
+        }
+
+        return default;
+
+    }
+
 }
