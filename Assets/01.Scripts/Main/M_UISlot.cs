@@ -94,10 +94,12 @@ public class M_UISlot : MonoBehaviour
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;
+
             case (int)ItemType.Helmet:
             case (int)ItemType.Armor:
             case (int)ItemType.Shose:
-
+                mainUI.SetEquipPopData(item);
+                mainUI.SetActiveEquipPopUpUI(true);
                 break;
         }
     }

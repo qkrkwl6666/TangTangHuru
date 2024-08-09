@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -185,14 +184,17 @@ public class MainInventory : MonoBehaviour
                     return m_weaponItem;
                 }
             case 2: // 투구
-
-                break;
             case 3: // 갑옷
-
-                break;
             case 4: // 신발
+                {
+                    M_Armour m_armour = new M_Armour();
 
-                break;
+                    int instanceId = m_armour.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+
+                    m_armour.SetItemData(itemData, instanceId);
+
+                    return m_armour;
+                }
             case 5: // 장비 원석
             case 6: // 강화석
                 {
@@ -204,6 +206,8 @@ public class MainInventory : MonoBehaviour
                     return m_item;
                 }
 
+            case 7: // 오브
+                break;
 
         }
 
@@ -377,16 +381,20 @@ public class MainInventory : MonoBehaviour
 
         if(items.Count == 0)
         {
-            MainInventoryAddItem("200001", 1);
-            MainInventoryAddItem("200101", 1);
-            MainInventoryAddItem("210001", 1);
-            MainInventoryAddItem("210101", 1);
-            MainInventoryAddItem("220001", 1);
-
-            MainInventoryAddItem("710001", 1);
-            MainInventoryAddItem("710002", 1);
-            MainInventoryAddItem("710003", 1);
-            MainInventoryAddItem("710004", 1);
+            MainInventoryAddItem("200001", 0);
+            MainInventoryAddItem("200101", 0);
+            MainInventoryAddItem("210001", 0);
+            MainInventoryAddItem("210101", 0);
+            MainInventoryAddItem("220001", 0);
+                                           
+            MainInventoryAddItem("710001", 0);
+            MainInventoryAddItem("710002", 0);
+            MainInventoryAddItem("710003", 0);
+            MainInventoryAddItem("710004", 0);
+                                           
+            MainInventoryAddItem("400001", 0);
+            MainInventoryAddItem("401001", 0);
+            MainInventoryAddItem("402001", 0);
         }
 
         RefreshItemSlotUI();

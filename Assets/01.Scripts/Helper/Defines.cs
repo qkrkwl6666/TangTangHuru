@@ -36,6 +36,11 @@ public static class Defines
     public static readonly string criticalChance = "치명타 확률 : ";
     public static readonly string criticalDamage = "치명타 피해 : ";
 
+    // 방어구 스텟 텍스트
+    public static readonly string hp = "체력 : ";
+    public static readonly string defence = "방어력 : ";
+    public static readonly string dodge = "회피율 : ";
+
     public static int MaxUpgrade = 10;
 
     // 방어구 스텟 텍스트

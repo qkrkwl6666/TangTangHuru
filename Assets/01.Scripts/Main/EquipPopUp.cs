@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -8,10 +9,10 @@ public class EquipPopUp : MonoBehaviour
     public Item currentItem;
 
     // 버튼
-    public Button EquipButton;   // 장착
+    public Button EquipButton;     // 장착
     public Button UnEquipButton;   // 장착 해제
-    public Button UpgradeButton; // 강화
-    public Button TierUpButton; // 승급
+    public Button UpgradeButton;   // 강화
+    public Button TierUpButton;    // 승급
 
     public Button CencelButton;
 
@@ -30,6 +31,9 @@ public class EquipPopUp : MonoBehaviour
     public TextMeshProUGUI itemDescText;
 
     // 무기 or 방어구에 따라 다르게 표시
+
+    public List<TextMeshProUGUI> itemStatusTexts = new List<TextMeshProUGUI>();
+
     public TextMeshProUGUI itemStatusText1; 
     public TextMeshProUGUI itemStatusText2;
     public TextMeshProUGUI itemStatusText3;
@@ -51,6 +55,11 @@ public class EquipPopUp : MonoBehaviour
         {
             Debug.Log("currentItem is null");
             return;
+        }
+
+        foreach(var text in itemStatusTexts)
+        {
+            text.gameObject.SetActive(false);
         }
 
         EquipButton.gameObject.SetActive(isEquip);
@@ -91,11 +100,23 @@ public class EquipPopUp : MonoBehaviour
                 itemStatusText3.text = Defines.criticalChance + item.itemData.CriticalChance + "%";
                 itemStatusText4.text = Defines.criticalDamage + item.itemData.Criticaldam + "%";
 
+                foreach (var text in itemStatusTexts)
+                {
+                    text.gameObject.SetActive(true);
+                }
+
                 break;
             case (int)ItemType.Helmet:
+                itemStatusText1.text = Defines.defence + item.itemData.Defense;
+                itemStatusTexts[0].gameObject.SetActive(true);
+                break;
             case (int)ItemType.Armor:
+                itemStatusText1.text = Defines.hp + item.itemData.Hp;
+                itemStatusTexts[0].gameObject.SetActive(true);
+                break;
             case (int)ItemType.Shose:
-
+                itemStatusText1.text = Defines.dodge + item.itemData.Dodge;
+                itemStatusTexts[0].gameObject.SetActive(true);
                 break;
         }
     }

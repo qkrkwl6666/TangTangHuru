@@ -46,11 +46,6 @@ public class GameManager : Singleton<GameManager>
         inGameItems.Clear();
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void AddinGameItem(IInGameItem item)
     {
         inGameItems.Add(item);
