@@ -516,6 +516,7 @@ public enum ItemType
     EquipmentGem = 5, // Àåºñ ¿ø¼®
     ReinforcedStone = 6, // °­È­¼®
     Orb = 7, // ¿Àºê
+    Pet = 8, // Æê
 }
 
 public enum ItemTier
@@ -534,6 +535,8 @@ public enum PlayerEquipment
     Helmet = 2, // Åõ±¸
     Armor = 3,  // °©¿Ê
     Shoes = 4,  // ½Å¹ß
+
+    Pet = 8, // Æê
 }
 
 public enum WeaponType
