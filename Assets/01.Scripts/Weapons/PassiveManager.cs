@@ -24,6 +24,7 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
+        PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
         WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
 
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
@@ -42,6 +43,12 @@ public class PassiveManager : MonoBehaviour
         totalPowerPassive = Instantiate(emptyPassiveData);
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
+    }
+
+    public void PetAdd(Item item)
+    {
+        var parent = GetComponentInParent<PlayerController>().gameObject;
+        Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
     }
 
     public void WeaponAdd(Item item)
