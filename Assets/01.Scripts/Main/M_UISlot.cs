@@ -110,4 +110,6 @@ public class M_UISlot : MonoBehaviour
         mainUI.SetUnequipPopData(item);
         mainUI.SetActiveEquipPopUpUI(true);
     }
+
+    // 장비 해제 찹업
 }
