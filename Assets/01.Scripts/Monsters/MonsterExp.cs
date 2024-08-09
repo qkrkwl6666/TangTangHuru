@@ -8,7 +8,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
 
     private float exp = 0; //생성시 자동세팅
 
-    private float playerDistanceDifference = 0.5f;
+    private float playerDistanceDifference = 1.5f;
 
     private float speed = 5f;
 

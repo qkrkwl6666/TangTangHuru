@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PassiveManager : MonoBehaviour
 {
@@ -25,7 +26,6 @@ public class PassiveManager : MonoBehaviour
     {
         WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
 
-        currMainWeapon = GameObject.FindGameObjectWithTag("MainWeapon").GetComponent<WeaponCreator>();
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
 
         foreach( var sub in subs)
@@ -34,15 +34,6 @@ public class PassiveManager : MonoBehaviour
             //To-Do. 아직 여기서 제거가 안됨. 
             weaponCreators.Remove(sub.GetComponent<WeaponCreator>()); 
         }
-        if(currMainWeapon == null)
-        {
-            Debug.LogError("No Main Weapon!");
-        }
-        else
-        {
-            currWeaponCreators.Add(currMainWeapon);
-        }
-
 
         for (int i = 0; i < passiveDataList.Count; i++)
         {
@@ -51,13 +42,27 @@ public class PassiveManager : MonoBehaviour
         totalPowerPassive = Instantiate(emptyPassiveData);
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
-
-
     }
 
     public void WeaponAdd(Item item)
     {
-        Addressables.InstantiateAsync(item.itemData.Prefab_Id);
+        var parent = GetComponentInParent<PlayerController>().gameObject;
+        //Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
+
+        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
+        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
+        {
+            if (obj.Status == AsyncOperationStatus.Succeeded)
+            {
+                GameObject mainWeapon = obj.Result;
+                currWeaponCreators.Add(mainWeapon.GetComponent<WeaponCreator>());
+                Debug.Log("Weapon instantiated and added to the list.");
+            }
+            else
+            {
+                Debug.LogError("Failed to instantiate the weapon.");
+            }
+        };
     }
 
     public void PassiveAdd(PassiveData selected)
