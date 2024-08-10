@@ -667,10 +667,14 @@ public class MainInventory : MonoBehaviour
 
         slot.ItemSlot.SetActive(false);
 
+        if (item.ItemType == ItemType.Pet) return;
+
         defaultEquipmentSlotUI[(int)item.ItemType - 1].SetActive(false);
 
         equipmentSlotUI[(int)item.ItemType - 1].SetItemData(item, mainUI);
         equipmentSlotUI[(int)item.ItemType - 1].gameObject.SetActive(true);
+
+        GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
     }
@@ -687,9 +691,9 @@ public class MainInventory : MonoBehaviour
         if(ItemType.Pet == item.ItemType)
         {
             playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+            GameManager.Instance.playerEquipment = playerEquipment;
             return;
         }
-
 
         if(playerEquipment.ContainsKey((PlayerEquipment)item.ItemType))
         {
