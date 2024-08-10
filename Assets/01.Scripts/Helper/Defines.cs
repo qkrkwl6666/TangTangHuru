@@ -29,6 +29,8 @@ public static class Defines
     public static readonly Color redColor = new Color(39 / 255f, 10 / 255f, 8 / 255f);
     public static readonly Color whiteColor = Color.white;
     public static readonly Color yellowColor = new Color(40 / 255f, 36 / 255f, 29 / 255f);
+    public static readonly Color allFoucsTextColor = new Color(246 / 255f, 225 / 255f, 156 / 255f);
+    public static readonly Color allNormalTextColor = new Color(155 / 255f, 155 / 255f, 155 / 255f);
 
     // 무기 스텟 텍스트
     public static readonly string damage = "공격력 : ";
