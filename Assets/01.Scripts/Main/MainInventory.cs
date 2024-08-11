@@ -39,6 +39,10 @@ public class MainInventory : MonoBehaviour
 
     private MainUI mainUI;
 
+    // 재화 골드 및 다이아
+    public TextMeshProUGUI goldText;
+    public TextMeshProUGUI diamondText;
+
     #region 정렬
     public Button allFilterButton;    // 전체
     public TextMeshProUGUI allFilterText; 
@@ -568,128 +572,12 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem(item);
         }
 
-        #region 초기 아이템 지급 테스트 코드
-        if (items.Count == 0)
-        {
-            MainInventoryAddItem("200001", 0);
-            MainInventoryAddItem("200101", 0);
-            MainInventoryAddItem("210001", 0);
-            MainInventoryAddItem("210101", 0);
-            MainInventoryAddItem("220001", 0);
-                                           
-            MainInventoryAddItem("710001", 0);
-            MainInventoryAddItem("710002", 0);
-            MainInventoryAddItem("710003", 0);
-            MainInventoryAddItem("710004", 0);
-                                           
-            MainInventoryAddItem("400001", 0);
-            MainInventoryAddItem("400002", 0);
-            MainInventoryAddItem("400003", 0);
-            MainInventoryAddItem("400004", 0);
-            MainInventoryAddItem("400005", 0);
-            MainInventoryAddItem("401001", 0);
-            MainInventoryAddItem("401002", 0);
-            MainInventoryAddItem("401003", 0);
-            MainInventoryAddItem("401004", 0);
-            MainInventoryAddItem("401005", 0);
-            MainInventoryAddItem("402001", 0);
-            MainInventoryAddItem("402002", 0);
-            MainInventoryAddItem("402003", 0);
-            MainInventoryAddItem("402004", 0);
-            MainInventoryAddItem("402005", 0);
-            MainInventoryAddItem("400011", 0);
-            MainInventoryAddItem("400012", 0);
-            MainInventoryAddItem("400013", 0);
-            MainInventoryAddItem("400014", 0);
-            MainInventoryAddItem("400015", 0);
-            MainInventoryAddItem("401011", 0);
-            MainInventoryAddItem("401012", 0);
-            MainInventoryAddItem("401013", 0);
-            MainInventoryAddItem("401014", 0);
-            MainInventoryAddItem("401015", 0);
-            MainInventoryAddItem("402011", 0);
-            MainInventoryAddItem("402012", 0);
-            MainInventoryAddItem("402013", 0);
-            MainInventoryAddItem("402014", 0);
-            MainInventoryAddItem("402015", 0);
-            MainInventoryAddItem("400021", 0);
-            MainInventoryAddItem("400022", 0);
-            MainInventoryAddItem("400023", 0);
-            MainInventoryAddItem("400024", 0);
-            MainInventoryAddItem("400025", 0);
-            MainInventoryAddItem("401021", 0);
-            MainInventoryAddItem("401022", 0);
-            MainInventoryAddItem("401023", 0);
-            MainInventoryAddItem("401024", 0);
-            MainInventoryAddItem("401025", 0);
-            MainInventoryAddItem("402021", 0);
-            MainInventoryAddItem("402022", 0);
-            MainInventoryAddItem("402023", 0);
-            MainInventoryAddItem("402024", 0);
-            MainInventoryAddItem("402025", 0);
-            MainInventoryAddItem("400031", 0);
-            MainInventoryAddItem("400032", 0);
-            MainInventoryAddItem("400033", 0);
-            MainInventoryAddItem("400034", 0);
-            MainInventoryAddItem("400035", 0);
-            MainInventoryAddItem("401031", 0);
-            MainInventoryAddItem("401032", 0);
-            MainInventoryAddItem("401033", 0);
-            MainInventoryAddItem("401034", 0);
-            MainInventoryAddItem("401035", 0);
-            MainInventoryAddItem("402031", 0);
-            MainInventoryAddItem("402032", 0);
-            MainInventoryAddItem("402033", 0);
-            MainInventoryAddItem("402034", 0);
-            MainInventoryAddItem("402035", 0);
-            MainInventoryAddItem("400041", 0);
-            MainInventoryAddItem("400042", 0);
-            MainInventoryAddItem("400043", 0);
-            MainInventoryAddItem("400044", 0);
-            MainInventoryAddItem("400045", 0);
-            MainInventoryAddItem("401041", 0);
-            MainInventoryAddItem("401042", 0);
-            MainInventoryAddItem("401043", 0);
-            MainInventoryAddItem("401044", 0);
-            MainInventoryAddItem("401045", 0);
-            MainInventoryAddItem("402051", 0);
-            MainInventoryAddItem("402052", 0);
-            MainInventoryAddItem("402053", 0);
-            MainInventoryAddItem("402054", 0);
-            MainInventoryAddItem("402055", 0);
-            MainInventoryAddItem("400061", 0);
-            MainInventoryAddItem("400062", 0);
-            MainInventoryAddItem("400063", 0);
-            MainInventoryAddItem("400064", 0);
-            MainInventoryAddItem("400065", 0);
-            MainInventoryAddItem("401061", 0);
-            MainInventoryAddItem("401062", 0);
-            MainInventoryAddItem("401063", 0);
-            MainInventoryAddItem("401064", 0);
-            MainInventoryAddItem("401065", 0);
-            MainInventoryAddItem("402061", 0);
-            MainInventoryAddItem("402062", 0);
-            MainInventoryAddItem("402063", 0);
-            MainInventoryAddItem("402064", 0);
-            MainInventoryAddItem("402065", 0);
-            MainInventoryAddItem("400071", 0);
-            MainInventoryAddItem("400072", 0);
-            MainInventoryAddItem("400073", 0);
-            MainInventoryAddItem("400074", 0);
-            MainInventoryAddItem("400075", 0);
-            MainInventoryAddItem("401071", 0);
-            MainInventoryAddItem("401072", 0);
-            MainInventoryAddItem("401073", 0);
-            MainInventoryAddItem("401074", 0);
-            MainInventoryAddItem("401075", 0);
-            MainInventoryAddItem("402071", 0);
-            MainInventoryAddItem("402072", 0);
-            MainInventoryAddItem("402073", 0);
-            MainInventoryAddItem("402074", 0);
-            MainInventoryAddItem("402075", 0);
-        }
+        // 초기 아이템 지급
+        initializeNewPlayerItems();
 
-        #endregion
+        GameManager.Instance.CurrentStage = SaveManager.SaveDataV1.CurrentStage;
+        goldText.text = SaveManager.SaveDataV1.Gold.ToString();
+        diamondText.text = SaveManager.SaveDataV1.Diamond.ToString();
 
         RefreshItemSlotUI();
 
@@ -711,6 +599,9 @@ public class MainInventory : MonoBehaviour
     public IEnumerator SceneLoadMainInventory()
     {
         var items = SaveManager.SaveDataV1.allItem;
+
+        goldText.text = SaveManager.SaveDataV1.Gold.ToString();
+        diamondText.text= SaveManager.SaveDataV1.Diamond.ToString();
 
         foreach (var item in items)
         {
@@ -933,6 +824,128 @@ public class MainInventory : MonoBehaviour
         {
             playerViewUI.SetNoneWeaponCharacterSkin(playerViewUI.CurrentCharacterSkin);
         }
+    }
+
+    public void initializeNewPlayerItems()
+    {
+        if (SaveManager.isSaveFile) return;
+
+        MainInventoryAddItem("200001", 0);
+        MainInventoryAddItem("200101", 0);
+        MainInventoryAddItem("210001", 0);
+        MainInventoryAddItem("210101", 0);
+        MainInventoryAddItem("220001", 0);
+
+        MainInventoryAddItem("710001", 0);
+        MainInventoryAddItem("710002", 0);
+        MainInventoryAddItem("710003", 0);
+        MainInventoryAddItem("710004", 0);
+
+        MainInventoryAddItem("400001", 0);
+        MainInventoryAddItem("400002", 0);
+        MainInventoryAddItem("400003", 0);
+        MainInventoryAddItem("400004", 0);
+        MainInventoryAddItem("400005", 0);
+        MainInventoryAddItem("401001", 0);
+        MainInventoryAddItem("401002", 0);
+        MainInventoryAddItem("401003", 0);
+        MainInventoryAddItem("401004", 0);
+        MainInventoryAddItem("401005", 0);
+        MainInventoryAddItem("402001", 0);
+        MainInventoryAddItem("402002", 0);
+        MainInventoryAddItem("402003", 0);
+        MainInventoryAddItem("402004", 0);
+        MainInventoryAddItem("402005", 0);
+        MainInventoryAddItem("400011", 0);
+        MainInventoryAddItem("400012", 0);
+        MainInventoryAddItem("400013", 0);
+        MainInventoryAddItem("400014", 0);
+        MainInventoryAddItem("400015", 0);
+        MainInventoryAddItem("401011", 0);
+        MainInventoryAddItem("401012", 0);
+        MainInventoryAddItem("401013", 0);
+        MainInventoryAddItem("401014", 0);
+        MainInventoryAddItem("401015", 0);
+        MainInventoryAddItem("402011", 0);
+        MainInventoryAddItem("402012", 0);
+        MainInventoryAddItem("402013", 0);
+        MainInventoryAddItem("402014", 0);
+        MainInventoryAddItem("402015", 0);
+        MainInventoryAddItem("400021", 0);
+        MainInventoryAddItem("400022", 0);
+        MainInventoryAddItem("400023", 0);
+        MainInventoryAddItem("400024", 0);
+        MainInventoryAddItem("400025", 0);
+        MainInventoryAddItem("401021", 0);
+        MainInventoryAddItem("401022", 0);
+        MainInventoryAddItem("401023", 0);
+        MainInventoryAddItem("401024", 0);
+        MainInventoryAddItem("401025", 0);
+        MainInventoryAddItem("402021", 0);
+        MainInventoryAddItem("402022", 0);
+        MainInventoryAddItem("402023", 0);
+        MainInventoryAddItem("402024", 0);
+        MainInventoryAddItem("402025", 0);
+        MainInventoryAddItem("400031", 0);
+        MainInventoryAddItem("400032", 0);
+        MainInventoryAddItem("400033", 0);
+        MainInventoryAddItem("400034", 0);
+        MainInventoryAddItem("400035", 0);
+        MainInventoryAddItem("401031", 0);
+        MainInventoryAddItem("401032", 0);
+        MainInventoryAddItem("401033", 0);
+        MainInventoryAddItem("401034", 0);
+        MainInventoryAddItem("401035", 0);
+        MainInventoryAddItem("402031", 0);
+        MainInventoryAddItem("402032", 0);
+        MainInventoryAddItem("402033", 0);
+        MainInventoryAddItem("402034", 0);
+        MainInventoryAddItem("402035", 0);
+        MainInventoryAddItem("400041", 0);
+        MainInventoryAddItem("400042", 0);
+        MainInventoryAddItem("400043", 0);
+        MainInventoryAddItem("400044", 0);
+        MainInventoryAddItem("400045", 0);
+        MainInventoryAddItem("401041", 0);
+        MainInventoryAddItem("401042", 0);
+        MainInventoryAddItem("401043", 0);
+        MainInventoryAddItem("401044", 0);
+        MainInventoryAddItem("401045", 0);
+        MainInventoryAddItem("402051", 0);
+        MainInventoryAddItem("402052", 0);
+        MainInventoryAddItem("402053", 0);
+        MainInventoryAddItem("402054", 0);
+        MainInventoryAddItem("402055", 0);
+        MainInventoryAddItem("400061", 0);
+        MainInventoryAddItem("400062", 0);
+        MainInventoryAddItem("400063", 0);
+        MainInventoryAddItem("400064", 0);
+        MainInventoryAddItem("400065", 0);
+        MainInventoryAddItem("401061", 0);
+        MainInventoryAddItem("401062", 0);
+        MainInventoryAddItem("401063", 0);
+        MainInventoryAddItem("401064", 0);
+        MainInventoryAddItem("401065", 0);
+        MainInventoryAddItem("402061", 0);
+        MainInventoryAddItem("402062", 0);
+        MainInventoryAddItem("402063", 0);
+        MainInventoryAddItem("402064", 0);
+        MainInventoryAddItem("402065", 0);
+        MainInventoryAddItem("400071", 0);
+        MainInventoryAddItem("400072", 0);
+        MainInventoryAddItem("400073", 0);
+        MainInventoryAddItem("400074", 0);
+        MainInventoryAddItem("400075", 0);
+        MainInventoryAddItem("401071", 0);
+        MainInventoryAddItem("401072", 0);
+        MainInventoryAddItem("401073", 0);
+        MainInventoryAddItem("401074", 0);
+        MainInventoryAddItem("401075", 0);
+        MainInventoryAddItem("402071", 0);
+        MainInventoryAddItem("402072", 0);
+        MainInventoryAddItem("402073", 0);
+        MainInventoryAddItem("402074", 0);
+        MainInventoryAddItem("402075", 0);
     }
 
     public void ItemFilterUISlot(FilterType filterType)

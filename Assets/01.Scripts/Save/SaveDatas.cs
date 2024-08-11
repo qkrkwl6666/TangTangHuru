@@ -8,9 +8,9 @@ public abstract class SaveDatas
 
 public class SaveDataV1 : SaveDatas
 {
-    public int Gold { get; set; } = 100;
-    public int Diamond { get; set; } = 100;
-    public int CurrentStage { get; set; } = 21;
+    public int Gold { get; set; } = 0;
+    public int Diamond { get; set; } = 0;
+    public int CurrentStage { get; set; } = 1;
 
     // 전체 아이템 컨테이너
     public List<Item> allItem = new();
