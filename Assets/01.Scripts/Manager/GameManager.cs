@@ -3,24 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-public class SaveData
-{
-    public int player_Gold;
-    public float player_Exp;
-    public int stage_Record;
-
-    public int equip_GemStone;
-    public int reinforce_Stone = 40;
-    public int orb_Atk_Rare = 1;
-    public int orb_Atk_Epic = 1;
-    public int orb_Atk_Unique = 2;
-    public int orb_Atk_Legend = 1;
-
-}
 
 public class GameManager : Singleton<GameManager>
 {
-    public SaveData currSaveData = new();
     public int CurrentStage { get; set; } = 1;
 
     public string currentWeapon = "OneSword";

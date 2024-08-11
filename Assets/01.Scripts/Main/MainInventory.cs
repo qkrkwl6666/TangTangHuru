@@ -202,6 +202,15 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
+            case 7: // °­È­¼®
+                {
+                    M_Item m_item = new M_Item();
+                    int instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
 
 
         }
