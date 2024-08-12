@@ -24,8 +24,16 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
-        PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
-        WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
+        // 에외 처리 추가
+        if(GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Pet))
+        {
+            PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
+        }
+
+        if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
+        {
+            WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
+        }
 
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
 

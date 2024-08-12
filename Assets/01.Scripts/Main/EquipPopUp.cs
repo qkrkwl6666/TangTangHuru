@@ -30,6 +30,13 @@ public class EquipPopUp : MonoBehaviour
     // 아이템 설명
     public TextMeshProUGUI itemDescText;
 
+    // 업그레이드 
+    public TextMeshProUGUI needUpgradeGold;
+    public TextMeshProUGUI totalUpgradeGold;
+
+    public TextMeshProUGUI needReinforcedStone;
+    public TextMeshProUGUI totalReinforcedStone;
+
     // 무기 or 방어구에 따라 다르게 표시
 
     public List<TextMeshProUGUI> itemStatusTexts = new List<TextMeshProUGUI>();

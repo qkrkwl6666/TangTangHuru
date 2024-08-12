@@ -11,6 +11,8 @@ public class SaveManager : Singleton<SaveManager>
 
     public static readonly string SaveName = "AutoSave.json";
 
+    public static bool isSaveFile = false;
+
     private void Awake()
     {
         LoadGame();
@@ -53,6 +55,7 @@ public class SaveManager : Singleton<SaveManager>
 
         if (!System.IO.File.Exists(Path.Combine(SaveDirectory, SaveName)))
         {
+            isSaveFile = false;
             return null;
         }
 
@@ -71,9 +74,11 @@ public class SaveManager : Singleton<SaveManager>
             }
 
             SaveDataV1 = saveData as SaveDataV1;
+            isSaveFile = true;
 
             return saveData;
         }
 
+       
     }
 }
