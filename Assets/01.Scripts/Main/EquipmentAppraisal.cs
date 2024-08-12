@@ -33,6 +33,14 @@ public class EquipmentAppraisal : MonoBehaviour
         appraisalButton.onClick.AddListener(OnAppraisal);
     }
 
+    private void OnEnable()
+    {
+        foreach (var key in selectGemStone.Keys.ToList())
+        {
+            selectGemStone[key] = 0;
+        }
+    }
+
     private void Start()
     {
         // 원석 아이템 슬롯 생성
