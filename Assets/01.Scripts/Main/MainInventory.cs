@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+
 using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
@@ -415,7 +416,6 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
-
         }
 
         return null;

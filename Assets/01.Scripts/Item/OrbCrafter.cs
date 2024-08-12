@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class OrbCrafter : MonoBehaviour
 {
+    public MainInventory inventory;
     public TextMeshProUGUI stoneCountText;
     public Button craftButton;
     public List<Image> gaige;
 
     private int gaigeNum = 0; //저장요소
     private int stoneCount = 0;
+    private List<int> orbIdList = new List<int> { 610001, 610101, 610201, 610301 };
 
     void Start()
     {
@@ -30,7 +32,7 @@ public class OrbCrafter : MonoBehaviour
 
     private void SetCount()
     {
-        stoneCount = GameManager.Instance.currSaveData.reinforce_Stone;
+        stoneCount = inventory.GetItemCount(ItemType.ReinforcedStone, 0);
         stoneCountText.text = stoneCount.ToString();
     }
 
@@ -39,7 +41,7 @@ public class OrbCrafter : MonoBehaviour
         if (!CheckCraftable())
             return;
 
-        GameManager.Instance.currSaveData.reinforce_Stone -= 3;
+        //Todo. 인벤토리 RemoveItem 완료시 추가예정.
 
         if (Random.Range(0, 100) < 56)
         {
@@ -54,7 +56,6 @@ public class OrbCrafter : MonoBehaviour
 
     private bool CheckCraftable()
     {
-        int stoneCount = GameManager.Instance.currSaveData.reinforce_Stone;
         if (stoneCount < 3)
         {
             Debug.Log("강화석 부족!");
@@ -66,7 +67,9 @@ public class OrbCrafter : MonoBehaviour
 
     private void CraftSuccess()
     {
-        if(gaigeNum < 5)
+        int rndIndex = Random.Range(0, orbIdList.Count);
+
+        if (gaigeNum < 5)
         {
             gaige[gaigeNum].color = Color.yellow;
             gaigeNum++;
@@ -78,7 +81,7 @@ public class OrbCrafter : MonoBehaviour
             {
                 obj.color = Color.clear;
             }
-            GameManager.Instance.currSaveData.orb_Atk_Rare++;
+            inventory.MainInventoryAddItem(orbIdList[rndIndex].ToString());
         }
         Debug.Log("제작 성공!");
     }

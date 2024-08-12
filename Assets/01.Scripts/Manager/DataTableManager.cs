@@ -16,7 +16,6 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string stageBoss = "StageBoss";
     public static readonly string treasure = "Treasure";
     public static readonly string item = "Item"; 
-    public static readonly string orb = "Orb"; 
     public static readonly string String = "String";
     public static readonly string stage = "Stage";
     public static readonly string appraise = "Appraise";
@@ -70,9 +69,6 @@ public class DataTableManager : Singleton<DataTableManager>
         DataTable itemTable = new ItemTable();
         itemTable.Load(item, OnTableLoaded);
 
-        DataTable orbTable = new OrbTable();
-        orbTable.Load(orb, OnTableLoaded);
-
         DataTable stringTable = new StringTable();
         stringTable.Load(String, OnTableLoaded);
 
@@ -91,7 +87,6 @@ public class DataTableManager : Singleton<DataTableManager>
 
         tables.Add(treasure, treasureTable);
         tables.Add(item, itemTable);
-        tables.Add(orb, orbTable);
 
         tables.Add(String, stringTable);
         tables.Add(appraise, appraiseTable);
@@ -121,7 +116,6 @@ public class DataTableManager : Singleton<DataTableManager>
             case "StageBoss": return new BossStageTable();
             case "Treasure": return new TreasureTable();
             case "Item": return new ItemTable();
-            case "Orb": return new OrbTable();
             case "String": return new StringTable();
 
             default: throw new ArgumentException($"Unknown table type: {tableName}");

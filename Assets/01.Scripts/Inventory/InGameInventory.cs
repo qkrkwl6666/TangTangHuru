@@ -60,10 +60,11 @@ public class InGameInventory : MonoBehaviour
             switch (item.ItemType)
             {
                 case IItemType.ReinforcedStone:
-                    GameManager.Instance.currSaveData.reinforce_Stone++;
+                    //ToDo. 메인 인벤토리에 추가되도록 변경.
+                    //GameManager.Instance.currSaveData.reinforce_Stone++;
                     break;
                 case IItemType.EquipmentGemstone:
-                    GameManager.Instance.currSaveData.equip_GemStone++;
+                    //GameManager.Instance.currSaveData.equip_GemStone++;
                     break;
             }
         }
