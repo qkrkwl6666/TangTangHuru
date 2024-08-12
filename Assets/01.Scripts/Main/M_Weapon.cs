@@ -9,6 +9,7 @@ public class M_Weapon : Item
     public ItemData itemData { get ; set ; }
     public List<Item> subWeapons { get ; set ; } // 가지고 있는 무기
     public List<Item> orbs { get ; set ; } // 보유하고 있는 오브
+    public float CurrentTierUp { get ; set ; }
 
     public void GetItemInfo()
     {

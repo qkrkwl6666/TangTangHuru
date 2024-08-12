@@ -35,6 +35,9 @@ public class ItemData
     // 무기 방어구 강화 단계
     public int CurrentUpgrade = 0;
 
+    public float TierUp_Exp { get; set; }
+    public float TierUp_NeedExp { get; set; }
+
 
     public ItemData DeepCopy()
     {
