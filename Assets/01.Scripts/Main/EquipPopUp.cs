@@ -46,12 +46,12 @@ public class EquipPopUp : MonoBehaviour
     public TextMeshProUGUI itemStatusText3;
     public TextMeshProUGUI itemStatusText4;
 
-    private MainInventory mainInventory;
+    public MainInventory mainInventory;
     public MainUI mainUI;
 
     private void Start()
     {
-        mainInventory = GameObject.FindWithTag("MainInventory").GetComponent<MainInventory>();  
+        
     }
 
     public void SetItemUI(Item item, bool isEquip = true)
@@ -101,7 +101,12 @@ public class EquipPopUp : MonoBehaviour
         // 아이템 스텟 텍스트 설정
         switch (item.itemData.Item_Type)
         {
-            case (int)ItemType.Weapon:
+            case (int)ItemType.Axe:
+            case (int)ItemType.Sword:
+            case (int)ItemType.Bow:
+            case (int)ItemType.Crossbow:
+            case (int)ItemType.Wand:
+            case (int)ItemType.Staff:
                 itemStatusText1.text = Defines.damage + item.itemData.Damage;
                 itemStatusText2.text = Defines.attackCoolTime + item.itemData.CoolDown;
                 itemStatusText3.text = Defines.criticalChance + item.itemData.CriticalChance + "%";
@@ -126,6 +131,9 @@ public class EquipPopUp : MonoBehaviour
                 itemStatusTexts[0].gameObject.SetActive(true);
                 break;
         }
+
+        // 강화 UI 설정
+        RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
     }
 
     private void Awake()
@@ -141,20 +149,48 @@ public class EquipPopUp : MonoBehaviour
         mainUI.SetActiveEquipPopUpUI(false);
     }
 
+    public void RefreshUpgradeTextUI(int currentUpgrade)
+    {
+        needUpgradeGold.text = $"{Defines.defaultUpgradeGold * (currentUpgrade + 1)} /"; 
+
+        totalUpgradeGold.text = $" {mainInventory.Gold}";
+
+        int reinforcedStone = 0;
+
+        var list = mainInventory.GetItemTypesTier(ItemType.ReinforcedStone, ItemTier.Normal);
+
+        if (list != null)
+        {
+            reinforcedStone = list.Count;
+        }
+
+        needReinforcedStone.text = $"{Defines.defaultUpgradeReinforcedStone} /";
+        totalReinforcedStone.text = $" {reinforcedStone}";
+    }
+
     public void OnUpgradeButton()
     {
         if(currentItem == null) return;
 
-        switch(currentItem.ItemType)
+        if(!mainInventory.CheckUpgrade(currentItem)) return;
+
+        switch (currentItem.ItemType)
         {
-            case ItemType.Weapon:
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
                 var weaponItem = currentItem as M_Weapon;
 
                 if(weaponItem == null) return;
 
+                mainInventory.ItemUpgrade(currentItem);
                 weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);
 
-                Debug.Log("무기 업그레이드");
+                RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
+                mainInventory.RefreshGoldDiamondTextUI();
                 break;
 
             case ItemType.Helmet:

@@ -34,15 +34,15 @@ public class AppraiseData
     public int Level4_shoes { get; set; }
     public int Level5_shoes { get; set; }
 
-    public List<(ItemType type,ItemTier tier , float prob)> GetAppraiseData()
+    public List<(ItemType type, ItemTier tier , float prob)> GetAppraiseData()
     {
         List<(ItemType type, ItemTier tier, float prob)> list = new();
 
-        list.Add((ItemType.Weapon,ItemTier.Normal, Level1_weapon));
-        list.Add((ItemType.Weapon,ItemTier.Rare, Level2_weapon));
-        list.Add((ItemType.Weapon,ItemTier.Epic, Level3_weapon));
-        list.Add((ItemType.Weapon,ItemTier.Unique, Level4_weapon));
-        list.Add((ItemType.Weapon,ItemTier.Legendary, Level5_weapon));
+        list.Add((ItemType.Weapon, ItemTier.Normal, Level1_weapon));
+        list.Add((ItemType.Weapon, ItemTier.Rare, Level2_weapon));
+        list.Add((ItemType.Weapon, ItemTier.Epic, Level3_weapon));
+        list.Add((ItemType.Weapon, ItemTier.Unique, Level4_weapon));
+        list.Add((ItemType.Weapon, ItemTier.Legendary, Level5_weapon));
 
         list.Add((ItemType.Helmet, ItemTier.Normal, Level1_helmet));
         list.Add((ItemType.Helmet, ItemTier.Rare, Level2_helmet));

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class EquipmentAppraisal : MonoBehaviour
 {
@@ -177,7 +178,9 @@ public class EquipmentAppraisal : MonoBehaviour
 
             if (random <= currentProbability)
             {
-                itemId = SelectItem(appraise.type, appraise.tier);
+                ItemType weaponRandomType = (ItemType)Random.Range(1, Defines.MaxWeaponCount + 1);
+
+                itemId = SelectItem(weaponRandomType, appraise.tier);
                 break;
             }
         }
@@ -194,20 +197,12 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public int SelectItem(ItemType itemType, ItemTier itemTier)
     {
-        int maxCount = 0;
-
         switch (itemType)
         {
             case ItemType.Weapon:
-                maxCount = (int)WeaponType.Count;
-
-                int random = Random.Range(1, maxCount);
-
-                int itemId = (int)Defines.RandomWeaponType() + random;
-
-                //WeaponType weaponType = Defines.RandomWeaponType();
-
-                return itemId;
+                var item = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+                    .GetItemData(itemType, itemTier);
+                return item.Item_Id;
 
             case ItemType.Helmet:
             case ItemType.Armor:

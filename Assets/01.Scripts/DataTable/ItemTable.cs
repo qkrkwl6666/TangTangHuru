@@ -73,6 +73,19 @@ public class ItemTable : DataTable
         return itemTable[item_Id];
     }
 
+    public ItemData GetItemData(ItemType itemType, ItemTier itemTier)
+    {
+        foreach (var item in itemTable.Values) 
+        {
+            if (item.Item_Type == (int)itemType && item.Item_Tier == (int)itemTier)
+            {
+                return item;
+            }
+        }
+
+        return null;
+    }
+
     public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>

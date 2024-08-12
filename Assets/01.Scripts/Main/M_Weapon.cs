@@ -28,8 +28,6 @@ public class M_Weapon : Item
 
     public void UpgradeWeapon(int UpgradeCount)
     {
-        if(UpgradeCount == 0 && itemData.CurrentUpgrade >= 10) return;
-
         var initItemData = DataTableManager.Instance.Get<ItemTable>
             (DataTableManager.item).GetItemData(itemData.Item_Id.ToString());
 

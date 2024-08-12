@@ -78,7 +78,12 @@ public class AppraisalPopUp : MonoBehaviour
         // 아이템 스텟 텍스트 설정
         switch (item.itemData.Item_Type)
         {
-            case (int)ItemType.Weapon:
+            case (int)ItemType.Axe:
+            case (int)ItemType.Sword:
+            case (int)ItemType.Bow:
+            case (int)ItemType.Crossbow:
+            case (int)ItemType.Wand:
+            case (int)ItemType.Staff:
                 itemStatusText1.text = Defines.damage + item.itemData.Damage;
                 itemStatusText2.text = Defines.attackCoolTime + item.itemData.CoolDown;
                 itemStatusText3.text = Defines.criticalChance + item.itemData.CriticalChance + "%";

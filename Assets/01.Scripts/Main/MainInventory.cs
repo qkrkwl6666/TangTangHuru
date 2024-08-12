@@ -43,6 +43,10 @@ public class MainInventory : MonoBehaviour
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI diamondText;
 
+    public int Gold {  get; private set; }
+    public int Diamond {  get; private set; }
+
+
     #region 정렬
     public Button allFilterButton;    // 전체
     public TextMeshProUGUI allFilterText; 
@@ -188,30 +192,32 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        items.Add(200001);
-        items.Add(200002);
-        items.Add(200003);
-        items.Add(200004);
-        items.Add(200005);
-        items.Add(200101);
-        items.Add(200102);
-        items.Add(200103);
-        items.Add(200104);
-        items.Add(200105);
-        items.Add(210001);
-        items.Add(210002);
-        items.Add(210003);
-        items.Add(210004);
-        items.Add(600001);
-        items.Add(600002);
-        items.Add(600003);
-        items.Add(600004);
-        items.Add(600005);
+        //items.Add(200001);
+        //items.Add(200002);
+        //items.Add(200003);
+        //items.Add(200004);
+        //items.Add(200005);
+        //items.Add(200101);
+        //items.Add(200102);
+        //items.Add(200103);
+        //items.Add(200104);
+        //items.Add(200105);
+        //items.Add(210001);
+        //items.Add(210002);
+        //items.Add(210003);
+        //items.Add(210004);
+        //items.Add(600001);
+        //items.Add(600002);
+        //items.Add(600003);
+        //items.Add(600004);
+        //items.Add(600005);
 
-        items.Add(710001);
-        items.Add(710002);
-        items.Add(710003);
-        items.Add(710004);
+        items.Add(600006);
+
+        //items.Add(710001);
+        //items.Add(710002);
+        //items.Add(710003);
+        //items.Add(710004);
 
     }
 
@@ -355,8 +361,18 @@ public class MainInventory : MonoBehaviour
     {
         switch (itemData.Item_Type)
         {
-            case 1: // 무기
-            case 8: // 펫 Todo : 임시
+            case 1: // Axe
+            case 2: // Sword
+            case 3: // Bow
+            case 4: // CrossBow
+            case 5: // Wand
+            case 6: // Staff
+
+            case 12: // Orb
+            case 13: // Orb
+            case 14: // Orb
+            case 15: // Orb
+            case 16: // Pet
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
 
@@ -369,9 +385,10 @@ public class MainInventory : MonoBehaviour
 
                     return m_weaponItem;
                 }
-            case 2: // 투구
-            case 3: // 갑옷
-            case 4: // 신발
+
+            case 7: // 투구
+            case 8: // 갑옷
+            case 9: // 신발
                 {
                     M_Armour m_armour = new M_Armour();
 
@@ -384,8 +401,8 @@ public class MainInventory : MonoBehaviour
 
                     return m_armour;
                 }
-            case 5: // 장비 원석
-            case 6: // 강화석
+            case 10: // 장비 원석
+            case 11: // 강화석
                 {
                     M_Item m_item = new M_Item();
 
@@ -398,9 +415,6 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
-
-            case 7: // 오브
-                break;
 
         }
 
@@ -423,7 +437,7 @@ public class MainInventory : MonoBehaviour
 
         foreach(var ItemTypeDictionary in allItem)
         {
-            if (ItemTypeDictionary.Key == ItemType.Orb) continue;
+            //if (ItemTypeDictionary.Key == ItemType.Orb) continue;
 
             foreach (var ItemTierDictionary in ItemTypeDictionary.Value)
             {
@@ -433,11 +447,20 @@ public class MainInventory : MonoBehaviour
                 {
                     switch (ItemTypeDictionary.Key)
                     {
-                        case ItemType.Weapon:
+                        case ItemType.Axe:
+                        case ItemType.Sword:
+                        case ItemType.Bow:
+                        case ItemType.Crossbow:
+                        case ItemType.Wand:
+                        case ItemType.Staff:
                         case ItemType.Helmet:
                         case ItemType.Armor:
                         case ItemType.Shose:
                         case ItemType.Pet: // Todo 임시
+                        case ItemType.OrbAttack:
+                        case ItemType.OrbHp:
+                        case ItemType.OrbDefence:
+                        case ItemType.OrbDodge:
                             CreateOrUpdateItemSlot(itemList[i]);
                             break;
 
@@ -446,8 +469,8 @@ public class MainInventory : MonoBehaviour
                             UpdateConsumableItemCount(itemList[i]);
                             break;
 
-                        case ItemType.Orb:
-                            break;
+                        //case ItemType.Orb:
+                            //break;
                     }
                 }
             }
@@ -550,9 +573,33 @@ public class MainInventory : MonoBehaviour
 
     // 소모품 아이템 삭제
 
-    public void RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
+    public bool RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
+        if (!allItem.ContainsKey(itemType))
+        {
+            if(!allItem[itemType].ContainsKey(itemTier))
+            {
+                return false;
+            }
+        }
 
+        var list = allItem[itemType][itemTier];
+
+        if (list.Count < removeCount) return false;
+
+        List<Item> removeItems = new ();
+
+        for(int i = 0; i < removeCount; i++)
+        {
+            removeItems.Add(list[i]);
+        }
+
+        foreach (var item in removeItems) 
+        {
+            list.Remove(item);
+        }
+
+        return true;
     }
 
     public void SaveMainInventory()
@@ -575,9 +622,13 @@ public class MainInventory : MonoBehaviour
         // 초기 아이템 지급
         initializeNewPlayerItems();
 
+        Gold = SaveManager.SaveDataV1.Gold;
+        Diamond = SaveManager.SaveDataV1.Diamond;
+
         GameManager.Instance.CurrentStage = SaveManager.SaveDataV1.CurrentStage;
-        goldText.text = SaveManager.SaveDataV1.Gold.ToString();
-        diamondText.text = SaveManager.SaveDataV1.Diamond.ToString();
+
+        goldText.text = Gold.ToString();
+        diamondText.text = Diamond.ToString();
 
         RefreshItemSlotUI();
 
@@ -618,7 +669,12 @@ public class MainInventory : MonoBehaviour
 
             switch (item.itemData.Item_Type)
             {
-                case (int)ItemType.Weapon:
+                case (int)ItemType.Axe:
+                case (int)ItemType.Sword:
+                case (int)ItemType.Bow:
+                case (int)ItemType.Crossbow:
+                case (int)ItemType.Wand:
+                case (int)ItemType.Staff:
                     var weaponItem = item as M_Weapon;
 
                     if (weaponItem == null) yield break;
@@ -638,6 +694,8 @@ public class MainInventory : MonoBehaviour
 
         yield return new WaitForSeconds(0.3f);
 
+        LoadDataPlayerEquip();
+
         GameManager.Instance.InitSaveLoaded();
     }
 
@@ -649,7 +707,12 @@ public class MainInventory : MonoBehaviour
 
             switch (item.itemData.Item_Type)
             {
-                case (int)ItemType.Weapon:
+                case (int)ItemType.Axe:
+                case (int)ItemType.Sword:
+                case (int)ItemType.Bow:
+                case (int)ItemType.Crossbow:
+                case (int)ItemType.Wand:
+                case (int)ItemType.Staff:
                     var weaponItem = item as M_Weapon;
 
                     if (weaponItem == null) continue;
@@ -692,10 +755,10 @@ public class MainInventory : MonoBehaviour
 
         if (item.ItemType == ItemType.Pet) return;
 
-        defaultEquipmentSlotUI[(int)item.ItemType - 1].SetActive(false);
+        defaultEquipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetActive(false);
 
-        equipmentSlotUI[(int)item.ItemType - 1].SetItemData(item, mainUI);
-        equipmentSlotUI[(int)item.ItemType - 1].gameObject.SetActive(true);
+        equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetItemData(item, mainUI);
+        equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].gameObject.SetActive(true);
 
         GameManager.Instance.playerEquipment = playerEquipment;
 
@@ -708,29 +771,49 @@ public class MainInventory : MonoBehaviour
     {
         if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
 
-        // 기존 장비 장착 중이라면 장착 해제
-
-        // Todo : 임시
-        if(ItemType.Pet == item.ItemType)
+        switch(item.ItemType)
         {
-            playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
-            GameManager.Instance.playerEquipment = playerEquipment;
-            return;
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                SetEquipItemUI(PlayerEquipment.Weapon, slot);
+                break;
+
+            case ItemType.Helmet:
+                SetEquipItemUI(PlayerEquipment.Helmet, slot);
+                break;
+            case ItemType.Armor:
+                SetEquipItemUI(PlayerEquipment.Armor, slot);
+                break;
+            case ItemType.Shose:
+                SetEquipItemUI(PlayerEquipment.Shoes, slot);
+                break;
+
+            case ItemType.Pet:
+                playerEquipment[PlayerEquipment.Pet] = (item, slot.ItemSlot);
+                GameManager.Instance.playerEquipment = playerEquipment;
+                break;
+        }
+    }
+
+    public void SetEquipItemUI(PlayerEquipment pe, (Item item, GameObject slotUI) equipInfo)
+    {
+        if (playerEquipment.ContainsKey(pe))
+        {
+            UnequipItem(playerEquipment[pe].Item1);
         }
 
-        if(playerEquipment.ContainsKey((PlayerEquipment)item.ItemType))
-        {
-            UnequipItem(playerEquipment[(PlayerEquipment)item.ItemType].Item1);
-        }
+        equipInfo.slotUI.SetActive(false);
 
-        slot.ItemSlot.SetActive(false);
+        defaultEquipmentSlotUI[(int)pe - 1].SetActive(false);
 
-        defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
+        equipmentSlotUI[(int)pe - 1].SetItemData(equipInfo.item, mainUI);
+        equipmentSlotUI[(int)pe - 1].gameObject.SetActive(true);
 
-        equipmentSlotUI[item.itemData.Item_Type - 1].SetItemData(item, mainUI);
-        equipmentSlotUI[item.itemData.Item_Type - 1].gameObject.SetActive(true);
-
-        playerEquipment[(PlayerEquipment)item.itemData.Item_Type] = (item, slot.ItemSlot);
+        playerEquipment[pe] = equipInfo;
 
         GameManager.Instance.playerEquipment = playerEquipment;
 
@@ -742,39 +825,70 @@ public class MainInventory : MonoBehaviour
         switch(currentFilterType)
         {
             case FilterType.All:
-                playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
+                playerEquipment[GetPlayerEquipmentItemType(item.ItemType)]
+                    .ItemSlot.SetActive(true);
                 break;
 
             case FilterType.Weapon:
-                if(item.ItemType == ItemType.Weapon || item.ItemType == ItemType.Helmet 
-                    || item.ItemType == ItemType.Armor || item.ItemType == ItemType.Shose)
+                if(item.ItemType == ItemType.Axe || item.ItemType == ItemType.Sword
+                    || item.ItemType == ItemType.Bow || item.ItemType == ItemType.Crossbow
+                    || item.ItemType == ItemType.Wand || item.ItemType == ItemType.Staff
+                    || item.ItemType == ItemType.Helmet || item.ItemType == ItemType.Armor 
+                    || item.ItemType == ItemType.Shose)
                 {
-                    playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
+                    playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
                 }
                 break;
             case FilterType.Consumable:
-                if (item.ItemType == ItemType.EquipmentGem || item.ItemType == ItemType.Orb
-                    || item.ItemType == ItemType.ReinforcedStone)
+                if (item.ItemType == ItemType.EquipmentGem || item.ItemType == ItemType.ReinforcedStone
+                    || item.ItemType == ItemType.OrbAttack || item.ItemType == ItemType.OrbHp 
+                    || item.ItemType == ItemType.OrbDefence || item.ItemType == ItemType.OrbDodge)
                 {
-                    playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
+                    playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
                 }
                 break;
             case FilterType.Pet:
                 if (item.ItemType == ItemType.Pet)
                 {
-                    playerEquipment[(PlayerEquipment)item.itemData.Item_Type].ItemSlot.SetActive(true);
+                    playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
                 }
                 break;
         }
 
-        playerEquipment.Remove((PlayerEquipment)item.itemData.Item_Type);
+        playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
 
-        defaultEquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(true);
-        EquipmentSlotUI[item.itemData.Item_Type - 1].SetActive(false);
+        defaultEquipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetActive(true);
+        EquipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetActive(false);
 
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+    }
+
+    public PlayerEquipment GetPlayerEquipmentItemType(ItemType itemType)
+    {
+        switch (itemType) 
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                return PlayerEquipment.Weapon;
+
+            case ItemType.Helmet:
+                return PlayerEquipment.Helmet;
+            case ItemType.Armor:
+                return PlayerEquipment.Armor;
+            case ItemType.Shose:
+                return PlayerEquipment.Shoes;
+            case ItemType.Pet:
+                return PlayerEquipment.Pet;
+
+            default:
+                return PlayerEquipment.Weapon;
+        }
     }
 
     public int GetItemCount(ItemType itemType, ItemTier itemTier)
@@ -805,6 +919,12 @@ public class MainInventory : MonoBehaviour
         return allItem[itemType][itemTier];
     }
 
+    public void RefreshGoldDiamondTextUI()
+    {
+        goldText.text = Gold.ToString();
+        diamondText.text = Diamond.ToString();
+    }
+
     public void RefreshCharacterSpine()
     {
         foreach (var itemType in playerEquipment)
@@ -826,6 +946,29 @@ public class MainInventory : MonoBehaviour
         }
     }
 
+    public bool CheckUpgrade(Item item)
+    {
+        if (item.itemData.CurrentUpgrade >= 10) return false;
+
+        var list = GetItemTypesTier(ItemType.ReinforcedStone, ItemTier.Normal);
+
+        if (list == null) return false;
+
+        int needGold = Defines.defaultUpgradeGold * (item.itemData.CurrentUpgrade + 1);
+
+        if(needGold > Gold) return false;
+
+        return true;
+    }
+
+    public void ItemUpgrade(Item item)
+    {
+        int needGold = Defines.defaultUpgradeGold * (item.itemData.CurrentUpgrade + 1);
+
+        Gold -= needGold;
+        RemoveItem(ItemType.ReinforcedStone, ItemTier.Normal, Defines.defaultUpgradeReinforcedStone);
+    }
+
     public void initializeNewPlayerItems()
     {
         if (SaveManager.isSaveFile) return;
@@ -840,6 +983,17 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("710002", 0);
         MainInventoryAddItem("710003", 0);
         MainInventoryAddItem("710004", 0);
+
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
 
         MainInventoryAddItem("400001", 0);
         MainInventoryAddItem("400002", 0);
@@ -976,7 +1130,12 @@ public class MainInventory : MonoBehaviour
             case FilterType.Weapon:
                 foreach (var itemSlot in itemSlotUI)
                 {
-                    if(itemSlot.Value.Item1.ItemType != ItemType.Weapon 
+                    if(itemSlot.Value.Item1.ItemType != ItemType.Axe
+                        && itemSlot.Value.Item1.ItemType != ItemType.Sword
+                        && itemSlot.Value.Item1.ItemType != ItemType.Bow
+                        && itemSlot.Value.Item1.ItemType != ItemType.Crossbow
+                        && itemSlot.Value.Item1.ItemType != ItemType.Wand
+                        && itemSlot.Value.Item1.ItemType != ItemType.Staff
                         && itemSlot.Value.Item1.ItemType != ItemType.Helmet 
                         && itemSlot.Value.Item1.ItemType != ItemType.Armor
                         && itemSlot.Value.Item1.ItemType != ItemType.Shose)
@@ -1005,8 +1164,9 @@ public class MainInventory : MonoBehaviour
                 foreach (var itemSlot in itemSlotUI)
                 {
                     if (itemSlot.Value.Item1.ItemType != ItemType.EquipmentGem
-                        && itemSlot.Value.Item1.ItemType != ItemType.Orb
-                        && itemSlot.Value.Item1.ItemType != ItemType.ReinforcedStone)
+                        && itemSlot.Value.Item1.ItemType != ItemType.ReinforcedStone 
+                        && itemSlot.Value.Item1.ItemType != ItemType.OrbAttack && itemSlot.Value.Item1.ItemType != ItemType.OrbHp
+                        && itemSlot.Value.Item1.ItemType != ItemType.OrbDefence && itemSlot.Value.Item1.ItemType != ItemType.OrbDodge)
                     {
                         itemSlot.Value.ItemSlot.SetActive(false);
                         continue;
@@ -1059,14 +1219,25 @@ public class MainInventory : MonoBehaviour
 
 public enum ItemType
 {
-    Weapon = 1, // 무기
-    Helmet = 2, // 투구
-    Armor = 3, // 갑옷
-    Shose = 4, // 신발
-    EquipmentGem = 5, // 장비 원석
-    ReinforcedStone = 6, // 강화석
-    Orb = 7, // 오브
-    Pet = 8, // 펫
+    Axe = 1,
+    Sword = 2,
+    Bow = 3,
+    Crossbow = 4,
+    Wand = 5,
+    Staff = 6,
+
+    Helmet = 7, // 투구
+    Armor = 8, // 갑옷
+    Shose = 9, // 신발
+    EquipmentGem = 10, // 장비 원석
+    ReinforcedStone = 11, // 강화석
+    OrbAttack = 12, // 오브
+    OrbDefence = 13, // 오브
+    OrbHp = 14, // 오브
+    OrbDodge = 15, // 오브
+    Pet = 16, // 펫
+
+    Weapon = 17, // 전체 무기
 }
 
 public enum ItemTier
@@ -1082,22 +1253,11 @@ public enum ItemTier
 public enum PlayerEquipment
 {
     Weapon = 1, // 무기
+
     Helmet = 2, // 투구
     Armor = 3,  // 갑옷
     Shoes = 4,  // 신발
-    other = 5,
-    Pet = 8, // 펫
-}
-
-public enum WeaponType
-{
-    Axe = 200001,
-    Bow = 210001,
-    Crossbow = 210101,
-    Wand = 220001,
-    Staff = 220101,
-
-    Count = 5,
+    Pet = 5, // 펫
 }
 
 public enum FilterType

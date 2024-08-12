@@ -44,6 +44,11 @@ public static class Defines
     public static readonly string dodge = "회피율 : ";
 
     public static int MaxUpgrade = 10;
+    public static int MaxWeaponCount = 6;
+
+    // 업그레이드 비용
+    public static int defaultUpgradeGold = 5000;
+    public static int defaultUpgradeReinforcedStone = 1;
 
     // 방어구 스텟 텍스트
 
@@ -152,24 +157,24 @@ public static class Defines
 
     }
 
-    public static WeaponType RandomWeaponType()
+    public static ItemType RandomWeaponType()
     {
-        int random = UnityEngine.Random.Range(0, (int)WeaponType.Count);
+        int random = UnityEngine.Random.Range(0, MaxWeaponCount);
 
         switch (random)
         {
             case 0:
-                return WeaponType.Axe;
+                return ItemType.Axe;
             case 1:
-                return WeaponType.Bow;
+                return ItemType.Bow;
             case 2:
-                return WeaponType.Crossbow;
+                return ItemType.Crossbow;
             case 3:
-                return WeaponType.Wand;
+                return ItemType.Wand;
             case 4:
-                return WeaponType.Staff;
+                return ItemType.Staff;
             default:
-                return WeaponType.Axe;
+                return ItemType.Axe;
         }
     }
 
