@@ -206,11 +206,11 @@ public class MainInventory : MonoBehaviour
         //items.Add(210002);
         //items.Add(210003);
         //items.Add(210004);
-        //items.Add(600001);
-        //items.Add(600002);
-        //items.Add(600003);
-        //items.Add(600004);
-        //items.Add(600005);
+        items.Add(600001);
+        items.Add(600002);
+        items.Add(600003);
+        items.Add(600004);
+        items.Add(600005);
 
         items.Add(600006);
 
@@ -530,6 +530,8 @@ public class MainInventory : MonoBehaviour
                 go.GetComponent<M_UISlot>().SetEquipUpgradeUI(item);
 
                 itemSlotUI.Add(item.InstanceId, (item, go));
+
+                go.SetActive(CheckFilterType(item));
             };
         }
         else
@@ -561,6 +563,7 @@ public class MainInventory : MonoBehaviour
 
         // item UI ΩΩ∑‘ ªË¡¶
         Destroy(item.ItemSlot);
+        itemSlotUI.Remove(instanceId);
 
         var itemData = item.Item1.itemData;
 
@@ -585,6 +588,8 @@ public class MainInventory : MonoBehaviour
 
         var list = allItem[itemType][itemTier];
 
+        int itemId = list[0].ItemId;
+
         if (list.Count < removeCount) return false;
 
         List<Item> removeItems = new ();
@@ -597,6 +602,12 @@ public class MainInventory : MonoBehaviour
         foreach (var item in removeItems) 
         {
             list.Remove(item);
+        }
+
+        if (allItem[itemType][itemTier].Count == 0)
+        {
+            Destroy(itemSlotUI[itemId].ItemSlot);
+            itemSlotUI.Remove(itemId);
         }
 
         return true;
@@ -863,6 +874,41 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+    }
+
+    public bool CheckFilterType(Item item)
+    {
+        switch (currentFilterType)
+        {
+            case FilterType.All:
+                return true;
+            case FilterType.Weapon:
+                if (item.ItemType == ItemType.Axe || item.ItemType == ItemType.Sword
+                    || item.ItemType == ItemType.Bow || item.ItemType == ItemType.Crossbow
+                    || item.ItemType == ItemType.Wand || item.ItemType == ItemType.Staff
+                    || item.ItemType == ItemType.Helmet || item.ItemType == ItemType.Armor
+                    || item.ItemType == ItemType.Shose)
+                {
+                    return true;
+                }
+                    break;
+            case FilterType.Consumable:
+                if (item.ItemType == ItemType.EquipmentGem || item.ItemType == ItemType.ReinforcedStone
+                    || item.ItemType == ItemType.OrbAttack || item.ItemType == ItemType.OrbHp
+                    || item.ItemType == ItemType.OrbDefence || item.ItemType == ItemType.OrbDodge)
+                {
+                    return true;
+                }
+                    break;
+            case FilterType.Pet:
+                if (item.ItemType == ItemType.Pet)
+                {
+                    return true;
+                }
+                    break;
+        }
+
+        return false;
     }
 
     public PlayerEquipment GetPlayerEquipmentItemType(ItemType itemType)

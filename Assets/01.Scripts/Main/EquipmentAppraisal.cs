@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -63,18 +64,15 @@ public class EquipmentAppraisal : MonoBehaviour
 
         foreach(var gemStone in allGemStone)
         {
+            if (gemStone.Value.Count == 0) continue;
+
             gemStoneSlotUI[gemStone.Key].SetActive(true);
             gemStoneSlotUI[gemStone.Key].GetComponent<M_GemStoneUISlot>()
                 .RefreshItemCount(allGemStone[gemStone.Key].Count);
+
+            gemStoneSlotUI[gemStone.Key].GetComponent<M_GemStoneUISlot>().SubButtonActive(false);
         }
 
-        /*
-            Normal,
-            Rare,
-            Epic,
-            Unique,
-            Legendary
-         */
     }
 
     public void CreateGemstoneSlot()
@@ -178,16 +176,18 @@ public class EquipmentAppraisal : MonoBehaviour
 
             if (random <= currentProbability)
             {
-                ItemType weaponRandomType = (ItemType)Random.Range(1, Defines.MaxWeaponCount + 1);
-
-                itemId = SelectItem(weaponRandomType, appraise.tier);
+                itemId = SelectItem(appraise.type, appraise.tier);
                 break;
             }
         }
 
         // 아이템 생성후 정보 띄우기
 
-        return mainInventory.MainInventoryAddItem(itemId.ToString());
+        if (itemId == -1) return null;
+
+        var item = mainInventory.MainInventoryAddItem(itemId.ToString());
+
+        return item;
 
     }
 
@@ -197,18 +197,37 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public int SelectItem(ItemType itemType, ItemTier itemTier)
     {
+
         switch (itemType)
         {
             case ItemType.Weapon:
+
+                ItemType weaponRandomType = (ItemType)Random.Range(1, Defines.MaxWeaponCount + 1);
+
                 var item = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
-                    .GetItemData(itemType, itemTier);
+                    .GetItemData(weaponRandomType, itemTier);
                 return item.Item_Id;
 
             case ItemType.Helmet:
-            case ItemType.Armor:
-            case ItemType.Shose:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Helmet, itemTier);
+                    return itemId;
+                }
 
-                return default;
+            case ItemType.Armor:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Armor, itemTier);
+                    return itemId;
+                }
+
+            case ItemType.Shose:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Shose, itemTier);
+                    return itemId;
+                }
         }
 
         return default;
@@ -241,7 +260,23 @@ public class EquipmentAppraisal : MonoBehaviour
         appraisalPopUp.gameObject.SetActive(true);
         appraisalPopUp.SetPopUp(itemList);
 
-        //mainInventory.RemoveItem()
+        // 선택한 재화 소모하기
+        for(int i = 0; i < (int)ItemTier.Count; i ++)
+        {
+            int removeCount = selectGemStone[(ItemTier)i];
+
+            if (removeCount == 0) continue;
+
+            mainInventory.RemoveItem(ItemType.EquipmentGem, (ItemTier)i, removeCount);
+
+            RefreshGemStoneSlotUI();
+        }
+
+        foreach (var key in selectGemStone.Keys.ToList())
+        {
+            selectGemStone[key] = 0;
+        }
+
     }
 
 }
