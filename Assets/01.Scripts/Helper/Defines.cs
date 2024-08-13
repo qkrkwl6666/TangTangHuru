@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,6 +45,11 @@ public static class Defines
     public static readonly string dodge = "회피율 : ";
 
     public static int MaxUpgrade = 10;
+    public static int MaxWeaponCount = 6;
+
+    // 업그레이드 비용
+    public static int defaultUpgradeGold = 5000;
+    public static int defaultUpgradeReinforcedStone = 1;
 
     // 방어구 스텟 텍스트
 
@@ -152,24 +158,24 @@ public static class Defines
 
     }
 
-    public static WeaponType RandomWeaponType()
+    public static ItemType RandomWeaponType()
     {
-        int random = UnityEngine.Random.Range(0, (int)WeaponType.Count);
+        int random = UnityEngine.Random.Range(0, MaxWeaponCount);
 
         switch (random)
         {
             case 0:
-                return WeaponType.Axe;
+                return ItemType.Axe;
             case 1:
-                return WeaponType.Bow;
+                return ItemType.Bow;
             case 2:
-                return WeaponType.Crossbow;
+                return ItemType.Crossbow;
             case 3:
-                return WeaponType.Wand;
+                return ItemType.Wand;
             case 4:
-                return WeaponType.Staff;
+                return ItemType.Staff;
             default:
-                return WeaponType.Axe;
+                return ItemType.Axe;
         }
     }
 
@@ -197,4 +203,129 @@ public static class Defines
         }
     }
 
+    public static ArmorType GetRandomArmorType()
+    {
+       ArmorType armorType = (ArmorType)Random.Range(0, (int)ArmorType.Count);
+
+        return armorType;
+    }
+
+    public static int GetArmorId(ArmorType armorType, ItemType itemType, ItemTier itemTier)
+    {
+        switch(armorType)
+        {
+            case ArmorType.HolyKnight:
+                if(itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.HolyKnight_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.HolyKnight_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.HolyKnight_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.SilverStrider:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.SilverStrider_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.SilverStrider_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.SilverStrider_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.ShadowWork:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.ShadowWork_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.ShadowWork_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.ShadowWork_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.RedStone:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.RedStone_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.RedStone_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.RedStone_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.StormBreaker:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.StormBreaker_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.StormBreaker_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.StormBreaker_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.MoonWalker:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.MoonWalker_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.MoonWalker_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.MoonWalker_Shoes + (int)itemTier;
+                break;
+
+            case ArmorType.SkyWatch:
+                if (itemType == ItemType.Helmet)
+                    return (int)TotalArmorType.SkyWatch_Helmet + (int)itemTier;
+                else if (itemType == ItemType.Armor)
+                    return (int)TotalArmorType.SkyWatch_Armor + (int)itemTier;
+                else if (itemType == ItemType.Shose)
+                    return (int)TotalArmorType.SkyWatch_Shoes + (int)itemTier;
+                break;
+
+            default:
+                return -1;
+        }
+
+        return -1;
+
+    }
+
+}
+
+public enum ArmorType
+{
+    HolyKnight = 0,
+    SilverStrider = 1,
+    ShadowWork = 2,
+    RedStone = 3,
+    StormBreaker = 4,
+    MoonWalker = 5,
+    SkyWatch = 6,
+    Count = 7,
+}
+
+public enum TotalArmorType
+{
+    HolyKnight_Helmet = 400001,
+    HolyKnight_Armor = 401001,
+    HolyKnight_Shoes = 402001,
+
+    SilverStrider_Helmet = 400011,
+    SilverStrider_Armor = 401011,
+    SilverStrider_Shoes = 402011,
+
+    ShadowWork_Helmet = 400021,
+    ShadowWork_Armor = 401021,
+    ShadowWork_Shoes = 402021,
+
+    RedStone_Helmet = 400031,
+    RedStone_Armor = 401031,
+    RedStone_Shoes = 402031,
+
+    StormBreaker_Helmet = 400041,
+    StormBreaker_Armor = 401041,
+    StormBreaker_Shoes = 402051,
+
+    MoonWalker_Helmet = 400061,
+    MoonWalker_Armor = 401061,
+    MoonWalker_Shoes = 402061,
+
+    SkyWatch_Helmet = 400071,
+    SkyWatch_Armor = 401071,
+    SkyWatch_Shoes = 402071,
 }

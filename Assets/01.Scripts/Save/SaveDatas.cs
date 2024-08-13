@@ -18,6 +18,13 @@ public class SaveDataV1 : SaveDatas
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
     public Dictionary<PlayerEquipment, Item> playerEquipment = new ();
 
+    // 도전과제 진행정보 저장
+    public List<AchieveState> SavedStates = new();
+    public List<int> SavedAchieveProgress = new();
+
+    //강화석 게이지
+    public int gaige = 0;
+
     public SaveDataV1()
     {
         Version = 1;

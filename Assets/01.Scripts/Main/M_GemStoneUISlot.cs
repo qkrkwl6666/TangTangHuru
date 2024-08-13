@@ -90,4 +90,9 @@ public class M_GemStoneUISlot : MonoBehaviour
             if (currentCount <= 0) subButton.gameObject.SetActive(false);
         }
     }
+
+    public void SubButtonActive(bool active)
+    {
+        subButton.gameObject.SetActive(active);
+    }
 }

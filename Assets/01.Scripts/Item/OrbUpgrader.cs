@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class OrbUpgrader : MonoBehaviour
     public Button upgradeButton;
     public OrbPanel popUp_OrbPanel;
     public GameObject popUp_Notice;
+
+    private ItemData orbData;
 
     private int firstItemId;
 
@@ -25,6 +28,10 @@ public class OrbUpgrader : MonoBehaviour
 
     private void OnDisable()
     {
+        foreach (var slot in upgradeSlots)
+        {
+            slot.GetComponent<Button>().onClick.RemoveAllListeners();
+        }
     }
 
     private void SlotSelected(ItemSlotUI currSlot)
@@ -37,17 +44,13 @@ public class OrbUpgrader : MonoBehaviour
         {
             PopUpOrbPanel(currSlot);
         }
-
     }
-
 
     private void PopUpOrbPanel(ItemSlotUI slot)
     {
         popUp_OrbPanel.currSlot = slot;
         popUp_OrbPanel.gameObject.SetActive(true);
     }
-
-
 
     public void SelectOrbInPanel(int index)
     {
@@ -64,8 +67,8 @@ public class OrbUpgrader : MonoBehaviour
         if (!CheckUpgradable())
             return;
 
-        GameManager.Instance.currSaveData.orb_Atk_Rare -= 3;
-        GameManager.Instance.currSaveData.orb_Atk_Epic++;
+        inventory.RemoveOrbItem((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier, 3);
+        inventory.MainInventoryAddItem((orbData.Item_Id + 1).ToString());
 
         popUp_OrbPanel.ResetOn();
 
@@ -73,7 +76,9 @@ public class OrbUpgrader : MonoBehaviour
         {
             upgradeSlots[i].ClearInfo();
         }
-        popUp_Notice.SetActive(true);
+        orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData((firstItemId + 1).ToString());
+        inventory.RefreshItemSlotUI();
+        SetNoticePopUp();
     }
 
     private bool CheckUpgradable()
@@ -82,6 +87,9 @@ public class OrbUpgrader : MonoBehaviour
             return false;
 
         firstItemId = upgradeSlots[0].currItemId;
+        if (firstItemId == 0)
+            return false;
+
 
         for (int i = 1; i < upgradeSlots.Length; i++)
         {
@@ -92,9 +100,23 @@ public class OrbUpgrader : MonoBehaviour
             }
         }
 
+        orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(firstItemId.ToString());
+
+        if(orbData.Item_Tier > 3)
+        {
+            Debug.Log("이미 최고티어 오브이다.");
+        }
         return true;
     }
 
+    private void SetNoticePopUp()
+    {
+        var strTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
+        var desc = strTable.Get(orbData.Desc_Id).Text;
+        var name = strTable.Get(orbData.Name_Id).Text;
+        popUp_Notice.GetComponentInChildren<TextMeshProUGUI>().text = ($"{desc} {name} 오브 획득!");
+        popUp_Notice.SetActive(true);
+    }
 
 }

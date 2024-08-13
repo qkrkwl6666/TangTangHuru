@@ -89,7 +89,12 @@ public class M_UISlot : MonoBehaviour
 
         switch(item.itemData.Item_Type)
         {
-            case (int)ItemType.Weapon:
+            case (int)ItemType.Axe:
+            case (int)ItemType.Sword:
+            case (int)ItemType.Bow:
+            case (int)ItemType.Crossbow:
+            case (int)ItemType.Wand:
+            case (int)ItemType.Staff:
             case (int)ItemType.Pet: // Todo : 임시입니다.
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);

@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class EquipmentAppraisal : MonoBehaviour
 {
@@ -29,6 +31,14 @@ public class EquipmentAppraisal : MonoBehaviour
     private void Awake()
     {
         appraisalButton.onClick.AddListener(OnAppraisal);
+    }
+
+    private void OnEnable()
+    {
+        foreach (var key in selectGemStone.Keys.ToList())
+        {
+            selectGemStone[key] = 0;
+        }
     }
 
     private void Start()
@@ -62,18 +72,15 @@ public class EquipmentAppraisal : MonoBehaviour
 
         foreach(var gemStone in allGemStone)
         {
+            if (gemStone.Value.Count == 0) continue;
+
             gemStoneSlotUI[gemStone.Key].SetActive(true);
             gemStoneSlotUI[gemStone.Key].GetComponent<M_GemStoneUISlot>()
                 .RefreshItemCount(allGemStone[gemStone.Key].Count);
+
+            gemStoneSlotUI[gemStone.Key].GetComponent<M_GemStoneUISlot>().SubButtonActive(false);
         }
 
-        /*
-            Normal,
-            Rare,
-            Epic,
-            Unique,
-            Legendary
-         */
     }
 
     public void CreateGemstoneSlot()
@@ -184,7 +191,11 @@ public class EquipmentAppraisal : MonoBehaviour
 
         // 아이템 생성후 정보 띄우기
 
-        return mainInventory.MainInventoryAddItem(itemId.ToString());
+        if (itemId == -1) return null;
+
+        var item = mainInventory.MainInventoryAddItem(itemId.ToString());
+
+        return item;
 
     }
 
@@ -194,26 +205,37 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public int SelectItem(ItemType itemType, ItemTier itemTier)
     {
-        int maxCount = 0;
 
         switch (itemType)
         {
             case ItemType.Weapon:
-                maxCount = (int)WeaponType.Count;
 
-                int random = Random.Range(1, maxCount);
+                ItemType weaponRandomType = (ItemType)Random.Range(1, Defines.MaxWeaponCount + 1);
 
-                int itemId = (int)Defines.RandomWeaponType() + random;
-
-                //WeaponType weaponType = Defines.RandomWeaponType();
-
-                return itemId;
+                var item = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+                    .GetItemData(weaponRandomType, itemTier);
+                return item.Item_Id;
 
             case ItemType.Helmet:
-            case ItemType.Armor:
-            case ItemType.Shose:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Helmet, itemTier);
+                    return itemId;
+                }
 
-                return default;
+            case ItemType.Armor:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Armor, itemTier);
+                    return itemId;
+                }
+
+            case ItemType.Shose:
+                {
+                    ArmorType armorType = Defines.GetRandomArmorType();
+                    int itemId = Defines.GetArmorId(armorType, ItemType.Shose, itemTier);
+                    return itemId;
+                }
         }
 
         return default;
@@ -246,7 +268,23 @@ public class EquipmentAppraisal : MonoBehaviour
         appraisalPopUp.gameObject.SetActive(true);
         appraisalPopUp.SetPopUp(itemList);
 
-        //mainInventory.RemoveItem()
+        // 선택한 재화 소모하기
+        for(int i = 0; i < (int)ItemTier.Count; i ++)
+        {
+            int removeCount = selectGemStone[(ItemTier)i];
+
+            if (removeCount == 0) continue;
+
+            mainInventory.RemoveItem(ItemType.EquipmentGem, (ItemTier)i, removeCount);
+
+            RefreshGemStoneSlotUI();
+        }
+
+        foreach (var key in selectGemStone.Keys.ToList())
+        {
+            selectGemStone[key] = 0;
+        }
+
     }
 
 }
