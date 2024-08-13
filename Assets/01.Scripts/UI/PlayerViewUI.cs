@@ -17,9 +17,11 @@ public class PlayerViewUI : MonoBehaviour
 
     private void Start()
     {
-        SetCharacterWeaponSkin(Defines.body033, Defines.weapon005);
+        SetNoneWeaponCharacterSkin(Defines.body033);
 
-        Defines.SetSkins();
+        //SetCharacterWeaponSkin(Defines.body033, Defines.weapon005);
+
+        //Defines.SetSkins();
     }
 
     public void PlayAnimation(PlayerState currentState)
@@ -43,6 +45,13 @@ public class PlayerViewUI : MonoBehaviour
         CurrentWeaponSkin = wepSkin;
 
         Spine.Skin characterSkin = skeletonAnimation.Skeleton.Data.FindSkin(CurrentCharacterSkin);
+
+        if (CurrentWeaponSkin == string.Empty)
+        {
+            skeletonAnimation.Skeleton.SetSkin(characterSkin);
+            return;
+        }
+
         Spine.Skin weaponSkin = skeletonAnimation.Skeleton.Data.FindSkin(CurrentWeaponSkin);
 
         Spine.Skin combinedSkin = new Spine.Skin("character_with_weapon");
@@ -57,9 +66,18 @@ public class PlayerViewUI : MonoBehaviour
 
     public void SetCharacterSkin(string chSkin)
     {
-        if (CurrentCharacterSkin == chSkin) return;
-
         SetCharacterWeaponSkin(chSkin, CurrentWeaponSkin);
+    }
+
+    public void SetNoneWeaponCharacterSkin(string chSkin) 
+    {
+        CurrentCharacterSkin = chSkin;
+        CurrentWeaponSkin = string.Empty;
+
+        Spine.Skin characterSkin = skeletonAnimation.Skeleton.Data.FindSkin(CurrentCharacterSkin);
+
+        skeletonAnimation.Skeleton.SetSkin(characterSkin);
+        skeletonAnimation.Skeleton.SetSlotsToSetupPose();
     }
 
     public void SetWeaponSkin(string wepSkin)

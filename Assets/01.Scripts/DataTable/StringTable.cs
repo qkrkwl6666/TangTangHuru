@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -22,7 +23,7 @@ public class StringTable : DataTable
         return stringTable[id];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -36,6 +37,9 @@ public class StringTable : DataTable
                     stringTable.Add(record.String_Id.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
+
 }

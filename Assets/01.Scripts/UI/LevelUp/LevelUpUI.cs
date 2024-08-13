@@ -6,20 +6,79 @@ using UnityEngine.UI;
 public class LevelUpUI : MonoBehaviour
 {
     public IconLoader iconLoader;
-    public PassiveManager passiveManager;
-
     public List<LevelUpOption> Options_UI;
+
+    private GameObject player;
+    private PassiveManager passiveManager;
 
     WeaponCreator mainWeapon;
     List<WeaponCreator> weaponList = new List<WeaponCreator>();
     List<PassiveData> passiveList = new List<PassiveData>();
 
+    StringTable stringMgr;
+
     private void OnEnable()
     {
-        var stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
-
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            passiveManager = player.GetComponentInChildren<PassiveManager>();
+        }
+        stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
         SetAllOptions();
+        SetSelectables();
+    }
 
+    private void OnDisable()
+    {
+        foreach (var option in Options_UI)
+        {
+            option.GetComponent<Button>().onClick.RemoveAllListeners();
+        }
+    }
+
+    private void SetAllOptions()
+    {
+        weaponList.Clear();
+        passiveList.Clear();
+
+        var weaponCount = 0;
+
+        foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
+        {
+            weaponCount++; //보유중 숫자
+            if (weaponCreator.currLevel < 5)
+            {
+                weaponList.Add(weaponCreator);
+            }
+        }
+        if (weaponCount < 5)
+        {
+            foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
+            {
+                weaponList.Add(weaponCreator);
+            }
+        }
+
+        foreach (var currPassiveData in passiveManager.currPassiveList) //갖고 있는 패시브
+        {
+            if (currPassiveData.Level < 7)
+            {
+                passiveList.Add(currPassiveData);
+            }
+        }
+
+        if (passiveList.Count < 5)
+        {
+            foreach (var passiveData in passiveManager.inGamePassiveList) //추가될 패시브
+            {
+                passiveList.Add(passiveData);
+            }
+        }
+    }
+
+    public void SetSelectables()
+    {
 
         List<int> PassiveOrActive = new List<int>();
         for (int i = 0; i < 3; i++)
@@ -68,8 +127,11 @@ public class LevelUpUI : MonoBehaviour
 
                 if (selectedCreator.currLevel == 0)
                 {
+                    //Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                    //=> selectedCreator.gameObject.SetActive(true));
+
                     Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                        => selectedCreator.gameObject.SetActive(true));
+                        => CreateSkill(selectedCreator));
                 }
                 else
                 {
@@ -78,69 +140,13 @@ public class LevelUpUI : MonoBehaviour
             }
         }
 
-
     }
 
-    private void OnDisable()
+    private void CreateSkill(WeaponCreator creator)
     {
-        foreach (var option in Options_UI)
-        {
-            option.GetComponent<Button>().onClick.RemoveAllListeners();
-        }
+        var skill = Instantiate(creator);
+        skill.transform.SetParent(player.transform, false);
+        passiveManager.currWeaponCreators.Add(skill);
+        passiveManager.weaponCreators.Remove(creator);
     }
-
-    private void SetAllOptions()
-    {
-        weaponList.Clear();
-        passiveList.Clear();
-
-        var weaponCount = 0;
-
-        foreach (var weaponCreator in passiveManager.weaponCreators) //선택 가능한 모든 액티브 목록
-        {
-            if (weaponCreator.currLevel > 0) //보유중
-            {
-                weaponCount++; //보유중 숫자
-                if (weaponCreator.currLevel < 5)
-                {
-                    weaponList.Add(weaponCreator);
-                }
-            }
-        }
-
-        if (weaponCount < 5)
-        {
-            foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
-            {
-                if (weaponCreator.currLevel == 0)
-                {
-                    weaponList.Add(weaponCreator);
-                }
-            }
-        }
-
-        foreach (var currPassiveData in passiveManager.currPassiveList) //갖고 있는 패시브
-        {
-            if (currPassiveData.Level < 7)
-            {
-                passiveList.Add(currPassiveData);
-            }
-        }
-
-        if (passiveList.Count < 5)
-        {
-            foreach (var passiveData in passiveManager.inGamePassiveList) //추가될 패시브
-            {
-                passiveList.Add(passiveData);
-            }
-        }
-    }
-
-    private void SetSelectable()
-    {
-
-
-
-    }
-
 }

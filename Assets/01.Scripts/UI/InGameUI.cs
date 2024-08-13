@@ -4,13 +4,9 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour, IPlayerObserver
 {
-    public GameObject treasurePrefab;
-
     private Transform playerTransform;
     private PlayerSubject playerSubject;
 
-    // ∫∏π∞ ªÛ¿⁄ ≈âµÊ UI
-    private Slider treasureBar;
     // ∑π¿Ã¥ı UI
     public Slider radarBar;
 
@@ -43,9 +39,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
-
-        treasureBar = Instantiate(treasurePrefab, playerTransform).GetComponentInChildren<Slider>();
-        treasureBar.gameObject.SetActive(false);
     }
 
     public void ActiveGameClearUI()
@@ -80,7 +73,7 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     public void ExitMainButton()
     {
-        GameManager.Instance.LoadSceneAsync(Defines.main);
+        GameManager.Instance.LoadSceneAsync("InventoryScene");
     }
 
     #endregion
@@ -95,19 +88,9 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         bossHpBar.gameObject.SetActive(active);
     }
 
-    public void SetActiveTreasureBar(bool active)
-    {
-        treasureBar.gameObject.SetActive(active);
-    }
-
     public void UpdateBossHpBar(float value)
     {
         bossHpBar.value = value;
-    }
-
-    public void UpdateTreasureBar(float value)
-    {
-        treasureBar.value = value;
     }
 
     public void UpdateRadarBar(float value)

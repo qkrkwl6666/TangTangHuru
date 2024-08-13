@@ -10,7 +10,7 @@ public class OrbDesc : MonoBehaviour
     public TextMeshProUGUI descripton;
     public Button button;
 
-    private OrbData orbData;
+    private ItemData itemData;
     private ItemSlotUI connectedSlot;
 
     private void Start()
@@ -20,12 +20,12 @@ public class OrbDesc : MonoBehaviour
     public void SetInfo(int id)
     {
         orbId = id;
-        orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData(orbId.ToString());
-        var stringDesc = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(orbData.Orb_Desc);
-        var stringType = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(orbData.Orb_Type);
+        itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(orbId.ToString());
+        var stringDesc = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Desc_Id);
+        var stringType = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Name_Id);
 
         descripton.text = stringDesc.Text + " / " + stringType.Text;
-        Addressables.LoadAssetAsync<Sprite>(orbData.Orb_Texture).Completed += (x) =>
+        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             iconImage.sprite = x.Result;
         };

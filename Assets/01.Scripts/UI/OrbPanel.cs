@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 public class OrbPanel : MonoBehaviour
 {
     public OrbUpgrader upgrader;
@@ -25,34 +23,24 @@ public class OrbPanel : MonoBehaviour
             orbList[i].gameObject.SetActive(false);
         }
 
-        int orbRareNum = GameManager.Instance.currSaveData.orb_Atk_Rare;
-        int orbEpicNum = GameManager.Instance.currSaveData.orb_Atk_Epic;
-        int orbUniqueNum = GameManager.Instance.currSaveData.orb_Atk_Unique;
-
-        activeNum = orbRareNum + orbEpicNum + orbUniqueNum;
-
-
-        for (int i = 0; i < activeNum; i++)
+        //인벤토리에서 개수 받아와서 목록 출력하고, 인벤토리 조합결과 AddItem메소드로 추가
+        int count = 0;
+        for (int i = 1; i <= 4; ++i)
         {
-            if (i < orbRareNum)
-            {
-                orbList[i].SetInfo(610003);
-            }
-            else if (i >= orbRareNum && i < orbRareNum + orbEpicNum)
-            {
-                orbList[i].SetInfo(610002);
-            }
-            else
-            {
-                orbList[i].SetInfo(610001);
-            }
+            //var tierOrbList = upgrader.inventory.GetItemTypesTier(ItemType.Orb, (ItemTier)i);
+            //if (tierOrbList != null)
+            //{
+            //    foreach ( var currOrb in tierOrbList)
+            //    {
+            //        orbList[count].SetInfo(currOrb.ItemId);
+            //        orbList[count].gameObject.SetActive(true);
 
-            orbList[i].gameObject.SetActive(true);
-
-            int currIndex = i;
-            orbList[i].GetComponentInChildren<Button>().onClick.AddListener(() => upgrader.SelectOrbInPanel(currIndex));
+            //        int index = count;
+            //        orbList[count].GetComponentInChildren<Button>().onClick.AddListener(() => upgrader.SelectOrbInPanel(index));
+            //        count++;
+            //    }
+            //}
         }
-
         reset = false;
     }
 

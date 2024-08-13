@@ -25,7 +25,7 @@ public class TreasureSpawnManager : MonoBehaviour
     private void Awake()
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
-            .GetTreasure(GameManager.Instance.CurrentStage.ToString());
+            .GetTreasure((GameManager.Instance.CurrentStage).ToString()); // stage name
 
         SpawnWall();
 
@@ -128,7 +128,7 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     for (int i = 0; i < rand; i++)
                     {
-                        Addressables.InstantiateAsync("Normal_Re_Stone").Completed +=
+                        Addressables.InstantiateAsync("Re_Stone").Completed +=
                         (x) =>
                         {
                             var restoneGo = x.Result;

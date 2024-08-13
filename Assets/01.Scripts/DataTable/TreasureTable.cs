@@ -1,4 +1,5 @@
 using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -47,7 +48,7 @@ public class TreasureTable : DataTable
         return treasureTable[name];
     }
 
-    public override void Load(string name)
+    public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
         {
@@ -61,6 +62,8 @@ public class TreasureTable : DataTable
                     treasureTable.Add(record.Stage.ToString(), record);
                 }
             }
+
+            tableLoaded?.Invoke();
         };
     }
 }

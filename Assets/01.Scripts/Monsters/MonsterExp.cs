@@ -8,43 +8,44 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
 
     private float exp = 0; //생성시 자동세팅
 
-    private float playerDistanceDifference = 3f;
+    private float playerDistanceDifference = 1.5f;
 
-    private bool isTracking = false;
-    private float speed = 20f;
+    private float speed = 5f;
+
+    private Transform targetTransform;
 
     public IObjectPool<GameObject> pool;
 
     private void Update()
     {
-        if (isTracking)
-        {
-            Vector2 dir = playerTransform.position - transform.position;
-            transform.Translate(dir * speed * Time.deltaTime);
-            if (Vector2.Distance(transform.position, playerTransform.position) <= 1)
-            {
-                // 플레이어 레벨업 메서드 호출
-                playerSubject.GetPlayerExp.EarnExp(exp);
-
-                pool.Release(gameObject);
-                return;
-            }
-        }
-    }
-
-    private void OnDisable()
-    {
-        isTracking = false;
-    }
-
-    private void FixedUpdate()
-    {
         if (playerSubject == null) return;
 
         if (Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
         {
-            isTracking = true;
+            targetTransform = playerTransform;
         }
+
+        if (targetTransform == null)
+            return;
+
+        Vector2 dir = targetTransform.position - transform.position;
+        transform.Translate(dir * speed * Time.deltaTime);
+        if (Vector2.Distance(transform.position, targetTransform.position) <= 1)
+        {
+            Release();
+            return;
+        }
+    }
+
+    public void Release()
+    {
+        playerSubject.GetPlayerExp.EarnExp(exp);
+        pool.Release(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        targetTransform = null;
     }
 
     public void Initialize(PlayerSubject playerSubject, Transform monsterTransform, float exp)
@@ -70,5 +71,10 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
     public void Reset()
     {
 
+    }
+
+    public void SetTarget(Transform target)
+    {
+        targetTransform = target;
     }
 }

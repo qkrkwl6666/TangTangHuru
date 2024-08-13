@@ -1,32 +1,33 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public abstract class SaveDatas 
 {
     public int Version { get; protected set; }
-    public abstract SaveData VersionUp();
+    public abstract SaveDatas VersionUp();
 }
 
 public class SaveDataV1 : SaveDatas
 {
-    public int Gold { get; set; } = 100;
-    public int Diamond { get; set; } = 100;
-    public int CurrentStage { get; set; } = 21;
+    public int Gold { get; set; } = 0;
+    public int Diamond { get; set; } = 0;
+    public int CurrentStage { get; set; } = 1;
 
     // 전체 아이템 컨테이너
-    public SortedDictionary<ItemType, SortedDictionary<ItemTier, List<Item>>> allItem = new();
+    public List<Item> allItem = new();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
     public Dictionary<PlayerEquipment, Item> playerEquipment = new ();
+
+    // 도전과제 진행정보 저장
+    public List<AchieveState> SavedStates = new();
+    public List<int> SavedAchieveProgress = new();
 
     public SaveDataV1()
     {
         Version = 1;
     }
 
-    public override SaveData VersionUp()
+    public override SaveDatas VersionUp()
     {
         //SaveDataV2 saveData = new SaveDataV2();
         //saveData.Gold = Gold;

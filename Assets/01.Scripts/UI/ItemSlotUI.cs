@@ -8,31 +8,38 @@ public class ItemSlotUI : MonoBehaviour
     public Image slotIcon;
 
     public bool isSelected = false;
-
     public OrbDesc connected;
+
+    private void OnDisable()
+    {
+        ClearInfo();
+    }
 
     public void SetOrbInfo(OrbDesc orbDesc)
     {
         connected = orbDesc;
         connected.Seleted();
-        var orbData = DataTableManager.Instance.Get<OrbTable>(DataTableManager.orb).GetOrbData(connected.orbId.ToString());
-        Addressables.LoadAssetAsync<Sprite>(orbData.Orb_Texture).Completed += (x) =>
+
+        currItemId = connected.orbId;
+        var itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(connected.orbId.ToString());
+        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             slotIcon.sprite = x.Result;
             slotIcon.gameObject.SetActive(true);
         };
-
         isSelected = true;
     }
 
     public void ClearInfo()
     {
-        connected.UnSelected();
-        connected = null;
+        if(connected != null)
+        {
+            connected.UnSelected();
+            connected = null;
+        }
         currItemId = 0;
         isSelected = false;
         slotIcon.gameObject.SetActive(false);
-
     }
 
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System;
 
 public class DataTableManager : Singleton<DataTableManager>
 {
@@ -12,44 +13,64 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string stageBoss = "StageBoss";
     public static readonly string treasure = "Treasure";
     public static readonly string item = "Item"; 
-    public static readonly string orb = "Orb"; 
     public static readonly string String = "String";
     public static readonly string stage = "Stage";
+    public static readonly string appraise = "Appraise";
+
+    public static readonly string[] TableNames = 
+    {
+        "StageWave", "Monster", "MonsterSkill", "Boss", "BossSkill", "StageBoss",
+        "Treasure", "Item", "Orb", "String", "Stage", "Appraise"
+    };
+
+    public event Action OnTableLoaded;
+
+    public Action OnAllTableLoaded;
+
+    public bool isTableLoad = false;
+
+    private int loadTableCount = 0;
+
+    public int tableCount = 0;
 
     private void Awake()
     {
+        tableCount = TableNames.Length;
+
+        OnTableLoaded += TableLoadCompleted;
+
         DataTable stageTable = new StageTable();
-        stageTable.Load(stage);
+        stageTable.Load(stage, OnTableLoaded);
 
         DataTable waveTable = new WaveTable();
-        waveTable.Load(stageWave);
+        waveTable.Load(stageWave, OnTableLoaded);
 
         DataTable monsterTable = new MonsterTable();
-        monsterTable.Load(monster);
+        monsterTable.Load(monster, OnTableLoaded);
 
         DataTable monsterSkillTable = new MonsterSkillTable();
-        monsterSkillTable.Load(monsterSkill);
+        monsterSkillTable.Load(monsterSkill, OnTableLoaded);
 
         DataTable bossTable = new BossTable();
-        bossTable.Load(boss);
+        bossTable.Load(boss, OnTableLoaded);
 
         DataTable bossSkillTable = new BossSkillTable();
-        bossSkillTable.Load(bossSkill);
+        bossSkillTable.Load(bossSkill, OnTableLoaded);
 
         DataTable stageBossTable = new BossStageTable();
-        stageBossTable.Load(stageBoss);
+        stageBossTable.Load(stageBoss, OnTableLoaded);
 
         DataTable treasureTable = new TreasureTable();
-        treasureTable.Load(treasure);
+        treasureTable.Load(treasure, OnTableLoaded);
 
         DataTable itemTable = new ItemTable();
-        itemTable.Load(item);
-
-        DataTable orbTable = new OrbTable();
-        orbTable.Load(orb);
+        itemTable.Load(item, OnTableLoaded);
 
         DataTable stringTable = new StringTable();
-        stringTable.Load(String);
+        stringTable.Load(String, OnTableLoaded);
+
+        DataTable appraiseTable = new AppraiseTable();
+        appraiseTable.Load(appraise, OnTableLoaded);
 
         tables.Add(stage, stageTable);
 
@@ -63,14 +84,39 @@ public class DataTableManager : Singleton<DataTableManager>
 
         tables.Add(treasure, treasureTable);
         tables.Add(item, itemTable);
-        tables.Add(orb, orbTable);
 
         tables.Add(String, stringTable);
+        tables.Add(appraise, appraiseTable);
     }
 
-    public void Update()
+    public void TableLoadCompleted()
     {
+        loadTableCount++;
 
+        if (loadTableCount >= tables.Count) 
+        {
+            OnAllTableLoaded?.Invoke();
+            isTableLoad = true;
+        }
+    }
+
+    private DataTable CreateTableInstance(string tableName)
+    {
+        switch (tableName)
+        {
+            case "Stage": return new StageTable();
+            case "StageWave": return new WaveTable();
+            case "Monster": return new MonsterTable();
+            case "MonsterSkill": return new MonsterSkillTable();
+            case "Boss": return new BossTable();
+            case "BossSkill": return new BossSkillTable();
+            case "StageBoss": return new BossStageTable();
+            case "Treasure": return new TreasureTable();
+            case "Item": return new ItemTable();
+            case "String": return new StringTable();
+
+            default: throw new ArgumentException($"Unknown table type: {tableName}");
+        }
     }
 
     public T Get<T>(string id) where T : DataTable
