@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -16,7 +17,7 @@ public class MainInventory : MonoBehaviour
     // Todo : 로드 시 playerEquipment 에 등록된 item은 itemslot에서 비활성화 해줘야함
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
 
-    public List<Image> supWeaponImages = new ();
+    public List<Image> subWeaponImages = new ();
 
     public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
     public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI           접근시 (PlayerEquipment) - 1
@@ -205,11 +206,11 @@ public class MainInventory : MonoBehaviour
         //items.Add(210002);
         //items.Add(210003);
         //items.Add(210004);
-        //items.Add(600001);
-        //items.Add(600002);
-        //items.Add(600003);
-        //items.Add(600004);
-        //items.Add(600005);
+        items.Add(600001);
+        items.Add(600002);
+        items.Add(600003);
+        items.Add(600004);
+        items.Add(600005);
         
         items.Add(600006);
         //items.Add(610001);
@@ -368,6 +369,23 @@ public class MainInventory : MonoBehaviour
             case 4: // CrossBow
             case 5: // Wand
             case 6: // Staff
+                {
+                    M_Weapon m_weaponItem = new M_Weapon();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_weaponItem.SetItemData(itemData, instanceId);
+
+                    if((ItemTier)itemData.Item_Tier != ItemTier.Normal)
+                    {
+                        m_weaponItem.subWeapons = GetRandomSubWeapon(itemData.Item_Tier);
+                    }     
+
+                    return m_weaponItem;
+                }
 
             case 12: // Orb
             case 13: // Orb
@@ -656,6 +674,11 @@ public class MainInventory : MonoBehaviour
                 defaultEquipmentSlotUI[(int)item.Key - 1].SetActive(true);
                 EquipmentSlotUI[(int)item.Key - 1].SetActive(false);
 
+                foreach(var image in subWeaponImages)
+                {
+                    image.gameObject.SetActive(false);
+                }
+
                 GameManager.Instance.playerEquipment = playerEquipment;
                 break;
             }
@@ -820,6 +843,19 @@ public class MainInventory : MonoBehaviour
         equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetItemData(item, mainUI);
         equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].gameObject.SetActive(true);
 
+
+        switch (item.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                LoadSubWeaponImage(item);
+                break;
+        }
+
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
@@ -840,6 +876,7 @@ public class MainInventory : MonoBehaviour
             case ItemType.Wand:
             case ItemType.Staff:
                 SetEquipItemUI(PlayerEquipment.Weapon, slot);
+                LoadSubWeaponImage(item);
                 break;
 
             case ItemType.Helmet:
@@ -856,6 +893,23 @@ public class MainInventory : MonoBehaviour
                 playerEquipment[PlayerEquipment.Pet] = (item, slot.ItemSlot);
                 GameManager.Instance.playerEquipment = playerEquipment;
                 break;
+        }
+    }
+
+    public void LoadSubWeaponImage(Item item)
+    {
+        for (int i = 0; i < item.itemData.Item_Tier; i++)
+        {
+            int tempInt = i;
+            var weapon = item as M_Weapon;
+
+            Addressables.LoadAssetAsync<Sprite>(weapon.subWeapons[i].Texture_Id).Completed
+                += (sprite) =>
+                {
+                    subWeaponImages[tempInt].sprite = sprite.Result;
+                    subWeaponImages[tempInt].gameObject.SetActive(true);
+                };
+
         }
     }
 
@@ -911,6 +965,21 @@ public class MainInventory : MonoBehaviour
                 if (item.ItemType == ItemType.Pet)
                 {
                     playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
+                }
+                break;
+        }
+
+        switch(item.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                foreach (var image in subWeaponImages)
+                {
+                    image.gameObject.SetActive(false);
                 }
                 break;
         }
@@ -1343,7 +1412,7 @@ public class MainInventory : MonoBehaviour
     }
 
     // 서브 무기 랜덤 뽑기
-    public void GetRandomSubWeapon(int count)
+    public List<ItemData> GetRandomSubWeapon(int count)
     {
         List<ItemData> subWeaponItems = new List<ItemData>();
 
@@ -1367,7 +1436,7 @@ public class MainInventory : MonoBehaviour
             if(isPass) subWeaponItems.Add(subWeapons[random]);
         }
 
-        //return subWeaponItems;
+        return subWeaponItems;
     }
     
 }
