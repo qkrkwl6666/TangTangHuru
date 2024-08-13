@@ -370,46 +370,22 @@ public class MainInventory : MonoBehaviour
             case 4: // CrossBow
             case 5: // Wand
             case 6: // Staff
+            case 16: //Pet
+                {
+                    M_Weapon m_weaponItem = new M_Weapon();
 
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_weaponItem.SetItemData(itemData, instanceId);
+
+                    return m_weaponItem;
+                }
             case 12: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
             case 13: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
             case 14: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
             case 15: // Orb
                 {
                     M_Item m_item = new M_Item();
@@ -423,20 +399,6 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
-            case 16: // Pet
-                {
-                    M_Weapon m_weaponItem = new M_Weapon();
-
-                    if(!isInstanceId)
-                    {
-                        instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_weaponItem.SetItemData(itemData, instanceId);
-
-                    return m_weaponItem;
-                }
-
             case 7: // ≈ı±∏
             case 8: // ∞©ø 
             case 9: // Ω≈πﬂ
