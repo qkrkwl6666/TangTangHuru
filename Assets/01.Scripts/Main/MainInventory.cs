@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -207,13 +208,14 @@ public class MainInventory : MonoBehaviour
         //items.Add(210002);
         //items.Add(210003);
         //items.Add(210004);
-        items.Add(600001);
-        items.Add(600002);
-        items.Add(600003);
-        items.Add(600004);
-        items.Add(600005);
-
-        items.Add(600006);
+        //items.Add(600001);
+        //items.Add(600002);
+        //items.Add(600003);
+        //items.Add(600004);
+        //items.Add(600005);
+        
+        //items.Add(600006);
+        items.Add(610001);
 
         //items.Add(710001);
         //items.Add(710002);
@@ -575,6 +577,35 @@ public class MainInventory : MonoBehaviour
     }
 
     // 소모품 아이템 삭제
+
+    public bool RemoveOrbItem(ItemType itemType, ItemTier itemTier, int removeCount)
+    {
+        if (!allItem.ContainsKey(itemType)) return false;
+
+        if (!allItem[itemType].ContainsKey(itemTier)) return false;
+
+        if(allItem[itemType][itemTier].Count == 0) return false;
+
+        var list = allItem[itemType][itemTier];
+
+        if (list.Count < removeCount) return false;
+
+        List<Item> removeItems = new();
+
+        for (int i = 0; i < removeCount; i++)
+        {
+            removeItems.Add(list[i]);
+        }
+
+        foreach (var item in removeItems)
+        {
+            Destroy(itemSlotUI[item.InstanceId].ItemSlot);
+            itemSlotUI.Remove(item.InstanceId);
+            list.Remove(item);
+        }
+
+        return true;
+    }
 
     public bool RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
