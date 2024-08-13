@@ -162,6 +162,7 @@ public class TierUpPopUp : MonoBehaviour
         if(CurrentTierUpValue >= MaxTierUpValue)
         {
             TierUpNewItemPopUp();
+            mainInventory.RefreshItemSlotUI();
             gameObject.SetActive(false);
             equipPopUp.gameObject.SetActive(false);
             return;
@@ -171,6 +172,7 @@ public class TierUpPopUp : MonoBehaviour
         item.CurrentTierUp = CurrentTierUpValue;
 
         equipPopUp.SetTierUpUI(item);
+        mainInventory.RefreshItemSlotUI();
         gameObject.SetActive(false);
     }
 
