@@ -11,11 +11,19 @@ public class MainUI : MonoBehaviour
     void Start()
     {
         DOTween.Init();
+        mainInventory.OnMainInventorySaveLoaded += SaveLoadMainStageText;
     }
 
     #region 메인 스테이지 UI
 
     public TextMeshProUGUI mainStageText;
+
+    public void SaveLoadMainStageText()
+    {
+        mainStageText.text = DataTableManager.Instance.Get<StageTable>(DataTableManager.stage)
+            .GetData(GameManager.Instance.CurrentStage).Title;
+    }
+
 
     public void MainStageUIButton()
     {

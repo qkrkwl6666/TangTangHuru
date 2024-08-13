@@ -206,11 +206,11 @@ public class MainInventory : MonoBehaviour
         //items.Add(210002);
         //items.Add(210003);
         //items.Add(210004);
-        items.Add(600001);
-        items.Add(600002);
-        items.Add(600003);
-        items.Add(600004);
-        items.Add(600005);
+        //items.Add(600001);
+        //items.Add(600002);
+        //items.Add(600003);
+        //items.Add(600004);
+        //items.Add(600005);
         
         items.Add(600006);
         //items.Add(610001);
@@ -340,10 +340,10 @@ public class MainInventory : MonoBehaviour
     public void SaveInventory()
     {
         SaveManager.SaveDataV1.allItem.Clear();
-
-        SaveManager.SaveDataV1.Gold = 0;
-        SaveManager.SaveDataV1.Diamond = 0;
-        SaveManager.SaveDataV1.CurrentStage = 1;
+        
+        SaveManager.SaveDataV1.Gold = Gold;
+        SaveManager.SaveDataV1.Diamond = Diamond;
+        SaveManager.SaveDataV1.CurrentStage = GameManager.Instance.CurrentStage;
 
         SaveManager.SaveDataV1.playerEquipment = playerEquipment.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Item1);
 
@@ -713,6 +713,8 @@ public class MainInventory : MonoBehaviour
         goldText.text = Gold.ToString();
         diamondText.text = Diamond.ToString();
 
+        
+
         RefreshItemSlotUI();
 
         yield return new WaitForSeconds(0.3f);
@@ -780,6 +782,7 @@ public class MainInventory : MonoBehaviour
         LoadDataPlayerEquip();
 
         GameManager.Instance.InitSaveLoaded();
+        mainUI.SaveLoadMainStageText();
     }
 
     public void LoadWeaponUpgrade()

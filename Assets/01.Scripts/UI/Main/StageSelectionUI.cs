@@ -59,7 +59,6 @@ public class StageSelectionUI : MonoBehaviour
         }
         else
         {
-            // 게임매니저 스테이지로 중앙 초기화
             CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
         }
     }
@@ -78,7 +77,6 @@ public class StageSelectionUI : MonoBehaviour
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
 
-        
         GameManager.Instance.CurrentStage = currentStage;
     }
 
@@ -107,6 +105,8 @@ public class StageSelectionUI : MonoBehaviour
 
     private IEnumerator ScrollCheck()
     {
+        yield return new WaitForSeconds(0.1f);
+
         while (true)
         {
             if (isScrolling)
@@ -162,7 +162,6 @@ public class StageSelectionUI : MonoBehaviour
 
             titleText.text = stageTable[(currentStage).ToString()].Title;
             descText.text = stageTable[(currentStage).ToString()].Desc;
-            
         }
     }
 
@@ -182,6 +181,25 @@ public class StageSelectionUI : MonoBehaviour
                    x => scrollRect.horizontalNormalizedPosition = x,
                    targetNormalizedPos, centeringDuration)
                .SetEase(Ease.OutQuad);
+    }
+
+    private IEnumerator CoCenterOnStageNoDotTween(RectTransform stageRect)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        float stageLeftEdge = stageRect.anchoredPosition.x - stageRect.rect.width * 0.5f;
+
+        float contentWidth = contentRect.rect.width;
+
+        float viewportWidth = scrollRect.viewport.rect.width;
+
+        float targetNormalizedPos = (stageLeftEdge + stageRect.rect.width * 0.5f - viewportWidth * 0.5f) / (contentWidth - viewportWidth);
+
+        targetNormalizedPos = Mathf.Clamp01(targetNormalizedPos);
+
+        scrollRect.horizontalNormalizedPosition = targetNormalizedPos;
+
+        gameObject.SetActive(false);
     }
 
     public void InitStageUI()
@@ -214,9 +232,8 @@ public class StageSelectionUI : MonoBehaviour
 
                 if(name == stageTable.Count - 1)
                 {
-                    Debug.Log(GameManager.Instance.CurrentStage);
-                    CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
-                    gameObject.SetActive(false);
+                    StartCoroutine(CoCenterOnStageNoDotTween(stageRects[GameManager.Instance.CurrentStage - 1]));
+                    currentStage = GameManager.Instance.CurrentStage;
                 }
             };
         }
