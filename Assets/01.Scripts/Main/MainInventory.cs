@@ -372,9 +372,57 @@ public class MainInventory : MonoBehaviour
             case 6: // Staff
 
             case 12: // Orb
+                {
+                    M_Item m_item = new M_Item();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
             case 13: // Orb
+                {
+                    M_Item m_item = new M_Item();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
             case 14: // Orb
+                {
+                    M_Item m_item = new M_Item();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
             case 15: // Orb
+                {
+                    M_Item m_item = new M_Item();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
             case 16: // Pet
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
@@ -1060,6 +1108,10 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("710002", 0);
         MainInventoryAddItem("710003", 0);
         MainInventoryAddItem("710004", 0);
+
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
 
         MainInventoryAddItem("610001", 0);
         MainInventoryAddItem("610001", 0);

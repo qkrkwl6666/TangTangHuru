@@ -22,6 +22,9 @@ public class SaveDataV1 : SaveDatas
     public List<AchieveState> SavedStates = new();
     public List<int> SavedAchieveProgress = new();
 
+    //강화석 게이지
+    public int gaige = 0;
+
     public SaveDataV1()
     {
         Version = 1;
