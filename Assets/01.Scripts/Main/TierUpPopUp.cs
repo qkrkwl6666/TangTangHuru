@@ -178,6 +178,7 @@ public class TierUpPopUp : MonoBehaviour
 
         // 현재 아이템 삭제
         mainInventory.RemoveItem(item.InstanceId);
+        
 
         var itemMain = mainInventory.MainInventoryAddItem(itemId.ToString());
 

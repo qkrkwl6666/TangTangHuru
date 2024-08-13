@@ -209,6 +209,7 @@ public class StageSelectionUI : MonoBehaviour
                 if(name == stageTable.Count - 1)
                 {
                     CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
+                    gameObject.SetActive(false);
                 }
             };
         }

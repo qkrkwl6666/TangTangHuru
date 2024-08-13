@@ -273,6 +273,7 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
+            RefreshItemSlotUI();
             return mainItem;
         }
 
@@ -282,14 +283,17 @@ public class MainInventory : MonoBehaviour
             allItem[itemType].Add(itemTier, new List<Item>());
 
             allItem[itemType][itemTier].Add(mainItem);
+            RefreshItemSlotUI();
             return mainItem;
         }
 
         // 아이템 타입과 아이템 티어가 있다면
         {
             allItem[itemType][itemTier].Add(mainItem);
+            RefreshItemSlotUI();
             return mainItem;
         }
+
     }
 
     // ****주의**** : Item 인스턴스 생성 아이디가 복사됨
