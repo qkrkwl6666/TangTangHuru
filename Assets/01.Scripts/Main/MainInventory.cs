@@ -576,7 +576,7 @@ public class MainInventory : MonoBehaviour
 
         itemList.Remove(item.Item1);
 
-        
+        RefreshItemSlotUI();
     }
 
     // 소모품 아이템 삭제
