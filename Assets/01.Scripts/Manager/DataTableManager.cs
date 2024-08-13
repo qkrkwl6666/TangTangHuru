@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using System;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using UnityEngine;
 
 public class DataTableManager : Singleton<DataTableManager>
 {

@@ -60,6 +60,9 @@ public class ItemData
         newItemData.CoolDown = this.CoolDown;
         newItemData.CriticalChance = this.CriticalChance;
         newItemData.Criticaldam = this.Criticaldam;
+        newItemData.CurrentUpgrade = this.CurrentUpgrade;
+        newItemData.TierUp_Exp = this.TierUp_Exp;
+        newItemData.TierUp_NeedExp = this.TierUp_NeedExp;
 
         return newItemData;
     }

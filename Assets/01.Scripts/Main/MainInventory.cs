@@ -1,15 +1,11 @@
-using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-
-using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
 {
@@ -311,6 +307,8 @@ public class MainInventory : MonoBehaviour
 
         var mainItem = MakeItem(itemData, true, item.InstanceId);
 
+        mainItem.CurrentTierUp = item.CurrentTierUp;
+
         if (!allItem.ContainsKey(itemType))
         {
             allItem.Add(itemType, new Dictionary<ItemTier, List<Item>>());
@@ -559,6 +557,9 @@ public class MainInventory : MonoBehaviour
     {
         if (!itemSlotUI.ContainsKey(instanceId)) return;
 
+        // 아이템 장착 중이면 장착에서도 삭제
+        PlayerEquipRemove(instanceId);
+
         var item = itemSlotUI[instanceId];
 
         // item UI 슬롯 삭제
@@ -571,7 +572,7 @@ public class MainInventory : MonoBehaviour
 
         itemList.Remove(item.Item1);
 
-        // 소모품 이면 소모품 컨테이너도 에서도 삭제해 줘야함
+        
     }
 
     // 소모품 아이템 삭제
@@ -640,6 +641,23 @@ public class MainInventory : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void PlayerEquipRemove(int instanceId) 
+    { 
+        foreach(var item in playerEquipment)
+        {
+            if(item.Value.Item1.InstanceId == instanceId)
+            {
+                playerEquipment.Remove(item.Key);
+
+                defaultEquipmentSlotUI[(int)item.Key - 1].SetActive(true);
+                EquipmentSlotUI[(int)item.Key - 1].SetActive(false);
+
+                GameManager.Instance.playerEquipment = playerEquipment;
+                break;
+            }
+        }
     }
 
     public void SaveMainInventory()

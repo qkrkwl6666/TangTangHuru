@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -13,11 +11,14 @@ public class TierUpItemSlotUI : MonoBehaviour
     public Image background;
     public GameObject foucs;
 
+    private TierUpPopUp tierUpPopUp;
+
     public bool IsFocus { get; private set; } = false;
 
-    public void SetItemData(Item item)
+    public void SetItemData(Item item, TierUpPopUp tierUpPopUp)
     {
         this.item = item;
+        this.tierUpPopUp = tierUpPopUp;
 
         // UI 아이템 데이터 에 맞춰서 설정
 
@@ -38,9 +39,12 @@ public class TierUpItemSlotUI : MonoBehaviour
 
     public void OnTierUpItemSlotButton()
     {
-        IsFocus = !IsFocus;
+        if(tierUpPopUp.OnSlotButton(item, !IsFocus))
+        {
+            IsFocus = !IsFocus;
 
-        foucs.SetActive(IsFocus);
+            foucs.SetActive(IsFocus);
+        }
     }
 
 }

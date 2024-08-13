@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 public class OrbPanel : MonoBehaviour
 {
     public OrbUpgrader upgrader;

@@ -71,10 +71,17 @@ public class EquipPopUp : MonoBehaviour
             text.gameObject.SetActive(false);
         }
 
+        if (item.ItemTier == ItemTier.Legendary) TierUpButton.interactable = false;
+        else TierUpButton.interactable = true;
+
         EquipButton.gameObject.SetActive(isEquip);
         UnEquipButton.gameObject.SetActive(!isEquip);
 
         UpgradeButton.interactable = !(currentItem.itemData.CurrentUpgrade >= 10);
+
+        tierUpSlider.value = item.CurrentTierUp;
+        tierUpSlider.maxValue = item.itemData.TierUp_NeedExp;
+        tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
 
         // 아이템 이미지
         Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += 
@@ -138,6 +145,12 @@ public class EquipPopUp : MonoBehaviour
         RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
     }
 
+    public void SetTierUpUI(Item item)
+    {
+        tierUpSlider.value = item.CurrentTierUp;
+        tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
+    }
+        
     private void Awake()
     {
         CencelButton.onClick.AddListener(OnCencelButton);
