@@ -48,6 +48,8 @@ public class EquipPopUp : MonoBehaviour
 
     public MainInventory mainInventory;
     public MainUI mainUI;
+    public TierUpPopUp tierUpPopUp;
+
 
     private void Start()
     {
@@ -140,6 +142,7 @@ public class EquipPopUp : MonoBehaviour
     {
         CencelButton.onClick.AddListener(OnCencelButton);
         UpgradeButton.onClick.AddListener(OnUpgradeButton);
+        TierUpButton.onClick.AddListener(OnTierUpPopUpButton);
     }
 
     public void OnCencelButton()
@@ -217,5 +220,10 @@ public class EquipPopUp : MonoBehaviour
         mainInventory.UnequipItem(currentItem);
 
         mainUI.SetActiveEquipPopUpUI(false);
+    }
+
+    public void OnTierUpPopUpButton()
+    {
+        tierUpPopUp.SetItemUI(currentItem);
     }
 }

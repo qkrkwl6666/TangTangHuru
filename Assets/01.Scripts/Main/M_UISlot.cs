@@ -39,30 +39,7 @@ public class M_UISlot : MonoBehaviour
         };
 
         // ¹è°æ »ö±ò
-        switch(item.itemData.Outline)
-        {
-            case "Outline_Blue":
-                background.color = Defines.blueColor;
-                break;
-            case "Outline_Green":
-                background.color = Defines.greenColor;
-                break;
-            case "Outline_Orange":
-                background.color = Defines.orangeColor;
-                break;
-            case "Outline_Purple":
-                background.color = Defines.purpleColor;
-                break;
-            case "Outline_Red":
-                background.color = Defines.redColor;
-                break;
-            case "Outline_White":
-                background.color = Defines.whiteColor;
-                break;
-            case "Outline_Yellow":
-                background.color = Defines.yellowColor;
-                break;
-        }
+        background.color = Defines.GetColor(item.itemData.Outline);
     }
 
     public void SetItemDataConsumable(Item item, int itemCount)

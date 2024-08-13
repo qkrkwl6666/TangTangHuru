@@ -194,20 +194,20 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        //items.Add(200001);
-        //items.Add(200002);
-        //items.Add(200003);
-        //items.Add(200004);
-        //items.Add(200005);
-        //items.Add(200101);
-        //items.Add(200102);
-        //items.Add(200103);
-        //items.Add(200104);
-        //items.Add(200105);
-        //items.Add(210001);
-        //items.Add(210002);
-        //items.Add(210003);
-        //items.Add(210004);
+        items.Add(200001);
+        items.Add(200002);
+        items.Add(200003);
+        items.Add(200004);
+        items.Add(200005);
+        items.Add(200101);
+        items.Add(200102);
+        items.Add(200103);
+        items.Add(200104);
+        items.Add(200105);
+        items.Add(210001);
+        items.Add(210002);
+        items.Add(210003);
+        items.Add(210004);
         //items.Add(600001);
         //items.Add(600002);
         //items.Add(600003);
@@ -233,8 +233,6 @@ public class MainInventory : MonoBehaviour
             Debug.Log("세이브 이미 로드 완료됨");
             StartCoroutine(SceneLoadMainInventory());
         }
-
-        //임시코드
 
     }
 
@@ -979,6 +977,37 @@ public class MainInventory : MonoBehaviour
         }
 
         return default;
+    }
+
+    public List<Item> GetWeaponItems()
+    {
+        var weaponTypes = new[]
+        {
+            ItemType.Axe,
+            ItemType.Sword,
+            ItemType.Bow,
+            ItemType.Crossbow,
+            ItemType.Wand,
+            ItemType.Staff
+        };
+
+        return weaponTypes
+              .Select(GetItemTypes)
+              .Where(dict => dict != null)
+              .SelectMany(dict => dict.Values)
+              .SelectMany(list => list)
+              .ToList();
+    }
+
+    public List<Item> GetArmourItems(ItemType itemType)
+    {
+        var itemDict = GetItemTypes(itemType);
+
+        if (itemDict == null) return null;
+
+        return itemDict.Values
+            .SelectMany(list => list)
+            .ToList();
     }
 
     public Dictionary<ItemTier, List<Item>> GetItemTypes(ItemType itemType)
