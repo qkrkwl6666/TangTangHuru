@@ -177,6 +177,8 @@ public class AchievementManager : Singleton<AchievementManager>
     // 도전과제 초기화 메소드
     private void InitializeAchievements()
     {
+        achievements.Clear();
+
         var stringTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
         for (int i = 0; i < 12; i++)

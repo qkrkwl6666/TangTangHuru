@@ -7,7 +7,7 @@ public class AchievementUI : MonoBehaviour
     public AchieveEntryUI entryPrefab;
     public GameObject content;
 
-    private List<AchieveEntryUI> entryList;
+    private List<AchieveEntryUI> entryList = new();
     private int entryCount;
 
     private bool sorted = false;
@@ -20,7 +20,7 @@ public class AchievementUI : MonoBehaviour
 
             for (int i = 0; i < entryCount; i++)
             {
-                entryList.Add(Instantiate(entryPrefab, content.transform));
+                entryList.Add(entryPrefab);
             }
             sorted = true;
         }
@@ -29,6 +29,7 @@ public class AchievementUI : MonoBehaviour
         for (int i = 0; i < entryCount; i++)
         {
             entryList[i].SetDescription(i);
+            Instantiate(entryList[i].gameObject, content.transform);
         }
     }
 }
