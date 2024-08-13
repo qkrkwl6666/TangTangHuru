@@ -16,6 +16,8 @@ public class MainInventory : MonoBehaviour
     // Todo : 로드 시 playerEquipment 에 등록된 item은 itemslot에서 비활성화 해줘야함
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
 
+    public List<Image> supWeaponImages = new ();
+
     public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
     public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI           접근시 (PlayerEquipment) - 1
     public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
@@ -43,7 +45,6 @@ public class MainInventory : MonoBehaviour
 
     public int Gold {  get; private set; }
     public int Diamond {  get; private set; }
-
 
     #region 정렬
     public Button allFilterButton;    // 전체
@@ -190,28 +191,28 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        items.Add(200001);
-        items.Add(200002);
-        items.Add(200003);
-        items.Add(200004);
-        items.Add(200005);
-        items.Add(200101);
-        items.Add(200102);
-        items.Add(200103);
-        items.Add(200104);
-        items.Add(200105);
-        items.Add(210001);
-        items.Add(210002);
-        items.Add(210003);
-        items.Add(210004);
+        //items.Add(200001);
+        //items.Add(200002);
+        //items.Add(200003);
+        //items.Add(200004);
+        //items.Add(200005);
+        //items.Add(200101);
+        //items.Add(200102);
+        //items.Add(200103);
+        //items.Add(200104);
+        //items.Add(200105);
+        //items.Add(210001);
+        //items.Add(210002);
+        //items.Add(210003);
+        //items.Add(210004);
         //items.Add(600001);
         //items.Add(600002);
         //items.Add(600003);
         //items.Add(600004);
         //items.Add(600005);
         
-        //items.Add(600006);
-        items.Add(610001);
+        items.Add(600006);
+        //items.Add(610001);
 
         //items.Add(710001);
         //items.Add(710002);
@@ -1340,6 +1341,35 @@ public class MainInventory : MonoBehaviour
                 break;
         }
     }
+
+    // 서브 무기 랜덤 뽑기
+    public void GetRandomSubWeapon(int count)
+    {
+        List<ItemData> subWeaponItems = new List<ItemData>();
+
+        var subWeapons = DataTableManager.Instance.Get<ItemTable>
+            (DataTableManager.item).GetItemDatas(ItemType.SubWeapon, ItemTier.Normal);
+
+        while(subWeaponItems.Count < count)
+        {
+            int random = UnityEngine.Random.Range(0, subWeapons.Count);
+
+            bool isPass = true;
+
+            foreach(var itemData in subWeaponItems)
+            {
+                if (itemData.Item_Id == subWeapons[random].Item_Id)
+                {
+                    isPass = false;
+                }
+            }
+            
+            if(isPass) subWeaponItems.Add(subWeapons[random]);
+        }
+
+        //return subWeaponItems;
+    }
+    
 }
 
 public enum ItemType
@@ -1363,6 +1393,7 @@ public enum ItemType
     Pet = 16, // 펫
 
     Weapon = 17, // 전체 무기
+    SubWeapon = 18,
 }
 
 public enum ItemTier

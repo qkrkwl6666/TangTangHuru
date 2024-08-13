@@ -50,7 +50,6 @@ public class EquipPopUp : MonoBehaviour
     public MainUI mainUI;
     public TierUpPopUp tierUpPopUp;
 
-
     private void Start()
     {
         

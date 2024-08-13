@@ -37,6 +37,13 @@ public class StageSelectionUI : MonoBehaviour
     private Coroutine scrollCoroutine;
     private void Awake()
     {
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += InitStageUI;
+        else
+        {
+            Debug.Log("세이브 이미 로드 완료됨");
+            InitStageUI();
+        }
         
     }
 
@@ -45,10 +52,9 @@ public class StageSelectionUI : MonoBehaviour
         EnhancedTouchSupport.Enable();
 
         scrollCoroutine = StartCoroutine(ScrollCheck());
-        //Debug.Log(GameManager.Instance.CurrentStage);
+        
         if (isFirstEnable == false)
         {
-            InitStageUI();
             isFirstEnable = true;
         }
         else
@@ -72,7 +78,7 @@ public class StageSelectionUI : MonoBehaviour
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
 
-
+        
         GameManager.Instance.CurrentStage = currentStage;
     }
 
@@ -208,12 +214,12 @@ public class StageSelectionUI : MonoBehaviour
 
                 if(name == stageTable.Count - 1)
                 {
+                    Debug.Log(GameManager.Instance.CurrentStage);
                     CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
                     gameObject.SetActive(false);
                 }
             };
         }
-
 
     }
 }

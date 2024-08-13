@@ -92,6 +92,21 @@ public class ItemTable : DataTable
         return null;
     }
 
+    public List<ItemData> GetItemDatas(ItemType itemType, ItemTier itemTier)
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+
+        foreach (var item in itemTable.Values)
+        {
+            if (item.Item_Type == (int)itemType && item.Item_Tier == (int)itemTier)
+            {
+                itemDatas.Add(item);
+            }
+        }
+
+        return itemDatas;
+    }
+
     public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>
