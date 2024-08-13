@@ -60,16 +60,18 @@ public class TierUpPopUp : MonoBehaviour
                 break;
         }
 
-        foreach (var item in items)
+        foreach (var mitem in items)
         {
+            if (mitem == item) continue;
+
             Addressables.InstantiateAsync(Defines.tierUpItemSlot, content)
                 .Completed += (slot) =>
                 {
                     var go = slot.Result;
                     var tierItemSlot = go.GetComponent<TierUpItemSlotUI>();
-                    tierItemSlot.SetItemData(item, this);
+                    tierItemSlot.SetItemData(mitem, this);
 
-                    tierUpItemSlot.Add((item, tierItemSlot));
+                    tierUpItemSlot.Add((mitem, tierItemSlot));
                 };
         }
 
