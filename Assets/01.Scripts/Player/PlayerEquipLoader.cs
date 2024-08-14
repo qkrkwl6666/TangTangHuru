@@ -17,24 +17,60 @@ public class PlayerEquipLoader : MonoBehaviour
     private WeaponData.Type mainType;
     private int setType = 0;
 
+    private float hpValue = 0;
+    private float defValue = 0;
+    private float dodgeValue = 0;
+
+
     private void Awake()
     {
         myPassiveManager = GetComponentInChildren<PassiveManager>();
         playerHealth = GetComponent<PlayerHealth>();
 
-        if(myPassiveManager != null)
-        {
-            var equipHp = GameManager.Instance.playerEquipment[PlayerEquipment.Armor].Item1;
-            var equipDef = GameManager.Instance.playerEquipment[PlayerEquipment.Helmet].Item1;
-            var equipDodge = GameManager.Instance.playerEquipment[PlayerEquipment.Shoes].Item1;
 
-            var armorSetType = equipHp.itemData.SetType;
-            if(armorSetType == equipDef.itemData.SetType && armorSetType == equipDodge.itemData.SetType)
+
+        if (myPassiveManager != null)
+        {
+            Item equipHp = null;
+            Item equipDef = null;
+            Item equipDodge = null;
+
+            if (GameManager.Instance.playerEquipment.TryGetValue(PlayerEquipment.Armor, out var armor))
             {
-                setType = armorSetType; //세트효과 적용
+                equipHp = armor.Item1;
+                if (equipHp != null)
+                {
+                    hpValue = equipHp.itemData.Hp;
+                }
+            }
+            if (GameManager.Instance.playerEquipment.TryGetValue(PlayerEquipment.Helmet, out var helmet))
+            {
+                equipDef = helmet.Item1;
+                if (equipDef != null)
+                {
+                    defValue = equipDef.itemData.Defense;
+                }
+            }
+            if (GameManager.Instance.playerEquipment.TryGetValue(PlayerEquipment.Shoes, out var shoes))
+            {
+                equipDodge = shoes.Item1;
+                if (equipDodge != null)
+                {
+                    dodgeValue = equipDodge.itemData.Dodge;
+                }
+            }
+            playerHealth.SetInfo(hpValue, defValue, dodgeValue);
+
+
+            if (equipHp != null && equipDef != null && equipDodge != null)
+            {
+                var armorSetType = equipHp.itemData.SetType;
+                if (armorSetType == equipDef.itemData.SetType && armorSetType == equipDodge.itemData.SetType)
+                {
+                    setType = armorSetType; //세트효과 적용
+                }
             }
 
-            playerHealth.SetInfo(equipHp.itemData.Hp, equipDef.itemData.Defense, equipDodge.itemData.Dodge);
         }
 
         if (myPassiveManager != null)
