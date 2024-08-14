@@ -8,6 +8,12 @@ public class PlayerEquipLoader : MonoBehaviour
 {
     private PassiveManager myPassiveManager;
     private PlayerHealth playerHealth;
+    private WeaponCreator mainWeaponCreator;
+    private float mainDmg;
+    private float mainCoolDown;
+    private float mainCriticalChance;
+    private float mainCriticalValue;
+
     private void Start()
     {
         myPassiveManager = GetComponentInChildren<PassiveManager>();
@@ -29,14 +35,14 @@ public class PlayerEquipLoader : MonoBehaviour
                 PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
             }
 
-            //무기에 서브무기가 되면 변경예정.
-            M_Weapon weapon = GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1 as M_Weapon;
-            WeaponAdd(weapon);
-            var subWeaponList = weapon.GetSubWeapon();
-
-            //장비 패시브
-            var equipPassive = Instantiate(myPassiveManager.emptyPassiveData);
-            M_Armour armor = GameManager.Instance.playerEquipment[PlayerEquipment.Armor].Item1 as M_Armour;
+            //무기에 서브무기가 들어가면 변경예정.
+            M_Weapon mainWeapon = GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1 as M_Weapon;
+            mainDmg = mainWeapon.itemData.Damage;
+            mainCoolDown = mainWeapon.itemData.CoolDown;
+            mainCriticalChance = mainWeapon.itemData.CriticalChance;
+            mainCriticalValue = mainWeapon.itemData.Criticaldam;
+            MainWeaponAdd(mainWeapon);
+            var subWeaponList = mainWeapon.GetSubWeapon();
         }
         else
         {
@@ -44,7 +50,7 @@ public class PlayerEquipLoader : MonoBehaviour
         }
     }
 
-    public void WeaponAdd(M_Weapon item)
+    public void MainWeaponAdd(M_Weapon item)
     {
         var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, transform);
         handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
@@ -52,7 +58,31 @@ public class PlayerEquipLoader : MonoBehaviour
             if (obj.Status == AsyncOperationStatus.Succeeded)
             {
                 GameObject mainWeapon = obj.Result;
-                myPassiveManager.currWeaponCreators.Add(mainWeapon.GetComponent<WeaponCreator>());
+                var weaponCreator = mainWeapon.GetComponent<WeaponCreator>();
+                var mainType = weaponCreator.weaponDataRef.WeaponType;
+
+                weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
+                myPassiveManager.currWeaponCreators.Add(weaponCreator);
+                mainWeaponCreator = weaponCreator;
+            }
+            else
+            {
+                Debug.LogError("Failed to instantiate the weapon.");
+            }
+        };
+    }
+
+    public void SubWeaponAdd(M_Weapon item)
+    {
+        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, transform);
+        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
+        {
+            if (obj.Status == AsyncOperationStatus.Succeeded)
+            {
+                GameObject weapon = obj.Result;
+                var weaponCreator = weapon.GetComponent<WeaponCreator>();
+                myPassiveManager.currWeaponCreators.Add(weaponCreator);
+                mainWeaponCreator = weaponCreator;
             }
             else
             {
@@ -103,4 +133,8 @@ public class PlayerEquipLoader : MonoBehaviour
         return;
     }
 
+    public WeaponCreator GetMainWeapon()
+    {
+        return mainWeaponCreator;
+    }
 }

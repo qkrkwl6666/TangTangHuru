@@ -31,6 +31,13 @@ public class WeaponCreator : MonoBehaviour
 
     public int currLevel = 0;
 
+    public bool isMainWeapon = false;
+    private float mainDamage;
+    private float mainCoolDown;
+    private float mainCriticalChance;
+    private float mainCriticalValue;
+    private WeaponData.Type mainType;
+
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
@@ -227,13 +234,32 @@ public class WeaponCreator : MonoBehaviour
             projectile.Speed = weaponDataInStage.Speed;
 
             hit = weapon.GetComponent<IAttackable>();
-            hit.Damage = weaponDataInStage.Damage + typePassive.Damage;
             hit.PierceCount = weaponDataInStage.PierceCount;
-            hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
-            hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
-            hit.AttackRate = weaponDataInStage.SingleAttackRate;
+
             hit.Impact = weaponDataInStage.Impact;
             hit.AttackableLayer = LayerMask.GetMask("Enemy");
+
+            if (isMainWeapon)
+            {
+                hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
+                hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
+                hit.AttackRate = weaponDataInStage.SingleAttackRate;
+            }
+            else
+            {
+                hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
+                hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
+                hit.AttackRate = weaponDataInStage.SingleAttackRate;
+            }
+
+            if(weaponDataInStage.WeaponType == mainType)
+            {
+                hit.Damage = (mainDamage * weaponDataInStage.Damage) + typePassive.Damage;
+            }
+            else
+            {
+                hit.Damage = ((mainDamage * 0.6f) * weaponDataInStage.Damage) + typePassive.Damage;
+            }
 
         }
     }
@@ -298,5 +324,22 @@ public class WeaponCreator : MonoBehaviour
     {
         this.typePassive = typePassive;
         this.commonPassive = commonPassive;
+    }
+    public void SetMainInfo(float dmg, float coolDown, float criChance, float criValue, Type type)
+    {
+        mainDamage = dmg;
+        mainCoolDown = coolDown;
+        mainCriticalChance = criChance;
+        mainCriticalValue = criValue;
+        mainType = type;
+
+    }
+    public float GetMainDamage()
+    {
+        return mainDamage;
+    }
+    public Type GetMainType()
+    {
+        return mainType;
     }
 }

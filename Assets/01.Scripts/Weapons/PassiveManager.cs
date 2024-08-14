@@ -43,42 +43,6 @@ public class PassiveManager : MonoBehaviour
 
     }
 
-    public void PetAdd(Item item)
-    {
-        var parent = GetComponentInParent<PlayerController>().gameObject;
-        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
-        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
-        {
-            if (obj.Status == AsyncOperationStatus.Succeeded)
-            {
-                Debug.Log("Succeed to instantiate the pet.");
-            }
-            else
-            {
-                Debug.Log("Failed to instantiate the pet.");
-            }
-        };
-    }
-
-    public void WeaponAdd(Item item)
-    {
-        var parent = GetComponentInParent<PlayerController>().gameObject;
-
-        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
-        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
-        {
-            if (obj.Status == AsyncOperationStatus.Succeeded)
-            {
-                GameObject mainWeapon = obj.Result;
-                currWeaponCreators.Add(mainWeapon.GetComponent<WeaponCreator>());
-            }
-            else
-            {
-                Debug.LogError("Failed to instantiate the weapon.");
-            }
-        };
-    }
-
     public void PassiveAdd(PassiveData selected)
     {
         var seletedPassive = selected;
