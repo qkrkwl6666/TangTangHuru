@@ -38,6 +38,9 @@ public class ItemData
     public float TierUp_Exp { get; set; }
     public float TierUp_NeedExp { get; set; }
 
+    //방어구 세트 정보
+    public int SetType { get; set; }
+
 
     public ItemData DeepCopy()
     {
@@ -60,6 +63,7 @@ public class ItemData
         newItemData.CoolDown = this.CoolDown;
         newItemData.CriticalChance = this.CriticalChance;
         newItemData.Criticaldam = this.Criticaldam;
+        newItemData.SetType = this.SetType;
 
         return newItemData;
     }
