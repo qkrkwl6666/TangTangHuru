@@ -14,6 +14,8 @@ public class GameManager : Singleton<GameManager>
 
     // 로딩 UI 
     public GameObject loadingUI;
+
+    // 인게임 세이브 아이템
     
     // 임시 용도
     public string characterSkin = Defines.body033;
@@ -23,7 +25,18 @@ public class GameManager : Singleton<GameManager>
     public MainInventory mainInventory;
 
     // 인 게임 아이템 저장 컨테이너
-    private List<IInGameItem> inGameItems = new ();
+    public List<IInGameItem> inGameItems = new ();
+
+    // 인게임 에서 메인 씬 이동후 로딩 완료 시 호출
+    public void InGameItemToMainItem()
+    {
+        foreach (var item in inGameItems) 
+        {
+            mainInventory.MainInventoryAddItem(item.ItemId.ToString());
+        }
+
+        inGameItems.Clear();
+    }
 
     public void InGameItemClear()
     {
@@ -59,6 +72,8 @@ public class GameManager : Singleton<GameManager>
 
         mainInventory.gameObject.SetActive(false);
         loadingUI.SetActive(false);
+
+        InGameItemToMainItem();
     }
 
     // Defines 에서 호출 ex) Defines.main 

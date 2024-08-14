@@ -42,11 +42,38 @@ public class M_UISlot : MonoBehaviour
         background.color = Defines.GetColor(item.itemData.Outline);
     }
 
+    public void SetItemData(ItemData itemData)
+    {
+        // 아이템 아이콘
+        Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (texture) =>
+        {
+            itemIcon.sprite = texture.Result;
+        };
+
+        // 테두리 아이콘
+        Addressables.LoadAssetAsync<Sprite>(itemData.Outline).Completed += (texture) =>
+        {
+            outline.sprite = texture.Result;
+        };
+
+        // 배경 색깔
+        background.color = Defines.GetColor(itemData.Outline);
+    }
+
     public void SetItemDataConsumable(Item item, int itemCount)
     {
         SetItemData(item, mainUI);
 
         // 소모품 개수 새서 텍스트 오브젝트 활성화 해주고 개수 넣어주기
+        textGameobject.SetActive(true);
+        itemCountText.text = itemCount.ToString();
+        isConsumable = true;
+    }
+
+    public void SetItemDataConsumable(ItemData itemData, int itemCount)
+    {
+        SetItemData(itemData);
+
         textGameobject.SetActive(true);
         itemCountText.text = itemCount.ToString();
         isConsumable = true;

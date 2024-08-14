@@ -18,7 +18,7 @@ public class Treasure : MonoBehaviour, IInGameItem
 
     public void GetItem()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void UseItem()

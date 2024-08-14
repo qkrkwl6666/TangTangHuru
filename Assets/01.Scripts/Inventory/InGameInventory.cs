@@ -53,26 +53,32 @@ public class InGameInventory : MonoBehaviour
 
     public void GameClear()
     {
-        gameUI.SetGameClearUI(Coin, Kill);
+        SaveItem();
 
-        foreach(var item in items)
+        gameUI.SetGameClearUI(Coin, Kill);
+    }
+
+    public void SaveItem()
+    {
+        foreach (var item in items)
         {
             switch (item.ItemType)
             {
                 case IItemType.ReinforcedStone:
-                    //ToDo. 메인 인벤토리에 추가되도록 변경.
-                    //GameManager.Instance.currSaveData.reinforce_Stone++;
-                    break;
                 case IItemType.EquipmentGemstone:
-                    //GameManager.Instance.currSaveData.equip_GemStone++;
+                    GameManager.Instance.AddinGameItem(item);
                     break;
             }
         }
+
+        items.Clear();
     }
 
     public void AddItem(IInGameItem inGameItem)
     {
         items.Add(inGameItem);
+
+        if (inGameItem.ItemType == IItemType.ReinforcedStone) return;
 
         foreach (Image image in images)
         {
