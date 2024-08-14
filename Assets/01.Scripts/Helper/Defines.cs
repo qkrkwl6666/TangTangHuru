@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public static class Defines
 {
@@ -286,6 +287,32 @@ public static class Defines
 
     }
 
+    public static void DotweenScaleActiveTrue(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
+
+        var seq = DOTween.Sequence();
+
+        // DOScale 의 첫 번째 파라미터는 목표 Scale 값, 두 번째는 시간입니다.
+        seq.Append(gameObject.transform.DOScale(1.1f, 0.2f));
+        seq.Append(gameObject.transform.DOScale(1f, 0.1f));
+
+        seq.Play();
+    }
+
+    public static void DotweenScaleActiveFalse(GameObject gameObject)
+    {
+        var seq = DOTween.Sequence();
+
+        seq.Append(gameObject.transform.DOScale(0.0f, 0.1f));
+
+        seq.onComplete += () =>
+        {
+            gameObject.SetActive(false);
+        };
+
+        seq.Play();
+    }
 }
 
 public enum ArmorType

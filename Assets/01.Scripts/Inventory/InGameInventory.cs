@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using DG.Tweening;
 
 
 public class InGameInventory : MonoBehaviour
@@ -82,7 +83,7 @@ public class InGameInventory : MonoBehaviour
             }
         }
 
-        if(isEffect) ItemBagEffect(items);
+        if(isEffect) ItemBagEffect(tempItems);
 
         items.Clear();
 
@@ -91,20 +92,41 @@ public class InGameInventory : MonoBehaviour
 
     public void ItemBagEffect(List<IInGameItem> items)
     {
+        Defines.DotweenScaleActiveTrue(bagTransform.gameObject);
+        //bagTransform.gameObject.SetActive(true);
+
         for (int i = 0; i < items.Count; i++) 
         {
             images[i].gameObject.SetActive(false);
             images[i].sprite = null;
 
+            int index = i; // 현재 i 값을 캡처
+
             var prefabId = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                 .GetItemData(items[i].ItemId.ToString()).Prefab_Id;
 
-            
-
-            Addressables.InstantiateAsync(prefabId).Completed += 
+            Addressables.InstantiateAsync($"{prefabId}UI", canvasTransform).Completed += 
                 (gemStone) =>
                 {
-                    //Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(gemStone.);
+                    var go = gemStone.Result;
+                    RectTransform goRect = go.GetComponent<RectTransform>();
+                    RectTransform imageRect = images[index].GetComponent<RectTransform>();
+
+                    goRect.position = imageRect.position;
+
+                    RectTransform bagRect = bagTransform;
+
+                    Vector2 bagCenter;
+
+                    bagCenter.x = bagRect.anchoredPosition.x - bagRect.rect.size.x * 0.25f;
+                    bagCenter.y = bagRect.anchoredPosition.y + bagRect.rect.size.y * 0.25f;
+
+                    go.GetComponent<RectTransform>().DOAnchorPos(bagCenter, 1f).SetEase(Ease.InOutQuad)
+                        .OnComplete(() => 
+                        {
+                            Defines.DotweenScaleActiveFalse(bagTransform.gameObject);
+                            Destroy(go);
+                        });
                 };
             
         }
