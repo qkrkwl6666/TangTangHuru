@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
 {
+    public bool raderOwner = true;
+
     private LinkedList<GameObject> followMeItems = new();
     private List<GameObject> removeItems = new();
 
@@ -159,6 +161,9 @@ public class ItemDetection : MonoBehaviour
 
     public void Radar()
     {
+        if (!raderOwner)
+            return;
+
         // ∑π¿Ã¥ı  
         if (radarTreasure == null)
         {

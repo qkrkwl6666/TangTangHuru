@@ -42,6 +42,12 @@ public class PetController : MonoBehaviour
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
+
+        var difference = Vector3.Distance(transform.position, targetPosition);
+        if(difference < 0.5f)
+        {
+            transform.position = targetPosition;
+        }
     }
 
     void HandleTargetUpdate()

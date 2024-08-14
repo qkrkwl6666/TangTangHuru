@@ -10,7 +10,7 @@ public class PlayerHealth : LivingEntity
     private bool isInvincible = false;
 
     private float armorRate = 0f;
-    private float dodgeRate = 60f;
+    private float dodgeRate = 0f;
 
     void Start()
     {

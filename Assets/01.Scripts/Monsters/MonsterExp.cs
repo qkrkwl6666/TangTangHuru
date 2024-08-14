@@ -10,7 +10,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
 
     private float playerDistanceDifference = 1.5f;
 
-    private float speed = 5f;
+    private float speed = 8f;
 
     private Transform targetTransform;
 

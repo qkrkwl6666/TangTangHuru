@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8345926056799910366}
   - component: {fileID: 2198420615908809198}
   - component: {fileID: 6947893392827860768}
-  - component: {fileID: 7294107387704184401}
+  - component: {fileID: 894420754954302301}
   m_Layer: 7
   m_Name: Pet 4
   m_TagString: Pet
@@ -139,7 +139,7 @@ MonoBehaviour:
   moveSpeed: 8
   updateInterval: 0.7
   detectionRadius: 8
---- !u!114 &7294107387704184401
+--- !u!114 &894420754954302301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -148,13 +148,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 663854907941981335}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e203bb5ef2b87647a443a342c72c41d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3514612d9faf6eb4cb4ef437b614fa5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  treasureBarPrefab: {fileID: 0}
+  checkRadius: 15
+  isEvolved: 0
 --- !u!1 &5435292795880351531
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +167,7 @@ GameObject:
   - component: {fileID: 1548652747622726605}
   - component: {fileID: 8759000852282734050}
   m_Layer: 7
-  m_Name: Canvas (1)
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -269,6 +267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e203bb5ef2b87647a443a342c72c41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raderOwner: 0
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256

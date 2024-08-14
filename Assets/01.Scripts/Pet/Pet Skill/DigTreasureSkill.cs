@@ -7,7 +7,7 @@ public class DigTreasureSkill : MonoBehaviour
     public float checkRadius = 15f;
     public bool isEvolved = false;
 
-    private float checkInterval = 3f;
+    private float checkInterval = 2.5f;
     private PetController petController;
 
     private void Start()
