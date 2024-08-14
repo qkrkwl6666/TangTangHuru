@@ -99,10 +99,12 @@ public class InGameInventory : MonoBehaviour
             var prefabId = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                 .GetItemData(items[i].ItemId.ToString()).Prefab_Id;
 
+            
+
             Addressables.InstantiateAsync(prefabId).Completed += 
                 (gemStone) =>
                 {
-
+                    //Vector2 ViewportPosition = Camera.main.WorldToViewportPoint(gemStone.);
                 };
             
         }

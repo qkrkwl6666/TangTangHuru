@@ -391,7 +391,6 @@ public class MainInventory : MonoBehaviour
             case 14: // Orb
             case 15: // Orb
             case 16: // Pet
-            case 16: //Pet
                 {
                     M_Item m_item = new M_Item();
 

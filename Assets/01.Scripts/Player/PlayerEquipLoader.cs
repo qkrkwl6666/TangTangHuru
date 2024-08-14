@@ -51,7 +51,7 @@ public class PlayerEquipLoader : MonoBehaviour
             mainCriticalChance = mainWeapon.itemData.CriticalChance;
             mainCriticalValue = mainWeapon.itemData.Criticaldam;
             MainWeaponAdd(mainWeapon);
-            var subWeaponList = mainWeapon.GetSubWeapon();
+            var subWeaponList = mainWeapon.subWeapons;
         }
         else
         {
