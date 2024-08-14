@@ -235,31 +235,28 @@ public class WeaponCreator : MonoBehaviour
 
             hit = weapon.GetComponent<IAttackable>();
             hit.PierceCount = weaponDataInStage.PierceCount;
-
+            hit.AttackRate = weaponDataInStage.SingleAttackRate;
             hit.Impact = weaponDataInStage.Impact;
             hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
+            //장비 능력치 반영
             if (isMainWeapon)
             {
-                hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
-                hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
-                hit.AttackRate = weaponDataInStage.SingleAttackRate;
+                weaponDataInStage.CriticalChance = mainCriticalChance;
+                weaponDataInStage.CriticalValue = mainCriticalValue;
+                weaponDataInStage.CoolDown = mainCoolDown;
             }
-            else
-            {
-                hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
-                hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
-                hit.AttackRate = weaponDataInStage.SingleAttackRate;
-            }
+            hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
+            hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
 
-            if(weaponDataInStage.WeaponType == mainType)
+            if (weaponDataInStage.WeaponType == mainType)
             {
                 hit.Damage = (mainDamage * weaponDataInStage.Damage) + typePassive.Damage;
             }
             else
             {
                 hit.Damage = ((mainDamage * 0.6f) * weaponDataInStage.Damage) + typePassive.Damage;
-            }
+            } 
 
         }
     }
@@ -337,6 +334,18 @@ public class WeaponCreator : MonoBehaviour
     public float GetMainDamage()
     {
         return mainDamage;
+    }
+    public float GetMainCoolDown()
+    {
+        return mainCoolDown;
+    }
+    public float GetMainCriChance()
+    {
+        return mainCriticalChance;
+    }
+    public float GetMainCriValue()
+    {
+        return mainCriticalValue;
     }
     public Type GetMainType()
     {

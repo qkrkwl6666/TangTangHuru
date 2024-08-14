@@ -22,7 +22,7 @@ public class TreasureSpawnManager : MonoBehaviour
     private float wallSpace = 1f;
     private float currentSize = 0;
 
-    private void Awake()
+    private void Start()
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
             .GetTreasure((GameManager.Instance.CurrentStage).ToString()); // stage name
@@ -82,7 +82,19 @@ public class TreasureSpawnManager : MonoBehaviour
 
     public void SetTreasure(TreasureData treasureData)
     {
+        var playerEquip = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipLoader>();
+        int armorSet = playerEquip.GetArmorSetType();
+
         var stones = treasureData.GetEqupStones();
+
+        //세트효과 삽입(스톤 확률 조정)
+        if(armorSet == 1)
+        {
+            for(int i = 1; i < stones.Count; i++)
+            {
+                if (stones[i].id == -1) break;
+            }
+        }
 
         float totalProbability = 0f;
         float currentProbability = 0f;
@@ -90,7 +102,6 @@ public class TreasureSpawnManager : MonoBehaviour
         foreach (var stone in stones)
         {
             if (stone.id == -1) break;
-
             totalProbability += stone.prob;
         }
 
@@ -125,6 +136,12 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     // 강화석 생성
                     int rand = Random.Range(treasureData.Min_Re_Stone, treasureData.Max_Re_Stone + 1);
+
+                    //세트효과 삽입
+                    if (armorSet == 4)
+                    {
+                        rand += 2;
+                    }
 
                     for (int i = 0; i < rand; i++)
                     {

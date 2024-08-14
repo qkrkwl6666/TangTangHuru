@@ -171,8 +171,8 @@ public class ItemDetection : MonoBehaviour
             return;
         }
 
-        var distacne = Vector2.Distance(radarTreasure.transform.position, transform.position);
-        float disValue = Mathf.InverseLerp(treasureDistance, 1f, distacne);
+        var distance = Vector2.Distance(radarTreasure.transform.position, transform.position);
+        float disValue = Mathf.InverseLerp(treasureDistance, 1f, distance);
 
         gameUI.UpdateRadarBar(disValue);
     }

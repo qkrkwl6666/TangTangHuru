@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using static WeaponData;
 
 public class PlayerEquipLoader : MonoBehaviour
 {
@@ -13,8 +14,10 @@ public class PlayerEquipLoader : MonoBehaviour
     private float mainCoolDown;
     private float mainCriticalChance;
     private float mainCriticalValue;
+    private WeaponData.Type mainType;
+    private int setType = 0;
 
-    private void Start()
+    private void Awake()
     {
         myPassiveManager = GetComponentInChildren<PassiveManager>();
         playerHealth = GetComponent<PlayerHealth>();
@@ -24,6 +27,12 @@ public class PlayerEquipLoader : MonoBehaviour
             var equipHp = GameManager.Instance.playerEquipment[PlayerEquipment.Armor].Item1;
             var equipDef = GameManager.Instance.playerEquipment[PlayerEquipment.Helmet].Item1;
             var equipDodge = GameManager.Instance.playerEquipment[PlayerEquipment.Shoes].Item1;
+
+            var armorSetType = equipHp.itemData.SetType;
+            if(armorSetType == equipDef.itemData.SetType && armorSetType == equipDodge.itemData.SetType)
+            {
+                setType = armorSetType; //세트효과 적용
+            }
 
             playerHealth.SetInfo(equipHp.itemData.Hp, equipDef.itemData.Defense, equipDodge.itemData.Dodge);
         }
@@ -59,7 +68,7 @@ public class PlayerEquipLoader : MonoBehaviour
             {
                 GameObject mainWeapon = obj.Result;
                 var weaponCreator = mainWeapon.GetComponent<WeaponCreator>();
-                var mainType = weaponCreator.weaponDataRef.WeaponType;
+                mainType = weaponCreator.weaponDataRef.WeaponType;
 
                 weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
                 myPassiveManager.currWeaponCreators.Add(weaponCreator);
@@ -81,6 +90,8 @@ public class PlayerEquipLoader : MonoBehaviour
             {
                 GameObject weapon = obj.Result;
                 var weaponCreator = weapon.GetComponent<WeaponCreator>();
+
+                weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
                 myPassiveManager.currWeaponCreators.Add(weaponCreator);
                 mainWeaponCreator = weaponCreator;
             }
@@ -136,5 +147,10 @@ public class PlayerEquipLoader : MonoBehaviour
     public WeaponCreator GetMainWeapon()
     {
         return mainWeaponCreator;
+    }
+
+    public int GetArmorSetType()
+    {
+        return setType;
     }
 }

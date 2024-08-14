@@ -151,7 +151,9 @@ public class LevelUpUI : MonoBehaviour
     {
         var skill = Instantiate(creator);
         skill.transform.SetParent(player.transform, false);
-        //skill.SetMainInfo(mainWeapon.GetMainDamage(), mainWeapon.GetMainType());
+        skill.SetMainInfo(
+            mainWeapon.GetMainDamage(),mainWeapon.GetMainCoolDown(), 
+            mainWeapon.GetMainCriChance(), mainWeapon.GetMainCriValue(), mainWeapon.GetMainType());
         passiveManager.currWeaponCreators.Add(skill);
         passiveManager.weaponCreators.Remove(creator);
     }
