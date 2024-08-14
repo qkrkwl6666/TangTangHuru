@@ -20816,10 +20816,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0405099a435188f409911cc97784d5f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainInventory: {fileID: 0}
   weaponTitleText: {fileID: 4723822868662051482}
   currentTierUpSlider: {fileID: 2665712151361888042}
+  subTierUpSlider: {fileID: 0}
   currentTierUpText: {fileID: 2665712151361888043}
   content: {fileID: 2069899222}
+  tierUpButton: {fileID: 0}
+  cencelButton: {fileID: 0}
+  equipPopUp: {fileID: 0}
+  appraisalPopUp: {fileID: 0}
 --- !u!114 &5820157085358049589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23674,6 +23680,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2c105fdec449f4ba66b0a85217b769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  subWeaponImages: []
   equipmentTextUI:
   - {fileID: 983504726}
   - {fileID: 47744690}
