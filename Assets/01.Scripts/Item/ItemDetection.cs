@@ -1,3 +1,7 @@
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +10,7 @@ public class ItemDetection : MonoBehaviour
     public bool raderOwner = true;
 
     private LinkedList<GameObject> followMeItems = new();
+    private LinkedList<Tweener> followTweener = new();
     private List<GameObject> removeItems = new();
 
     public LayerMask itemLayerMask;
@@ -58,45 +63,30 @@ public class ItemDetection : MonoBehaviour
         prevTreasureDistance = int.MaxValue;
         targetTreasure = null;
 
-        if (time >= duration)
-        {
-            Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
+        ItemDotween();
 
-            foreach (var item in hitCollider)
-            {
-                if (item == null) break;
+        //foreach (var item in followMeItems)
+        //{
+        //    var dir = (transform.position - item.transform.position).normalized;
+        //    item.transform.Translate(dir * Time.deltaTime * followSpeed);
 
-                if (!followMeItems.Contains(item.gameObject))
-                {
-                    followMeItems.AddLast(item.gameObject);
-                }
-
-            }
-            time = 0f;
-        }
-
-        foreach (var item in followMeItems)
-        {
-            var dir = (transform.position - item.transform.position).normalized;
-            item.transform.Translate(dir * Time.deltaTime * followSpeed);
-
-            if (Vector2.Distance(item.transform.position, transform.position) < 1f)
-            {
-                removeItems.Add(item.gameObject);
-            }
-        }
+        //    if (Vector2.Distance(item.transform.position, transform.position) < 1f)
+        //    {
+        //        removeItems.Add(item.gameObject);
+        //    }
+        //}
 
         // 아이템 흭득 
-        foreach (var item in removeItems)
-        {
-            item.GetComponent<IInGameItem>().UseItem();
-            followMeItems.Remove(item);
+        //foreach (var item in removeItems)
+        //{
+        //    item.GetComponent<IInGameItem>().UseItem();
+        //    followMeItems.Remove(item);
 
-            // Todo : 임시 아이템 비활성화
-            item.SetActive(false);
-        }
+        //    // Todo : 임시 아이템 비활성화
+        //    item.SetActive(false);
+        //}
 
-        removeItems.Clear();
+        //removeItems.Clear();
 
         for (int i = 0; i < hitCollider.Length; i++)
         {
@@ -177,6 +167,27 @@ public class ItemDetection : MonoBehaviour
         gameUI.UpdateRadarBar(disValue);
     }
 
+    public void ItemDotween()
+    {
+        if (time >= duration)
+        {
+            Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
+
+            foreach (var item in hitCollider)
+            {
+                if (item == null) break;
+
+                if (!followMeItems.Contains(item.gameObject))
+                {
+                    followMeItems.AddLast(item.gameObject);
+
+                    
+                }
+
+            }
+            time = 0f;
+        }
+    }
     // public void OnDrawGizmos()
     // {
     //     Gizmos.color = Color.red;
@@ -184,4 +195,5 @@ public class ItemDetection : MonoBehaviour
     //     Gizmos.color = Color.yellow;
     //     Gizmos.DrawWireSphere(transform.position, 20f);
     // }
+
 }

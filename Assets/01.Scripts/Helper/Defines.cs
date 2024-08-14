@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 public static class Defines
 {
@@ -313,6 +315,7 @@ public static class Defines
 
         seq.Play();
     }
+
 }
 
 public enum ArmorType
