@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class OrbCrafter : MonoBehaviour
 {
+    public OrbUpgrader orbUpgrader;
     public MainInventory inventory;
     public TextMeshProUGUI stoneCountText;
     public Button craftButton;
@@ -16,6 +17,7 @@ public class OrbCrafter : MonoBehaviour
 
     void Start()
     {
+        LoadGaige();
         foreach (var obj in gaige)
         {
             obj.color = Color.clear;
@@ -24,7 +26,7 @@ public class OrbCrafter : MonoBehaviour
         SetCount();
         craftButton.onClick.AddListener(Craft);
 
-        for(int i = 0; i < gaigeNum; i++)
+        for (int i = 0; i < gaigeNum; i++)
         {
             gaige[i].color = Color.yellow;
         }
@@ -41,8 +43,7 @@ public class OrbCrafter : MonoBehaviour
         if (!CheckCraftable())
             return;
 
-        //Todo. 인벤토리 RemoveItem 완료시 추가예정.
-
+        inventory.RemoveItem(ItemType.ReinforcedStone, 0, 3);
         if (Random.Range(0, 100) < 56)
         {
             CraftSuccess();
@@ -51,6 +52,8 @@ public class OrbCrafter : MonoBehaviour
         {
             CraftFail();
         }
+        inventory.RefreshItemSlotUI();
+        orbUpgrader.popUp_OrbPanel.ResetOn();
         SetCount();
     }
 
@@ -77,13 +80,14 @@ public class OrbCrafter : MonoBehaviour
         else
         {
             gaigeNum = 0;
-            foreach(var obj in gaige)
+            foreach (var obj in gaige)
             {
                 obj.color = Color.clear;
             }
             inventory.MainInventoryAddItem(orbIdList[rndIndex].ToString());
         }
         Debug.Log("제작 성공!");
+        SaveGaige();
     }
 
     private void CraftFail()
@@ -91,4 +95,12 @@ public class OrbCrafter : MonoBehaviour
         Debug.Log("제작 실패..");
     }
 
+    public void SaveGaige()
+    {
+        SaveManager.SaveDataV1.gaige = gaigeNum;
+    }
+    public void LoadGaige()
+    {
+        gaigeNum = SaveManager.SaveDataV1.gaige;
+    }
 }

@@ -11,10 +11,10 @@ public class PassiveManager : MonoBehaviour
     public List<PassiveData> passiveDataList;
     public List<PassiveData> inGamePassiveList = new(); //데이터 리스트 카피
     public List<PassiveData> currPassiveList = new();
+    public List<PassiveData> equipmentPassiveList = new();
 
     public PassiveData emptyPassiveData;
 
-    private WeaponCreator currMainWeapon;
     private WeaponCreator[] currSubWeapon;
     private PassiveData totalPowerPassive;
     private PassiveData totalSpeedPassive;
@@ -24,8 +24,6 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
-        WeaponAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1);
-
         var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
 
         foreach( var sub in subs)
@@ -43,48 +41,6 @@ public class PassiveManager : MonoBehaviour
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
 
-        
-        if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Pet))
-        {
-            PetAdd(GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1);
-        }
-
-    }
-
-    public void PetAdd(Item item)
-    {
-        var parent = GetComponentInParent<PlayerController>().gameObject;
-        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
-        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
-        {
-            if (obj.Status == AsyncOperationStatus.Succeeded)
-            {
-                Debug.Log("Succeed to instantiate the pet.");
-            }
-            else
-            {
-                Debug.Log("Failed to instantiate the pet.");
-            }
-        };
-    }
-
-    public void WeaponAdd(Item item)
-    {
-        var parent = GetComponentInParent<PlayerController>().gameObject;
-
-        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, parent.transform);
-        handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
-        {
-            if (obj.Status == AsyncOperationStatus.Succeeded)
-            {
-                GameObject mainWeapon = obj.Result;
-                currWeaponCreators.Add(mainWeapon.GetComponent<WeaponCreator>());
-            }
-            else
-            {
-                Debug.LogError("Failed to instantiate the weapon.");
-            }
-        };
     }
 
     public void PassiveAdd(PassiveData selected)

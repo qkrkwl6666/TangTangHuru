@@ -391,19 +391,19 @@ public class MainInventory : MonoBehaviour
             case 14: // Orb
             case 15: // Orb
             case 16: // Pet
+            case 16: //Pet
                 {
-                    M_Weapon m_weaponItem = new M_Weapon();
+                    M_Item m_item = new M_Item();
 
-                    if(!isInstanceId)
+                    if (!isInstanceId)
                     {
-                        instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
                     }
 
-                    m_weaponItem.SetItemData(itemData, instanceId);
+                    m_item.SetItemData(itemData, instanceId);
 
-                    return m_weaponItem;
+                    return m_item;
                 }
-
             case 7: // ≈ı±∏
             case 8: // ∞©ø 
             case 9: // Ω≈πﬂ
@@ -1180,6 +1180,10 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("710002", 0);
         MainInventoryAddItem("710003", 0);
         MainInventoryAddItem("710004", 0);
+
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
 
         MainInventoryAddItem("610001", 0);
         MainInventoryAddItem("610001", 0);

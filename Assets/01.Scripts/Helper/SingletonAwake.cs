@@ -11,6 +11,11 @@ public class SingletonAwake : MonoBehaviour
         var dtm = DataTableManager.Instance;
 
         Application.targetFrameRate = 200;
+
+        DataTableManager.Instance.OnAllTableLoaded += () =>
+        {
+            var achieveMgr = AchievementManager.Instance;
+        };
     }
 
 

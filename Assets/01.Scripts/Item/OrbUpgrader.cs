@@ -44,17 +44,13 @@ public class OrbUpgrader : MonoBehaviour
         {
             PopUpOrbPanel(currSlot);
         }
-
     }
-
 
     private void PopUpOrbPanel(ItemSlotUI slot)
     {
         popUp_OrbPanel.currSlot = slot;
         popUp_OrbPanel.gameObject.SetActive(true);
     }
-
-
 
     public void SelectOrbInPanel(int index)
     {
@@ -71,7 +67,7 @@ public class OrbUpgrader : MonoBehaviour
         if (!CheckUpgradable())
             return;
 
-        //ToDo. RemoveItem 메소드 완성되면 재료소비 추가예정
+        inventory.RemoveOrbItem((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier, 3);
         inventory.MainInventoryAddItem((orbData.Item_Id + 1).ToString());
 
         popUp_OrbPanel.ResetOn();
@@ -80,8 +76,8 @@ public class OrbUpgrader : MonoBehaviour
         {
             upgradeSlots[i].ClearInfo();
         }
-
         orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData((firstItemId + 1).ToString());
+        inventory.RefreshItemSlotUI();
         SetNoticePopUp();
     }
 
@@ -110,8 +106,6 @@ public class OrbUpgrader : MonoBehaviour
         {
             Debug.Log("이미 최고티어 오브이다.");
         }
-
-
         return true;
     }
 

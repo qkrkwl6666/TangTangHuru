@@ -24,6 +24,11 @@ public class LevelUpUI : MonoBehaviour
             player = GameObject.FindGameObjectWithTag("Player");
             passiveManager = player.GetComponentInChildren<PassiveManager>();
         }
+        if(mainWeapon == null)
+        {
+            mainWeapon = player.GetComponent<PlayerEquipLoader>().GetMainWeapon();
+        }
+
         stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
         SetAllOptions();
         SetSelectables();
@@ -146,6 +151,9 @@ public class LevelUpUI : MonoBehaviour
     {
         var skill = Instantiate(creator);
         skill.transform.SetParent(player.transform, false);
+        skill.SetMainInfo(
+            mainWeapon.GetMainDamage(),mainWeapon.GetMainCoolDown(), 
+            mainWeapon.GetMainCriChance(), mainWeapon.GetMainCriValue(), mainWeapon.GetMainType());
         passiveManager.currWeaponCreators.Add(skill);
         passiveManager.weaponCreators.Remove(creator);
     }

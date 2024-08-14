@@ -16,7 +16,7 @@ public class AchieveEntryUI : MonoBehaviour
 
     public void SetDescription(int index)
     {
-        indexUI.text = index.ToString();
+        indexUI.text = (index + 1).ToString();
         descUI.text = AchievementManager.Instance.achievements[index].description;
         SetRewardState(index);
     }
