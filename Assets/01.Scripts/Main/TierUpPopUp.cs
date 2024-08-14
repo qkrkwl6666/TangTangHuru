@@ -3,8 +3,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
-using System;
-using Unity.VisualScripting;
 
 public class TierUpPopUp : MonoBehaviour
 {
