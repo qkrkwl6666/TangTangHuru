@@ -170,4 +170,5 @@ public enum UIObject
     StageSelect = 1,
     Inventory = 2,
     EquipmentAppraisal = 3,
+    Carft = 4,
 }

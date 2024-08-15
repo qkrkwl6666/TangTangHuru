@@ -42,11 +42,6 @@ public class TreasureSpawnManager : MonoBehaviour
         SpawnWell();
     }
 
-    private void OnDestroy()
-    {
-        inventory.AllCoreCollected -= MoveWellPosition;
-    }
-
     public Vector2 SetPosition(Treasure tr = null)
     {
         bool isSame = false;
