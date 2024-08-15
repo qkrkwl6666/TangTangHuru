@@ -171,4 +171,5 @@ public enum UIObject
     Inventory = 2,
     EquipmentAppraisal = 3,
     Carft = 4,
+    Shop = 5,
 }
