@@ -121,7 +121,12 @@ public class TreasureSpawnManager : MonoBehaviour
                         (DataTableManager.item).GetItemData(stone.id.ToString());
 
                     var treasure = treasureGo.AddComponent<Treasure>();
-                    // 장비 원석 , 강화석 , 자석
+
+                    // 자석
+                    Addressables.InstantiateAsync(Defines.magnet).Completed += (x) => 
+                    {
+                        treasure.AddItem(x.Result);
+                    };
 
                     // 장비 원석 생성
                     Addressables.InstantiateAsync(itemData.Prefab_Id).Completed +=
@@ -162,6 +167,11 @@ public class TreasureSpawnManager : MonoBehaviour
 
         };
 
+    }
+
+    private void TreasureSpawnManager_Completed(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<GameObject> obj)
+    {
+        throw new System.NotImplementedException();
     }
 
     // 맵 울타리 스폰

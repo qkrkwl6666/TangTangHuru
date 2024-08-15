@@ -93,7 +93,6 @@ public class InGameInventory : MonoBehaviour
     public void ItemBagEffect(List<IInGameItem> items)
     {
         Defines.DotweenScaleActiveTrue(bagTransform.gameObject);
-        //bagTransform.gameObject.SetActive(true);
 
         for (int i = 0; i < items.Count; i++) 
         {
@@ -141,6 +140,8 @@ public class InGameInventory : MonoBehaviour
         foreach (Image image in images)
         {
             if (image.sprite != null) continue;
+
+            image.gameObject.SetActive(true);
 
             Addressables.LoadAssetAsync<Sprite>(inGameItem.TextureId).Completed += (x) =>
             {
