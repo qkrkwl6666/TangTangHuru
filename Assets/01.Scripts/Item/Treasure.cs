@@ -27,7 +27,7 @@ public class Treasure : MonoBehaviour, IInGameItem
         foreach (var item in inGameItems)
         {
             var dir = Random.insideUnitCircle;
-            dir = dir.normalized * 10f;
+            dir = dir.normalized * 3f;
             item.transform.position = (Vector2)transform.position + dir;
         }
 
