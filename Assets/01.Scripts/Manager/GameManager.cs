@@ -83,8 +83,9 @@ public class GameManager : Singleton<GameManager>
     {
         loadingUI.SetActive(true);
 
-        // 저장
-        mainInventory.SaveMainInventory();
+        // Todo : 메인 씬 이름 변경시 변경 필요
+        if (sceneName != "InventoryScene")
+            mainInventory.SaveMainInventory();
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
