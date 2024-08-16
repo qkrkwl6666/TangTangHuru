@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class MonsterExp : MonoBehaviour, IPlayerObserver
+public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 {
     private PlayerSubject playerSubject;
     private Transform playerTransform;
@@ -16,26 +16,10 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
 
     public IObjectPool<GameObject> pool;
 
-    private void Update()
-    {
-        if (playerSubject == null) return;
-
-        if (Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
-        {
-            targetTransform = playerTransform;
-        }
-
-        if (targetTransform == null)
-            return;
-
-        Vector2 dir = targetTransform.position - transform.position;
-        transform.Translate(dir * speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, targetTransform.position) <= 1)
-        {
-            Release();
-            return;
-        }
-    }
+    public int ItemId { get ; set ; }
+    public string Name { get ; set ; }
+    public IItemType ItemType { get ; set ; }
+    public string TextureId { get ; set ; }
 
     public void Release()
     {
@@ -68,13 +52,18 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
         playerTransform = playerSubject.GetPlayerTransform;
     }
 
-    public void Reset()
-    {
-
-    }
-
     public void SetTarget(Transform target)
     {
         targetTransform = target;
+    }
+
+    public void UseItem()
+    {
+        Release();
+    }
+
+    public void GetItem()
+    {
+        
     }
 }

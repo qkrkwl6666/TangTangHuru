@@ -13,7 +13,6 @@ public class MainInventory : MonoBehaviour
     private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new ();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
-    // Todo : 로드 시 playerEquipment 에 등록된 item은 itemslot에서 비활성화 해줘야함
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
 
     public List<Image> subWeaponImages = new ();
@@ -23,6 +22,9 @@ public class MainInventory : MonoBehaviour
     public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
 
     public List<M_UISlot> equipmentSlotUI = new ();
+
+    // 펫 정보
+    public List<GameObject> petSlotUI = new ();
 
     // 현재 생성된 UI 슬롯 아이템
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
@@ -356,6 +358,8 @@ public class MainInventory : MonoBehaviour
                 }
             }
         }
+
+        SaveManager.Instance.SaveGame(SaveManager.SaveDataV1);
     }
 
     public Item MakeItem(ItemData itemData, bool isInstanceId = false, int instanceId = 0)
@@ -892,9 +896,10 @@ public class MainInventory : MonoBehaviour
 
             case ItemType.Pet:
                 playerEquipment[PlayerEquipment.Pet] = (item, slot.ItemSlot);
-                GameManager.Instance.playerEquipment = playerEquipment;
                 break;
         }
+
+        GameManager.Instance.playerEquipment = playerEquipment;
     }
 
     public void LoadSubWeaponImage(Item item)
@@ -993,6 +998,40 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+    }
+
+    // 펫 장착 및 해제
+    public void SetEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
+    {
+        if (playerEquipment.ContainsKey(PlayerEquipment.Pet))
+        {
+            SetUnEquipPetItemUI(playerEquipment[PlayerEquipment.Pet]);
+        }
+
+        equipInfo.slotUI.SetActive(false);
+        playerEquipment[PlayerEquipment.Pet] = equipInfo;
+        GameManager.Instance.playerEquipment = playerEquipment;
+
+        switch (equipInfo.item.ItemId)
+        {
+            case 710001:
+                petSlotUI[0].SetActive(true);
+                break;
+            case 710002:
+                petSlotUI[1].SetActive(true);
+                break;
+            case 710003:
+                petSlotUI[2].SetActive(true);
+                break;
+            case 710004:
+                petSlotUI[3].SetActive(true);
+                break;
+        }
+    }
+
+    public void SetUnEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
+    {
+
     }
 
     public bool CheckFilterType(Item item)

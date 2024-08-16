@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 public static class Defines
 {
     public static readonly string exp = "Exp";
+    public static readonly string magnet = "Magnet";
     public static readonly string normalBullet = "NormalBullet";
     public static readonly string snailBullet = "SnailBullet";
     public static readonly string treasure = "Treasure";
@@ -284,6 +288,33 @@ public static class Defines
 
         return -1;
 
+    }
+
+    public static void DotweenScaleActiveTrue(GameObject gameObject)
+    {
+        gameObject.SetActive(true);
+
+        var seq = DOTween.Sequence();
+
+        // DOScale 의 첫 번째 파라미터는 목표 Scale 값, 두 번째는 시간입니다.
+        seq.Append(gameObject.transform.DOScale(1.1f, 0.2f));
+        seq.Append(gameObject.transform.DOScale(1f, 0.1f));
+
+        seq.Play();
+    }
+
+    public static void DotweenScaleActiveFalse(GameObject gameObject)
+    {
+        var seq = DOTween.Sequence();
+
+        seq.Append(gameObject.transform.DOScale(0.0f, 0.1f));
+
+        seq.onComplete += () =>
+        {
+            gameObject.SetActive(false);
+        };
+
+        seq.Play();
     }
 
 }

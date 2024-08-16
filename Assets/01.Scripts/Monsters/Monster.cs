@@ -79,6 +79,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
+
         dead = true;
 
         PoolRelease();
