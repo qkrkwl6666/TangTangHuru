@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    private Monster monster;
+    private LivingEntity monster;
 
     private void Awake()
     {
-        monster = GetComponent<Monster>();
+        monster = GetComponent<LivingEntity>();
         monster.OnDamaged += ShowHeadUpDamage;
     }
 
