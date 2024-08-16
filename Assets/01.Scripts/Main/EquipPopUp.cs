@@ -189,9 +189,9 @@ public class EquipPopUp : MonoBehaviour
         {
             reinforcedStone = list.Count;
         }
-
-        needReinforcedStone.text = $"{Defines.defaultUpgradeReinforcedStone} /";
-        totalReinforcedStone.text = $" {reinforcedStone}";
+        //reinforcedStone
+        needReinforcedStone.text = $"{reinforcedStone} /";
+        totalReinforcedStone.text = $" {Defines.defaultUpgradeReinforcedStone}";
     }
 
     public void OnUpgradeButton()

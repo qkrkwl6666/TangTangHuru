@@ -47,8 +47,8 @@ public class MainInventory : MonoBehaviour
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI diamondText;
 
-    public int Gold {  get; private set; }
-    public int Diamond {  get; private set; }
+    public int Gold {  get; set; }
+    public int Diamond {  get; set; }
 
     #region 정렬
     public Button allFilterButton;    // 전체
@@ -232,6 +232,9 @@ public class MainInventory : MonoBehaviour
         else
         {
             Debug.Log("세이브 이미 로드 완료됨");
+
+            Gold = SaveManager.SaveDataV1.Gold;
+
             StartCoroutine(SceneLoadMainInventory());
         }
 
@@ -739,6 +742,9 @@ public class MainInventory : MonoBehaviour
     public IEnumerator SceneLoadMainInventory()
     {
         var items = SaveManager.SaveDataV1.allItem;
+
+        Gold = SaveManager.SaveDataV1.Gold;
+        Diamond = SaveManager.SaveDataV1.Diamond;
 
         goldText.text = SaveManager.SaveDataV1.Gold.ToString();
         diamondText.text= SaveManager.SaveDataV1.Diamond.ToString();
