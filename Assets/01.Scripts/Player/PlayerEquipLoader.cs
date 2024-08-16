@@ -27,8 +27,6 @@ public class PlayerEquipLoader : MonoBehaviour
         myPassiveManager = GetComponentInChildren<PassiveManager>();
         playerHealth = GetComponent<PlayerHealth>();
 
-
-
         if (myPassiveManager != null)
         {
             Item equipHp = null;
@@ -103,12 +101,16 @@ public class PlayerEquipLoader : MonoBehaviour
             if (obj.Status == AsyncOperationStatus.Succeeded)
             {
                 GameObject mainWeapon = obj.Result;
-                var weaponCreator = mainWeapon.GetComponent<WeaponCreator>();
-                mainType = weaponCreator.weaponDataRef.WeaponType;
+                var weaponCreators = mainWeapon.GetComponents<WeaponCreator>();
+                mainType = weaponCreators[0].weaponDataRef.WeaponType;
 
-                weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
-                myPassiveManager.currWeaponCreators.Add(weaponCreator);
-                mainWeaponCreator = weaponCreator;
+                foreach (var weaponCreator in weaponCreators)
+                {
+                    weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
+                }
+                weaponCreators[0].isMainWeapon = true;
+                myPassiveManager.currWeaponCreators.Add(weaponCreators[0]);
+                mainWeaponCreator = weaponCreators[0];
             }
             else
             {

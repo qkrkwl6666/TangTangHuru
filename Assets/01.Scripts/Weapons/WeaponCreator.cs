@@ -66,6 +66,15 @@ public class WeaponCreator : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
 
+        if (isMainWeapon)
+        {
+            weaponDataInStage.CriticalChance = mainCriticalChance;
+            weaponDataInStage.CriticalValue = mainCriticalValue;
+            weaponDataInStage.CoolDown = mainCoolDown;
+        }
+
+        SetWeaponData();
+
         while (gameObject.activeSelf)
         {
             var index = 0;
@@ -78,7 +87,7 @@ public class WeaponCreator : MonoBehaviour
                     aimer.TotalCount = weaponDataInStage.BurstCount;
                     aimer.Index = index;
 
-                    SetWeaponData();
+                    //SetWeaponData();
 
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
@@ -239,13 +248,6 @@ public class WeaponCreator : MonoBehaviour
             hit.Impact = weaponDataInStage.Impact;
             hit.AttackableLayer = LayerMask.GetMask("Enemy");
 
-            //장비 능력치 반영
-            if (isMainWeapon)
-            {
-                weaponDataInStage.CriticalChance = mainCriticalChance;
-                weaponDataInStage.CriticalValue = mainCriticalValue;
-                weaponDataInStage.CoolDown = mainCoolDown;
-            }
             hit.CriticalChance = weaponDataInStage.CriticalChance + commonPassive.CriticalChance;
             hit.CriticalValue = weaponDataInStage.CriticalValue + commonPassive.CriticalValue;
 
