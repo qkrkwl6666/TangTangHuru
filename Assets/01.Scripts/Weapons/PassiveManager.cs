@@ -24,15 +24,6 @@ public class PassiveManager : MonoBehaviour
 
     void Start()
     {
-        var subs = GameObject.FindGameObjectsWithTag("WeaponCreator");
-
-        foreach( var sub in subs)
-        {
-            currWeaponCreators.Add(sub.GetComponent<WeaponCreator>());
-            //To-Do. 아직 여기서 제거가 안됨. 
-            weaponCreators.Remove(sub.GetComponent<WeaponCreator>()); 
-        }
-
         for (int i = 0; i < passiveDataList.Count; i++)
         {
             inGamePassiveList.Add(Instantiate(passiveDataList[i]));

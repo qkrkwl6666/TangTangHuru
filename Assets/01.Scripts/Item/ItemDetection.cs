@@ -93,6 +93,9 @@ public class ItemDetection : MonoBehaviour
 
         foreach (var treasure in treasureList)
         {
+            if (treasure == null) 
+                continue;
+
             var distance = Vector2.Distance(treasure.transform.position, transform.position);
 
             if (distance <= treasureDistance && distance <= prevTreasureDistance)
@@ -114,7 +117,10 @@ public class ItemDetection : MonoBehaviour
             }
         }
 
-        Radar();
+        if (raderOwner)
+        {
+            Radar();
+        }
 
         if (!opening)
         {
@@ -134,16 +140,14 @@ public class ItemDetection : MonoBehaviour
         if (treasureTime >= treasureDuration) 
         {
             OpenTreasure();
+            Radar();
         }
     }
 
     public void Radar()
     {
-        if (!raderOwner)
-            return;
-
         // ∑π¿Ã¥ı  
-        if (radarTreasure == null)
+        if (radarTreasure == null || !radarTreasure.gameObject.activeSelf)
         {
             gameUI.UpdateRadarBar(0f);
             return;

@@ -17,21 +17,21 @@ public class PickUpExp : MonoBehaviour
             checkInterval = 20f;
         }
 
-        //InvokeRepeating(nameof(CheckNearbyObjects), 0f, checkInterval);
+        InvokeRepeating(nameof(CheckNearbyObjects), 0f, checkInterval);
     }
 
-    //private void CheckNearbyObjects()
-    //{
-    //    Collider[] hitColliders = Physics.OverlapSphere(transform.position, checkRadius);
+    private void CheckNearbyObjects()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, checkRadius);
 
-    //    foreach (var hitCollider in hitColliders)
-    //    {
-    //        MonsterExp monsterExp = hitCollider.GetComponent<MonsterExp>();
+        foreach (var hitCollider in hitColliders)
+        {
+            MonsterExp monsterExp = hitCollider.GetComponent<MonsterExp>();
 
-    //        if (monsterExp != null)
-    //        {
-    //            monsterExp.SetTarget(transform);
-    //        }
-    //    }
-    //}
+            if (monsterExp != null)
+            {
+                monsterExp.SetTarget(transform);
+            }
+        }
+    }
 }
