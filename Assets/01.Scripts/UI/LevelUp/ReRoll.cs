@@ -8,19 +8,18 @@ public class ReRoll : MonoBehaviour
 
     void Start()
     {
-        GameObject pet = GameObject.FindGameObjectWithTag("Pet");
-        if (pet == null)
+        if (!GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Pet))
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        if (GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1.ItemId != 710002)
         {
             gameObject.SetActive(false);
             return;
         }
 
-        var reSkill = pet.GetComponent<ReRollSkill>();
-        if(reSkill == null)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
+        var reSkill = GameObject.FindGameObjectWithTag("Pet").GetComponent<ReRollSkill>();
         countMax = reSkill.ReRollCountMax;
 
         GetComponent<Button>().onClick.AddListener(AddReRollCount);

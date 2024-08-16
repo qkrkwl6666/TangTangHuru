@@ -29,7 +29,7 @@ public class ItemDetection : MonoBehaviour
     private InGameUI gameUI;
 
     public TreasureBar treasureBarPrefab;
-    private GameObject treasureBar;
+    private TreasureBar treasureBar;
 
     // 보물 상자
     private float targetDistance = 1f; // 보물 아이템 거리
@@ -45,26 +45,38 @@ public class ItemDetection : MonoBehaviour
     private float prevTreasureDistance = int.MaxValue;
     private Treasure radarTreasure = null;
 
-    private bool isMagnet = false;
+    // 세트효과 관련
+    private PlayerEquipLoader equipLoader;
+    private TreasureSpawnManager treasureManager;
 
+    private bool isMagnet = false;
     Vector3 endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
 
     private void Awake()
     {
         hitCollider = new Collider[maxCollider];
 
-        treasureList = GameObject.FindWithTag("TreasureSpawnManager")
-            .GetComponent<TreasureSpawnManager>().treasures;
+        treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
+        treasureList = treasureManager.treasures;
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
-        var tBar = Instantiate(treasureBarPrefab);
-        treasureBar = tBar.gameObject;
-        treasureBar.transform.SetParent(gameObject.transform, false);
+        treasureBar = Instantiate(treasureBarPrefab);
+        treasureBar.gameObject.transform.SetParent(gameObject.transform, false);
+    }
+
+    private void Start()
+    {
+        equipLoader = GetComponentInParent<PlayerEquipLoader>();
+        if (equipLoader == null)
+            return;
+        if (equipLoader.GetArmorSetType() == 7)
+        {
+            treasureDistance *= 1.3f;
+        }
     }
 
     public void Update()
     {
-        var bar = treasureBar.GetComponent<TreasureBar>();
         time += Time.deltaTime;
         prevTreasureDistance = int.MaxValue;
         targetTreasure = null;
@@ -92,7 +104,7 @@ public class ItemDetection : MonoBehaviour
             if (distance <= targetDistance)
             {
                 opening = true;
-                bar.SetActiveTreasureBar(true);
+                treasureBar.SetActiveTreasureBar(true);
                 targetTreasure = treasure;
                 break;
             }
@@ -106,8 +118,8 @@ public class ItemDetection : MonoBehaviour
 
         if (!opening)
         {
-            bar.SetActiveTreasureBar(false);
-            bar.UpdateTreasureBar(0f);
+            treasureBar.SetActiveTreasureBar(false);
+            treasureBar.UpdateTreasureBar(0f);
             treasureTime = 0f;
             return;
         }
@@ -116,20 +128,13 @@ public class ItemDetection : MonoBehaviour
 
         float value = Mathf.InverseLerp(0f, treasureDuration, treasureTime);
         //treasureBar.value = value;
-        bar.UpdateTreasureBar(value);
+        treasureBar.UpdateTreasureBar(value);
 
-        if (treasureTime >= treasureDuration)
+        //보물상자 열림
+        if (treasureTime >= treasureDuration) 
         {
-            bar.SetActiveTreasureBar(false);
-            bar.UpdateTreasureBar(0f);
-            treasureTime = 0f;
-            opening = false;
-            targetTreasure.UseItem();
-            treasureList.Remove(targetTreasure);
-            targetTreasure = null;
-            radarTreasure = null;
+            OpenTreasure();
         }
-
     }
 
     public void Radar()
@@ -150,6 +155,31 @@ public class ItemDetection : MonoBehaviour
         gameUI.UpdateRadarBar(disValue);
     }
 
+    public void OpenTreasure()
+    {
+        treasureBar.SetActiveTreasureBar(false);
+        treasureBar.UpdateTreasureBar(0f);
+        treasureTime = 0f;
+        opening = false;
+        targetTreasure.UseItem();
+        treasureList.Remove(targetTreasure);
+        targetTreasure = null;
+        radarTreasure = null;
+
+
+        //장비 세트 효과
+        if (equipLoader.GetArmorSetType() == 6)
+        {
+            var playerExp = GetComponentInParent<PlayerExp>();
+            var earnedExp = playerExp.GetRequiredExp();
+            playerExp.EarnExp(earnedExp);
+        }
+    }
+
+    public List<Treasure> GetTreasureList()
+    {
+        return treasureList;
+    }
     public void ItemDotween()
     {
         if (time >= duration)
@@ -232,13 +262,5 @@ public class ItemDetection : MonoBehaviour
     {
         isMagnet = true;
     }
-
-    // public void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Gizmos.DrawWireSphere(transform.position, treasureDistance);
-    //     Gizmos.color = Color.yellow;
-    //     Gizmos.DrawWireSphere(transform.position, 20f);
-    // }
 
 }

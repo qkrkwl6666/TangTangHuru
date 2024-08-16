@@ -8,7 +8,7 @@ public class Well : MonoBehaviour
 
     private void Awake()
     {
-        inventory = GameObject.FindWithTag("InGameInventory").GetComponent<InGameInventory>();
+        inventory = GameObject.FindGameObjectWithTag("InGameInventory").GetComponent<InGameInventory>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

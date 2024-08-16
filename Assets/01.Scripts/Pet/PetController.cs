@@ -42,7 +42,7 @@ public class PetController : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
 
         var difference = Vector3.Distance(transform.position, targetPosition);
-        if(difference < 0.5f)
+        if(difference < 0.3f)
         {
             transform.position = targetPosition;
         }

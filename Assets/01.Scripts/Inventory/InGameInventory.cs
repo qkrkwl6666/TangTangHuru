@@ -23,6 +23,21 @@ public class InGameInventory : MonoBehaviour
     // 플레이어 코인 수
     public int Coin { get; private set; } = 0;
 
+    private int coreCount;
+    public int CoreCount
+    {
+        get => coreCount;
+        set
+        {
+            coreCount = value;
+            if (coreCount == 3)
+            {
+                AllCoreCollected?.Invoke(); // CoreCount가 3이 되면 이벤트 호출
+            }
+        }
+    }
+    public event Action AllCoreCollected;
+
     private void Awake()
     {
         foreach (Transform image in transform)
@@ -147,8 +162,8 @@ public class InGameInventory : MonoBehaviour
             {
                 image.sprite = x.Result;
                 image.color = new Color(255f, 255f, 255f, 1f);
+                AddCoreCount();
             };
-
             break;
         }
     }
@@ -164,6 +179,10 @@ public class InGameInventory : MonoBehaviour
         Kill++;
     }
 
+    private void AddCoreCount()
+    {
+        CoreCount++;
+    }
     public void RemoveItem(IInGameItem inGameItem)
     {
         items.Remove(inGameItem);

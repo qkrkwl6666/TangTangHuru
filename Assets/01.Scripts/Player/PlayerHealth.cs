@@ -1,4 +1,8 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.UI;
 
 public class PlayerHealth : LivingEntity
@@ -12,11 +16,54 @@ public class PlayerHealth : LivingEntity
     private float armorRate = 0f;
     private float dodgeRate = 0f;
 
+    private GameObject textObject;
+    private List<GameObject> textObjects = new List<GameObject>();
+
     void Start()
     {
         hpBar.maxValue = startingHealth;
         hpBar.value = startingHealth;
+
+        Addressables.LoadAssetAsync<GameObject>("DamageText").Completed += OnDamageTextLoaded;
     }
+
+    private void OnDamageTextLoaded(AsyncOperationHandle<GameObject> handle)
+    {
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            textObject = handle.Result;
+        }
+        else
+        {
+            Debug.LogError("Failed to load DamageText prefab.");
+        }
+    }
+
+    public void ShowMiss(Vector3 targetPos)
+    {
+        if (textObjects.Count < 100)
+        {
+            var newText = Instantiate(textObject, targetPos, Quaternion.identity);
+            newText.GetComponent<TextMeshPro>().text = "Miss!";
+            newText.GetComponent<TextMeshPro>().color = Color.white;
+            textObjects.Add(newText);
+            return;
+        }
+
+        foreach (var text in textObjects)
+        {
+            if (!text.activeSelf)
+            {
+                text.SetActive(true);
+                text.transform.position = targetPos;
+                text.GetComponent<TextMeshPro>().text = "Miss!";
+                return;
+            }
+        }
+    }
+
+
+
 
     // Update is called once per frame
     void Update()
@@ -46,8 +93,10 @@ public class PlayerHealth : LivingEntity
 
         if (dodgeRate >= Random.Range(0f, 100f))
         {
+            var showPos = transform.position;
+            showPos.y += 1f;
             //¹Ì½ºÈ¿°ú ¶ç¿ì±â
-            Debug.Log("ºø³ª°¨!");
+            ShowMiss(showPos);
             return;
         }
 
