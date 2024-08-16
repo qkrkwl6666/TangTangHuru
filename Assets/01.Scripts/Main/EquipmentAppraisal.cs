@@ -282,6 +282,7 @@ public class EquipmentAppraisal : MonoBehaviour
             selectGemStone[key] = 0;
         }
 
+        mainInventory.SaveInventory();
     }
 
 }

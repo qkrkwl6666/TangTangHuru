@@ -171,6 +171,7 @@ public class TierUpPopUp : MonoBehaviour
 
         equipPopUp.SetTierUpUI(item);
         mainInventory.RefreshItemSlotUI();
+        mainInventory.SaveInventory();
         gameObject.SetActive(false);
     }
 
@@ -181,12 +182,13 @@ public class TierUpPopUp : MonoBehaviour
         // 현재 아이템 삭제
         mainInventory.RemoveItem(item.InstanceId);
         
-
         var itemMain = mainInventory.MainInventoryAddItem(itemId.ToString());
 
         List<Item> newItems = new List<Item>();
         newItems.Add(itemMain);
 
         appraisalPopUp.SetPopUp(newItems);
+
+        mainInventory.SaveInventory();
     }
 }

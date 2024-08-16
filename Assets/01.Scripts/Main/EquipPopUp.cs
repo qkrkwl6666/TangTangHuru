@@ -73,8 +73,8 @@ public class EquipPopUp : MonoBehaviour
         if (item.ItemTier == ItemTier.Legendary) TierUpButton.interactable = false;
         else TierUpButton.interactable = true;
 
-        EquipButton.gameObject.SetActive(isEquip);
-        UnEquipButton.gameObject.SetActive(!isEquip);
+        EquipButton.transform.parent.gameObject.SetActive(isEquip);
+        UnEquipButton.transform.parent.gameObject.SetActive(!isEquip);
 
         UpgradeButton.interactable = !(currentItem.itemData.CurrentUpgrade >= 10);
 
@@ -124,19 +124,30 @@ public class EquipPopUp : MonoBehaviour
                 {
                     text.gameObject.SetActive(true);
                 }
-
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Helmet:
                 itemStatusText1.text = Defines.defence + item.itemData.Defense;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Armor:
                 itemStatusText1.text = Defines.hp + item.itemData.Hp;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Shose:
                 itemStatusText1.text = Defines.dodge + item.itemData.Dodge;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
+                break;
+            case (int)ItemType.Pet:
+                TierUpButton.transform.parent.gameObject.SetActive(false);
+                UpgradeButton.transform.parent.gameObject.SetActive(false);
                 break;
         }
 
@@ -216,6 +227,7 @@ public class EquipPopUp : MonoBehaviour
 
         SetItemUI(currentItem);
         mainInventory.RefreshItemSlotUI();
+        mainInventory.SaveInventory();
     }
 
     // 장비 장착 버튼

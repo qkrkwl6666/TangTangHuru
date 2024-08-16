@@ -74,6 +74,8 @@ public class GameManager : Singleton<GameManager>
         loadingUI.SetActive(false);
 
         InGameItemToMainItem();
+
+        mainInventory.SaveInventory(); 
     }
 
     // Defines 에서 호출 ex) Defines.main 
