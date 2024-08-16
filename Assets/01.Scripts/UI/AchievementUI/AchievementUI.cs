@@ -14,17 +14,22 @@ public class AchievementUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!sorted)
+        if (sorted)
         {
-            entryCount = AchievementManager.Instance.achievements.Count;
-
             for (int i = 0; i < entryCount; i++)
             {
-                entryList.Add(entryPrefab);
+                entryList[i].SetDescription(i);
             }
-            sorted = true;
+            return;
         }
 
+        entryCount = AchievementManager.Instance.achievements.Count;
+
+        for (int i = 0; i < entryCount; i++)
+        {
+            entryList.Add(entryPrefab);
+        }
+        sorted = true;
 
         for (int i = 0; i < entryCount; i++)
         {
