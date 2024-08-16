@@ -85,7 +85,16 @@ public class PlayerEquipLoader : MonoBehaviour
             mainCriticalChance = mainWeapon.itemData.CriticalChance;
             mainCriticalValue = mainWeapon.itemData.Criticaldam;
             MainWeaponAdd(mainWeapon);
+
+
             var subWeaponList = mainWeapon.subWeapons;
+            if(subWeaponList != null)
+            {
+                foreach (var sub in subWeaponList)
+                {
+                    SubWeaponAdd(sub);
+                }
+            }
         }
         else
         {
@@ -119,19 +128,22 @@ public class PlayerEquipLoader : MonoBehaviour
         };
     }
 
-    public void SubWeaponAdd(M_Weapon item)
+    public void SubWeaponAdd(ItemData subData)
     {
-        var handle = Addressables.InstantiateAsync(item.itemData.Prefab_Id, transform);
+        var handle = Addressables.InstantiateAsync(subData.Prefab_Id, transform);
         handle.Completed += (AsyncOperationHandle<GameObject> obj) =>
         {
             if (obj.Status == AsyncOperationStatus.Succeeded)
             {
                 GameObject weapon = obj.Result;
-                var weaponCreator = weapon.GetComponent<WeaponCreator>();
+                var weaponCreators = weapon.GetComponents<WeaponCreator>();
+                mainType = weaponCreators[0].weaponDataRef.WeaponType;
 
-                weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
-                myPassiveManager.currWeaponCreators.Add(weaponCreator);
-                mainWeaponCreator = weaponCreator;
+                foreach (var weaponCreator in weaponCreators)
+                {
+                    weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
+                }
+                myPassiveManager.currWeaponCreators.Add(weapon.GetComponent<WeaponCreator>());
             }
             else
             {
