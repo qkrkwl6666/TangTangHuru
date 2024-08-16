@@ -229,28 +229,6 @@ public class ItemDetection : MonoBehaviour
                 {
                     followMeItems.AddLast(item.gameObject);
 
-                    //var tweener = item.transform.DOMove(transform.position, 0.5f);
-
-                    //tweener.SetEase(Ease.OutBack);
-                    //tweener.SetUpdate(UpdateType.Fixed);
-                    //tweener.OnUpdate(() =>
-                    //{
-                    //    tweener.ChangeValues(item.transform.position, transform.position).Restart();
-
-                    //    float distance = Vector3.Distance(item.transform.position, transform.position);
-
-                    //    if (distance <= 0.5f)
-                    //    {
-                    //        tweener.Complete();
-                    //    }
-                    //});
-                    //tweener.OnComplete(() => 
-                    //{
-                    //    removeItems.Add(item.gameObject);
-                    //    item.gameObject.SetActive(false);
-                    //    item.GetComponent<IInGameItem>().UseItem();
-                    //});
-
                     Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
 
                     DOTween.To(() => startScreenPos, x =>
@@ -261,9 +239,11 @@ public class ItemDetection : MonoBehaviour
                         .SetUpdate(UpdateType.Fixed)
                         .OnComplete(() =>
                     {
-                        removeItems.Add(item.gameObject);
-                        item.gameObject.SetActive(false);
-                        item.GetComponent<IInGameItem>().UseItem();
+                        if(!removeItems.Contains(item.gameObject))
+                        {
+                            removeItems.Add(item.gameObject);
+                            item.GetComponent<IInGameItem>().UseItem();
+                        }
                     });
                 }
 

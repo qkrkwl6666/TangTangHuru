@@ -21,10 +21,21 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
     public IItemType ItemType { get ; set ; }
     public string TextureId { get ; set ; }
 
+    private bool isUsed = false;
+
     public void Release()
     {
-        playerSubject.GetPlayerExp.EarnExp(exp);
-        pool.Release(gameObject);
+        if (!isUsed)
+        {
+            isUsed = true;
+            playerSubject.GetPlayerExp.EarnExp(exp);
+            pool.Release(gameObject);
+        }
+    }
+
+    private void OnEnable()
+    {
+        isUsed = false;
     }
 
     private void OnDisable()
@@ -59,7 +70,10 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 
     public void UseItem()
     {
-        Release();
+        if (!isUsed)
+        {
+            Release();
+        }
     }
 
     public void GetItem()
