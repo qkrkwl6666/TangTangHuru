@@ -18,11 +18,12 @@ public class M_UISlot : MonoBehaviour
 
     public MainUI mainUI;
 
-    public void SetItemData(Item item, MainUI mainUI)
+    public void SetItemData(Item item, MainUI mainUI, bool isPetEquipSlot = false)
     {
         this.item = item;
-
         this.mainUI = mainUI;
+
+        if (isPetEquipSlot) return;
 
         // UI 아이템 데이터 에 맞춰서 설정
 
@@ -99,7 +100,6 @@ public class M_UISlot : MonoBehaviour
             case (int)ItemType.Crossbow:
             case (int)ItemType.Wand:
             case (int)ItemType.Staff:
-            case (int)ItemType.Pet: // Todo : 임시입니다.
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;
@@ -107,6 +107,10 @@ public class M_UISlot : MonoBehaviour
             case (int)ItemType.Helmet:
             case (int)ItemType.Armor:
             case (int)ItemType.Shose:
+                mainUI.SetEquipPopData(item);
+                mainUI.SetActiveEquipPopUpUI(true);
+                break;
+            case (int)ItemType.Pet:
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;

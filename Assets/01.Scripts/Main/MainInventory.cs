@@ -25,6 +25,8 @@ public class MainInventory : MonoBehaviour
 
     // Æê Á¤º¸
     public List<GameObject> petSlotUI = new ();
+    public Button petEquipSlotUI;
+    public M_UISlot petMUISlot;
 
     // ÇöÀç »ý¼ºµÈ UI ½½·Ô ¾ÆÀÌÅÛ
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
@@ -895,7 +897,7 @@ public class MainInventory : MonoBehaviour
                 break;
 
             case ItemType.Pet:
-                playerEquipment[PlayerEquipment.Pet] = (item, slot.ItemSlot);
+                SetEquipPetItemUI(slot);
                 break;
         }
 
@@ -988,6 +990,16 @@ public class MainInventory : MonoBehaviour
                     image.gameObject.SetActive(false);
                 }
                 break;
+
+            case ItemType.Pet:
+                foreach(var pet in petSlotUI)
+                {
+                    pet.gameObject.SetActive(false);
+                }
+                playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
+                GameManager.Instance.playerEquipment = playerEquipment;
+                petEquipSlotUI.interactable = false;
+                return;
         }
 
         playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
@@ -1000,17 +1012,19 @@ public class MainInventory : MonoBehaviour
         RefreshCharacterSpine();
     }
 
-    // Æê ÀåÂø ¹× ÇØÁ¦
+    // Æê ÀåÂø
     public void SetEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
     {
         if (playerEquipment.ContainsKey(PlayerEquipment.Pet))
         {
-            SetUnEquipPetItemUI(playerEquipment[PlayerEquipment.Pet]);
+            UnequipItem(equipInfo.item);
         }
 
         equipInfo.slotUI.SetActive(false);
         playerEquipment[PlayerEquipment.Pet] = equipInfo;
         GameManager.Instance.playerEquipment = playerEquipment;
+        petEquipSlotUI.interactable = true;
+        petMUISlot.SetItemData(equipInfo.item, mainUI, true);
 
         switch (equipInfo.item.ItemId)
         {
@@ -1027,11 +1041,6 @@ public class MainInventory : MonoBehaviour
                 petSlotUI[3].SetActive(true);
                 break;
         }
-    }
-
-    public void SetUnEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
-    {
-
     }
 
     public bool CheckFilterType(Item item)
