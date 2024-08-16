@@ -42,10 +42,7 @@ public class DetectPointerCreator : MonoBehaviour
 
                 if (armorSet == 2)
                 {
-                    var pointerComponent = pointers[0].GetComponent<TreasurePointer>();
-                    pointerComponent.SetTarget(SetRandomTreasureTransform());
-                    pointerComponent.SetPivot(equipLoader.gameObject);
-                    pointerComponent.gameObject.SetActive(true);
+                    Invoke("SetPointer", 0.5f);
                 }
             };
     }
@@ -72,6 +69,14 @@ public class DetectPointerCreator : MonoBehaviour
             pointers.RemoveAt(0);
             stageTimer = 0f;
         }
+    }
+
+    private void SetPointer()
+    {
+        var pointerComponent = pointers[0].GetComponent<TreasurePointer>();
+        pointerComponent.SetTarget(SetRandomTreasureTransform());
+        pointerComponent.SetPivot(equipLoader.gameObject);
+        pointerComponent.gameObject.SetActive(true);
     }
 
     private Treasure SetRandomTreasureTransform()
