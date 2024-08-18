@@ -21,6 +21,10 @@ public class SaveDataV1 : SaveDatas
     // 도전과제 진행정보 저장
     public List<AchieveState> SavedStates = new();
     public List<int> SavedAchieveProgress = new();
+    // 도전과제 보상지급 정보
+    public List<bool> scrollStates = new();
+    public List<bool> petRewardStates = new();
+
 
     //강화석 게이지
     public int gaige = 0;

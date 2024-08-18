@@ -9,10 +9,6 @@ public class AchieveEntryUI : MonoBehaviour
     public Image rewardImage;
     public Button rewardButton;
 
-    void Start()
-    {
-        
-    }
 
     public void SetDescription(int index)
     {
