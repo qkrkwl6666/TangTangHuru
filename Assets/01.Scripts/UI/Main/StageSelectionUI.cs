@@ -35,6 +35,11 @@ public class StageSelectionUI : MonoBehaviour
     private Dictionary<string, StageData> stageTable;
 
     private Coroutine scrollCoroutine;
+
+    public MainUI mainUI;
+
+    public Button selectButton;
+
     private void Awake()
     {
         if (!DataTableManager.Instance.isTableLoad)
@@ -77,7 +82,12 @@ public class StageSelectionUI : MonoBehaviour
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
 
-        GameManager.Instance.CurrentStage = currentStage;
+        if(currentStage <= SaveManager.SaveDataV1.MaxStage)
+        {
+            GameManager.Instance.CurrentStage = currentStage;
+        }
+
+        mainUI.SaveLoadMainStageText();
     }
 
     private void Start()
@@ -153,6 +163,8 @@ public class StageSelectionUI : MonoBehaviour
                 nearestDistance = distance;
                 nearestStage = stageRects[i];
                 currentStage = i + 1;
+
+                selectButton.interactable = i + 1 > SaveManager.SaveDataV1.MaxStage ? false : true;
             }
         }
 
@@ -230,7 +242,20 @@ public class StageSelectionUI : MonoBehaviour
 
                 stageRects.Add(rect);
 
-                if(name == stageTable.Count - 1)
+                if(name + 1 > SaveManager.SaveDataV1.MaxStage)
+                {
+                    rect.GetChild(1).gameObject.SetActive(true);
+                }
+
+                if (stageTable[(name + 1).ToString()].Texture != "-1")
+                {
+                    Addressables.LoadAssetAsync<Sprite>(stageTable[(name + 1).ToString()].Texture).Completed += (sprite) => 
+                    {
+                        rect.GetChild(0).GetComponent<Image>().sprite = sprite.Result;
+                    };
+                }
+
+                if (name == stageTable.Count - 1)
                 {
                     StartCoroutine(CoCenterOnStageNoDotTween(stageRects[GameManager.Instance.CurrentStage - 1]));
                     currentStage = GameManager.Instance.CurrentStage;
@@ -239,4 +264,5 @@ public class StageSelectionUI : MonoBehaviour
         }
 
     }
+
 }

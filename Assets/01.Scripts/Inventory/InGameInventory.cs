@@ -75,6 +75,11 @@ public class InGameInventory : MonoBehaviour
         SaveItem();
 
         gameUI.SetGameClearUI(Coin, Kill);
+
+        if(GameManager.Instance.CurrentStage == SaveManager.SaveDataV1.MaxStage)
+        {
+            SaveManager.SaveDataV1.MaxStage++;
+        }
     }
 
     public List<IInGameItem> SaveItem(bool isEffect = false)

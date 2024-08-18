@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class MainUI : MonoBehaviour
 {
@@ -17,11 +19,23 @@ public class MainUI : MonoBehaviour
     #region 메인 스테이지 UI
 
     public TextMeshProUGUI mainStageText;
+    public Image mainStageImage;
 
     public void SaveLoadMainStageText()
     {
-        mainStageText.text = DataTableManager.Instance.Get<StageTable>(DataTableManager.stage)
-            .GetData(GameManager.Instance.CurrentStage).Title;
+        var data = DataTableManager.Instance.Get<StageTable>(DataTableManager.stage)
+            .GetData(GameManager.Instance.CurrentStage);
+
+        mainStageText.text = data.Title;
+
+        if (data.Texture != "-1")
+        {
+            Addressables.LoadAssetAsync<Sprite>(data.Texture).Completed += (sprite) => 
+            {
+                mainStageImage.sprite = sprite.Result;
+            };
+
+        }
     }
 
 

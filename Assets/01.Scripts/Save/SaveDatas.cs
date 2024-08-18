@@ -11,6 +11,7 @@ public class SaveDataV1 : SaveDatas
     public int Gold { get; set; } = 1000000;
     public int Diamond { get; set; } = 0;
     public int CurrentStage { get; set; } = 1;
+    public int MaxStage { get; set; } = 1;
 
     // 전체 아이템 컨테이너
     public List<Item> allItem = new();
