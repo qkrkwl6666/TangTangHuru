@@ -145,10 +145,6 @@ public class EquipPopUp : MonoBehaviour
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
-            case (int)ItemType.Pet:
-                TierUpButton.transform.parent.gameObject.SetActive(false);
-                UpgradeButton.transform.parent.gameObject.SetActive(false);
-                break;
         }
 
         // 강화 UI 설정

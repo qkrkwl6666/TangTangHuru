@@ -210,12 +210,12 @@ public class MainUI : MonoBehaviour
 
     public void SetEquipPetData(Item item)
     {
-        EquipPopUp.SetItemUI(item);
+        petPopUp.SetItemUI(item);
     }
 
     public void SetUnequipPetData(Item item)
     {
-        EquipPopUp.SetItemUI(item, false);
+        petPopUp.SetItemUI(item, false);
     }
 
 #endregion

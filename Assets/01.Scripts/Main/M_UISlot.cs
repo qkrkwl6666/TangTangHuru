@@ -111,8 +111,8 @@ public class M_UISlot : MonoBehaviour
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;
             case (int)ItemType.Pet: //ÆêÆË¾÷
-                mainUI.SetEquipPopData(item);
-                mainUI.SetActiveEquipPopUpUI(true);
+                mainUI.SetEquipPetData(item);
+                mainUI.SetActivePetPopUpUI(true);
                 break;
         }
     }
@@ -122,6 +122,12 @@ public class M_UISlot : MonoBehaviour
     {
         mainUI.SetUnequipPopData(item);
         mainUI.SetActiveEquipPopUpUI(true);
+    }
+    // Æê ÇØÁ¦ ÆË¾÷
+    public void OnPetSlotButton()
+    {
+        mainUI.SetUnequipPetData(item);
+        mainUI.SetActivePetPopUpUI(true);
     }
 
     // Àåºñ ÇØÁ¦ Âý¾÷
