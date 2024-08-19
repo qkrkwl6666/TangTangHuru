@@ -29,6 +29,7 @@ public class EquipPopUp : MonoBehaviour
 
     // 아이템 설명
     public TextMeshProUGUI itemDescText;
+    public TextMeshProUGUI damageTypeText;
 
     // 업그레이드 
     public TextMeshProUGUI needUpgradeGold;
@@ -132,27 +133,47 @@ public class EquipPopUp : MonoBehaviour
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
                 break;
             case (int)ItemType.Armor:
                 itemStatusText1.text = Defines.hp + item.itemData.Hp;
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
                 break;
             case (int)ItemType.Shose:
                 itemStatusText1.text = Defines.dodge + item.itemData.Dodge;
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
                 break;
             case (int)ItemType.Pet:
                 TierUpButton.transform.parent.gameObject.SetActive(false);
                 UpgradeButton.transform.parent.gameObject.SetActive(false);
+                damageTypeText.gameObject.SetActive(false);
                 break;
         }
 
-        // 강화 UI 설정
-        RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
+        switch (item.itemData.Item_Type)
+        {
+            case (int)ItemType.Axe:
+            case (int)ItemType.Crossbow:
+            case (int)ItemType.Staff:
+                damageTypeText.gameObject.SetActive(true);
+                damageTypeText.text = "파워 타입";
+                break;
+            case (int)ItemType.Sword:
+            case (int)ItemType.Bow:
+            case (int)ItemType.Wand:
+                damageTypeText.gameObject.SetActive(true);
+                damageTypeText.text = "스피드 타입";
+                break;
+        }
+
+                // 강화 UI 설정
+                RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
     }
 
     public void SetTierUpUI(Item item)
