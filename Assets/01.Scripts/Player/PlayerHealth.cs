@@ -108,7 +108,7 @@ public class PlayerHealth : LivingEntity
         }
 
         health -= totalDmg;
-        hpBar.value -= damage;
+        hpBar.value = health;
 
         if (health <= 0 && !dead)
         {
@@ -142,5 +142,17 @@ public class PlayerHealth : LivingEntity
     {
         isInvincible = false;
         invincibleTime = 0.1f;
+    }
+
+    public void Health(float heal)
+    {
+        health += heal;
+
+        if(health > startingHealth)
+        {
+            health = startingHealth; 
+        }
+
+        hpBar.value = health;
     }
 }

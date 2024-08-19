@@ -126,6 +126,13 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     var treasure = treasureGo.AddComponent<Treasure>();
 
+                    // 회복
+
+                    Addressables.InstantiateAsync(Defines.healItem).Completed += (x) =>
+                    {
+                        treasure.AddItem(x.Result);
+                    };
+
                     // 자석
                     Addressables.InstantiateAsync(Defines.magnet).Completed += (x) => 
                     {

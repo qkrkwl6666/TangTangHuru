@@ -16,6 +16,7 @@ public static class Defines
     public static readonly string playBoss = "PlayBoss";
     public static readonly string obstacles = "Obstacles";
     public static readonly string rangeArea = "RangeArea";
+    public static readonly string healItem = "HealItem";
 
     public static readonly string loadingUI = "LoadingUI";
     public static readonly string main = "Main";
