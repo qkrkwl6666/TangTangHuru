@@ -110,7 +110,7 @@ public class M_UISlot : MonoBehaviour
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;
-            case (int)ItemType.Pet:
+            case (int)ItemType.Pet: //ÆêÆË¾÷
                 mainUI.SetEquipPopData(item);
                 mainUI.SetActiveEquipPopUpUI(true);
                 break;

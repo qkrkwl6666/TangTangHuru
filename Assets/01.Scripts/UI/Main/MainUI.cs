@@ -176,6 +176,49 @@ public class MainUI : MonoBehaviour
     }
 
     #endregion
+
+    #region ÆêUI ÆË¾÷
+
+    public PetPopUp petPopUp;
+
+    public void SetActivePetPopUpUI(bool active)
+    {
+        if (active)
+        {
+            petPopUp.gameObject.SetActive(active);
+            var seq = DOTween.Sequence();
+
+            seq.Append(petPopUp.transform.DOScale(1.1f, 0.2f));
+            seq.Append(petPopUp.transform.DOScale(1f, 0.1f));
+
+            seq.Play();
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+
+            seq.Append(petPopUp.transform.DOScale(0.0f, 0.1f));
+
+            seq.onComplete += () =>
+            {
+                petPopUp.gameObject.SetActive(active);
+            };
+
+            seq.Play();
+        }
+    }
+
+    public void SetEquipPetData(Item item)
+    {
+        EquipPopUp.SetItemUI(item);
+    }
+
+    public void SetUnequipPetData(Item item)
+    {
+        EquipPopUp.SetItemUI(item, false);
+    }
+
+#endregion
 }
 
 public enum UIObject

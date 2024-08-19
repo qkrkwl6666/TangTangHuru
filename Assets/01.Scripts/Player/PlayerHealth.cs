@@ -88,6 +88,12 @@ public class PlayerHealth : LivingEntity
 
     public override void OnDamage(float damage, float Impact = 0)
     {
+        if(damage < 0)
+        {
+            health -= damage;
+            hpBar.value -= damage;
+        }
+
         if (dead || isInvincible)
             return;
 
@@ -100,10 +106,10 @@ public class PlayerHealth : LivingEntity
             return;
         }
 
-        var totalDmg = damage - armorRate;
-        if(totalDmg <= 0 )
+        float totalDmg = damage * (damage / (damage + armorRate));
+
+        if (totalDmg <= 1 )
         {
-            //공식 변경 가능
             totalDmg = 1;
         }
 
