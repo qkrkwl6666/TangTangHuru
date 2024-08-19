@@ -122,6 +122,9 @@ public static class Defines
     public static readonly string attack2 = "attack2";
     public static readonly string dead = "dead";
 
+    //돌진 가디언 애니메이션
+    public static readonly string attack1 = "attack1";
+
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new();
     public static List<string> weaponSkins = new();

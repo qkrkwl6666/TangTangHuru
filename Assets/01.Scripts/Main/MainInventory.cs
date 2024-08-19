@@ -586,12 +586,25 @@ public class MainInventory : MonoBehaviour
     }
 
     // 장비 무기 아이템 삭제
-    public void RemoveItem(int instanceId)
+    public void RemoveItem(int instanceId, bool isPet = false)
     {
         if (!itemSlotUI.ContainsKey(instanceId)) return;
 
         // 아이템 장착 중이면 장착에서도 삭제
-        PlayerEquipRemove(instanceId);
+
+        if(!isPet)
+            PlayerEquipRemove(instanceId);
+        else
+        {
+            foreach (var pet in petSlotUI)
+            {
+                pet.gameObject.SetActive(false);
+            }
+            
+            petEquipSlotUI.interactable = false;
+            playerEquipment.Remove(PlayerEquipment.Pet);
+            GameManager.Instance.playerEquipment = playerEquipment;
+        }
 
         var item = itemSlotUI[instanceId];
 
