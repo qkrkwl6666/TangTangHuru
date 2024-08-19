@@ -131,4 +131,16 @@ public class PlayerHealth : LivingEntity
         StopAllCoroutines();
         dead = true;
     }
+
+    public void HealthCheatOn()
+    {
+        isInvincible = true;
+        invincibleTime = 999999f;
+    }
+
+    public void HealthCheatOff()
+    {
+        isInvincible = false;
+        invincibleTime = 0.1f;
+    }
 }
