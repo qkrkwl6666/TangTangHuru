@@ -24,10 +24,12 @@ public class EquipmentAppraisal : MonoBehaviour
     public AppraisalPopUp appraisalPopUp;
 
     public Button appraisalButton;
+    public VFXRenderManager renderManager;
+    public MainUI mainUI;
 
     private void Awake()
     {
-        appraisalButton.onClick.AddListener(OnAppraisal);
+        appraisalButton.onClick.AddListener(() => StartCoroutine(OnAppraisal()));
     }
 
     private void OnEnable()
@@ -240,7 +242,7 @@ public class EquipmentAppraisal : MonoBehaviour
     }
 
     // 감정 버튼 누르면 호출
-    public void OnAppraisal()
+    public System.Collections.IEnumerator OnAppraisal()
     {
         // 내가 현재 선택한 원석들 가져와서 한번에 다 뽑고 n번 팝업창 띄우기
 
@@ -259,14 +261,14 @@ public class EquipmentAppraisal : MonoBehaviour
                 Item item = RandomItemCreate(appraiseData);
 
                 itemList.Add(item);
+
             }
         }
 
-        appraisalPopUp.gameObject.SetActive(true);
-        appraisalPopUp.SetPopUp(itemList);
+        if (itemList.Count <= 0) yield break;
 
         // 선택한 재화 소모하기
-        for(int i = 0; i < (int)ItemTier.Count; i ++)
+        for (int i = 0; i < (int)ItemTier.Count; i++)
         {
             int removeCount = selectGemStone[(ItemTier)i];
 
@@ -283,6 +285,16 @@ public class EquipmentAppraisal : MonoBehaviour
         }
 
         mainInventory.SaveInventory();
+
+        renderManager.PlayAppraisalParticle(3f);
+        mainUI.allCloseUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        mainUI.allCloseUI.SetActive(false);
+        appraisalPopUp.gameObject.SetActive(true);
+        appraisalPopUp.SetPopUp(itemList);
+
     }
 
 }

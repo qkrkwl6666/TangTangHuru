@@ -1,4 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using static Demo_Project.SceneManager;
 
 
 namespace Demo_Project
@@ -245,8 +248,8 @@ namespace Demo_Project
             if (projectileObject.GetComponent<Projectile>().muzzleFlash)
             {
                 Vector2 muzzleFlashPoint = CircleAroundCenter(transform.position.x, transform.position.y, transform.position.x + +projectileObject.GetComponent<Projectile>().muzzleFlashOriginPoint.x, transform.position.y + projectileObject.GetComponent<Projectile>().muzzleFlashOriginPoint.y);
-                GameObject muzzleFlashObjectTemp = Instantiate(bullet.GetComponent<Projectile>().muzzleFlashObject, new Vector3(muzzleFlashPoint.x, muzzleFlashPoint.y, transform.position.z), Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetAngle()));
-                ParticleSystem.MainModule particleSystemMain = muzzleFlashObjectTemp.transform.GetChild(0).GetComponent<ParticleSystem>().main;
+                GameObject muzzleFlashObjectTemp = Instantiate(bullet.GetComponent<Projectile>().muzzleFlashObject, new Vector3(muzzleFlashPoint.x, muzzleFlashPoint.y, transform.position.z), Quaternion.Euler(0, 0, Mathf.Rad2Deg * GetAngle()));        
+                ParticleSystem.MainModule particleSystemMain = muzzleFlashObjectTemp.transform.GetChild(0).GetComponent<ParticleSystem>().main;              
                 particleSystemMain.startColor = projectileObject.GetComponent<Projectile>().muzzleFlashColor;
                 SceneManager.listOfMuzzleFlashes.Add(muzzleFlashObjectTemp);
 
@@ -284,7 +287,7 @@ namespace Demo_Project
                     break;
                 }
 
-
+                
             }
             loopObject = Instantiate(tempLoopObject);
             loopObject.SetActive(true);
@@ -298,7 +301,7 @@ namespace Demo_Project
             {
                 if (SceneManager.listOfImpacts[i].GetComponent<ParticleSystem>().time >= SceneManager.listOfImpacts[i].GetComponent<ParticleSystem>().main.duration)
                 {
-
+                    
                     Destroy(SceneManager.listOfImpacts[i]);
                     SceneManager.listOfImpacts.RemoveAt(i);
                 }
@@ -308,7 +311,7 @@ namespace Demo_Project
             {
                 if (SceneManager.listOfMuzzleFlashes[i].GetComponent<ParticleSystem>().time >= SceneManager.listOfMuzzleFlashes[i].GetComponent<ParticleSystem>().main.duration)
                 {
-
+                  
                     Destroy(SceneManager.listOfMuzzleFlashes[i]);
                     SceneManager.listOfMuzzleFlashes.RemoveAt(i);
                 }

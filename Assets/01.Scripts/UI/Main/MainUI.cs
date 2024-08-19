@@ -16,6 +16,8 @@ public class MainUI : MonoBehaviour
         mainInventory.OnMainInventorySaveLoaded += SaveLoadMainStageText;
     }
 
+    public GameObject allCloseUI;
+
     #region 메인 스테이지 UI
 
     public TextMeshProUGUI mainStageText;
