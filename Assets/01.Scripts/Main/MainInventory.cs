@@ -15,6 +15,9 @@ public class MainInventory : MonoBehaviour
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
 
+    // ArmorSet
+    private PlayerEquipment[] armorSet = { PlayerEquipment.Helmet, PlayerEquipment.Armor, PlayerEquipment.Shoes };
+
     public List<Image> subWeaponImages = new ();
 
     public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
@@ -33,6 +36,9 @@ public class MainInventory : MonoBehaviour
 
     // 소모품 아이템 컨테이너
     private Dictionary<string, (Item item, int count)> consumableItems = new();
+
+    // 세트 효과 텍스트
+    public TextMeshProUGUI setText;
 
     public Transform content;
 
@@ -903,6 +909,8 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+
+        PlayerArmorSetCheck();
     }
 
 
@@ -939,6 +947,7 @@ public class MainInventory : MonoBehaviour
         }
 
         GameManager.Instance.playerEquipment = playerEquipment;
+
     }
 
     public void LoadSubWeaponImage(Item item)
@@ -977,6 +986,49 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+
+        PlayerArmorSetCheck();
+    }
+
+    public void PlayerArmorSetCheck()
+    {
+        if (armorSet.Any(armor => !playerEquipment.ContainsKey(armor)))
+            return;
+
+        var setType = playerEquipment[PlayerEquipment.Helmet].Item1.itemData.SetType;
+
+        if (armorSet.All(armor => playerEquipment[armor].Item1.itemData.SetType == setType))
+        {
+            string stringId = string.Empty;
+
+            switch (setType)
+            {
+                case 1:
+                    stringId = "SetType1";
+                    break;
+                case 2:
+                    stringId = "SetType2";
+                    break;
+                case 3:
+                    stringId = "SetType3";
+                    break;
+                case 4:
+                    stringId = "SetType4";
+                    break;
+                case 5:
+                    stringId = "SetType5";
+                    break;
+                case 6:
+                    stringId = "SetType6";
+                    break;
+                case 7:
+                    stringId = "SetType7";
+                    break;
+            }
+
+            setText.text = DataTableManager.Instance
+                .Get<StringTable>(DataTableManager.String).Get(stringId).Text;
+        }
     }
 
     public void UnequipItem(Item item)
@@ -1037,6 +1089,11 @@ public class MainInventory : MonoBehaviour
                 GameManager.Instance.playerEquipment = playerEquipment;
                 petEquipSlotUI.interactable = false;
                 return;
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                setText.text = string.Empty;
+                break;
         }
 
         playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
