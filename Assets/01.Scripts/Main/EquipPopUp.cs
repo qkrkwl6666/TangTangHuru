@@ -177,9 +177,9 @@ public class EquipPopUp : MonoBehaviour
 
     public void RefreshUpgradeTextUI(int currentUpgrade)
     {
-        needUpgradeGold.text = $"{Defines.defaultUpgradeGold * (currentUpgrade + 1)} /"; 
+        needUpgradeGold.text = $"{mainInventory.Gold} / ";
 
-        totalUpgradeGold.text = $" {mainInventory.Gold}";
+        totalUpgradeGold.text = $" {Defines.defaultUpgradeGold * (currentUpgrade + 1)}";
 
         int reinforcedStone = 0;
 
@@ -189,9 +189,9 @@ public class EquipPopUp : MonoBehaviour
         {
             reinforcedStone = list.Count;
         }
-
-        needReinforcedStone.text = $"{Defines.defaultUpgradeReinforcedStone} /";
-        totalReinforcedStone.text = $" {reinforcedStone}";
+        //reinforcedStone
+        needReinforcedStone.text = $"{reinforcedStone} /";
+        totalReinforcedStone.text = $" {Defines.defaultUpgradeReinforcedStone}";
     }
 
     public void OnUpgradeButton()
