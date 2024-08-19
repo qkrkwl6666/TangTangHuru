@@ -41,6 +41,9 @@ public class ItemData
     //방어구 세트 정보
     public int SetType { get; set; }
 
+    //가격
+    public int Price { get; set; }
+
 
     public ItemData DeepCopy()
     {
@@ -67,6 +70,7 @@ public class ItemData
         newItemData.TierUp_Exp = this.TierUp_Exp;
         newItemData.TierUp_NeedExp = this.TierUp_NeedExp;
         newItemData.SetType = this.SetType;
+        newItemData.Price = this.Price;
 
 
         return newItemData;

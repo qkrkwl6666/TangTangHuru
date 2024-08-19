@@ -67,7 +67,8 @@ public class PetPopUp : MonoBehaviour
             (DataTableManager.String).Get(item.itemData.Desc_Id.ToString()).Text;
 
         //먹이가 하나도 없으면 feed버튼 클릭불가
-        feedButton.interactable = false;
+        CheckFoodCount();
+
 
     }
 
@@ -108,7 +109,51 @@ public class PetPopUp : MonoBehaviour
 
     public void OnClickFeedButton()
     {
+        var currFood = mainInventory.GetItemTypesTier(ItemType.PetFood, currentItem.ItemTier);
+        currentItem.CurrentTierUp += currFood[0].itemData.TierUp_Exp;
+        mainInventory.RemoveItem(ItemType.PetFood, currentItem.ItemTier, 1);
+        mainInventory.RefreshItemSlotUI();
 
+        if (currentItem.CurrentTierUp >= currentItem.itemData.TierUp_NeedExp)
+        {
+            mainInventory.RemoveItem(currentItem.InstanceId, true);
+            switch (currentItem.ItemTier)
+            {
+                case ItemTier.Normal:
+                    currentItem = mainInventory.MainInventoryAddItem("710005"); 
+                    break;
+                case ItemTier.Rare:
+                    currentItem = mainInventory.MainInventoryAddItem("710006");
+                    break;
+                case ItemTier.Epic:
+                    currentItem = mainInventory.MainInventoryAddItem("710007");
+                    break;
+                case ItemTier.Unique:
+                    currentItem = mainInventory.MainInventoryAddItem("710008");
+                    break;
+                default:
+                    break;
+            }
+            SetItemUI(currentItem);
+            mainInventory.RefreshItemSlotUI();
 
+        }
+        else
+        {
+            SetTierUpUI(currentItem);
+            CheckFoodCount();
+        }
+    }
+
+    private void CheckFoodCount()
+    {
+        if (mainInventory.GetItemCount(ItemType.PetFood, currentItem.ItemTier) < 1)
+        {
+            feedButton.interactable = false;
+        }
+        else
+        {
+            feedButton.interactable = true;
+        }
     }
 }

@@ -429,6 +429,7 @@ public class MainInventory : MonoBehaviour
                 }
             case 10: // 장비 원석
             case 11: // 강화석
+            case 19: // PetFood
                 {
                     M_Item m_item = new M_Item();
 
@@ -491,6 +492,7 @@ public class MainInventory : MonoBehaviour
 
                         case ItemType.EquipmentGem:
                         case ItemType.ReinforcedStone:
+                        case ItemType.PetFood:
                             UpdateConsumableItemCount(itemList[i]);
                             break;
 
@@ -580,12 +582,25 @@ public class MainInventory : MonoBehaviour
     }
 
     // 장비 무기 아이템 삭제
-    public void RemoveItem(int instanceId)
+    public void RemoveItem(int instanceId, bool isPet = false)
     {
         if (!itemSlotUI.ContainsKey(instanceId)) return;
 
         // 아이템 장착 중이면 장착에서도 삭제
-        PlayerEquipRemove(instanceId);
+        if (!isPet)
+        {
+            PlayerEquipRemove(instanceId);
+        }
+        else
+        {
+            foreach (var pet in petSlotUI)
+            {
+                pet.gameObject.SetActive(false);
+            }
+            petEquipSlotUI.interactable = false;
+            playerEquipment.Remove(PlayerEquipment.Pet);
+            GameManager.Instance.playerEquipment = playerEquipment;
+        }
 
         var item = itemSlotUI[instanceId];
 
@@ -602,7 +617,7 @@ public class MainInventory : MonoBehaviour
         RefreshItemSlotUI();
     }
 
-    // 소모품 아이템 삭제
+
 
     public bool RemoveOrbItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
@@ -633,6 +648,7 @@ public class MainInventory : MonoBehaviour
         return true;
     }
 
+    // 소모품 아이템 삭제
     public bool RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
         if (!allItem.ContainsKey(itemType))
@@ -868,6 +884,19 @@ public class MainInventory : MonoBehaviour
             case 710004:
                 petSlotUI[3].SetActive(true);
                 break;
+
+            case 710005:
+                petSlotUI[4].SetActive(true);
+                break;
+            case 710006:
+                petSlotUI[5].SetActive(true);
+                break;
+            case 710007:
+                petSlotUI[6].SetActive(true);
+                break;
+            case 710008:
+                petSlotUI[7].SetActive(true);
+                break;
         }
     }
 
@@ -1076,6 +1105,19 @@ public class MainInventory : MonoBehaviour
                 break;
             case 710004:
                 petSlotUI[3].SetActive(true);
+                break;
+
+            case 710005:
+                petSlotUI[4].SetActive(true);
+                break;
+            case 710006:
+                petSlotUI[5].SetActive(true);
+                break;
+            case 710007:
+                petSlotUI[6].SetActive(true);
+                break;
+            case 710008:
+                petSlotUI[7].SetActive(true);
                 break;
         }
     }
@@ -1296,6 +1338,22 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("710002");
         MainInventoryAddItem("710003");
         MainInventoryAddItem("710004");
+
+
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720002");
 
         //MainInventoryAddItem("200001", 0);
         //MainInventoryAddItem("200101", 0);
@@ -1519,7 +1577,8 @@ public class MainInventory : MonoBehaviour
             case FilterType.Pet:
                 foreach (var itemSlot in itemSlotUI)
                 {
-                    if (itemSlot.Value.Item1.ItemType != ItemType.Pet)
+                    if (itemSlot.Value.Item1.ItemType != ItemType.Pet
+                        && itemSlot.Value.Item1.ItemType != ItemType.PetFood)
                     {
                         itemSlot.Value.ItemSlot.SetActive(false);
                         continue;
@@ -1596,6 +1655,7 @@ public enum ItemType
 
     Weapon = 17, // 전체 무기
     SubWeapon = 18,
+    PetFood = 19,
 }
 
 public enum ItemTier
