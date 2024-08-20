@@ -27,7 +27,11 @@ public class SoundManager : Singleton<SoundManager>
 
     [SerializeField] private int poolSize = 10;
 
+    [SerializeField] private GameObject tempPlayer;
+
     private int loadCount = 0;
+
+    private bool soundLoaded = false;
 
     private void Start()
     {
@@ -36,34 +40,63 @@ public class SoundManager : Singleton<SoundManager>
         soundPlayerPool = new Queue<TemporalSoundPlayer>();
 
         // 미리 사운드 플레이어 오브젝트 생성
+        CreateTemporalObjects();
+
+        Addressables.LoadAssetsAsync<AudioClip>("LobbySound", OnClipLoaded).Completed += OnLoadCheck;
+        Addressables.LoadAssetsAsync<AudioClip>("BGM", OnClipLoaded).Completed += OnLoadCheck;
+        Addressables.LoadAssetsAsync<AudioClip>("StageSound", OnClipLoaded).Completed += OnLoadCheck;
+        Addressables.LoadAssetsAsync<AudioClip>("WeaponSound", OnClipLoaded).Completed += OnLoadCheck;
+    }
+
+    public void CreateTemporalObjects()
+    {
+        if(tempPlayer != null)
+        {
+            for (int i = 0; i < poolSize; ++i)
+            {
+                var temp = Instantiate(tempPlayer);
+                temp.SetActive(false);
+                var tempSoundPlayer = tempPlayer.GetComponent<TemporalSoundPlayer>();
+                soundPlayerPool.Enqueue(tempSoundPlayer);
+            }
+            return;
+        }
+
         Addressables.LoadAssetAsync<GameObject>("TemporalSoundPlayer").Completed += (x) =>
         {
             for (int i = 0; i < poolSize; ++i)
             {
-                var tempPlayer = Instantiate(x.Result);
+                tempPlayer = Instantiate(x.Result);
                 tempPlayer.SetActive(false);
                 var tempSoundPlayer = tempPlayer.GetComponent<TemporalSoundPlayer>();
                 soundPlayerPool.Enqueue(tempSoundPlayer);
             }
         };
+    }
 
-        Addressables.LoadAssetsAsync<AudioClip>("LobbySound", OnClipLoaded).Completed += OnLoadCheck;
-        Addressables.LoadAssetsAsync<AudioClip>("BGM", OnClipLoaded).Completed += OnLoadCheck;
-
-        //var handle = Addressables.LoadAssetsAsync<AudioClip>("BGM", OnClipLoaded);
-        //handle.Completed += OnClipsLoaded;
-        //handle.Completed += (operation) => PlaySound2D("BGM_main", 0, true, SoundType.BGM);
-
+    public void ClearSoundPlayerPool()
+    {
+        soundPlayerPool.Clear();
     }
 
     private void OnLoadCheck(AsyncOperationHandle<IList<AudioClip>> handle)
     {
         loadCount++;
 
-        if (loadCount == 2)
+        if (loadCount == 4)
         {
             OnClipsLoaded(handle);
         }
+    }
+    public void EnterStage()
+    {
+        if (soundLoaded)
+            return;
+
+        Addressables.LoadAssetsAsync<AudioClip>("StageSound", OnClipLoaded).Completed += OnLoadCheck;
+        Addressables.LoadAssetsAsync<AudioClip>("WeaponSound", OnClipLoaded).Completed += OnLoadCheck;
+
+        soundLoaded = true;
     }
 
     private void OnClipLoaded(AudioClip clip)
@@ -105,8 +138,8 @@ public class SoundManager : Singleton<SoundManager>
         else
         {
             // 풀에 남은 오브젝트가 없으면 새로 생성
-            GameObject obj = new GameObject("TemporalSoundPlayer 2D");
-            return obj.AddComponent<TemporalSoundPlayer>();
+            var temp = Instantiate(tempPlayer);
+            return temp.GetComponent<TemporalSoundPlayer>();
         }
     }
 
@@ -146,6 +179,25 @@ public class SoundManager : Singleton<SoundManager>
         }
 
         Debug.LogWarning(clipName + "을 찾을 수 없습니다.");
+    }
+
+    public void PlayerBGM(int index)
+    {
+        currPlayingSounds.Clear();
+
+        string BGM_Name = "BGM_Stage_";
+
+        switch (index)
+        {
+            case 0:
+                BGM_Name = "BGM_main";
+                break;
+            default:
+                BGM_Name += index.ToString();
+                break;
+        }
+
+        PlaySound2D(BGM_Name, 0, true, SoundType.BGM);
     }
 
     public void PlaySound2D(string clipName, float delay = 0f, bool isLoop = false, SoundType type = SoundType.EFFECT)

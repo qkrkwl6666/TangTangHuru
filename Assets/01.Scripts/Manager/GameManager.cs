@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -26,6 +27,8 @@ public class GameManager : Singleton<GameManager>
 
     // 인 게임 아이템 저장 컨테이너
     public List<IInGameItem> inGameItems = new ();
+
+    private int BGM_Index = 0;
 
     // 인게임 에서 메인 씬 이동후 로딩 완료 시 호출
     public void InGameItemToMainItem()
@@ -81,18 +84,36 @@ public class GameManager : Singleton<GameManager>
     // Defines 에서 호출 ex) Defines.main 
     public void LoadSceneAsync(string sceneName)
     {
+        SoundManager.Instance.ClearSoundPlayerPool();
+
         loadingUI.SetActive(true);
 
         // Todo : 메인 씬 이름 변경시 변경 필요
         if (sceneName != "InventoryScene")
+        {
             mainInventory.SaveMainInventory();
+        }
+
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
             //Todo : 메인 씬 이름 변경시 변경 필요
             if(sceneName != "InventoryScene")
                 loadingUI.SetActive(false);
+
+            SoundManager.Instance.CreateTemporalObjects();
         };
+
+        if (sceneName == "InventoryScene")
+        {
+            BGM_Index = 0;
+        }
+        else
+        {
+            BGM_Index = 1;
+            SoundManager.Instance.EnterStage();
+        }
+        Invoke("ChangeBGM", 2);
     }
 
     public void StartGame()
@@ -107,10 +128,13 @@ public class GameManager : Singleton<GameManager>
 
     public void SceneSaveInventory()
     {
-
-
         //this.allItem = allItem;
         //this.playerEquipment = playerEquipment;
+    }
+
+    public void ChangeBGM()
+    {
+        SoundManager.Instance.PlayerBGM(BGM_Index);
     }
 
 }
