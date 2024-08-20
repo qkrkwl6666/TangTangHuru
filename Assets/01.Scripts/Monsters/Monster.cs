@@ -129,7 +129,6 @@ public class Monster : LivingEntity, IPlayerObserver
         if (isVisible)
         {
             isSliderVisible = true;
-            hpBar.gameObject.SetActive(true); //테스트 끝나면 이줄 삭제
         }
         else
         {
