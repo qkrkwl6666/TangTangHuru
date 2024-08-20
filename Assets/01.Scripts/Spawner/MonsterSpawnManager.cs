@@ -23,6 +23,7 @@ public class MonsterSpawnManager : MonoBehaviour
     private float currentSpawnDistance = 0f;
 
     private bool isHpBarOn = true;
+    private bool isHpTextOn = true;
 
     private void Awake()
     {
@@ -142,6 +143,16 @@ public class MonsterSpawnManager : MonoBehaviour
         foreach (var monster in monsterSpawnFactory.monsters)
         {
             monster.GetComponent<Monster>().ActiveHpSlider(isHpBarOn);
+        }
+    }
+
+    public void ToggleMonsterDamageText()
+    {
+        isHpTextOn = !isHpTextOn;
+
+        foreach (var monster in monsterSpawnFactory.monsters)
+        {
+            monster.GetComponent<DamageText>().ActiveDamageText(isHpBarOn);
         }
     }
 
