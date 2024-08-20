@@ -148,6 +148,11 @@ public class Boss : LivingEntity, IPlayerObserver
                         var dash = AddSkill<Dash>(skill.Item1, skill.Item2);
                     }
                     break;
+                case 510014:
+                    {
+                        var bombardment = AddSkill<Bombardment>(skill.Item1, skill.Item2);
+                    }
+                    break;
             }
         }
 

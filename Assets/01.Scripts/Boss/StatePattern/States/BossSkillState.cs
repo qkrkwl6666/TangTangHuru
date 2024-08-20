@@ -24,8 +24,11 @@ public class BossSkillState : BossState
             case 333001: // 돌진 가디언
                 bossView.PlayAnimation(Defines.attack1, true);
                 break;
-            case 333002: // 
-
+            case 333002: // 포격 가디언
+                bossView.PlayAnimation(Defines.groundIn, false).Complete += (x) => 
+                {
+                    bossView.PlayAnimation(Defines.idle, true);
+                };
                 break;
             case 333003: // 
 

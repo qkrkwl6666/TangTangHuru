@@ -25,6 +25,8 @@ public static class Defines
     public static readonly string skeletonData = "SkeletonData";
     public static readonly string stageImage = "StageImage";
     public static readonly string emptyRect = "EmptyRect";
+    public static readonly string boom = "Boom";
+    public static readonly string stunCirlce = "StunCirlce";
 
     public static readonly string player = "Player";
 
@@ -124,6 +126,10 @@ public static class Defines
 
     //돌진 가디언 애니메이션
     public static readonly string attack1 = "attack1";
+
+    //포격 가디언 애니메이션
+    public static readonly string groundIn = "ground_in";  
+    public static readonly string groundOut = "ground_out";  
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new();

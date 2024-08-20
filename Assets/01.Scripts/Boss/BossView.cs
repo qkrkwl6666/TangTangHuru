@@ -16,8 +16,8 @@ public class BossView : MonoBehaviour
 
 
     #region 돌진 수호자 애니메이션
-    public float startTime = 0.815f; // 시뮬레이션 50번 돌려보면서 최적의 값을 찾았습니다.
-    public float endTime = 1.265f;
+    private float startTime = 0.815f; // 시뮬레이션 50번 돌려보면서 최적의 값을 찾았습니다.
+    private float endTime = 1.265f;
 
     private bool isDash = false;
 

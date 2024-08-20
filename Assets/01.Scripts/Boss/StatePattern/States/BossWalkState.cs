@@ -15,6 +15,25 @@ public class BossWalkState : BossState
 
     public override void Enter()
     {
+        if (boss.isGuardian)
+        {
+            switch(boss.BossData.Boss_Id)
+            {
+                case 333001:
+                    bossView.PlayAnimation(Defines.idle, true);
+                    break;
+                case 333002:
+                    bossView.PlayAnimation(Defines.groundOut, false).Complete += (x) => 
+                    {
+                        bossView.PlayAnimation(Defines.walk, true);
+                    };
+                    break;
+                case 333003:
+
+                    break;
+            }
+        }
+
         if (boss.Speed <= 0)
         {
             bossView.PlayAnimation(Defines.idle, true);
