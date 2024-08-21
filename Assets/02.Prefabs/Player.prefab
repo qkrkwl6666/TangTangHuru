@@ -167,9 +167,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e203bb5ef2b87647a443a342c72c41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raderOwner: 1
   itemLayerMask:
     serializedVersion: 2
     m_Bits: 256
+  treasureBarPrefab: {fileID: 0}
 --- !u!1 &1603739081648258547
 GameObject:
   m_ObjectHideFlags: 0
@@ -955,7 +957,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: 5651fd9ee71d96d45b7a1e48d0e78a27, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 16576cff85bad2d47bddd4f015b6e9b7, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!1001 &2455948152320977671
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1065,7 +1069,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: d82a1f01134292e488cb4f70c59f1840, type: 3}
   weaponDataRef: {fileID: 11400000, guid: ffe05996ebab486429a376b6773dc778, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!4 &6039578027236593742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -1196,7 +1202,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: d82a1f01134292e488cb4f70c59f1840, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 9b7f9f7874c0a4e41805f491542dbdf1, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!114 &8626126450677602979 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -1322,7 +1330,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: 5651fd9ee71d96d45b7a1e48d0e78a27, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 370cea82d488dce49b97e07f9fac42fb, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!114 &8831036490444683334 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5929843946191955122, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -1454,7 +1464,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: 157a4513ba9c50143b33a437f87d53b9, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 072d7a6bf47fa3248957f807f31aa97a, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!4 &2444240314562613005 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}
@@ -1585,7 +1597,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: d82a1f01134292e488cb4f70c59f1840, type: 3}
   weaponDataRef: {fileID: 11400000, guid: ffe05996ebab486429a376b6773dc778, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!1001 &7658411685525418540
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1695,7 +1709,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPrefab: {fileID: 3661404853983736829, guid: ea24b5c8ffea86643b71dc279e373a95, type: 3}
   weaponDataRef: {fileID: 11400000, guid: 01b5579e23b34f74cb153e6ad1207486, type: 2}
-  levelUpReady: 0
+  secondWeaponPrefab: {fileID: 0}
+  currLevel: 0
+  isMainWeapon: 0
 --- !u!4 &1985391687276300645 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8198138889625369417, guid: 8d933386647e89f428b98adb0a45e722, type: 3}

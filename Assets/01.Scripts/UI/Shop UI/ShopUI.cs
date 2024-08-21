@@ -32,6 +32,11 @@ public class ShopUI : MonoBehaviour
         sorted = true;
     }
 
+    private void OnDisable()
+    {
+        inventory.RefreshItemSlotUI();
+    }
+
     private void SetShopItems()
     {
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720001"));
@@ -39,6 +44,12 @@ public class ShopUI : MonoBehaviour
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720003"));
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720004"));
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("600006"));
+
+        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610001"));
+        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610101"));
+        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610201"));
+        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610301"));
+
     }
 
     private void SetEntry(ItemData itemData)
@@ -51,8 +62,18 @@ public class ShopUI : MonoBehaviour
 
     private void Purchase(ItemData itemData)
     {
-        inventory.MainInventoryAddItem(itemData.Item_Id.ToString());
-        inventory.Gold -= itemData.Price;
-        inventory.RefreshGoldDiamondTextUI();
+        if(inventory.Gold < itemData.Price)
+        {
+            SoundManager.Instance.PlaySound2D("failed");
+        }
+        else
+        {
+            inventory.MainInventoryAddItem(itemData.Item_Id.ToString());
+            inventory.Gold -= itemData.Price;
+            inventory.RefreshGoldDiamondTextUI();
+
+            SoundManager.Instance.PlaySound2D("success");
+        }
+
     }
 }

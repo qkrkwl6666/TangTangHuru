@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Audio;
 
 public class SingletonAwake : MonoBehaviour
 {
@@ -15,6 +17,13 @@ public class SingletonAwake : MonoBehaviour
         DataTableManager.Instance.OnAllTableLoaded += () =>
         {
             var achieveMgr = AchievementManager.Instance;
+        };
+        
+        var sound = SoundManager.Instance;
+
+        Addressables.LoadAssetAsync<AudioMixer>("AudioMixer").Completed += (x) =>
+        {
+            sound.mAudioMixer = x.Result;
         };
     }
 
