@@ -26,9 +26,14 @@ public static class Defines
     public static readonly string stageImage = "StageImage";
     public static readonly string emptyRect = "EmptyRect";
     public static readonly string boom = "Boom";
-    public static readonly string stunCirlce = "StunCirlce";
+    public static readonly string stunCirlce = "StunCircle";
 
     public static readonly string player = "Player";
+
+    // 가디언 보스 ID
+    public static readonly int chargeGuardian = 333001;
+    public static readonly int boomGuardian = 333002;
+    public static readonly int sternGuardian = 333003;
 
     // 아웃라이너 컬러
     public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
@@ -117,12 +122,13 @@ public static class Defines
     public static readonly string weapon027 = "weapon_027";
     public static readonly string weapon028 = "weapon_028";
 
-    // 몬스터 애니메이션
+    // 애니메이션
     public static readonly string idle = "idle";
     public static readonly string walk = "walk";
     public static readonly string attack = "attack";
     public static readonly string attack2 = "attack2";
     public static readonly string dead = "dead";
+    public static readonly string passOut = "passout";
 
     //돌진 가디언 애니메이션
     public static readonly string attack1 = "attack1";
@@ -134,6 +140,7 @@ public static class Defines
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new();
     public static List<string> weaponSkins = new();
+
 
     public static void SetSkins()
     {

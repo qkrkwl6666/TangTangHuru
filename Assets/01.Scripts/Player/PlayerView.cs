@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     public SkeletonAnimation skeletonAnimation;
-    public AnimationReferenceAsset idle, run;
+    public AnimationReferenceAsset idle, run, passout;
     public PlayerController controller;
     public PlayerState previousState = PlayerState.Idle;
     public string CurrentCharacterSkin { get; private set; } = string.Empty;
@@ -45,6 +45,9 @@ public class PlayerView : MonoBehaviour
                 break;
             case PlayerState.Run:
                 skeletonAnimation.AnimationState.SetAnimation(0, run, true);
+                break;
+            case PlayerState.Stun:
+                skeletonAnimation.AnimationState.SetAnimation(0, passout, true);
                 break;
         }
     }

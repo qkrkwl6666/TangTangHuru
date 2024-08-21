@@ -929,6 +929,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1072787931690643177, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
+      propertyPath: passout
+      value: 
+      objectReference: {fileID: 11400000, guid: e6646dd692ee2434aa6c2216766a71ea, type: 2}
     - target: {fileID: 2364806144273083525, guid: 5fba8ec4d6fa8e546aec0f1ee401b234, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1524,31 +1528,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Circle
       objectReference: {fileID: 0}
+    - target: {fileID: 8643346569051183372, guid: 26b168a88cecaf5488d9a2ed120298af, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8643346569051183372, guid: 26b168a88cecaf5488d9a2ed120298af, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1439713049}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26b168a88cecaf5488d9a2ed120298af, type: 3}
---- !u!1 &1439713048 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8643346569051183372, guid: 26b168a88cecaf5488d9a2ed120298af, type: 3}
-  m_PrefabInstance: {fileID: 1439713047}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1439713049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1439713048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8aa0ae5d861ad04abf28008847e6f75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1533847496
 GameObject:
   m_ObjectHideFlags: 0
@@ -2202,6 +2190,10 @@ PrefabInstance:
     - target: {fileID: 5720318913007519022, guid: 813bef0d48d77c74ca41c7c27a34c0bf, type: 3}
       propertyPath: m_Name
       value: Bollabear
+      objectReference: {fileID: 0}
+    - target: {fileID: 5720318913007519022, guid: 813bef0d48d77c74ca41c7c27a34c0bf, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5492,7 +5484,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2108776948950657912, guid: da554aa7950d70545a52fafddb331a5c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2108776948950657913, guid: da554aa7950d70545a52fafddb331a5c, type: 3}
       propertyPath: m_Pivot.x
@@ -5584,7 +5576,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2108776949559557854, guid: da554aa7950d70545a52fafddb331a5c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

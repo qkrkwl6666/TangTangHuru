@@ -34,9 +34,7 @@ public class Boss : LivingEntity, IPlayerObserver
 
     // View
     private BossView bossView;
-
     public BossData BossData { get; private set; }
-
     public InGameUI GameUI { get; private set; }
 
     private void Awake()
@@ -151,6 +149,11 @@ public class Boss : LivingEntity, IPlayerObserver
                 case 510014:
                     {
                         var bombardment = AddSkill<Bombardment>(skill.Item1, skill.Item2);
+                    }
+                    break;
+                case 510015:
+                    {
+                        var stunned = AddSkill<Stunned>(skill.Item1, skill.Item2);
                     }
                     break;
             }

@@ -18,7 +18,7 @@ public class Stunned : MonoBehaviour, IBossSkill
     private Boss boss;
 
     private float time = 0f;
-    private float circleScale = 3f;
+    private float circleScale = 10f;
 
     private void Awake()
     {
@@ -28,11 +28,12 @@ public class Stunned : MonoBehaviour, IBossSkill
 
     public void Initialize(BossSkillData bossSkillData, float damage)
     {
-        Addressables.InstantiateAsync(Defines.stunCirlce).Completed 
+        Addressables.InstantiateAsync(Defines.stunCirlce, transform).Completed 
             += (x) =>
         {
             var go = x.Result;
             stunCirlce = go;
+            stunCirlce.GetComponent<StunCircle>().Initialize(boss, bossView, SkillRate, damage);
             stunCirlce.SetActive(false);
         };
 
@@ -48,6 +49,8 @@ public class Stunned : MonoBehaviour, IBossSkill
     public void Activate()
     {
         enabled = true;
+
+        Attack();
     }
 
     public void DeActivate()
@@ -61,15 +64,15 @@ public class Stunned : MonoBehaviour, IBossSkill
     {
         time += deltaTime;
 
-        if (time >= SkillRate)
-        {
-            time = 0f;
-            Attack();
-        }
+        //if (time >= SkillRate)
+        //{
+        //    time = 0f;
+        //    Attack();
+        //}
     }
 
     public void Attack()
     {
-
+        stunCirlce.gameObject.SetActive(true);
     }
 }
