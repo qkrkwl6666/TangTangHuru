@@ -1008,33 +1008,33 @@ public class MainInventory : MonoBehaviour
         if (armorSet.Any(armor => !playerEquipment.ContainsKey(armor)))
             return;
 
-        var setType = playerEquipment[PlayerEquipment.Helmet].Item1.itemData.SetType;
+        ArmorSet setType = (ArmorSet)playerEquipment[PlayerEquipment.Helmet].Item1.itemData.SetType;
 
-        if (armorSet.All(armor => playerEquipment[armor].Item1.itemData.SetType == setType))
+        if (armorSet.All(armor => playerEquipment[armor].Item1.itemData.SetType == (int)setType))
         {
             string stringId = string.Empty;
 
             switch (setType)
             {
-                case 1:
+                case ArmorSet.HolyKnightSet:
                     stringId = "SetType1";
                     break;
-                case 2:
+                case ArmorSet.SilverStrider:
                     stringId = "SetType2";
                     break;
-                case 3:
+                case ArmorSet.ShadowWork:
                     stringId = "SetType3";
                     break;
-                case 4:
+                case ArmorSet.RedStone:
                     stringId = "SetType4";
                     break;
-                case 5:
+                case ArmorSet.StormBreaker:
                     stringId = "SetType5";
                     break;
-                case 6:
+                case ArmorSet.MoonWalker:
                     stringId = "SetType6";
                     break;
-                case 7:
+                case ArmorSet.SkyWatch:
                     stringId = "SetType7";
                     break;
             }
@@ -1694,4 +1694,15 @@ public enum FilterType
     Weapon,
     Consumable,
     Pet,
+}
+
+public enum ArmorSet
+{
+    HolyKnightSet = 1,
+    SilverStrider,
+    ShadowWork,
+    RedStone,
+    StormBreaker,
+    MoonWalker,
+    SkyWatch,
 }

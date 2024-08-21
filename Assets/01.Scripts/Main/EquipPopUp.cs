@@ -172,8 +172,8 @@ public class EquipPopUp : MonoBehaviour
                 break;
         }
 
-                // 강화 UI 설정
-                RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
+        // 강화 UI 설정
+        RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
     }
 
     public void SetTierUpUI(Item item)

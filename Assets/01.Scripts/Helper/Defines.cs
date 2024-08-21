@@ -6,6 +6,7 @@ using DG.Tweening.Plugins.Options;
 
 public static class Defines
 {
+    // item
     public static readonly string exp = "Exp";
     public static readonly string magnet = "Magnet";
     public static readonly string normalBullet = "NormalBullet";
@@ -29,6 +30,9 @@ public static class Defines
     public static readonly string stunCirlce = "StunCircle";
 
     public static readonly string player = "Player";
+
+    // Scene
+    public static readonly string tutorialScene = "TutorialScene";
 
     // 가디언 보스 ID
     public static readonly int chargeGuardian = 333001;

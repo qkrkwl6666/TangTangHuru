@@ -265,4 +265,16 @@ public class StageSelectionUI : MonoBehaviour
 
     }
 
+    public void ResetUI()
+    {
+        foreach(Transform transform in contentRect.transform)
+        {
+            Destroy(transform.gameObject);
+        }
+
+        stageRects.Clear();
+
+        InitStageUI();
+    }
+
 }

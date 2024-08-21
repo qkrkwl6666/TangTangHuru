@@ -54,6 +54,8 @@ public class ItemDetection : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log(gameObject.name);
+
         hitCollider = new Collider[maxCollider];
 
         treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
