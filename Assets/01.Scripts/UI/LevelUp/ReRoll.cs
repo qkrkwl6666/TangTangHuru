@@ -13,16 +13,25 @@ public class ReRoll : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-        if (GameManager.Instance.playerEquipment[PlayerEquipment.Pet].Item1.ItemId != 710002)
-        {
-            gameObject.SetActive(false);
-            return;
-        }
 
         var reSkill = GameObject.FindGameObjectWithTag("Pet").GetComponent<ReRollSkill>();
-        countMax = reSkill.ReRollCountMax;
+        if(reSkill != null )
+        {
+            countMax = reSkill.ReRollCountMax;
+        }
+        else
+        {
+            countMax = 0;
+        }
 
-        GetComponent<Button>().onClick.AddListener(AddReRollCount);
+        if(countMax == 0)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            GetComponent<Button>().onClick.AddListener(AddReRollCount);
+        }
     }
 
     private void AddReRollCount()

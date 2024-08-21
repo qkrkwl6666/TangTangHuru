@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,13 +9,14 @@ using UnityEngine.UI;
 public class PlayerHealth : LivingEntity
 {
     public Slider hpBar;
+    public ParticleSystem healPartice;
 
-    private float invincibleTime = 0.1f;
+    private float invincibleTime = 0.07f;
     private float timer = 0f;
     private bool isInvincible = false;
 
-    private float armorRate = 0f;
-    private float dodgeRate = 0f;
+    private float armorRate = 1f;
+    private float dodgeRate = 1f;
 
     private GameObject textObject;
     private List<GameObject> textObjects = new List<GameObject>();
@@ -88,10 +90,24 @@ public class PlayerHealth : LivingEntity
 
     public override void OnDamage(float damage, float Impact = 0)
     {
-        if(damage < 0)
+        if (damage < 0)
         {
-            health -= damage;
-            hpBar.value -= damage;
+            if (health > startingHealth)
+            {
+                health = startingHealth;
+                hpBar.value = startingHealth;
+            }
+            else
+            {
+                health -= damage;
+                hpBar.value -= damage;
+            }
+
+            if (!healPartice.gameObject.activeSelf)
+            {
+                StartCoroutine(HealEffectPlay());
+            }
+            return;
         }
 
         if (dead || isInvincible)
@@ -114,7 +130,7 @@ public class PlayerHealth : LivingEntity
         }
 
         health -= totalDmg;
-        hpBar.value -= damage;
+        hpBar.value -= totalDmg;
 
         if (health <= 0 && !dead)
         {
@@ -148,5 +164,15 @@ public class PlayerHealth : LivingEntity
     {
         isInvincible = false;
         invincibleTime = 0.1f;
+    }
+
+
+    private IEnumerator HealEffectPlay()
+    {
+        healPartice.gameObject.SetActive(true);
+        healPartice.Play();
+        yield return new WaitForSeconds(1f);
+        healPartice.Stop();
+        healPartice.gameObject.SetActive(false);
     }
 }

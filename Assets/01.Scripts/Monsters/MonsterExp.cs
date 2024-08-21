@@ -8,9 +8,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 
     private float exp = 0; //생성시 자동세팅
 
-    private float playerDistanceDifference = 1.5f;
-
-    private float speed = 8f;
+    private float speed = 10f;
 
     private Transform targetTransform;
 
@@ -79,5 +77,21 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
     public void GetItem()
     {
         
+    }
+
+    private void Update()
+    {
+        if (targetTransform == null)
+            return;
+
+        var dir = targetTransform.position - transform.position;
+
+        transform.position += dir.normalized * speed * Time.deltaTime;
+
+
+        if(Vector2.Distance(targetTransform.position, transform.position) < 0.5f)
+        {
+            UseItem();
+        }
     }
 }
