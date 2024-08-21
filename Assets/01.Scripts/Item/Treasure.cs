@@ -18,7 +18,7 @@ public class Treasure : MonoBehaviour, IInGameItem
 
     public void GetItem()
     {
-        throw new System.NotImplementedException();
+        
     }
 
     public void UseItem()
@@ -27,7 +27,7 @@ public class Treasure : MonoBehaviour, IInGameItem
         foreach (var item in inGameItems)
         {
             var dir = Random.insideUnitCircle;
-            dir = dir.normalized * 5f;
+            dir = dir.normalized * 3f;
             item.transform.position = (Vector2)transform.position + dir;
         }
 

@@ -1,11 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class EquipmentAppraisal : MonoBehaviour
 {
@@ -285,6 +282,7 @@ public class EquipmentAppraisal : MonoBehaviour
             selectGemStone[key] = 0;
         }
 
+        mainInventory.SaveInventory();
     }
 
 }

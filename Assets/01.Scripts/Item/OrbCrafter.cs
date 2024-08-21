@@ -2,18 +2,23 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class OrbCrafter : MonoBehaviour
 {
     public OrbUpgrader orbUpgrader;
     public MainInventory inventory;
     public TextMeshProUGUI stoneCountText;
+    public TextMeshProUGUI stonePersent;
+    public OrbNoticePanel popUp_Notice;
     public Button craftButton;
     public List<Image> gaige;
 
     private int gaigeNum = 0; //저장요소
     private int stoneCount = 0;
     private List<int> orbIdList = new List<int> { 610001, 610101, 610201, 610301 };
+
+    private int createPersent = 56;
 
     void Start()
     {
@@ -30,6 +35,8 @@ public class OrbCrafter : MonoBehaviour
         {
             gaige[i].color = Color.yellow;
         }
+
+        stonePersent.text = $"{createPersent}%"; ;
     }
 
     private void SetCount()
@@ -44,7 +51,7 @@ public class OrbCrafter : MonoBehaviour
             return;
 
         inventory.RemoveItem(ItemType.ReinforcedStone, 0, 3);
-        if (Random.Range(0, 100) < 56)
+        if (Random.Range(0, 100) < createPersent)
         {
             CraftSuccess();
         }
@@ -76,6 +83,7 @@ public class OrbCrafter : MonoBehaviour
         {
             gaige[gaigeNum].color = Color.yellow;
             gaigeNum++;
+            SoundManager.Instance.PlaySound2D("success");
         }
         else
         {
@@ -85,14 +93,23 @@ public class OrbCrafter : MonoBehaviour
                 obj.color = Color.clear;
             }
             inventory.MainInventoryAddItem(orbIdList[rndIndex].ToString());
+
+            var orbData = DataTableManager.Instance.Get<ItemTable>
+            (DataTableManager.item).GetItemData(orbIdList[rndIndex].ToString());
+
+            popUp_Notice.SetInfo(orbData);
+            popUp_Notice.gameObject.SetActive(true);
+
+            SoundManager.Instance.PlaySound2D("orb");
         }
-        Debug.Log("제작 성공!");
         SaveGaige();
+
+
     }
 
     private void CraftFail()
     {
-        Debug.Log("제작 실패..");
+        SoundManager.Instance.PlaySound2D("failed");
     }
 
     public void SaveGaige()

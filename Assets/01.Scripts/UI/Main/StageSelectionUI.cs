@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TMPro;
+using DG.Tweening.Core.Easing;
 
 public class StageSelectionUI : MonoBehaviour
 {
@@ -35,8 +36,23 @@ public class StageSelectionUI : MonoBehaviour
     private Dictionary<string, StageData> stageTable;
 
     private Coroutine scrollCoroutine;
+
+    public MainUI mainUI;
+
+    public Button selectButton;
+
+    private bool allClearCheat = false;
+    private int originalMaxStage = 0;
+
     private void Awake()
     {
+        if (!DataTableManager.Instance.isTableLoad)
+            DataTableManager.Instance.OnAllTableLoaded += InitStageUI;
+        else
+        {
+            Debug.Log("세이브 이미 로드 완료됨");
+            InitStageUI();
+        }
         
     }
 
@@ -45,15 +61,13 @@ public class StageSelectionUI : MonoBehaviour
         EnhancedTouchSupport.Enable();
 
         scrollCoroutine = StartCoroutine(ScrollCheck());
-        //Debug.Log(GameManager.Instance.CurrentStage);
+        
         if (isFirstEnable == false)
         {
-            InitStageUI();
             isFirstEnable = true;
         }
         else
         {
-            // 게임매니저 스테이지로 중앙 초기화
             CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
         }
     }
@@ -72,8 +86,16 @@ public class StageSelectionUI : MonoBehaviour
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
 
+        if (allClearCheat)
+        {
+            GameManager.Instance.CurrentStage = currentStage;
+        }
+        else if(currentStage <= SaveManager.SaveDataV1.MaxStage)
+        {
+            GameManager.Instance.CurrentStage = currentStage;
+        }
 
-        GameManager.Instance.CurrentStage = currentStage;
+        mainUI.SaveLoadMainStageText();
     }
 
     private void Start()
@@ -101,6 +123,8 @@ public class StageSelectionUI : MonoBehaviour
 
     private IEnumerator ScrollCheck()
     {
+        yield return new WaitForSeconds(0.1f);
+
         while (true)
         {
             if (isScrolling)
@@ -147,6 +171,16 @@ public class StageSelectionUI : MonoBehaviour
                 nearestDistance = distance;
                 nearestStage = stageRects[i];
                 currentStage = i + 1;
+
+                if (allClearCheat)
+                {
+                    selectButton.interactable = true;
+                }
+                else
+                {
+                    selectButton.interactable = i + 1 > SaveManager.SaveDataV1.MaxStage ? false : true;
+
+                }
             }
         }
 
@@ -156,7 +190,6 @@ public class StageSelectionUI : MonoBehaviour
 
             titleText.text = stageTable[(currentStage).ToString()].Title;
             descText.text = stageTable[(currentStage).ToString()].Desc;
-            
         }
     }
 
@@ -176,6 +209,25 @@ public class StageSelectionUI : MonoBehaviour
                    x => scrollRect.horizontalNormalizedPosition = x,
                    targetNormalizedPos, centeringDuration)
                .SetEase(Ease.OutQuad);
+    }
+
+    private IEnumerator CoCenterOnStageNoDotTween(RectTransform stageRect)
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        float stageLeftEdge = stageRect.anchoredPosition.x - stageRect.rect.width * 0.5f;
+
+        float contentWidth = contentRect.rect.width;
+
+        float viewportWidth = scrollRect.viewport.rect.width;
+
+        float targetNormalizedPos = (stageLeftEdge + stageRect.rect.width * 0.5f - viewportWidth * 0.5f) / (contentWidth - viewportWidth);
+
+        targetNormalizedPos = Mathf.Clamp01(targetNormalizedPos);
+
+        scrollRect.horizontalNormalizedPosition = targetNormalizedPos;
+
+        gameObject.SetActive(false);
     }
 
     public void InitStageUI()
@@ -206,13 +258,33 @@ public class StageSelectionUI : MonoBehaviour
 
                 stageRects.Add(rect);
 
-                if(name == stageTable.Count - 1)
+                if(name + 1 > SaveManager.SaveDataV1.MaxStage)
                 {
-                    CenterOnStage(stageRects[GameManager.Instance.CurrentStage - 1]);
+                    rect.GetChild(1).gameObject.SetActive(true);
+                }
+
+                if (stageTable[(name + 1).ToString()].Texture != "-1")
+                {
+                    Addressables.LoadAssetAsync<Sprite>(stageTable[(name + 1).ToString()].Texture).Completed += (sprite) => 
+                    {
+                        rect.GetChild(0).GetComponent<Image>().sprite = sprite.Result;
+                    };
+                }
+
+                if (name == stageTable.Count - 1)
+                {
+                    StartCoroutine(CoCenterOnStageNoDotTween(stageRects[GameManager.Instance.CurrentStage - 1]));
+                    currentStage = GameManager.Instance.CurrentStage;
                 }
             };
         }
 
-
     }
+
+
+    public void AllClearCheatOn()
+    {
+        allClearCheat = !allClearCheat;
+    }
+
 }

@@ -9,6 +9,13 @@ public class ReinforcedStone : MonoBehaviour, IInGameItem
     public IItemType ItemType { get; set; } = IItemType.ReinforcedStone;
     public string TextureId { get; set; }
 
+    private InGameInventory inventory;
+
+    private void Awake()
+    {
+        inventory = GameObject.FindWithTag("InGameInventory").GetComponent<InGameInventory>();
+    }
+
     public void GetItem()
     {
 
@@ -16,7 +23,6 @@ public class ReinforcedStone : MonoBehaviour, IInGameItem
 
     public void UseItem()
     {
-        // Todo : 바로 메인 인벤토리 에 강화석이 들어가야함
-        //Debug.Log($"아이템 ID : {ItemId}, 이름 : {Name}");
+        inventory.AddItem(this);
     }
 }

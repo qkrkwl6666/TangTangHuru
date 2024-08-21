@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UI;
 
 public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 {
@@ -22,6 +23,9 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     public List<GameObject> monsters = new List<GameObject>();
     public Dictionary<int, IObjectPool<GameObject>> monsterPools = new Dictionary<int, IObjectPool<GameObject>>();
     public int maxMonster = 200; // 필드 최대 몬스터 수
+
+    //장착할 HP바 프리팹
+    public GameObject hpBarObj;
 
     // 보스 장애물 관련 변수들
     private int obstaclesCount = 90; // 장애물 개수
@@ -106,7 +110,14 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 (x) =>
                 {
                     monsters.Add(x);
-                    x.GetComponent<LivingEntity>().AwakeHealth();
+                    var hp = x.GetComponent<Monster>();
+                    if(hp.hpBar == null)
+                    {
+                        var hpCanvas = Instantiate(hpBarObj, x.transform);
+                        hp.hpBar = hpCanvas.GetComponentInChildren<Slider>();
+                    }
+                    hp.AwakeHealth();
+                    hp.SetHpBar();
                     x.SetActive(true);
                 },
                 (x) =>
@@ -119,38 +130,70 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 10, 200);
         }
 
+
+        GameObject monster = monsterPools[monsterData.Monster_ID].Get();
+        monster.transform.rotation = Quaternion.identity;
+        monster.GetComponent<Monster>().SetHpBar();
+
         switch (spawnType)
         {
-            // 랜덤 생성
-            case 1:
+            case 1: // 랜덤 생성
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    var monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = RandomPosition();
-                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
-            // 직선 생성
-            case 2:
+            case 2: // 직선 생성
                 var lineList = LinePosition(RandomPosition(), spawnCount, 0f);
-
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    var monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = lineList[i];
-                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
-            // 원 생성
-            case 3:
+            case 3: // 원 생성
                 for (int i = 0; i < spawnCount; i++)
                 {
-                    var monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = CirclePosition(spawnCount, i);
-                    monster.transform.rotation = Quaternion.identity;
                 }
                 break;
         }
+
+        //수정전
+        //switch (spawnType)
+        //{
+        //    // 랜덤 생성
+        //    case 1:
+        //        for (int i = 0; i < spawnCount; i++)
+        //        {
+        //            monster = monsterPools[monsterData.Monster_ID].Get();
+        //            monster.transform.position = RandomPosition();
+        //            monster.transform.rotation = Quaternion.identity;
+        //            monster.GetComponent<Monster>().SetHpBar();
+        //        }
+        //        break;
+        //    // 직선 생성
+        //    case 2:
+        //        var lineList = LinePosition(RandomPosition(), spawnCount, 0f);
+
+        //        for (int i = 0; i < spawnCount; i++)
+        //        {
+        //            monster = monsterPools[monsterData.Monster_ID].Get();
+        //            monster.transform.position = lineList[i];
+        //            monster.transform.rotation = Quaternion.identity;
+        //            monster.GetComponent<Monster>().SetHpBar();
+        //        }
+        //        break;
+        //    // 원 생성
+        //    case 3:
+        //        for (int i = 0; i < spawnCount; i++)
+        //        {
+        //            monster = monsterPools[monsterData.Monster_ID].Get();
+        //            monster.transform.position = CirclePosition(spawnCount, i);
+        //            monster.transform.rotation = Quaternion.identity;
+        //            monster.GetComponent<Monster>().SetHpBar();
+        //        }
+        //        break;
+        //}
 
     }
 

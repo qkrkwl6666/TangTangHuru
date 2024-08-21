@@ -8,7 +8,7 @@ public class OrbUpgrader : MonoBehaviour
     public ItemSlotUI[] upgradeSlots;
     public Button upgradeButton;
     public OrbPanel popUp_OrbPanel;
-    public GameObject popUp_Notice;
+    public OrbNoticePanel popUp_Notice;
 
     private ItemData orbData;
 
@@ -32,6 +32,7 @@ public class OrbUpgrader : MonoBehaviour
         {
             slot.GetComponent<Button>().onClick.RemoveAllListeners();
         }
+        popUp_OrbPanel.ResetOn();
     }
 
     private void SlotSelected(ItemSlotUI currSlot)
@@ -44,6 +45,8 @@ public class OrbUpgrader : MonoBehaviour
         {
             PopUpOrbPanel(currSlot);
         }
+
+        SoundManager.Instance.PlaySound2D("cancel");
     }
 
     private void PopUpOrbPanel(ItemSlotUI slot)
@@ -64,21 +67,26 @@ public class OrbUpgrader : MonoBehaviour
 
     private void Upgrade()
     {
-        if (!CheckUpgradable())
-            return;
-
-        inventory.RemoveOrbItem((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier, 3);
-        inventory.MainInventoryAddItem((orbData.Item_Id + 1).ToString());
-
-        popUp_OrbPanel.ResetOn();
-
-        for (int i = 0; i < upgradeSlots.Length; i++)
+        if (CheckUpgradable())
         {
-            upgradeSlots[i].ClearInfo();
+            inventory.RemoveOrbItem((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier, 3);
+            inventory.MainInventoryAddItem((orbData.Item_Id + 1).ToString());
+
+            popUp_OrbPanel.ResetOn();
+
+            for (int i = 0; i < upgradeSlots.Length; i++)
+            {
+                upgradeSlots[i].ClearInfo();
+            }
+            orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData((firstItemId + 1).ToString());
+            inventory.RefreshItemSlotUI();
+            SetNoticePopUp();
         }
-        orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData((firstItemId + 1).ToString());
-        inventory.RefreshItemSlotUI();
-        SetNoticePopUp();
+        else
+        {
+            SoundManager.Instance.PlaySound2D("failed");
+        }
+
     }
 
     private bool CheckUpgradable()
@@ -105,18 +113,16 @@ public class OrbUpgrader : MonoBehaviour
         if(orbData.Item_Tier > 3)
         {
             Debug.Log("이미 최고티어 오브이다.");
+            return false;
         }
         return true;
     }
 
     private void SetNoticePopUp()
     {
-        var strTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
-
-        var desc = strTable.Get(orbData.Desc_Id).Text;
-        var name = strTable.Get(orbData.Name_Id).Text;
-        popUp_Notice.GetComponentInChildren<TextMeshProUGUI>().text = ($"{desc} {name} 오브 획득!");
-        popUp_Notice.SetActive(true);
+        popUp_Notice.SetInfo(orbData);
+        popUp_Notice.gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound2D("orb");
     }
 
 }

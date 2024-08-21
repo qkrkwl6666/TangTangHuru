@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class MonsterExp : MonoBehaviour, IPlayerObserver
+public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 {
     private PlayerSubject playerSubject;
     private Transform playerTransform;
@@ -10,37 +10,32 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
 
     private float playerDistanceDifference = 1.5f;
 
-    private float speed = 5f;
+    private float speed = 8f;
 
     private Transform targetTransform;
 
     public IObjectPool<GameObject> pool;
 
-    private void Update()
-    {
-        if (playerSubject == null) return;
+    public int ItemId { get ; set ; }
+    public string Name { get ; set ; }
+    public IItemType ItemType { get ; set ; }
+    public string TextureId { get ; set ; }
 
-        if (Vector2.Distance(transform.position, playerTransform.position) <= playerDistanceDifference)
-        {
-            targetTransform = playerTransform;
-        }
-
-        if (targetTransform == null)
-            return;
-
-        Vector2 dir = targetTransform.position - transform.position;
-        transform.Translate(dir * speed * Time.deltaTime);
-        if (Vector2.Distance(transform.position, targetTransform.position) <= 1)
-        {
-            Release();
-            return;
-        }
-    }
+    private bool isUsed = false;
 
     public void Release()
     {
-        playerSubject.GetPlayerExp.EarnExp(exp);
-        pool.Release(gameObject);
+        if (!isUsed)
+        {
+            isUsed = true;
+            playerSubject.GetPlayerExp.EarnExp(exp);
+            pool.Release(gameObject);
+        }
+    }
+
+    private void OnEnable()
+    {
+        isUsed = false;
     }
 
     private void OnDisable()
@@ -68,13 +63,21 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver
         playerTransform = playerSubject.GetPlayerTransform;
     }
 
-    public void Reset()
-    {
-
-    }
-
     public void SetTarget(Transform target)
     {
         targetTransform = target;
+    }
+
+    public void UseItem()
+    {
+        if (!isUsed)
+        {
+            Release();
+        }
+    }
+
+    public void GetItem()
+    {
+        
     }
 }

@@ -38,6 +38,12 @@ public class ItemData
     public float TierUp_Exp { get; set; }
     public float TierUp_NeedExp { get; set; }
 
+    //방어구 세트 정보
+    public int SetType { get; set; }
+
+    //가격
+    public int Price { get; set; }
+
 
     public ItemData DeepCopy()
     {
@@ -60,6 +66,12 @@ public class ItemData
         newItemData.CoolDown = this.CoolDown;
         newItemData.CriticalChance = this.CriticalChance;
         newItemData.Criticaldam = this.Criticaldam;
+        newItemData.CurrentUpgrade = this.CurrentUpgrade;
+        newItemData.TierUp_Exp = this.TierUp_Exp;
+        newItemData.TierUp_NeedExp = this.TierUp_NeedExp;
+        newItemData.SetType = this.SetType;
+        newItemData.Price = this.Price;
+
 
         return newItemData;
     }
@@ -87,6 +99,21 @@ public class ItemTable : DataTable
         }
 
         return null;
+    }
+
+    public List<ItemData> GetItemDatas(ItemType itemType, ItemTier itemTier)
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+
+        foreach (var item in itemTable.Values)
+        {
+            if (item.Item_Type == (int)itemType && item.Item_Tier == (int)itemTier)
+            {
+                itemDatas.Add(item);
+            }
+        }
+
+        return itemDatas;
     }
 
     public override void Load(string name, Action tableLoaded)

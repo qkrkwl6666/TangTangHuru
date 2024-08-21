@@ -1,15 +1,11 @@
-using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-
-using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
 {
@@ -17,14 +13,20 @@ public class MainInventory : MonoBehaviour
     private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new ();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
-    // Todo : 로드 시 playerEquipment 에 등록된 item은 itemslot에서 비활성화 해줘야함
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
+
+    public List<Image> subWeaponImages = new ();
 
     public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
     public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI           접근시 (PlayerEquipment) - 1
     public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
 
     public List<M_UISlot> equipmentSlotUI = new ();
+
+    // 펫 정보
+    public List<GameObject> petSlotUI = new ();
+    public Button petEquipSlotUI;
+    public M_UISlot petMUISlot;
 
     // 현재 생성된 UI 슬롯 아이템
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
@@ -45,9 +47,8 @@ public class MainInventory : MonoBehaviour
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI diamondText;
 
-    public int Gold {  get; private set; }
-    public int Diamond {  get; private set; }
-
+    public int Gold {  get; set; }
+    public int Diamond {  get; set; }
 
     #region 정렬
     public Button allFilterButton;    // 전체
@@ -194,28 +195,28 @@ public class MainInventory : MonoBehaviour
 
         mainUI = GameObject.FindWithTag("MainUI").GetComponent<MainUI>();
 
-        //items.Add(200001);
-        //items.Add(200002);
-        //items.Add(200003);
-        //items.Add(200004);
-        //items.Add(200005);
-        //items.Add(200101);
-        //items.Add(200102);
-        //items.Add(200103);
-        //items.Add(200104);
-        //items.Add(200105);
-        //items.Add(210001);
-        //items.Add(210002);
-        //items.Add(210003);
-        //items.Add(210004);
-        //items.Add(600001);
-        //items.Add(600002);
-        //items.Add(600003);
-        //items.Add(600004);
-        //items.Add(600005);
+        items.Add(200001);
+        items.Add(200002);
+        items.Add(200003);
+        items.Add(200004);
+        items.Add(200005);
+        items.Add(200101);
+        items.Add(200102);
+        items.Add(200103);
+        items.Add(200104);
+        items.Add(200105);
+        items.Add(210001);
+        items.Add(210002);
+        items.Add(210003);
+        items.Add(210004);
+        items.Add(600001);
+        items.Add(600002);
+        items.Add(600003);
+        items.Add(600004);
+        items.Add(600005);
         
-        //items.Add(600006);
-        items.Add(610001);
+        items.Add(600006);
+        //items.Add(610001);
 
         //items.Add(710001);
         //items.Add(710002);
@@ -231,10 +232,11 @@ public class MainInventory : MonoBehaviour
         else
         {
             Debug.Log("세이브 이미 로드 완료됨");
+
+            Gold = SaveManager.SaveDataV1.Gold;
+
             StartCoroutine(SceneLoadMainInventory());
         }
-
-        //임시코드
 
     }
 
@@ -296,6 +298,7 @@ public class MainInventory : MonoBehaviour
             allItem[itemType][itemTier].Add(mainItem);
             return mainItem;
         }
+
     }
 
     // ****주의**** : Item 인스턴스 생성 아이디가 복사됨
@@ -312,6 +315,8 @@ public class MainInventory : MonoBehaviour
         ItemTier itemTier = item.ItemTier;
 
         var mainItem = MakeItem(itemData, true, item.InstanceId);
+
+        mainItem.CurrentTierUp = item.CurrentTierUp;
 
         if (!allItem.ContainsKey(itemType))
         {
@@ -341,10 +346,10 @@ public class MainInventory : MonoBehaviour
     public void SaveInventory()
     {
         SaveManager.SaveDataV1.allItem.Clear();
-
-        SaveManager.SaveDataV1.Gold = 0;
-        SaveManager.SaveDataV1.Diamond = 0;
-        SaveManager.SaveDataV1.CurrentStage = 1;
+        
+        SaveManager.SaveDataV1.Gold = Gold;
+        SaveManager.SaveDataV1.Diamond = Diamond;
+        SaveManager.SaveDataV1.CurrentStage = GameManager.Instance.CurrentStage;
 
         SaveManager.SaveDataV1.playerEquipment = playerEquipment.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Item1);
 
@@ -358,6 +363,8 @@ public class MainInventory : MonoBehaviour
                 }
             }
         }
+
+        SaveManager.Instance.SaveGame(SaveManager.SaveDataV1);
     }
 
     public Item MakeItem(ItemData itemData, bool isInstanceId = false, int instanceId = 0)
@@ -370,73 +377,41 @@ public class MainInventory : MonoBehaviour
             case 4: // CrossBow
             case 5: // Wand
             case 6: // Staff
-
-            case 12: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
-            case 13: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
-            case 14: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
-            case 15: // Orb
-                {
-                    M_Item m_item = new M_Item();
-
-                    if (!isInstanceId)
-                    {
-                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }
-
-                    m_item.SetItemData(itemData, instanceId);
-
-                    return m_item;
-                }
-            case 16: // Pet
                 {
                     M_Weapon m_weaponItem = new M_Weapon();
 
-                    if(!isInstanceId)
+                    if (!isInstanceId)
                     {
                         instanceId = m_weaponItem.GetHashCode() + UnityEngine.Random.Range(1, 100000);
                     }
 
                     m_weaponItem.SetItemData(itemData, instanceId);
 
+                    if((ItemTier)itemData.Item_Tier != ItemTier.Normal)
+                    {
+                        m_weaponItem.subWeapons = GetRandomSubWeapon(itemData.Item_Tier);
+                    }     
+
                     return m_weaponItem;
                 }
 
+            case 12: // Orb
+            case 13: // Orb
+            case 14: // Orb
+            case 15: // Orb
+            case 16: // Pet
+                {
+                    M_Item m_item = new M_Item();
+
+                    if (!isInstanceId)
+                    {
+                        instanceId = m_item.GetHashCode() + UnityEngine.Random.Range(1, 100000);
+                    }
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
             case 7: // 투구
             case 8: // 갑옷
             case 9: // 신발
@@ -454,6 +429,7 @@ public class MainInventory : MonoBehaviour
                 }
             case 10: // 장비 원석
             case 11: // 강화석
+            case 19: // PetFood
                 {
                     M_Item m_item = new M_Item();
 
@@ -516,6 +492,7 @@ public class MainInventory : MonoBehaviour
 
                         case ItemType.EquipmentGem:
                         case ItemType.ReinforcedStone:
+                        case ItemType.PetFood:
                             UpdateConsumableItemCount(itemList[i]);
                             break;
 
@@ -605,9 +582,25 @@ public class MainInventory : MonoBehaviour
     }
 
     // 장비 무기 아이템 삭제
-    public void RemoveItem(int instanceId)
+    public void RemoveItem(int instanceId, bool isPet = false)
     {
         if (!itemSlotUI.ContainsKey(instanceId)) return;
+
+        // 아이템 장착 중이면 장착에서도 삭제
+        if (!isPet)
+        {
+            PlayerEquipRemove(instanceId);
+        }
+        else
+        {
+            foreach (var pet in petSlotUI)
+            {
+                pet.gameObject.SetActive(false);
+            }
+            petEquipSlotUI.interactable = false;
+            playerEquipment.Remove(PlayerEquipment.Pet);
+            GameManager.Instance.playerEquipment = playerEquipment;
+        }
 
         var item = itemSlotUI[instanceId];
 
@@ -621,10 +614,10 @@ public class MainInventory : MonoBehaviour
 
         itemList.Remove(item.Item1);
 
-        // 소모품 이면 소모품 컨테이너도 에서도 삭제해 줘야함
+        RefreshItemSlotUI();
     }
 
-    // 소모품 아이템 삭제
+
 
     public bool RemoveOrbItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
@@ -655,6 +648,7 @@ public class MainInventory : MonoBehaviour
         return true;
     }
 
+    // 소모품 아이템 삭제
     public bool RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
         if (!allItem.ContainsKey(itemType))
@@ -690,6 +684,28 @@ public class MainInventory : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void PlayerEquipRemove(int instanceId) 
+    { 
+        foreach(var item in playerEquipment)
+        {
+            if(item.Value.Item1.InstanceId == instanceId)
+            {
+                playerEquipment.Remove(item.Key);
+
+                defaultEquipmentSlotUI[(int)item.Key - 1].SetActive(true);
+                EquipmentSlotUI[(int)item.Key - 1].SetActive(false);
+
+                foreach(var image in subWeaponImages)
+                {
+                    image.gameObject.SetActive(false);
+                }
+
+                GameManager.Instance.playerEquipment = playerEquipment;
+                break;
+            }
+        }
     }
 
     public void SaveMainInventory()
@@ -741,6 +757,9 @@ public class MainInventory : MonoBehaviour
     {
         var items = SaveManager.SaveDataV1.allItem;
 
+        Gold = SaveManager.SaveDataV1.Gold;
+        Diamond = SaveManager.SaveDataV1.Diamond;
+
         goldText.text = SaveManager.SaveDataV1.Gold.ToString();
         diamondText.text= SaveManager.SaveDataV1.Diamond.ToString();
 
@@ -787,6 +806,7 @@ public class MainInventory : MonoBehaviour
         LoadDataPlayerEquip();
 
         GameManager.Instance.InitSaveLoaded();
+        mainUI.SaveLoadMainStageText();
     }
 
     public void LoadWeaponUpgrade()
@@ -833,7 +853,50 @@ public class MainInventory : MonoBehaviour
 
         foreach (var item in playerEquipment)
         {
+            if (item.Value.Item1.ItemType == ItemType.Pet)
+            {
+                LoadEquipPet(item.Value);
+                continue;
+            }
             LoadEquipItem(item.Value.Item1);
+        }
+
+
+    }
+
+    public void LoadEquipPet((Item item, GameObject slotUI) equipInfo)
+    {
+        equipInfo.slotUI.SetActive(false);
+        petEquipSlotUI.interactable = true;
+        petMUISlot.SetItemData(equipInfo.item, mainUI, true);
+
+        switch (equipInfo.item.ItemId)
+        {
+            case 710001:
+                petSlotUI[0].SetActive(true);
+                break;
+            case 710002:
+                petSlotUI[1].SetActive(true);
+                break;
+            case 710003:
+                petSlotUI[2].SetActive(true);
+                break;
+            case 710004:
+                petSlotUI[3].SetActive(true);
+                break;
+
+            case 710005:
+                petSlotUI[4].SetActive(true);
+                break;
+            case 710006:
+                petSlotUI[5].SetActive(true);
+                break;
+            case 710007:
+                petSlotUI[6].SetActive(true);
+                break;
+            case 710008:
+                petSlotUI[7].SetActive(true);
+                break;
         }
     }
 
@@ -849,6 +912,22 @@ public class MainInventory : MonoBehaviour
 
         equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetItemData(item, mainUI);
         equipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].gameObject.SetActive(true);
+
+
+        switch (item.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                LoadSubWeaponImage(item);
+                break;
+            case ItemType.Pet:
+
+                break;
+        }
 
         GameManager.Instance.playerEquipment = playerEquipment;
 
@@ -870,6 +949,7 @@ public class MainInventory : MonoBehaviour
             case ItemType.Wand:
             case ItemType.Staff:
                 SetEquipItemUI(PlayerEquipment.Weapon, slot);
+                LoadSubWeaponImage(item);
                 break;
 
             case ItemType.Helmet:
@@ -883,9 +963,27 @@ public class MainInventory : MonoBehaviour
                 break;
 
             case ItemType.Pet:
-                playerEquipment[PlayerEquipment.Pet] = (item, slot.ItemSlot);
-                GameManager.Instance.playerEquipment = playerEquipment;
+                SetEquipPetItemUI(slot);
                 break;
+        }
+
+        GameManager.Instance.playerEquipment = playerEquipment;
+    }
+
+    public void LoadSubWeaponImage(Item item)
+    {
+        for (int i = 0; i < item.itemData.Item_Tier; i++)
+        {
+            int tempInt = i;
+            var weapon = item as M_Weapon;
+
+            Addressables.LoadAssetAsync<Sprite>(weapon.subWeapons[i].Texture_Id).Completed
+                += (sprite) =>
+                {
+                    subWeaponImages[tempInt].sprite = sprite.Result;
+                    subWeaponImages[tempInt].gameObject.SetActive(true);
+                };
+
         }
     }
 
@@ -945,6 +1043,31 @@ public class MainInventory : MonoBehaviour
                 break;
         }
 
+        switch(item.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                foreach (var image in subWeaponImages)
+                {
+                    image.gameObject.SetActive(false);
+                }
+                break;
+
+            case ItemType.Pet:
+                foreach(var pet in petSlotUI)
+                {
+                    pet.gameObject.SetActive(false);
+                }
+                playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
+                GameManager.Instance.playerEquipment = playerEquipment;
+                petEquipSlotUI.interactable = false;
+                return;
+        }
+
         playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
 
         defaultEquipmentSlotUI[(int)GetPlayerEquipmentItemType(item.ItemType) - 1].SetActive(true);
@@ -953,6 +1076,50 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+    }
+
+    // 펫 장착
+    public void SetEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
+    {
+        if (playerEquipment.ContainsKey(PlayerEquipment.Pet))
+        {
+            UnequipItem(equipInfo.item);
+        }
+
+        equipInfo.slotUI.SetActive(false);
+        playerEquipment[PlayerEquipment.Pet] = equipInfo;
+        GameManager.Instance.playerEquipment = playerEquipment;
+        petEquipSlotUI.interactable = true;
+        petMUISlot.SetItemData(equipInfo.item, mainUI, true);
+
+        switch (equipInfo.item.ItemId)
+        {
+            case 710001:
+                petSlotUI[0].SetActive(true);
+                break;
+            case 710002:
+                petSlotUI[1].SetActive(true);
+                break;
+            case 710003:
+                petSlotUI[2].SetActive(true);
+                break;
+            case 710004:
+                petSlotUI[3].SetActive(true);
+                break;
+
+            case 710005:
+                petSlotUI[4].SetActive(true);
+                break;
+            case 710006:
+                petSlotUI[5].SetActive(true);
+                break;
+            case 710007:
+                petSlotUI[6].SetActive(true);
+                break;
+            case 710008:
+                petSlotUI[7].SetActive(true);
+                break;
+        }
     }
 
     public bool CheckFilterType(Item item)
@@ -1029,6 +1196,37 @@ public class MainInventory : MonoBehaviour
         return default;
     }
 
+    public List<Item> GetWeaponItems()
+    {
+        var weaponTypes = new[]
+        {
+            ItemType.Axe,
+            ItemType.Sword,
+            ItemType.Bow,
+            ItemType.Crossbow,
+            ItemType.Wand,
+            ItemType.Staff
+        };
+
+        return weaponTypes
+              .Select(GetItemTypes)
+              .Where(dict => dict != null)
+              .SelectMany(dict => dict.Values)
+              .SelectMany(list => list)
+              .ToList();
+    }
+
+    public List<Item> GetArmourItems(ItemType itemType)
+    {
+        var itemDict = GetItemTypes(itemType);
+
+        if (itemDict == null) return null;
+
+        return itemDict.Values
+            .SelectMany(list => list)
+            .ToList();
+    }
+
     public Dictionary<ItemTier, List<Item>> GetItemTypes(ItemType itemType)
     {
         if(!allItem.ContainsKey(itemType)) return null;
@@ -1098,137 +1296,196 @@ public class MainInventory : MonoBehaviour
     {
         if (SaveManager.isSaveFile) return;
 
+        // 레전드 무기
+        MainInventoryAddItem("200005", 10);
+        MainInventoryAddItem("200105", 10);
+        MainInventoryAddItem("210105", 10);
+        MainInventoryAddItem("220005", 10);
+        MainInventoryAddItem("220105", 10);
+
+        // 일반 무기
         MainInventoryAddItem("200001", 0);
         MainInventoryAddItem("200101", 0);
         MainInventoryAddItem("210001", 0);
         MainInventoryAddItem("210101", 0);
         MainInventoryAddItem("220001", 0);
+        MainInventoryAddItem("220101", 0);
 
-        MainInventoryAddItem("710001", 0);
-        MainInventoryAddItem("710002", 0);
-        MainInventoryAddItem("710003", 0);
-        MainInventoryAddItem("710004", 0);
+        // 레전드 장비
+        MainInventoryAddItem("400015", 10);
+        MainInventoryAddItem("401015", 10);
+        MainInventoryAddItem("402015", 10);
 
-        MainInventoryAddItem("600006", 0);
-        MainInventoryAddItem("600006", 0);
-        MainInventoryAddItem("600006", 0);
+        // 강화석 장비 원석
+        for (int i = 0; i < 100; i++)
+        {
+            MainInventoryAddItem("600001");
+            MainInventoryAddItem("600002");
+            MainInventoryAddItem("600003");
+            MainInventoryAddItem("600004");
+            MainInventoryAddItem("600005");
+            MainInventoryAddItem("600006");
+        }
 
-        MainInventoryAddItem("610001", 0);
-        MainInventoryAddItem("610001", 0);
-        MainInventoryAddItem("610001", 0);
-        MainInventoryAddItem("610001", 0);
-        MainInventoryAddItem("610001", 0);
-        MainInventoryAddItem("610101", 0);
-        MainInventoryAddItem("610101", 0);
-        MainInventoryAddItem("610101", 0);
-        MainInventoryAddItem("610101", 0);
-        MainInventoryAddItem("610101", 0);
+        // 오브
+        MainInventoryAddItem("610004");
 
-        MainInventoryAddItem("400001", 0);
-        MainInventoryAddItem("400002", 0);
-        MainInventoryAddItem("400003", 0);
-        MainInventoryAddItem("400004", 0);
-        MainInventoryAddItem("400005", 0);
-        MainInventoryAddItem("401001", 0);
-        MainInventoryAddItem("401002", 0);
-        MainInventoryAddItem("401003", 0);
-        MainInventoryAddItem("401004", 0);
-        MainInventoryAddItem("401005", 0);
-        MainInventoryAddItem("402001", 0);
-        MainInventoryAddItem("402002", 0);
-        MainInventoryAddItem("402003", 0);
-        MainInventoryAddItem("402004", 0);
-        MainInventoryAddItem("402005", 0);
-        MainInventoryAddItem("400011", 0);
-        MainInventoryAddItem("400012", 0);
-        MainInventoryAddItem("400013", 0);
-        MainInventoryAddItem("400014", 0);
-        MainInventoryAddItem("400015", 0);
-        MainInventoryAddItem("401011", 0);
-        MainInventoryAddItem("401012", 0);
-        MainInventoryAddItem("401013", 0);
-        MainInventoryAddItem("401014", 0);
-        MainInventoryAddItem("401015", 0);
-        MainInventoryAddItem("402011", 0);
-        MainInventoryAddItem("402012", 0);
-        MainInventoryAddItem("402013", 0);
-        MainInventoryAddItem("402014", 0);
-        MainInventoryAddItem("402015", 0);
-        MainInventoryAddItem("400021", 0);
-        MainInventoryAddItem("400022", 0);
-        MainInventoryAddItem("400023", 0);
-        MainInventoryAddItem("400024", 0);
-        MainInventoryAddItem("400025", 0);
-        MainInventoryAddItem("401021", 0);
-        MainInventoryAddItem("401022", 0);
-        MainInventoryAddItem("401023", 0);
-        MainInventoryAddItem("401024", 0);
-        MainInventoryAddItem("401025", 0);
-        MainInventoryAddItem("402021", 0);
-        MainInventoryAddItem("402022", 0);
-        MainInventoryAddItem("402023", 0);
-        MainInventoryAddItem("402024", 0);
-        MainInventoryAddItem("402025", 0);
-        MainInventoryAddItem("400031", 0);
-        MainInventoryAddItem("400032", 0);
-        MainInventoryAddItem("400033", 0);
-        MainInventoryAddItem("400034", 0);
-        MainInventoryAddItem("400035", 0);
-        MainInventoryAddItem("401031", 0);
-        MainInventoryAddItem("401032", 0);
-        MainInventoryAddItem("401033", 0);
-        MainInventoryAddItem("401034", 0);
-        MainInventoryAddItem("401035", 0);
-        MainInventoryAddItem("402031", 0);
-        MainInventoryAddItem("402032", 0);
-        MainInventoryAddItem("402033", 0);
-        MainInventoryAddItem("402034", 0);
-        MainInventoryAddItem("402035", 0);
-        MainInventoryAddItem("400041", 0);
-        MainInventoryAddItem("400042", 0);
-        MainInventoryAddItem("400043", 0);
-        MainInventoryAddItem("400044", 0);
-        MainInventoryAddItem("400045", 0);
-        MainInventoryAddItem("401041", 0);
-        MainInventoryAddItem("401042", 0);
-        MainInventoryAddItem("401043", 0);
-        MainInventoryAddItem("401044", 0);
-        MainInventoryAddItem("401045", 0);
-        MainInventoryAddItem("402051", 0);
-        MainInventoryAddItem("402052", 0);
-        MainInventoryAddItem("402053", 0);
-        MainInventoryAddItem("402054", 0);
-        MainInventoryAddItem("402055", 0);
-        MainInventoryAddItem("400061", 0);
-        MainInventoryAddItem("400062", 0);
-        MainInventoryAddItem("400063", 0);
-        MainInventoryAddItem("400064", 0);
-        MainInventoryAddItem("400065", 0);
-        MainInventoryAddItem("401061", 0);
-        MainInventoryAddItem("401062", 0);
-        MainInventoryAddItem("401063", 0);
-        MainInventoryAddItem("401064", 0);
-        MainInventoryAddItem("401065", 0);
-        MainInventoryAddItem("402061", 0);
-        MainInventoryAddItem("402062", 0);
-        MainInventoryAddItem("402063", 0);
-        MainInventoryAddItem("402064", 0);
-        MainInventoryAddItem("402065", 0);
-        MainInventoryAddItem("400071", 0);
-        MainInventoryAddItem("400072", 0);
-        MainInventoryAddItem("400073", 0);
-        MainInventoryAddItem("400074", 0);
-        MainInventoryAddItem("400075", 0);
-        MainInventoryAddItem("401071", 0);
-        MainInventoryAddItem("401072", 0);
-        MainInventoryAddItem("401073", 0);
-        MainInventoryAddItem("401074", 0);
-        MainInventoryAddItem("401075", 0);
-        MainInventoryAddItem("402071", 0);
-        MainInventoryAddItem("402072", 0);
-        MainInventoryAddItem("402073", 0);
-        MainInventoryAddItem("402074", 0);
-        MainInventoryAddItem("402075", 0);
+        MainInventoryAddItem("610104");
+        MainInventoryAddItem("610204");
+        MainInventoryAddItem("610304");
+
+        MainInventoryAddItem("710001");
+        MainInventoryAddItem("710002");
+        MainInventoryAddItem("710003");
+        MainInventoryAddItem("710004");
+
+
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720002");
+
+        //MainInventoryAddItem("200001", 0);
+        //MainInventoryAddItem("200101", 0);
+        //MainInventoryAddItem("210001", 0);
+        //MainInventoryAddItem("210101", 0);
+        //MainInventoryAddItem("220001", 0);
+
+        //MainInventoryAddItem("710001", 0);
+        //MainInventoryAddItem("710002", 0);
+        //MainInventoryAddItem("710003", 0);
+        //MainInventoryAddItem("710004", 0);
+
+        //MainInventoryAddItem("600006", 0);
+        //MainInventoryAddItem("600006", 0);
+        //MainInventoryAddItem("600006", 0);
+
+        //MainInventoryAddItem("610001", 0);
+        //MainInventoryAddItem("610001", 0);
+        //MainInventoryAddItem("610001", 0);
+        //MainInventoryAddItem("610001", 0);
+        //MainInventoryAddItem("610001", 0);
+        //MainInventoryAddItem("610101", 0);
+        //MainInventoryAddItem("610101", 0);
+        //MainInventoryAddItem("610101", 0);
+        //MainInventoryAddItem("610101", 0);
+        //MainInventoryAddItem("610101", 0);
+
+        //MainInventoryAddItem("400001", 0);
+        //MainInventoryAddItem("400002", 0);
+        //MainInventoryAddItem("400003", 0);
+        //MainInventoryAddItem("400004", 0);
+        //MainInventoryAddItem("400005", 0);
+        //MainInventoryAddItem("401001", 0);
+        //MainInventoryAddItem("401002", 0);
+        //MainInventoryAddItem("401003", 0);
+        //MainInventoryAddItem("401004", 0);
+        //MainInventoryAddItem("401005", 0);
+        //MainInventoryAddItem("402001", 0);
+        //MainInventoryAddItem("402002", 0);
+        //MainInventoryAddItem("402003", 0);
+        //MainInventoryAddItem("402004", 0);
+        //MainInventoryAddItem("402005", 0);
+        //MainInventoryAddItem("400011", 0);
+        //MainInventoryAddItem("400012", 0);
+        //MainInventoryAddItem("400013", 0);
+        //MainInventoryAddItem("400014", 0);
+        //MainInventoryAddItem("400015", 0);
+        //MainInventoryAddItem("401011", 0);
+        //MainInventoryAddItem("401012", 0);
+        //MainInventoryAddItem("401013", 0);
+        //MainInventoryAddItem("401014", 0);
+        //MainInventoryAddItem("401015", 0);
+        //MainInventoryAddItem("402011", 0);
+        //MainInventoryAddItem("402012", 0);
+        //MainInventoryAddItem("402013", 0);
+        //MainInventoryAddItem("402014", 0);
+        //MainInventoryAddItem("402015", 0);
+        //MainInventoryAddItem("400021", 0);
+        //MainInventoryAddItem("400022", 0);
+        //MainInventoryAddItem("400023", 0);
+        //MainInventoryAddItem("400024", 0);
+        //MainInventoryAddItem("400025", 0);
+        //MainInventoryAddItem("401021", 0);
+        //MainInventoryAddItem("401022", 0);
+        //MainInventoryAddItem("401023", 0);
+        //MainInventoryAddItem("401024", 0);
+        //MainInventoryAddItem("401025", 0);
+        //MainInventoryAddItem("402021", 0);
+        //MainInventoryAddItem("402022", 0);
+        //MainInventoryAddItem("402023", 0);
+        //MainInventoryAddItem("402024", 0);
+        //MainInventoryAddItem("402025", 0);
+        //MainInventoryAddItem("400031", 0);
+        //MainInventoryAddItem("400032", 0);
+        //MainInventoryAddItem("400033", 0);
+        //MainInventoryAddItem("400034", 0);
+        //MainInventoryAddItem("400035", 0);
+        //MainInventoryAddItem("401031", 0);
+        //MainInventoryAddItem("401032", 0);
+        //MainInventoryAddItem("401033", 0);
+        //MainInventoryAddItem("401034", 0);
+        //MainInventoryAddItem("401035", 0);
+        //MainInventoryAddItem("402031", 0);
+        //MainInventoryAddItem("402032", 0);
+        //MainInventoryAddItem("402033", 0);
+        //MainInventoryAddItem("402034", 0);
+        //MainInventoryAddItem("402035", 0);
+        //MainInventoryAddItem("400041", 0);
+        //MainInventoryAddItem("400042", 0);
+        //MainInventoryAddItem("400043", 0);
+        //MainInventoryAddItem("400044", 0);
+        //MainInventoryAddItem("400045", 0);
+        //MainInventoryAddItem("401041", 0);
+        //MainInventoryAddItem("401042", 0);
+        //MainInventoryAddItem("401043", 0);
+        //MainInventoryAddItem("401044", 0);
+        //MainInventoryAddItem("401045", 0);
+        //MainInventoryAddItem("402051", 0);
+        //MainInventoryAddItem("402052", 0);
+        //MainInventoryAddItem("402053", 0);
+        //MainInventoryAddItem("402054", 0);
+        //MainInventoryAddItem("402055", 0);
+        //MainInventoryAddItem("400061", 0);
+        //MainInventoryAddItem("400062", 0);
+        //MainInventoryAddItem("400063", 0);
+        //MainInventoryAddItem("400064", 0);
+        //MainInventoryAddItem("400065", 0);
+        //MainInventoryAddItem("401061", 0);
+        //MainInventoryAddItem("401062", 0);
+        //MainInventoryAddItem("401063", 0);
+        //MainInventoryAddItem("401064", 0);
+        //MainInventoryAddItem("401065", 0);
+        //MainInventoryAddItem("402061", 0);
+        //MainInventoryAddItem("402062", 0);
+        //MainInventoryAddItem("402063", 0);
+        //MainInventoryAddItem("402064", 0);
+        //MainInventoryAddItem("402065", 0);
+        //MainInventoryAddItem("400071", 0);
+        //MainInventoryAddItem("400072", 0);
+        //MainInventoryAddItem("400073", 0);
+        //MainInventoryAddItem("400074", 0);
+        //MainInventoryAddItem("400075", 0);
+        //MainInventoryAddItem("401071", 0);
+        //MainInventoryAddItem("401072", 0);
+        //MainInventoryAddItem("401073", 0);
+        //MainInventoryAddItem("401074", 0);
+        //MainInventoryAddItem("401075", 0);
+        //MainInventoryAddItem("402071", 0);
+        //MainInventoryAddItem("402072", 0);
+        //MainInventoryAddItem("402073", 0);
+        //MainInventoryAddItem("402074", 0);
+        //MainInventoryAddItem("402075", 0);
     }
 
     public void ItemFilterUISlot(FilterType filterType)
@@ -1320,7 +1577,8 @@ public class MainInventory : MonoBehaviour
             case FilterType.Pet:
                 foreach (var itemSlot in itemSlotUI)
                 {
-                    if (itemSlot.Value.Item1.ItemType != ItemType.Pet)
+                    if (itemSlot.Value.Item1.ItemType != ItemType.Pet
+                        && itemSlot.Value.Item1.ItemType != ItemType.PetFood)
                     {
                         itemSlot.Value.ItemSlot.SetActive(false);
                         continue;
@@ -1344,6 +1602,35 @@ public class MainInventory : MonoBehaviour
                 break;
         }
     }
+
+    // 서브 무기 랜덤 뽑기
+    public List<ItemData> GetRandomSubWeapon(int count)
+    {
+        List<ItemData> subWeaponItems = new List<ItemData>();
+
+        var subWeapons = DataTableManager.Instance.Get<ItemTable>
+            (DataTableManager.item).GetItemDatas(ItemType.SubWeapon, ItemTier.Normal);
+
+        while(subWeaponItems.Count < count)
+        {
+            int random = UnityEngine.Random.Range(0, subWeapons.Count);
+
+            bool isPass = true;
+
+            foreach(var itemData in subWeaponItems)
+            {
+                if (itemData.Item_Id == subWeapons[random].Item_Id)
+                {
+                    isPass = false;
+                }
+            }
+            
+            if(isPass) subWeaponItems.Add(subWeapons[random]);
+        }
+
+        return subWeaponItems;
+    }
+    
 }
 
 public enum ItemType
@@ -1367,6 +1654,8 @@ public enum ItemType
     Pet = 16, // 펫
 
     Weapon = 17, // 전체 무기
+    SubWeapon = 18,
+    PetFood = 19,
 }
 
 public enum ItemTier

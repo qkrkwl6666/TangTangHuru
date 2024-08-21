@@ -8,9 +8,10 @@ public abstract class SaveDatas
 
 public class SaveDataV1 : SaveDatas
 {
-    public int Gold { get; set; } = 0;
+    public int Gold { get; set; } = 1000000;
     public int Diamond { get; set; } = 0;
     public int CurrentStage { get; set; } = 1;
+    public int MaxStage { get; set; } = 1;
 
     // 전체 아이템 컨테이너
     public List<Item> allItem = new();
@@ -21,6 +22,10 @@ public class SaveDataV1 : SaveDatas
     // 도전과제 진행정보 저장
     public List<AchieveState> SavedStates = new();
     public List<int> SavedAchieveProgress = new();
+    // 도전과제 보상지급 정보
+    public List<bool> scrollStates = new();
+    public List<bool> petRewardStates = new();
+
 
     //강화석 게이지
     public int gaige = 0;

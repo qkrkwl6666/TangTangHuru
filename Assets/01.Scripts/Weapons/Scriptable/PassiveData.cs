@@ -14,12 +14,6 @@ public class PassiveData : ScriptableObject
         CoolDown,
         CriticalChance,
         CriticalValue,
-        //Health,
-        //Speed,
-        //Range,
-        //BurstCount,
-        //PierceCount,
-        //LifeTime,
     }
 
     [Header("이름 및 타입")]
@@ -59,6 +53,4 @@ public class PassiveData : ScriptableObject
     [SerializeField]
     private float criticalValue;
     public float CriticalValue { get { return criticalValue; } set { criticalValue = value; } }
-
-
 }

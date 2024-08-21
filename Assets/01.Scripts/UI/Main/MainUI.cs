@@ -2,20 +2,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 public class MainUI : MonoBehaviour
 {
+    private string panelClickSound = "panel";
+
     public List<GameObject> uiGameObjects = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
     {
         DOTween.Init();
+        mainInventory.OnMainInventorySaveLoaded += SaveLoadMainStageText;
     }
 
     #region ¸ÞÀÎ ½ºÅ×ÀÌÁö UI
 
     public TextMeshProUGUI mainStageText;
+    public Image mainStageImage;
+
+    public void SaveLoadMainStageText()
+    {
+        var data = DataTableManager.Instance.Get<StageTable>(DataTableManager.stage)
+            .GetData(GameManager.Instance.CurrentStage);
+
+        mainStageText.text = data.Title;
+
+        if (data.Texture != "-1")
+        {
+            Addressables.LoadAssetAsync<Sprite>(data.Texture).Completed += (sprite) => 
+            {
+                mainStageImage.sprite = sprite.Result;
+            };
+
+        }
+    }
+
 
     public void MainStageUIButton()
     {
@@ -23,6 +47,8 @@ public class MainUI : MonoBehaviour
         {
             uiGameObjects[i].SetActive(UIObject.Stage == (UIObject)i);
         }
+
+        SoundManager.Instance.PlaySound2D(panelClickSound);
     }
 
     public void StageSelectSetActiveTrue()
@@ -73,6 +99,8 @@ public class MainUI : MonoBehaviour
         {
             uiGameObjects[i].SetActive(UIObject.Inventory == (UIObject)i);
         }
+
+        SoundManager.Instance.PlaySound2D(panelClickSound);
     }
 
     #endregion
@@ -94,6 +122,8 @@ public class MainUI : MonoBehaviour
         {
             uiGameObjects[i].SetActive((UIObject)uiPanel == (UIObject)i);
         }
+
+        SoundManager.Instance.PlaySound2D(panelClickSound);
     }
 
     #region UI ÆË¾÷
@@ -151,9 +181,54 @@ public class MainUI : MonoBehaviour
         {
             uiGameObjects[i].SetActive(UIObject.EquipmentAppraisal == (UIObject)i);
         }
+
+        SoundManager.Instance.PlaySound2D(panelClickSound);
     }
 
     #endregion
+
+    #region ÆêUI ÆË¾÷
+
+    public PetPopUp petPopUp;
+
+    public void SetActivePetPopUpUI(bool active)
+    {
+        if (active)
+        {
+            petPopUp.gameObject.SetActive(active);
+            var seq = DOTween.Sequence();
+
+            seq.Append(petPopUp.transform.DOScale(1.1f, 0.2f));
+            seq.Append(petPopUp.transform.DOScale(1f, 0.1f));
+
+            seq.Play();
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+
+            seq.Append(petPopUp.transform.DOScale(0.0f, 0.1f));
+
+            seq.onComplete += () =>
+            {
+                petPopUp.gameObject.SetActive(active);
+            };
+
+            seq.Play();
+        }
+    }
+
+    public void SetEquipPetData(Item item)
+    {
+        petPopUp.SetItemUI(item);
+    }
+
+    public void SetUnequipPetData(Item item)
+    {
+        petPopUp.SetItemUI(item, false);
+    }
+
+#endregion
 }
 
 public enum UIObject
@@ -162,4 +237,6 @@ public enum UIObject
     StageSelect = 1,
     Inventory = 2,
     EquipmentAppraisal = 3,
+    Carft = 4,
+    Shop = 5,
 }

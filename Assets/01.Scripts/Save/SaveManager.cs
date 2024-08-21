@@ -1,5 +1,4 @@
 using Newtonsoft.Json;
-using System;
 using System.IO;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class SaveManager : Singleton<SaveManager>
 
     public static readonly int SaveVersion = 1;
 
-    public static readonly string SaveName = "AutoSave.json";
+    public static readonly string SaveName = "AutoSave1.json";
 
     public static bool isSaveFile = false;
 

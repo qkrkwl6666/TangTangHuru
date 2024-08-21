@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PetController : MonoBehaviour
@@ -42,6 +40,12 @@ public class PetController : MonoBehaviour
     {
         Vector3 direction = (targetPosition - transform.position).normalized;
         transform.position += direction * moveSpeed * Time.deltaTime;
+
+        var difference = Vector3.Distance(transform.position, targetPosition);
+        if(difference < 0.3f)
+        {
+            transform.position = targetPosition;
+        }
     }
 
     void HandleTargetUpdate()

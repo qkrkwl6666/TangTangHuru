@@ -48,6 +48,7 @@ public class EquipPopUp : MonoBehaviour
 
     public MainInventory mainInventory;
     public MainUI mainUI;
+    public TierUpPopUp tierUpPopUp;
 
     private void Start()
     {
@@ -69,10 +70,17 @@ public class EquipPopUp : MonoBehaviour
             text.gameObject.SetActive(false);
         }
 
-        EquipButton.gameObject.SetActive(isEquip);
-        UnEquipButton.gameObject.SetActive(!isEquip);
+        if (item.ItemTier == ItemTier.Legendary) TierUpButton.interactable = false;
+        else TierUpButton.interactable = true;
+
+        EquipButton.transform.parent.gameObject.SetActive(isEquip);
+        UnEquipButton.transform.parent.gameObject.SetActive(!isEquip);
 
         UpgradeButton.interactable = !(currentItem.itemData.CurrentUpgrade >= 10);
+
+        tierUpSlider.value = item.CurrentTierUp;
+        tierUpSlider.maxValue = item.itemData.TierUp_NeedExp;
+        tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
 
         // 아이템 이미지
         Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += 
@@ -116,19 +124,26 @@ public class EquipPopUp : MonoBehaviour
                 {
                     text.gameObject.SetActive(true);
                 }
-
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Helmet:
                 itemStatusText1.text = Defines.defence + item.itemData.Defense;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Armor:
                 itemStatusText1.text = Defines.hp + item.itemData.Hp;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
             case (int)ItemType.Shose:
                 itemStatusText1.text = Defines.dodge + item.itemData.Dodge;
                 itemStatusTexts[0].gameObject.SetActive(true);
+                TierUpButton.transform.parent.gameObject.SetActive(true);
+                UpgradeButton.transform.parent.gameObject.SetActive(true);
                 break;
         }
 
@@ -136,10 +151,17 @@ public class EquipPopUp : MonoBehaviour
         RefreshUpgradeTextUI(item.itemData.CurrentUpgrade);
     }
 
+    public void SetTierUpUI(Item item)
+    {
+        tierUpSlider.value = item.CurrentTierUp;
+        tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
+    }
+        
     private void Awake()
     {
         CencelButton.onClick.AddListener(OnCencelButton);
         UpgradeButton.onClick.AddListener(OnUpgradeButton);
+        TierUpButton.onClick.AddListener(OnTierUpPopUpButton);
     }
 
     public void OnCencelButton()
@@ -151,9 +173,9 @@ public class EquipPopUp : MonoBehaviour
 
     public void RefreshUpgradeTextUI(int currentUpgrade)
     {
-        needUpgradeGold.text = $"{Defines.defaultUpgradeGold * (currentUpgrade + 1)} /"; 
+        needUpgradeGold.text = $"{mainInventory.Gold} / ";
 
-        totalUpgradeGold.text = $" {mainInventory.Gold}";
+        totalUpgradeGold.text = $" {Defines.defaultUpgradeGold * (currentUpgrade + 1)}";
 
         int reinforcedStone = 0;
 
@@ -163,9 +185,9 @@ public class EquipPopUp : MonoBehaviour
         {
             reinforcedStone = list.Count;
         }
-
-        needReinforcedStone.text = $"{Defines.defaultUpgradeReinforcedStone} /";
-        totalReinforcedStone.text = $" {reinforcedStone}";
+        //reinforcedStone
+        needReinforcedStone.text = $"{reinforcedStone} /";
+        totalReinforcedStone.text = $" {Defines.defaultUpgradeReinforcedStone}";
     }
 
     public void OnUpgradeButton()
@@ -201,6 +223,7 @@ public class EquipPopUp : MonoBehaviour
 
         SetItemUI(currentItem);
         mainInventory.RefreshItemSlotUI();
+        mainInventory.SaveInventory();
     }
 
     // 장비 장착 버튼
@@ -217,5 +240,10 @@ public class EquipPopUp : MonoBehaviour
         mainInventory.UnequipItem(currentItem);
 
         mainUI.SetActiveEquipPopUpUI(false);
+    }
+
+    public void OnTierUpPopUpButton()
+    {
+        tierUpPopUp.SetItemUI(currentItem);
     }
 }

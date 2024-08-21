@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class DamageText : MonoBehaviour
 {
-    private Monster monster;
+    private LivingEntity monster;
+
+    private bool isTextOn = true;
 
     private void Awake()
     {
-        monster = GetComponent<Monster>();
+        monster = GetComponent<LivingEntity>();
         monster.OnDamaged += ShowHeadUpDamage;
     }
 
@@ -17,6 +19,14 @@ public class DamageText : MonoBehaviour
 
     private void ShowHeadUpDamage(float damage)
     {
+        if (!isTextOn)
+            return;
+
         MonsterManager.Instance.ShowDamage(damage, transform.position);
+    }
+
+    public void ActiveDamageText(bool isOn)
+    {
+        isTextOn = isOn;
     }
 }

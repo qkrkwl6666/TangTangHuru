@@ -5,9 +5,7 @@ using UnityEngine.AddressableAssets;
 public class TreasureSpawnManager : MonoBehaviour
 {
     public List<Treasure> treasures = new();
-
     public Well well = null;
-
     public readonly int treasuresCount = 3;
 
     private float minRadius = 150f;
@@ -22,7 +20,12 @@ public class TreasureSpawnManager : MonoBehaviour
     private float wallSpace = 1f;
     private float currentSize = 0;
 
-    private void Awake()
+    private PlayerEquipLoader equipLoader;
+    private InGameInventory inventory;
+
+    private float bonusProb = 60f;
+
+    private void Start()
     {
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
             .GetTreasure((GameManager.Instance.CurrentStage).ToString()); // stage name
@@ -37,11 +40,6 @@ public class TreasureSpawnManager : MonoBehaviour
 
         // 우물 스폰
         SpawnWell();
-    }
-
-    public void Update()
-    {
-
     }
 
     public Vector2 SetPosition(Treasure tr = null)
@@ -82,15 +80,32 @@ public class TreasureSpawnManager : MonoBehaviour
 
     public void SetTreasure(TreasureData treasureData)
     {
-        var stones = treasureData.GetEqupStones();
+        //세트효과 삽입(우물 순간 이동)
+        equipLoader = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerEquipLoader>();
+        int armorSet = equipLoader.GetArmorSetType();
+        if (armorSet == 3)
+        {
+            inventory = GameObject.FindGameObjectWithTag("InGameInventory").GetComponent<InGameInventory>();
+            inventory.AllCoreCollected += MoveWellPosition;
+        }
 
+        var stones = treasureData.GetEqupStones();
+        //세트효과 삽입(스톤 확률 조정)
+        if (armorSet == 1)
+        {
+            for(int i = 1; i < stones.Count; i++)
+            {
+                if (stones[i].id == -1) break;
+                var newProb = stones[i].prob + bonusProb;
+                stones[i] = (stones[i].id, newProb);
+            }
+        }
         float totalProbability = 0f;
         float currentProbability = 0f;
 
         foreach (var stone in stones)
         {
             if (stone.id == -1) break;
-
             totalProbability += stone.prob;
         }
 
@@ -110,7 +125,12 @@ public class TreasureSpawnManager : MonoBehaviour
                         (DataTableManager.item).GetItemData(stone.id.ToString());
 
                     var treasure = treasureGo.AddComponent<Treasure>();
-                    // 장비 원석 , 강화석 , 자석
+
+                    // 자석
+                    Addressables.InstantiateAsync(Defines.magnet).Completed += (x) => 
+                    {
+                        treasure.AddItem(x.Result);
+                    };
 
                     // 장비 원석 생성
                     Addressables.InstantiateAsync(itemData.Prefab_Id).Completed +=
@@ -125,6 +145,12 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     // 강화석 생성
                     int rand = Random.Range(treasureData.Min_Re_Stone, treasureData.Max_Re_Stone + 1);
+
+                    //세트효과 삽입
+                    if (armorSet == 4)
+                    {
+                        rand += 2;
+                    }
 
                     for (int i = 0; i < rand; i++)
                     {
@@ -145,6 +171,11 @@ public class TreasureSpawnManager : MonoBehaviour
 
         };
 
+    }
+
+    private void TreasureSpawnManager_Completed(UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<GameObject> obj)
+    {
+        throw new System.NotImplementedException();
     }
 
     // 맵 울타리 스폰
@@ -215,14 +246,19 @@ public class TreasureSpawnManager : MonoBehaviour
 
     public void SpawnWell()
     {
-
         Addressables.InstantiateAsync(Defines.well).Completed += (x) =>
         {
             well = x.Result.GetComponent<Well>();
             well.transform.position = SetPosition();
             wellIndicator.target = well.transform;
         };
+    }
 
+    public void MoveWellPosition()
+    {
+        var dir = Random.insideUnitCircle;
+        dir = dir.normalized * 3f;
+        well.transform.position = (Vector2)equipLoader.transform.position + dir;
     }
 
     private void OnDrawGizmos()

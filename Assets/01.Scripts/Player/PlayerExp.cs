@@ -39,5 +39,10 @@ public class PlayerExp : MonoBehaviour
         }
     }
 
+    public float GetRequiredExp()
+    {
+        return requiredExp;
+    }
+
 
 }

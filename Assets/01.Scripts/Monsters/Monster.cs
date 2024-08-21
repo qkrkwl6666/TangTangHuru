@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public enum MonsterType
 {
@@ -22,6 +23,9 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public PlayerSubject playerSubject;
     private Transform playerTransform;
+
+    public Slider hpBar;
+    private bool isSliderVisible = true;
 
     public void Initialize(PlayerSubject playerSubject)
     {
@@ -49,6 +53,14 @@ public class Monster : LivingEntity, IPlayerObserver
         playerSubject.AddObserver(this);
 
         AwakeHealth();
+    }
+
+    public void SetHpBar()
+    {
+        hpBar.maxValue = startingHealth;
+        hpBar.value = startingHealth;
+
+        hpBar.gameObject.SetActive(false);
     }
 
     private IObjectPool<GameObject> pool;
@@ -79,6 +91,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
+
         dead = true;
 
         PoolRelease();
@@ -87,5 +100,40 @@ public class Monster : LivingEntity, IPlayerObserver
     public void IObserverUpdate()
     {
         playerTransform = playerSubject.GetPlayerTransform;
+    }
+
+    public override void OnDamage(float damage, float impact)
+    {
+        health -= damage;
+
+        OnDamaged?.Invoke(damage);
+        OnImpact?.Invoke(impact);
+
+        if (health <= 0 && !dead)
+        {
+            Die();
+        }
+
+        if (isSliderVisible)
+        {
+            if (!hpBar.gameObject.activeSelf)
+            {
+                hpBar.gameObject.SetActive(true);
+            }
+            hpBar.value = health;
+        }
+    }
+
+    public void ActiveHpSlider(bool isVisible)
+    {
+        if (isVisible)
+        {
+            isSliderVisible = true;
+        }
+        else
+        {
+            isSliderVisible = false;
+            hpBar.gameObject.SetActive(false);
+        }
     }
 }

@@ -177,17 +177,33 @@ public class AchievementManager : Singleton<AchievementManager>
     // 도전과제 초기화 메소드
     private void InitializeAchievements()
     {
+        achievements.Clear();
+
         var stringTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
-        for (int i = 1; i <= 12; i++)
+        for (int i = 0; i < 12; i++)
         {
             achievements.Add(new Achievement
             {
-                title = stringTable.Get($"Achieve_Name{i}").Text,
-                description = stringTable.Get($"Achieve_Desc{i}").Text,
+                title = stringTable.Get($"Achieve_Name{i + 1}").Text,
+                description = stringTable.Get($"Achieve_Desc{i + 1}").Text,
                 onUnlock = () => Debug.Log("Achievement Unlocked!")
             });
         }
+
+
+        if (SaveManager.SaveDataV1.SavedAchieveProgress.Count == 0)
+            return;
+        myTasks.SavedAchieveProgress = SaveManager.SaveDataV1.SavedAchieveProgress;
+        myTasks.LoadProgress();
+
+        if (SaveManager.SaveDataV1.SavedStates.Count == 0)
+            return;
+        for (int i = 0; i < 12; i++)
+        {
+            achievements[i].achieveState = SaveManager.SaveDataV1.SavedStates[i];
+        }
+
     }
 
     //도전과제 조건확인
