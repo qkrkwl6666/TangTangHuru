@@ -102,7 +102,7 @@ public class Monster : LivingEntity, IPlayerObserver
         playerTransform = playerSubject.GetPlayerTransform;
     }
 
-    public override void OnDamage(float damage, float impact)
+    public override void OnDamage(float damage, float impact = 0)
     {
         health -= damage;
 

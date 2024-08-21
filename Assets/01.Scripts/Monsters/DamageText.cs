@@ -5,6 +5,7 @@ public class DamageText : MonoBehaviour
     private LivingEntity monster;
 
     private bool isTextOn = true;
+    public bool isCritical = false;
 
     private void Awake()
     {
@@ -22,7 +23,8 @@ public class DamageText : MonoBehaviour
         if (!isTextOn)
             return;
 
-        MonsterManager.Instance.ShowDamage(damage, transform.position);
+        MonsterManager.Instance.ShowDamage((int)damage, transform.position, isCritical);
+        isCritical = false;
     }
 
     public void ActiveDamageText(bool isOn)

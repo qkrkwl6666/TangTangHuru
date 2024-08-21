@@ -7,7 +7,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
     private PlayerSubject playerSubject;
     private PlayerExp playerExp;
 
-
+    private int levelUpCount = 0;
     void Start()
     {
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
@@ -30,8 +30,28 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
 
     private void HandleLevelChanged(int newLevel)
     {
-        //Debug.Log("Player level changed to: " + newLevel);
-        // 레벨 변경에 따른 로직 처리
+        levelUpCount++;
+
+        if (levelUpMenu.activeSelf)
+            return;
+
+        if (levelUpCount > 0)
+        {
+            levelUpMenu.SetActive(true);
+            levelUpCount--;
+        }
+    }
+    public void CheckLevelUpPanelOn()
+    {
+        if(levelUpCount > 0)
+        {
+            Invoke("ActivateLevelUpMenu", 0.2f);
+            levelUpCount--;
+        }
+    }
+
+    private void ActivateLevelUpMenu()
+    {
         levelUpMenu.SetActive(true);
     }
 
