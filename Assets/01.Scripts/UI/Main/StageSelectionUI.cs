@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem.EnhancedTouch;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 using TMPro;
+using DG.Tweening.Core.Easing;
 
 public class StageSelectionUI : MonoBehaviour
 {
@@ -39,6 +40,9 @@ public class StageSelectionUI : MonoBehaviour
     public MainUI mainUI;
 
     public Button selectButton;
+
+    private bool allClearCheat = false;
+    private int originalMaxStage = 0;
 
     private void Awake()
     {
@@ -82,7 +86,11 @@ public class StageSelectionUI : MonoBehaviour
         }
         //mainStageText.text = stageTable[currentStage.ToString()].Title;
 
-        if(currentStage <= SaveManager.SaveDataV1.MaxStage)
+        if (allClearCheat)
+        {
+            GameManager.Instance.CurrentStage = currentStage;
+        }
+        else if(currentStage <= SaveManager.SaveDataV1.MaxStage)
         {
             GameManager.Instance.CurrentStage = currentStage;
         }
@@ -164,7 +172,15 @@ public class StageSelectionUI : MonoBehaviour
                 nearestStage = stageRects[i];
                 currentStage = i + 1;
 
-                selectButton.interactable = i + 1 > SaveManager.SaveDataV1.MaxStage ? false : true;
+                if (allClearCheat)
+                {
+                    selectButton.interactable = true;
+                }
+                else
+                {
+                    selectButton.interactable = i + 1 > SaveManager.SaveDataV1.MaxStage ? false : true;
+
+                }
             }
         }
 
@@ -263,6 +279,12 @@ public class StageSelectionUI : MonoBehaviour
             };
         }
 
+    }
+
+
+    public void AllClearCheatOn()
+    {
+        allClearCheat = !allClearCheat;
     }
 
 }
