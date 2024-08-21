@@ -38,6 +38,7 @@ public class HitOneOff : MonoBehaviour, IAttackable
             if (Random.Range(0, 100) <= CriticalChance)
             {
                 TotalDamage = Damage * CriticalValue;
+                other.GetComponent<DamageText>().isCritical = true;
             }
             else
             {
