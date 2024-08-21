@@ -6,6 +6,7 @@ public class Treasure : MonoBehaviour, IInGameItem
     // Todo : GameObejct 로 수정 
     public List<GameObject> inGameItems = new();
 
+    public GameObject guardian;
     public int ItemId { get; set; }
     public string Name { get; set; }
     public IItemType ItemType { get; set; }
@@ -13,6 +14,7 @@ public class Treasure : MonoBehaviour, IInGameItem
 
     public void AddItem(GameObject item)
     {
+        item.SetActive(false);
         inGameItems.Add(item);
     }
 
@@ -29,6 +31,16 @@ public class Treasure : MonoBehaviour, IInGameItem
             var dir = Random.insideUnitCircle;
             dir = dir.normalized * 3f;
             item.transform.position = (Vector2)transform.position + dir;
+            item.SetActive(true);
+        }
+        
+        if(guardian != null)
+        {
+            var dir = Random.insideUnitCircle;
+            dir = dir.normalized * 10f;
+
+            guardian.transform.position = (Vector2)transform.position + dir;
+            guardian.SetActive(true);
         }
 
         // 상자 열고 난뒤

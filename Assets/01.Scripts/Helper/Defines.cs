@@ -35,6 +35,8 @@ public static class Defines
     public static readonly int boomGuardian = 333002;
     public static readonly int sternGuardian = 333003;
 
+    public static readonly int maxGuardian = 3;
+
     // 아웃라이너 컬러
     public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
     public static readonly Color greenColor = new Color(20 / 255f, 46 / 255f, 34 / 255f);
