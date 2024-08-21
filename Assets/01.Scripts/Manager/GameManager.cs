@@ -5,6 +5,9 @@ using UnityEngine.AddressableAssets;
 
 public class GameManager : Singleton<GameManager>
 {
+    // tutorial
+    private bool isTutorial = false;
+
     public int CurrentStage { get; set; } = 1;
 
     public string currentWeapon = "OneSword";

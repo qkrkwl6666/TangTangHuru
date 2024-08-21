@@ -8,6 +8,8 @@ using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
 {
+    public bool isTutorial = false;
+
     public bool raderOwner = true;
 
     private LinkedList<GameObject> followMeItems = new();
@@ -52,14 +54,17 @@ public class ItemDetection : MonoBehaviour
     private bool isMagnet = false;
     Vector3 endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
 
+    public TutorialGameInit tutorialGameInit;
+
     private void Awake()
     {
-        Debug.Log(gameObject.name);
-
         hitCollider = new Collider[maxCollider];
 
-        treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
-        treasureList = treasureManager.treasures;
+        if (!isTutorial)
+        {
+            treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
+            treasureList = treasureManager.treasures;
+        }
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
         treasureBar = Instantiate(treasureBarPrefab);
@@ -269,6 +274,14 @@ public class ItemDetection : MonoBehaviour
     public void MagnetOn()
     {
         isMagnet = true;
+    }
+
+    public void SetTutorialTreasure(Treasure treasure)
+    {
+        treasureList = new()
+        {
+            treasure
+        };
     }
 
 }

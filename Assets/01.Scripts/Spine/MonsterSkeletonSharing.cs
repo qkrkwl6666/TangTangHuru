@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MonsterSkeletonSharing : MonoBehaviour
 {
-    private Dictionary<string, SkeletonAnimation> monsterSkeletonAnimation = new ();
-    private Dictionary<string, TaskCompletionSource<SkeletonAnimation>> loadingTasks = new();
+    //private Dictionary<string, SkeletonAnimation> monsterSkeletonAnimation = new ();
+    //private Dictionary<string, TaskCompletionSource<SkeletonAnimation>> loadingTasks = new();
 
     private Dictionary<string , List<SkeletonRenderer>> skeletonRenderers = new ();
     private Dictionary<string, Spine.AnimationState> sharedAnimationState = new ();

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TimeControl : MonoBehaviour
 {
-    float currTime;
+    float currTime = 1.0f;
     float prevTime;
     float doubleTime = 2.0f;
     float normalTime = 1.0f;
@@ -10,8 +10,8 @@ public class TimeControl : MonoBehaviour
 
     void Start()
     {
-        currTime = 1.0f;
-        Time.timeScale = 1.0f;
+        //currTime = 1.0f;
+        //Time.timeScale = 1.0f;
     }
 
     public void StopTime()

@@ -79,22 +79,37 @@ public class PlayerEquipLoader : MonoBehaviour
             }
 
             //무기에 서브무기가 들어가면 변경예정.
-            M_Weapon mainWeapon = GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1 as M_Weapon;
+
+            M_Weapon mainWeapon;
+
+            if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
+            {
+                mainWeapon = GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1 as M_Weapon;
+            }
+            else
+            {
+                mainWeapon = new M_Weapon();
+
+                mainWeapon.SetItemData(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+                    .GetItemDatas(ItemType.Axe, ItemTier.Normal)[0], -1);
+            }
+
             mainDmg = mainWeapon.itemData.Damage;
             mainCoolDown = mainWeapon.itemData.CoolDown;
             mainCriticalChance = mainWeapon.itemData.CriticalChance;
             mainCriticalValue = mainWeapon.itemData.Criticaldam;
             MainWeaponAdd(mainWeapon);
 
-
             var subWeaponList = mainWeapon.subWeapons;
-            if(subWeaponList != null)
+            if (subWeaponList != null)
             {
                 foreach (var sub in subWeaponList)
                 {
                     SubWeaponAdd(sub);
                 }
             }
+
+
         }
         else
         {
