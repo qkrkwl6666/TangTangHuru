@@ -130,70 +130,41 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 10, 200);
         }
 
-
-        GameObject monster = monsterPools[monsterData.Monster_ID].Get();
-        monster.transform.rotation = Quaternion.identity;
-        monster.GetComponent<Monster>().SetHpBar();
-
         switch (spawnType)
         {
-            case 1: // 罚待 积己
+            // 罚待 积己
+            case 1:
                 for (int i = 0; i < spawnCount; i++)
                 {
+                    GameObject monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = RandomPosition();
+                    monster.transform.rotation = Quaternion.identity;
+                    monster.GetComponent<Monster>().SetHpBar();
                 }
                 break;
-            case 2: // 流急 积己
+            // 流急 积己
+            case 2:
                 var lineList = LinePosition(RandomPosition(), spawnCount, 0f);
+
                 for (int i = 0; i < spawnCount; i++)
                 {
+                    GameObject monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = lineList[i];
+                    monster.transform.rotation = Quaternion.identity;
+                    monster.GetComponent<Monster>().SetHpBar();
                 }
                 break;
-            case 3: // 盔 积己
+            // 盔 积己
+            case 3:
                 for (int i = 0; i < spawnCount; i++)
                 {
+                    GameObject monster = monsterPools[monsterData.Monster_ID].Get();
                     monster.transform.position = CirclePosition(spawnCount, i);
+                    monster.transform.rotation = Quaternion.identity;
+                    monster.GetComponent<Monster>().SetHpBar();
                 }
                 break;
         }
-
-        //荐沥傈
-        //switch (spawnType)
-        //{
-        //    // 罚待 积己
-        //    case 1:
-        //        for (int i = 0; i < spawnCount; i++)
-        //        {
-        //            monster = monsterPools[monsterData.Monster_ID].Get();
-        //            monster.transform.position = RandomPosition();
-        //            monster.transform.rotation = Quaternion.identity;
-        //            monster.GetComponent<Monster>().SetHpBar();
-        //        }
-        //        break;
-        //    // 流急 积己
-        //    case 2:
-        //        var lineList = LinePosition(RandomPosition(), spawnCount, 0f);
-
-        //        for (int i = 0; i < spawnCount; i++)
-        //        {
-        //            monster = monsterPools[monsterData.Monster_ID].Get();
-        //            monster.transform.position = lineList[i];
-        //            monster.transform.rotation = Quaternion.identity;
-        //            monster.GetComponent<Monster>().SetHpBar();
-        //        }
-        //        break;
-        //    // 盔 积己
-        //    case 3:
-        //        for (int i = 0; i < spawnCount; i++)
-        //        {
-        //            monster = monsterPools[monsterData.Monster_ID].Get();
-        //            monster.transform.position = CirclePosition(spawnCount, i);
-        //            monster.transform.rotation = Quaternion.identity;
-        //            monster.GetComponent<Monster>().SetHpBar();
-        //        }
-        //        break;
-        //}
 
     }
 
