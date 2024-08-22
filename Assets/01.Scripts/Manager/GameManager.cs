@@ -121,8 +121,6 @@ public class GameManager : Singleton<GameManager>
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-            //Todo : 硫붿씤 �뵮 �씠由� 蹂�寃쎌떆 蹂�寃� �븘�슂
-
             if(sceneName != Defines.mainScene) 
                 loadingUI.SetActive(false);
             SoundManager.Instance.CreateTemporalObjects();
@@ -134,7 +132,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            BGM_Index = 1;
+            BGM_Index = CurrentStage;
             SoundManager.Instance.EnterStage();
         }
         Invoke("ChangeBGM", 2);
