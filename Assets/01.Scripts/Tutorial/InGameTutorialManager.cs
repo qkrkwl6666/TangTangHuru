@@ -56,14 +56,14 @@ public class InGameTutorialManager : MonoBehaviour
 
     private void Update()
     {
-
+        
     }
 
     public IEnumerator Tutorial2Start()
     {
         yield return StartCoroutine(ChatActive(1, 1, true));
 
-        timeControl.NormalTime();
+        //timeControl.NormalTime();
     }
 
     public IEnumerator Tutorial3Start()

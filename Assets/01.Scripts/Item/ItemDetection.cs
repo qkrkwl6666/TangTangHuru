@@ -211,7 +211,7 @@ public class ItemDetection : MonoBehaviour
                         followMeItems.AddLast(item.gameObject);
 
                         Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
-
+                        endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
                         DOTween.To(() => startScreenPos, x =>
                         {
                             item.transform.position = Camera.main.ScreenToWorldPoint(x);
@@ -241,7 +241,8 @@ public class ItemDetection : MonoBehaviour
                     followMeItems.AddLast(item.gameObject);
 
                     Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
-
+                    endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+                    Debug.Log(endScreenPos);
                     DOTween.To(() => startScreenPos, x =>
                     {
                         item.transform.position = Camera.main.ScreenToWorldPoint(x);

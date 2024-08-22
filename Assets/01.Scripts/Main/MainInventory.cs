@@ -754,6 +754,8 @@ public class MainInventory : MonoBehaviour
         LoadDataPlayerEquip();
 
         OnMainInventorySaveLoaded?.Invoke();
+
+        SaveInventory();
     }
 
     public IEnumerator SceneLoadMainInventory()
@@ -773,7 +775,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         foreach (var itemSlot in itemSlotUI)
         {
@@ -804,7 +806,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         LoadDataPlayerEquip();
 

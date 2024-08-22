@@ -197,7 +197,7 @@ public class StageSelectionUI : MonoBehaviour
 
     private IEnumerator CoCenterOnStageNoDotTween(RectTransform stageRect)
     {
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSecondsRealtime(0.1f);
 
         float stageLeftEdge = stageRect.anchoredPosition.x - stageRect.rect.width * 0.5f;
 

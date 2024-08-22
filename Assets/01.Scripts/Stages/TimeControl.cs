@@ -10,8 +10,8 @@ public class TimeControl : MonoBehaviour
 
     void Start()
     {
-        //currTime = 1.0f;
-        //Time.timeScale = 1.0f;
+        currTime = 1.0f;
+        Time.timeScale = 1.0f;
     }
 
     public void StopTime()
