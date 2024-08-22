@@ -15,6 +15,8 @@ public class GameOverCheck : MonoBehaviour, IPlayerObserver
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(gameObject.name);
+
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
 

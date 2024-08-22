@@ -20,6 +20,26 @@ public class MonsterData
     public float Cooldown { get; set; }
     public float Range { get; set; }
     public float AttackInterval { get; set; }
+
+    public MonsterData GetDeepCopyMonsterData()
+    {
+        MonsterData monsterData = new MonsterData();
+
+        monsterData.Monster_ID = Monster_ID;
+        monsterData.Monster_Prefab = Monster_Prefab;
+        monsterData.Monster_Scale = Monster_Scale;
+        monsterData.Monster_Hp = Monster_Hp;
+        monsterData.Monster_MoveSpeed = Monster_MoveSpeed;
+        monsterData.Monster_Damage = Monster_Damage;
+        monsterData.Monster_Exp = Monster_Exp;
+        monsterData.Monster_Gold = Monster_Gold;
+        monsterData.Monster_Skill_Id = Monster_Skill_Id;
+        monsterData.Cooldown = Cooldown;
+        monsterData.Range = Range;
+        monsterData.AttackInterval = AttackInterval;
+
+        return monsterData;
+    }
 }
 
 public class MonsterTable : DataTable

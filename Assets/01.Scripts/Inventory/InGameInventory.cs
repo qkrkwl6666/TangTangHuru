@@ -8,6 +8,9 @@ using DG.Tweening;
 
 public class InGameInventory : MonoBehaviour
 {
+    public bool isTutorial = false;
+    public InGameTutorialManager inGameTutorialManager;
+
     private List<IInGameItem> items = new();
     private List<Image> images = new();
 
@@ -147,9 +150,21 @@ public class InGameInventory : MonoBehaviour
                         {
                             Defines.DotweenScaleActiveFalse(bagTransform.gameObject);
                             Destroy(go);
+
+                            // 몬스터 스폰
+                            TutorialCheck();
                         });
                 };
             
+        }
+    }
+
+    public void TutorialCheck()
+    {
+        if (isTutorial && inGameTutorialManager != null)
+        {
+            inGameTutorialManager.StartCoroutine
+            (inGameTutorialManager.Tutorial5Start());
         }
     }
 

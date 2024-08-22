@@ -99,6 +99,7 @@ public class TutorialManager : MonoBehaviour
         if (!SaveManager.isSaveFile)
         {
             StartCoroutine(Tutorial1Start());
+            SaveManager.isSaveFile = true;
         }
     }
 
