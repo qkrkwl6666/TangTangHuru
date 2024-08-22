@@ -20,15 +20,19 @@ public class ParabolaShoot : MonoBehaviour, IProjectile
         currAimer = GetComponent<IAimer>();
     }
 
-    private void OnEnable()
+    private void OnEnable() //UI상 좌표 조준
     {
         timer = 0f;
         transform.localScale = new Vector3(Size, Size);
 
         initialPosition = transform.position;
-        Vector2 aimDirection = currAimer.AimDirection();
-        targetPosition = initialPosition + aimDirection * currAimer.LifeTime * Speed;
+
+        // 화면 중심에서 특정 방향으로 일정 거리에 있는 목표 지점 설정
+        Vector2 aimDirection = currAimer.AimDirection().normalized;
+        Vector2 screenCenter = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        targetPosition = screenCenter + aimDirection * Range;
     }
+
 
     private void Update()
     {
@@ -44,6 +48,8 @@ public class ParabolaShoot : MonoBehaviour, IProjectile
         }
 
         Vector2 linearPosition = Vector2.Lerp(initialPosition, targetPosition, progress);
+
+        // 포물선 궤적의 높이 오프셋 계산
         float heightOffset = Mathf.Sin(Mathf.PI * progress) * Speed / 2;
 
         Vector2 parabolaPosition = linearPosition + Vector2.up * heightOffset;

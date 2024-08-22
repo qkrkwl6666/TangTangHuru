@@ -79,7 +79,7 @@ public class OrbCrafter : MonoBehaviour
     {
         int rndIndex = Random.Range(0, orbIdList.Count);
 
-        if (gaigeNum < 5)
+        if (gaigeNum < 4)
         {
             gaige[gaigeNum].color = Color.yellow;
             gaigeNum++;

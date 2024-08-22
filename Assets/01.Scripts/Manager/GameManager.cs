@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 
 
 public class GameManager : Singleton<GameManager>
 {
+    public InputActionAsset inputActionAsset;
+
+    private InputAction backAction;
+
     // tutorial
     private bool isTutorial = false;
 
@@ -13,10 +19,8 @@ public class GameManager : Singleton<GameManager>
 
     public string currentWeapon = "OneSword";
 
-    // �뵆�젅�씠�뼱 �옣李�
     public Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
 
-    // 濡쒕뵫 UI 
     public GameObject loadingUI;
 
     // �씤寃뚯엫 �꽭�씠釉� �븘�씠�뀥
@@ -68,6 +72,23 @@ public class GameManager : Singleton<GameManager>
             .GetComponent<MainInventory>();
 
         mainInventory.OnMainInventorySaveLoaded += InitSaveLoaded;
+    }
+
+    private void OnEnable()
+    {
+        var playerInput = new InputActionMap("PlayerControls");
+        backAction = playerInput.AddAction("Back", binding: "<AndroidGamepad>/buttonEast");
+        backAction.performed += OnBackPressed;
+        backAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        backAction.Disable();
+    }
+    private void OnBackPressed(InputAction.CallbackContext context)
+    {
+        Application.Quit();
     }
 
     public void InitSaveLoaded()
