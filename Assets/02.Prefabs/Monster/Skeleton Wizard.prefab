@@ -136,9 +136,10 @@ GameObject:
   - component: {fileID: 3746601643493796701}
   - component: {fileID: 8768746381036460407}
   - component: {fileID: 5675191995521745482}
-  - component: {fileID: 1527448129495693898}
+  - component: {fileID: 5308647783170671370}
+  - component: {fileID: 2252366391255721417}
   m_Layer: 6
-  m_Name: MonsterView
+  m_Name: BossView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -209,7 +210,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &1527448129495693898
+--- !u!114 &5308647783170671370
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +219,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3650079460904660309}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 4b939be99a45279488e007d48da271e6, type: 2}
@@ -243,3 +244,19 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1
+--- !u!114 &2252366391255721417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3650079460904660309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 5308647783170671370}

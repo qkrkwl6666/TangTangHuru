@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6324643987662284773}
   - component: {fileID: 4597992169737917719}
   - component: {fileID: 278204235815676503}
-  - component: {fileID: 4198067810291095553}
+  - component: {fileID: 7349224009277087935}
+  - component: {fileID: 1242709819285383762}
   m_Layer: 6
-  m_Name: MonsterView
+  m_Name: BossView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4198067810291095553
+--- !u!114 &7349224009277087935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +94,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 389662622043314279}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 4510d670023a8a240a61534a443a9683, type: 2}
@@ -118,6 +119,22 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1
+--- !u!114 &1242709819285383762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389662622043314279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 7349224009277087935}
 --- !u!1 &3232474763179573515
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,6 +185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
+  hpBar: {fileID: 0}
 --- !u!114 &4906701211556242197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCritical: 0
 --- !u!50 &8050179853523743710
 Rigidbody2D:
   serializedVersion: 4
