@@ -1,6 +1,5 @@
 using Spine.Unity;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class MonsterSkeletonSharing : MonoBehaviour
@@ -66,6 +65,8 @@ public class MonsterSkeletonSharing : MonoBehaviour
 
         sharedAnimationState.Add(key, new Spine.AnimationState(skeletonRenderer
             .skeletonDataAsset.GetAnimationStateData()));
+
+        Debug.Log(skeletonRenderer.skeleton);
 
         sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
         skeletonRenderer.skeleton.UpdateWorldTransform();

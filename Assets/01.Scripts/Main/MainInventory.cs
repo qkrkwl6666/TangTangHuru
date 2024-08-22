@@ -253,6 +253,7 @@ public class MainInventory : MonoBehaviour
 
     public void CoSaveDataLoadMainInventory()
     {
+        Debug.Log("CoSaveDataLoadMainInventory");
         StartCoroutine(SaveDataLoadMainInventory());
     }
 
@@ -764,6 +765,7 @@ public class MainInventory : MonoBehaviour
 
     public IEnumerator SceneLoadMainInventory()
     {
+        Debug.Log("SceneLoadMainInventory");
         var items = SaveManager.SaveDataV1.allItem;
 
         Gold = SaveManager.SaveDataV1.Gold;

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -7,7 +6,7 @@ using UnityEngine.AddressableAssets;
 public class GameManager : Singleton<GameManager>
 {
     // tutorial
-    private bool isTutorial = false;
+    public bool isTutorialSceneEnd = false;
 
     public int CurrentStage { get; set; } = 1;
 

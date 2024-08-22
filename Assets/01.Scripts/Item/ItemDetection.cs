@@ -1,9 +1,5 @@
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
@@ -242,7 +238,7 @@ public class ItemDetection : MonoBehaviour
 
                     Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
                     endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
-                    Debug.Log(endScreenPos);
+                    //Debug.Log(endScreenPos);
                     DOTween.To(() => startScreenPos, x =>
                     {
                         item.transform.position = Camera.main.ScreenToWorldPoint(x);

@@ -52,11 +52,19 @@ public class InGameTutorialManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
 
         StartCoroutine(Tutorial2Start());
+        //StartCoroutine(WaitSec());
     }
 
     private void Update()
     {
         
+    }
+
+    public IEnumerator WaitSec()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        timeControl.StopTime();
     }
 
     public IEnumerator Tutorial2Start()
@@ -89,7 +97,7 @@ public class InGameTutorialManager : MonoBehaviour
             yield return null;
         }
 
-        timeControl.NormalTime() ;
+        timeControl.NormalTime();
 
         yield return new WaitForSeconds(1f);
 
@@ -149,6 +157,7 @@ public class InGameTutorialManager : MonoBehaviour
             currentCount++;
         }
 
+        timeControl.NormalTime();
         tutorialPanel.SetActive(false);
     }
 }

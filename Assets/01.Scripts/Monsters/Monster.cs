@@ -124,6 +124,8 @@ public class Monster : LivingEntity, IPlayerObserver
             Die();
         }
 
+        if (hpBar == null) return;
+
         if (isSliderVisible)
         {
             if (!hpBar.gameObject.activeSelf)
