@@ -49,7 +49,7 @@ public class SoundManager : Singleton<SoundManager>
 
     public void CreateTemporalObjects()
     {
-        if(tempPlayer != null)
+        if (tempPlayer != null)
         {
             for (int i = 0; i < poolSize; ++i)
             {
@@ -113,7 +113,7 @@ public class SoundManager : Singleton<SoundManager>
             }
             Debug.Log("All sounds loaded successfully.");
 
-            if(currPlayingSounds.Count == 0)
+            if (currPlayingSounds.Count == 0)
             {
                 PlaySound2D("BGM_main", 0, true, SoundType.BGM);
             }

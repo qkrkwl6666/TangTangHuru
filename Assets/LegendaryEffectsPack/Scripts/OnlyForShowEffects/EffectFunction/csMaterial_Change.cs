@@ -6,9 +6,9 @@ public class csMaterial_Change : MonoBehaviour
     Material m_objectMaterial;
     MeshRenderer m_meshRenderer;
     public float m_timeToReduce;
-    public float m_reduceFactor =1.0f;
+    public float m_reduceFactor = 1.0f;
     public float m_timeToStart;
-    public float m_startFactor =1.0f;
+    public float m_startFactor = 1.0f;
     float m_time;
     float m_cutOutFactor;
 
@@ -23,30 +23,30 @@ public class csMaterial_Change : MonoBehaviour
             m_cutOutFactor = 0.0f;
     }
 
-	void LateUpdate()
+    void LateUpdate()
     {
         if (m_timeToReduce <= 0)
             return;
 
         m_time += Time.deltaTime;
-        if(m_time > m_timeToReduce)
+        if (m_time > m_timeToReduce)
             m_cutOutFactor += Time.deltaTime * m_reduceFactor;
 
         if (m_time <= m_timeToStart)
             m_cutOutFactor = 1.0f;
         else if (m_time > m_timeToStart && m_time <= m_timeToReduce)
-            m_cutOutFactor -= Time.deltaTime*m_startFactor;
+            m_cutOutFactor -= Time.deltaTime * m_startFactor;
 
         m_cutOutFactor = Mathf.Clamp01(m_cutOutFactor);
         if (m_cutOutFactor >= 1 && m_time > m_timeToReduce)
             Destroy(gameObject);
         m_objectMaterial.SetFloat("_CutOut", m_cutOutFactor);
-	}
+    }
 
     public void SetTime(float _Duration, bool _Loop)
     {
         if (!_Loop)
-            m_timeToReduce = _Duration+1;
+            m_timeToReduce = _Duration + 1;
         else
             m_timeToReduce = 0.0f;
     }

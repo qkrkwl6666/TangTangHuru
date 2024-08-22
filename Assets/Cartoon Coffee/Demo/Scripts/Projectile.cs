@@ -92,9 +92,9 @@ namespace Demo_Project
         {
             GameObject tempImpact = Instantiate(impactObject, transform.position, transform.rotation);
             SceneManager.listOfImpacts.Add(tempImpact);
-            for(int i = 0; i < SceneManager.listOfBullets.Count; i++)
+            for (int i = 0; i < SceneManager.listOfBullets.Count; i++)
             {
-                if(SceneManager.listOfBullets[i] == this.gameObject)
+                if (SceneManager.listOfBullets[i] == this.gameObject)
                 {
                     SceneManager.listOfBullets.RemoveAt(i);
                     break;

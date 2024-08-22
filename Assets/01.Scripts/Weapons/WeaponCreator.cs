@@ -261,7 +261,7 @@ public class WeaponCreator : MonoBehaviour
             else
             {
                 hit.Damage = ((mainDamage * 0.6f) * weaponDataInStage.Damage) + typePassive.Damage;
-            } 
+            }
 
         }
     }

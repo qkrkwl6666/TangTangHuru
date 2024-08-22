@@ -13,8 +13,8 @@ public class OrbPanel : MonoBehaviour
 
     private bool reset = true;
 
-    private List<ItemType> orbTypes = new List<ItemType> 
-    { 
+    private List<ItemType> orbTypes = new List<ItemType>
+    {
         ItemType.OrbAttack,
         ItemType.OrbDefence,
         ItemType.OrbHp,
@@ -54,8 +54,8 @@ public class OrbPanel : MonoBehaviour
                 }
             }
         }
-        
-        
+
+
         reset = false;
     }
 

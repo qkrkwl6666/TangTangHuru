@@ -26,7 +26,7 @@ public class Stunned : MonoBehaviour, IBossSkill
 
     public void Initialize(BossSkillData bossSkillData, float damage)
     {
-        Addressables.InstantiateAsync(Defines.stunCirlce, transform).Completed 
+        Addressables.InstantiateAsync(Defines.stunCirlce, transform).Completed
             += (x) =>
         {
             var go = x.Result;

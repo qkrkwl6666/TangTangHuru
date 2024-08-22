@@ -29,7 +29,7 @@ public class ArmorSetUI : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     private void RefreshList()

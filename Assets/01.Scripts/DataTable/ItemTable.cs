@@ -90,7 +90,7 @@ public class ItemTable : DataTable
 
     public ItemData GetItemData(ItemType itemType, ItemTier itemTier)
     {
-        foreach (var item in itemTable.Values) 
+        foreach (var item in itemTable.Values)
         {
             if (item.Item_Type == (int)itemType && item.Item_Tier == (int)itemTier)
             {

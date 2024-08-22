@@ -27,7 +27,7 @@ public class BossIdleState : BossState
     {
         time += deltaTime;
 
-        if (time >= coolDown) 
+        if (time >= coolDown)
         {
             boss.ChangeState(boss.skillState);
         }

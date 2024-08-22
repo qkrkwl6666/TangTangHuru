@@ -19,13 +19,13 @@ public class BossWalkState : BossState
     {
         if (boss.isGuardian)
         {
-            switch(boss.BossData.Boss_Id)
+            switch (boss.BossData.Boss_Id)
             {
                 case 333001:
                     bossView.PlayAnimation(Defines.idle, true);
                     break;
                 case 333002:
-                    bossView.PlayAnimation(Defines.groundOut, false).Complete += (x) => 
+                    bossView.PlayAnimation(Defines.groundOut, false).Complete += (x) =>
                     {
                         bossView.PlayAnimation(Defines.walk, true);
                     };
@@ -56,7 +56,7 @@ public class BossWalkState : BossState
         time += deltaTime;
 
         // 상태 이상형 수호자
-        if(boss.BossData.Boss_Id == Defines.sternGuardian)
+        if (boss.BossData.Boss_Id == Defines.sternGuardian)
         {
             float distance = Vector2.Distance(playerTransform.position, boss.transform.position);
 

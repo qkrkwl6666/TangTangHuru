@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class EffectsScene : MonoBehaviour {
+public class EffectsScene : MonoBehaviour
+{
 
     public Transform[] m_effects;
 
@@ -18,10 +19,10 @@ public class EffectsScene : MonoBehaviour {
 
     }
 
-	void Update ()
+    void Update()
     {
         InputKey();
-	}
+    }
 
     void InputKey()
     {
@@ -37,7 +38,7 @@ public class EffectsScene : MonoBehaviour {
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            if (index >= m_effects.Length-1)
+            if (index >= m_effects.Length - 1)
                 index = 0;
             else
                 index++;
@@ -55,7 +56,7 @@ public class EffectsScene : MonoBehaviour {
         GameObject gm = Instantiate(m_effects[index],
             m_effects[index].transform.position,
             m_effects[index].transform.rotation).gameObject;
-        m_effectName.text = (index+1) +" : "+m_effects[index].name.ToString();
+        m_effectName.text = (index + 1) + " : " + m_effects[index].name.ToString();
         gm.transform.parent = this.transform;
         m_destroyObjects[inputLocation] = gm;
 
@@ -64,7 +65,7 @@ public class EffectsScene : MonoBehaviour {
 
     void DestroyGameObject()
     {
-        for(int i = 0; i < inputLocation; i++)
+        for (int i = 0; i < inputLocation; i++)
         {
             Destroy(m_destroyObjects[i]);
         }

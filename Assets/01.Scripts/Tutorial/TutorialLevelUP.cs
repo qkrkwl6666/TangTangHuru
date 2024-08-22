@@ -8,7 +8,7 @@ public class TutorialLevelUP : MonoBehaviour
 
     private void OnEnable()
     {
-        if(LevelUpChat)
+        if (LevelUpChat)
         {
             inGameTutorialManager.StartCoroutine(inGameTutorialManager.Tutorial3Start());
             LevelUpChat = false;

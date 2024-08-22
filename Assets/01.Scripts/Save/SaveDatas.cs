@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public abstract class SaveDatas 
+public abstract class SaveDatas
 {
     public int Version { get; protected set; }
     public abstract SaveDatas VersionUp();
@@ -13,11 +13,13 @@ public class SaveDataV1 : SaveDatas
     public int CurrentStage { get; set; } = 1;
     public int MaxStage { get; set; } = 1;
 
+    public bool isTutorialCompleted = false;
+
     // 전체 아이템 컨테이너
     public List<Item> allItem = new();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
-    public Dictionary<PlayerEquipment, Item> playerEquipment = new ();
+    public Dictionary<PlayerEquipment, Item> playerEquipment = new();
 
     // 도전과제 진행정보 저장
     public List<AchieveState> SavedStates = new();

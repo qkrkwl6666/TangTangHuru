@@ -217,7 +217,7 @@ public class PlayerEquipLoader : MonoBehaviour
 
         var seletedPassive = selected;
         seletedPassive.Level = 1;
-        
+
         //currPassiveList.Add(seletedPassive);
         //inGamePassiveList.Remove(selected);
 

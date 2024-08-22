@@ -4,25 +4,25 @@ public class Vibration : MonoBehaviour
 {
     public static void Vibrate(float seconds)
     {
-        #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject vibrator = GetVibrator();
         if (vibrator != null)
         {
             long milliseconds = (long)(seconds * 1000);
             vibrator.Call("vibrate", milliseconds);
         }
-        #endif
+#endif
     }
 
     public static void VibratePattern(long[] pattern, int repeat)
     {
-        #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject vibrator = GetVibrator();
         if (vibrator != null)
         {
             vibrator.Call("vibrate", pattern, repeat);
         }
-        #endif
+#endif
     }
 
     private static AndroidJavaObject GetVibrator()
@@ -35,12 +35,12 @@ public class Vibration : MonoBehaviour
 
     public static void Cancel()
     {
-        #if UNITY_ANDROID && !UNITY_EDITOR
+#if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject vibrator = GetVibrator();
         if (vibrator != null)
         {
             vibrator.Call("cancel");
         }
-        #endif
+#endif
     }
 }

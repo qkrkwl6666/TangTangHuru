@@ -6,7 +6,7 @@ public class SimplerCollision : MonoBehaviour
     public float pushForce = 0.1f;   // 밀어내는 힘
     public LayerMask collisionMask;  // 감지할 레이어
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         Collider2D[] nearbyObjects = Physics2D.OverlapCircleAll(transform.position, minDistance, collisionMask);
 

@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 namespace Demo_Project
 {
@@ -354,7 +354,7 @@ namespace Demo_Project
                 SceneManager.listOfTargets[i].GetComponent<SpriteRenderer>().enabled = false;
             }
 
-            
+
         }
 
         // Displays the player and target on the screen

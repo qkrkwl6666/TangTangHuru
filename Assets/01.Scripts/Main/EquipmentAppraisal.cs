@@ -55,7 +55,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
     private void OnDestroy()
     {
-        
+
     }
 
     public void RefreshGemStoneSlotUI()
@@ -69,7 +69,7 @@ public class EquipmentAppraisal : MonoBehaviour
             gemStone.Value.gameObject.SetActive(false);
         }
 
-        foreach(var gemStone in allGemStone)
+        foreach (var gemStone in allGemStone)
         {
             if (gemStone.Value.Count == 0) continue;
 
@@ -90,7 +90,7 @@ public class EquipmentAppraisal : MonoBehaviour
             selectGemStone.Add((ItemTier)i, 0);
         }
 
-        for(int i = 0; i < (int)ItemTier.Count; i++)
+        for (int i = 0; i < (int)ItemTier.Count; i++)
         {
             int tempItemId = defaultGemStoneItemId;
             ItemTier tempType = (ItemTier)i;
@@ -114,7 +114,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
         var apprasieTable = DataTableManager.Instance.Get<AppraiseTable>(DataTableManager.appraise).appraiseTable;
 
-        foreach(var apprasie in apprasieTable)
+        foreach (var apprasie in apprasieTable)
         {
             appraisalId.Add(apprasie.Value.Id);
         }
@@ -129,7 +129,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public int GetMaxGemStoneCount(ItemTier itemTier)
     {
-        if(allGemStone.ContainsKey(itemTier))
+        if (allGemStone.ContainsKey(itemTier))
         {
             return allGemStone[itemTier].Count;
         }
@@ -246,11 +246,11 @@ public class EquipmentAppraisal : MonoBehaviour
     {
         // 내가 현재 선택한 원석들 가져와서 한번에 다 뽑고 n번 팝업창 띄우기
 
-        List<Item> itemList = new ();
+        List<Item> itemList = new();
 
-        foreach(var appraisal in selectGemStone)
+        foreach (var appraisal in selectGemStone)
         {
-            for(int i = 0; i < appraisal.Value; i++)
+            for (int i = 0; i < appraisal.Value; i++)
             {
                 int appraiseId = defaultAppraisalItemId + (int)appraisal.Key;
 

@@ -8,7 +8,7 @@ public class TutorialTreasure : MonoBehaviour
 
     private void OnDisable()
     {
-        if(isFrist)
+        if (isFrist)
             inGameTutorialManager.StartCoroutine(inGameTutorialManager.Tutorial4Start());
 
         isFrist = false;

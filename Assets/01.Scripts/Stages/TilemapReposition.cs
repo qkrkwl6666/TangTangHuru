@@ -18,7 +18,7 @@ public class TilemapReposition : MonoBehaviour, IPlayerObserver
         float diffX = playerTransform.position.x - transform.position.x;
         float diffY = playerTransform.position.y - transform.position.y;
 
-        if(Mathf.Abs(diffX) > TileSize)
+        if (Mathf.Abs(diffX) > TileSize)
         {
             float dirX = diffX > 0 ? 1 : -1;
             transform.Translate(Vector3.right * dirX * TileSize * 2);

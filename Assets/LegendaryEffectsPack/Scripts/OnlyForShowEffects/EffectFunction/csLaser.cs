@@ -7,7 +7,7 @@ public class csLaser : MonoBehaviour
     public float Width = 1.5f; //LineRenderer Width Value
     float CurrentWidth = 0.0f;
     public float Offset = 1.0f; //LineRenderer MainTexture Offset Value 
-    public float MaxLength = Mathf.Infinity; 
+    public float MaxLength = Mathf.Infinity;
     public Transform LaserHitEffect; //For Laser Hit Effect.
     public Material _Material; //For LineRenderer Material
 
@@ -17,19 +17,19 @@ public class csLaser : MonoBehaviour
     public float MaxTime;
     public float shrinkValue;
     float time;
-    
+
     void Awake()
     {
-        if (!(LineRenderer)transform.gameObject.GetComponent("LineRenderer")) 
+        if (!(LineRenderer)transform.gameObject.GetComponent("LineRenderer"))
             this.gameObject.AddComponent<LineRenderer>();
 
-        Transform MakedEffect = Instantiate(LaserHitEffect, transform.position, transform.rotation) as Transform; 
+        Transform MakedEffect = Instantiate(LaserHitEffect, transform.position, transform.rotation) as Transform;
         _Effect = MakedEffect.gameObject; // Set MakeEffect Information To _Effect
 
         csEffectScene.m_destroyObjects[csEffectScene.inputLocation] = _Effect;
         csEffectScene.inputLocation++;
 
-        _LineRenderer = GetComponent<LineRenderer>(); 
+        _LineRenderer = GetComponent<LineRenderer>();
         _LineRenderer.material = _Material;
         CurrentWidth = Width;
         _LineRenderer.startWidth = CurrentWidth;
@@ -42,13 +42,13 @@ public class csLaser : MonoBehaviour
         RaycastHit hit;
         time += Time.deltaTime;
 
-        if (Physics.Raycast(transform.position, transform.forward, out hit, MaxLength)) 
+        if (Physics.Raycast(transform.position, transform.forward, out hit, MaxLength))
         {
-            NowLength = hit.distance+1; 
+            NowLength = hit.distance + 1;
 
-            if(_Effect)
-            { 
-                _Effect.transform.position = hit.point; 
+            if (_Effect)
+            {
+                _Effect.transform.position = hit.point;
                 _Effect.transform.rotation = Quaternion.LookRotation(hit.normal);
             }
         }
@@ -66,11 +66,11 @@ public class csLaser : MonoBehaviour
         }
 
         Vector3 NewPos = this.transform.position + new Vector3(transform.forward.x * (NowLength - 1)
-            , transform.forward.y * (NowLength - 1), transform.forward.z * (NowLength - 1));                                                                     
-        _LineRenderer.SetPosition(0, transform.position); 
-        _LineRenderer.SetPosition(1, NewPos); 
+            , transform.forward.y * (NowLength - 1), transform.forward.z * (NowLength - 1));
+        _LineRenderer.SetPosition(0, transform.position);
+        _LineRenderer.SetPosition(1, NewPos);
         _LineRenderer.material.SetTextureOffset("_MainTex",
             new Vector2(-Time.time * 10f * Offset, 0.0f));
-        _LineRenderer.GetComponent<Renderer>().materials[0].mainTextureScale = new Vector2(NowLength/10, _LineRenderer.GetComponent<Renderer>().materials[0].mainTextureScale.y);
+        _LineRenderer.GetComponent<Renderer>().materials[0].mainTextureScale = new Vector2(NowLength / 10, _LineRenderer.GetComponent<Renderer>().materials[0].mainTextureScale.y);
     }
 }

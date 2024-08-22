@@ -28,7 +28,7 @@ public class M_UISlot : MonoBehaviour
         // UI 아이템 데이터 에 맞춰서 설정
 
         // 아이템 아이콘
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += (texture) => 
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += (texture) =>
         {
             itemIcon.sprite = texture.Result;
         };
@@ -92,7 +92,7 @@ public class M_UISlot : MonoBehaviour
         // 현재 아이템 타입에 맞는 UI 팝업 띄우고 현재 아이템 데이터 정보 팝업으로
         // 넘기기 여기서 isConsumable 에 따라서 팝업 정보 다르게 띄우기
 
-        switch(item.itemData.Item_Type)
+        switch (item.itemData.Item_Type)
         {
             case (int)ItemType.Axe:
             case (int)ItemType.Sword:

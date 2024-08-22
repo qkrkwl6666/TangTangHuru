@@ -42,7 +42,7 @@ public class StunCircle : MonoBehaviour
 
         transform.localScale = new Vector3(scale, scale, scale);
 
-        if (time >= duration && !attack) 
+        if (time >= duration && !attack)
         {
             attack = true;
 
@@ -54,7 +54,7 @@ public class StunCircle : MonoBehaviour
     {
         yield return new WaitForSeconds(0.15f);
 
-        if(isFirst) yield break;
+        if (isFirst) yield break;
 
         boss.ChangeState(boss.walkState);
         gameObject.SetActive(false);
@@ -68,7 +68,7 @@ public class StunCircle : MonoBehaviour
         {
             isFirst = true;
 
-            bossView.PlayAnimation(Defines.attack, false).Complete += (x) => 
+            bossView.PlayAnimation(Defines.attack, false).Complete += (x) =>
             {
                 collision.GetComponent<PlayerController>
                     ().StartStun(stunDuration);

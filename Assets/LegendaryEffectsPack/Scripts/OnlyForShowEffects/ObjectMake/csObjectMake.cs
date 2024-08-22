@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csObjectMake : MonoBehaviour {
+public class csObjectMake : MonoBehaviour
+{
 
     public GameObject m_gameObject;
     float t;

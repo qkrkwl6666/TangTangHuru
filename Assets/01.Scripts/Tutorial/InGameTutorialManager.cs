@@ -52,12 +52,12 @@ public class InGameTutorialManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
 
         StartCoroutine(Tutorial2Start());
-        //StartCoroutine(WaitSec());
+        StartCoroutine(WaitSec());
     }
 
     private void Update()
     {
-        
+
     }
 
     public IEnumerator WaitSec()
@@ -92,7 +92,7 @@ public class InGameTutorialManager : MonoBehaviour
         // 버튼 선택 까지 대기
         while (true)
         {
-            if(!levelUpPanel.parent.gameObject.activeSelf) break;
+            if (!levelUpPanel.parent.gameObject.activeSelf) break;
 
             yield return null;
         }

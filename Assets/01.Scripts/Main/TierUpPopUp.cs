@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 
 public class TierUpPopUp : MonoBehaviour
 {
@@ -25,7 +25,7 @@ public class TierUpPopUp : MonoBehaviour
     public EquipPopUp equipPopUp;
     public AppraisalPopUp appraisalPopUp;
 
-    public List<(Item, TierUpItemSlotUI)> tierUpItemSlot = new ();
+    public List<(Item, TierUpItemSlotUI)> tierUpItemSlot = new();
 
     private bool isMaxValue = false;
 
@@ -38,7 +38,7 @@ public class TierUpPopUp : MonoBehaviour
 
     public void RefreshItemCreateSlotUI(ItemType itemType)
     {
-        List<Item> items = new ();
+        List<Item> items = new();
 
         switch (itemType)
         {
@@ -77,7 +77,7 @@ public class TierUpPopUp : MonoBehaviour
 
     public void OnDisable()
     {
-        foreach(var item in tierUpItemSlot)
+        foreach (var item in tierUpItemSlot)
         {
             Destroy(item.Item2.gameObject);
         }
@@ -120,7 +120,7 @@ public class TierUpPopUp : MonoBehaviour
     {
         if (isFoucs && isMaxValue) return false;
 
-        if (isFoucs) 
+        if (isFoucs)
         {
             CurrentTierUpValue += item.itemData.TierUp_Exp;
         }
@@ -141,9 +141,9 @@ public class TierUpPopUp : MonoBehaviour
     {
         List<Item> removeItem = new List<Item>();
 
-        foreach(var item in tierUpItemSlot)
+        foreach (var item in tierUpItemSlot)
         {
-            if(item.Item2.IsFocus)
+            if (item.Item2.IsFocus)
             {
                 removeItem.Add(item.Item1);
             }
@@ -151,13 +151,13 @@ public class TierUpPopUp : MonoBehaviour
 
         if (removeItem.Count == 0) return;
 
-        foreach (var item in removeItem) 
+        foreach (var item in removeItem)
         {
             mainInventory.RemoveItem(item.InstanceId);
         }
 
         // 승급 성공 다음 등급 아이템 생성 팝업 띄우기
-        if(CurrentTierUpValue >= MaxTierUpValue)
+        if (CurrentTierUpValue >= MaxTierUpValue)
         {
             TierUpNewItemPopUp();
             mainInventory.RefreshItemSlotUI();
@@ -181,7 +181,7 @@ public class TierUpPopUp : MonoBehaviour
 
         // 현재 아이템 삭제
         mainInventory.RemoveItem(item.InstanceId);
-        
+
         var itemMain = mainInventory.MainInventoryAddItem(itemId.ToString());
 
         List<Item> newItems = new List<Item>();

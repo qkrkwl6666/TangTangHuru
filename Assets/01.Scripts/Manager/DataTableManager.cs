@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 public class DataTableManager : Singleton<DataTableManager>
 {
@@ -12,12 +12,12 @@ public class DataTableManager : Singleton<DataTableManager>
     public static readonly string bossSkill = "BossSkill";
     public static readonly string stageBoss = "StageBoss";
     public static readonly string treasure = "Treasure";
-    public static readonly string item = "Item"; 
+    public static readonly string item = "Item";
     public static readonly string String = "String";
     public static readonly string stage = "Stage";
     public static readonly string appraise = "Appraise";
 
-    public static readonly string[] TableNames = 
+    public static readonly string[] TableNames =
     {
         "StageWave", "Monster", "MonsterSkill", "Boss", "BossSkill", "StageBoss",
         "Treasure", "Item", "Orb", "String", "Stage", "Appraise"
@@ -93,7 +93,7 @@ public class DataTableManager : Singleton<DataTableManager>
     {
         loadTableCount++;
 
-        if (loadTableCount >= tables.Count) 
+        if (loadTableCount >= tables.Count)
         {
             OnAllTableLoaded?.Invoke();
             isTableLoad = true;

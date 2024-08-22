@@ -11,7 +11,7 @@ public class Well : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == Defines.player)
+        if (collision.tag == Defines.player)
         {
             inventory.SaveItem(true);
         }

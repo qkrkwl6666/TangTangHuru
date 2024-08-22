@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csObjectMake4 : MonoBehaviour {
+public class csObjectMake4 : MonoBehaviour
+{
 
     public GameObject m_gameObject;
     float t = 2;
@@ -16,7 +17,7 @@ public class csObjectMake4 : MonoBehaviour {
             return;
 
         t += Time.deltaTime;
-        if(MaxTime < t)
+        if (MaxTime < t)
         {
             count++;
             t = 0;

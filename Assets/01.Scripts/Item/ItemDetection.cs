@@ -96,7 +96,7 @@ public class ItemDetection : MonoBehaviour
 
         foreach (var treasure in treasureList)
         {
-            if (treasure == null) 
+            if (treasure == null)
                 continue;
 
             var distance = Vector2.Distance(treasure.transform.position, transform.position);
@@ -140,7 +140,7 @@ public class ItemDetection : MonoBehaviour
         treasureBar.UpdateTreasureBar(value);
 
         //보물상자 열림
-        if (treasureTime >= treasureDuration) 
+        if (treasureTime >= treasureDuration)
         {
             OpenTreasure();
             Radar();
@@ -191,7 +191,7 @@ public class ItemDetection : MonoBehaviour
     {
         if (time >= duration)
         {
-            if(!isMagnet)
+            if (!isMagnet)
                 Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
             else
             {
@@ -247,7 +247,7 @@ public class ItemDetection : MonoBehaviour
                         .SetUpdate(UpdateType.Fixed)
                         .OnComplete(() =>
                     {
-                        if(!removeItems.Contains(item.gameObject))
+                        if (!removeItems.Contains(item.gameObject))
                         {
                             removeItems.Add(item.gameObject);
                             item.GetComponent<IInGameItem>().UseItem();

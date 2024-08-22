@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class VFXRenderManager : MonoBehaviour
 {
-    public List<ParticleSystem> particles = new ();
+    public List<ParticleSystem> particles = new();
 
-    public List<RawImage> rawImages = new ();
+    public List<RawImage> rawImages = new();
 
     private void Awake()
     {
@@ -98,6 +98,6 @@ public enum Particle
 public enum RenderRawImage
 {
     ChargeLightTexture,
-    IconWaitTexture, 
+    IconWaitTexture,
     RatingTexture,
 }

@@ -1,12 +1,12 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.UI;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.UI;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
-using TMPro;
 
 public class StageSelectionUI : MonoBehaviour
 {
@@ -20,7 +20,7 @@ public class StageSelectionUI : MonoBehaviour
 
     public float centeringDuration = 0.15f; // 중앙 정렬 애니메이션 시간
     public RectTransform contentRect; // 스크롤 뷰의 content RectTransform
-    private List<RectTransform> stageRects = new ();
+    private List<RectTransform> stageRects = new();
 
     private float magnitude = int.MaxValue;
 
@@ -52,7 +52,7 @@ public class StageSelectionUI : MonoBehaviour
             Debug.Log("세이브 이미 로드 완료됨");
             InitStageUI();
         }
-        
+
     }
 
     private void OnEnable()
@@ -60,7 +60,7 @@ public class StageSelectionUI : MonoBehaviour
         EnhancedTouchSupport.Enable();
 
         scrollCoroutine = StartCoroutine(ScrollCheck());
-        
+
         if (isFirstEnable == false)
         {
             isFirstEnable = true;
@@ -78,7 +78,7 @@ public class StageSelectionUI : MonoBehaviour
         isScrolling = false;
         consecutiveStopCount = 0;
 
-        if(scrollCoroutine != null)
+        if (scrollCoroutine != null)
         {
             StopCoroutine(scrollCoroutine);
             scrollCoroutine = null;
@@ -89,7 +89,7 @@ public class StageSelectionUI : MonoBehaviour
         {
             GameManager.Instance.CurrentStage = currentStage;
         }
-        else if(currentStage <= SaveManager.SaveDataV1.MaxStage)
+        else if (currentStage <= SaveManager.SaveDataV1.MaxStage)
         {
             GameManager.Instance.CurrentStage = currentStage;
         }
@@ -117,7 +117,7 @@ public class StageSelectionUI : MonoBehaviour
 
     private void Update()
     {
-        
+
     }
 
     private IEnumerator ScrollCheck()
@@ -159,7 +159,7 @@ public class StageSelectionUI : MonoBehaviour
         RectTransform nearestStage = null;
         float nearestDistance = float.MaxValue;
 
-        for(int i = 0; i < stageRects.Count; i++)
+        for (int i = 0; i < stageRects.Count; i++)
         {
             // 스테이지의 월드 위치를 뷰포트의 로컬 위치로 변환
             Vector3 stageViewportPos = scrollRect.viewport.InverseTransformPoint(stageRects[i].TransformPoint(Vector3.zero));
@@ -245,26 +245,26 @@ public class StageSelectionUI : MonoBehaviour
             go.transform.SetAsLastSibling();
         };
 
-        for (int i = 0; i < stageTable.Count; i++) 
+        for (int i = 0; i < stageTable.Count; i++)
         {
             int name = i;
 
-            Addressables.InstantiateAsync(Defines.stageImage, contentRect).Completed 
+            Addressables.InstantiateAsync(Defines.stageImage, contentRect).Completed
                 += (stage) =>
-            { 
+            {
                 var rect = stage.Result.GetComponent<RectTransform>();
                 rect.gameObject.name = $"{name}";
 
                 stageRects.Add(rect);
 
-                if(name + 1 > SaveManager.SaveDataV1.MaxStage)
+                if (name + 1 > SaveManager.SaveDataV1.MaxStage)
                 {
                     rect.GetChild(1).gameObject.SetActive(true);
                 }
 
                 if (stageTable[(name + 1).ToString()].Texture != "-1")
                 {
-                    Addressables.LoadAssetAsync<Sprite>(stageTable[(name + 1).ToString()].Texture).Completed += (sprite) => 
+                    Addressables.LoadAssetAsync<Sprite>(stageTable[(name + 1).ToString()].Texture).Completed += (sprite) =>
                     {
                         rect.GetChild(0).GetComponent<Image>().sprite = sprite.Result;
                     };

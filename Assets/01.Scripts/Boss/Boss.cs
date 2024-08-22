@@ -140,7 +140,7 @@ public class Boss : LivingEntity, IPlayerObserver
                     }
                     break;
 
-                    // 가디언
+                // 가디언
                 case 510013:
                     {
                         var dash = AddSkill<Dash>(skill.Item1, skill.Item2);
@@ -231,8 +231,8 @@ public class Boss : LivingEntity, IPlayerObserver
         base.Die();
 
         InGameInventory.OnCoinAdd?.Invoke(Gold);
-        
-        if(!isGuardian)
+
+        if (!isGuardian)
             OnDead?.Invoke();
 
         ChangeState(deadState);

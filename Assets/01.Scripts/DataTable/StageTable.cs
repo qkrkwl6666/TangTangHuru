@@ -22,11 +22,11 @@ public class StageTable : DataTable
 
     public StageData GetData(int stage)
     {
-        if(stageTable.ContainsKey(stage.ToString()))
+        if (stageTable.ContainsKey(stage.ToString()))
         {
             return stageTable[stage.ToString()];
         }
-        
+
         return null;
     }
 

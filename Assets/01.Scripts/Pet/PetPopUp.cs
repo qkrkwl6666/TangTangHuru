@@ -118,7 +118,7 @@ public class PetPopUp : MonoBehaviour
             switch (currentItem.ItemTier)
             {
                 case ItemTier.Normal:
-                    currentItem = mainInventory.MainInventoryAddItem("710005"); 
+                    currentItem = mainInventory.MainInventoryAddItem("710005");
                     break;
                 case ItemTier.Rare:
                     currentItem = mainInventory.MainInventoryAddItem("710006");

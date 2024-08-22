@@ -5,7 +5,7 @@ public class Dash : MonoBehaviour, IBossSkill
 {
     public int SkillCount { get; set; } = 1;
     public bool IsChange { get; set; } = false;
-    public float SkillRate { get ; set ; } = 1f;
+    public float SkillRate { get; set; } = 1f;
     public float DamageFactor { get; set; } = 1f;
     public float Damage { get; set; } = 1f;
 
@@ -57,7 +57,7 @@ public class Dash : MonoBehaviour, IBossSkill
     {
         time += deltaTime;
 
-        if(time >= dashTime)
+        if (time >= dashTime)
         {
             boss.ChangeState(boss.walkState);
         }
@@ -75,7 +75,7 @@ public class Dash : MonoBehaviour, IBossSkill
         if (collision.gameObject.tag == "Player")
         {
 
-            bossView.PlayAnimation(Defines.attack, false).Complete += (trackEntry) => 
+            bossView.PlayAnimation(Defines.attack, false).Complete += (trackEntry) =>
             {
                 collision.gameObject.GetComponent<IDamagable>().OnDamage(Damage, 0);
                 IsChange = true;

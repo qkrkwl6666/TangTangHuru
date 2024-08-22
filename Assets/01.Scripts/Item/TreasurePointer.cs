@@ -7,7 +7,7 @@ public class TreasurePointer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(targetTreasure != null)
+        if (targetTreasure != null)
         {
             SetDirection();
 

@@ -83,7 +83,7 @@ public class Bombardment : MonoBehaviour, IBossSkill
     {
         time += deltaTime;
 
-        if(time >= SkillRate)
+        if (time >= SkillRate)
         {
             time = 0f;
             Attack();

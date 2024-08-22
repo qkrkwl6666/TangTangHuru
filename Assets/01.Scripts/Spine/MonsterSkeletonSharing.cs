@@ -7,8 +7,8 @@ public class MonsterSkeletonSharing : MonoBehaviour
     //private Dictionary<string, SkeletonAnimation> monsterSkeletonAnimation = new ();
     //private Dictionary<string, TaskCompletionSource<SkeletonAnimation>> loadingTasks = new();
 
-    private Dictionary<string , List<SkeletonRenderer>> skeletonRenderers = new ();
-    private Dictionary<string, Spine.AnimationState> sharedAnimationState = new ();
+    private Dictionary<string, List<SkeletonRenderer>> skeletonRenderers = new();
+    private Dictionary<string, Spine.AnimationState> sharedAnimationState = new();
 
     private int frameDuration = 5;
     private int currentFrame = 0;
@@ -16,32 +16,32 @@ public class MonsterSkeletonSharing : MonoBehaviour
 
     private void Awake()
     {
-        
+
     }
 
     private void Update()
     {
         currentFrame++;
         deltaTime += Time.deltaTime;
-        
+
         if (currentFrame >= frameDuration)
         {
-            foreach(var animationState in sharedAnimationState)
+            foreach (var animationState in sharedAnimationState)
             {
                 animationState.Value.Update(deltaTime);
             }
-        
+
             foreach (var skeletonRendererList in skeletonRenderers)
             {
                 string key = skeletonRendererList.Key;
 
-                foreach(var skeletonRenderer in skeletonRendererList.Value)
+                foreach (var skeletonRenderer in skeletonRendererList.Value)
                 {
                     sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
                     skeletonRenderer.skeleton.UpdateWorldTransform();
                 }
             }
-        
+
             currentFrame = 0;
             deltaTime = 0f;
         }

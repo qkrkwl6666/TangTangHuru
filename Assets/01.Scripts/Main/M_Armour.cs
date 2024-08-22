@@ -5,7 +5,7 @@ public class M_Armour : Item
     public ItemType ItemType { get; set; }
     public ItemTier ItemTier { get; set; }
     public ItemData itemData { get; set; }
-    public float CurrentTierUp { get; set ; }
+    public float CurrentTierUp { get; set; }
 
     public void GetItemInfo()
     {

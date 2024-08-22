@@ -10,7 +10,7 @@ public class TutorialGameInit : MonoBehaviour
     public ItemDetection itemDetection;
 
     public GameObject guardian;
-    public List<GameObject> monsters = new ();
+    public List<GameObject> monsters = new();
     public GameObject treasureGo;
 
     private int maxMapSizeWidth = 70;
@@ -58,12 +58,12 @@ public class TutorialGameInit : MonoBehaviour
 
         foreach (var monster in monsters)
         {
-            if(monster.GetComponentInChildren<SkeletonRenderer>() == null)
+            if (monster.GetComponentInChildren<SkeletonRenderer>() == null)
             {
                 Debug.Log($"{monster.GetComponentInChildren<SkeletonRenderer>()} is null");
             }
             monsterSkeletonSharing.AddSkeletonRenderers("111", monster.GetComponentInChildren<SkeletonRenderer>());
-            
+
             monster.GetComponent<Monster>().Initialize(playerSubject, copy);
         }
     }

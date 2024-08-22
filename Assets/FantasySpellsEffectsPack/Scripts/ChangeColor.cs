@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class ChangeColor : MonoBehaviour {
+public class ChangeColor : MonoBehaviour
+{
 
     public Gradient color;
     public Color m_changeColor;
@@ -12,28 +13,28 @@ public class ChangeColor : MonoBehaviour {
     bool isChangeColor = false;
     public Image m_ColorHandler;
 
-	private void Update()
-	{
+    private void Update()
+    {
         m_changeColor = color.Evaluate(color_Value);
         m_ColorHandler.color = m_changeColor;
 
-        if(isChangeColor && m_obj != null)
+        if (isChangeColor && m_obj != null)
         {
             m_rnds = m_obj.GetComponentsInChildren<Renderer>(true);
 
-            foreach(Renderer rend in m_rnds)
+            foreach (Renderer rend in m_rnds)
             {
                 for (int i = 0; i < rend.materials.Length; i++)
                 {
-                    rend.materials[i].SetColor("_TintColor", m_changeColor*1.75f);
-                    rend.materials[i].SetColor("_Color", m_changeColor*1.75f);
-                    rend.materials[i].SetColor("_RimColor", m_changeColor*1.75f);
+                    rend.materials[i].SetColor("_TintColor", m_changeColor * 1.75f);
+                    rend.materials[i].SetColor("_Color", m_changeColor * 1.75f);
+                    rend.materials[i].SetColor("_RimColor", m_changeColor * 1.75f);
                 }
             }
         }
-	}
+    }
 
-	public void ChangeEffectColor(float value)
+    public void ChangeEffectColor(float value)
     {
         color_Value = value;
     }
