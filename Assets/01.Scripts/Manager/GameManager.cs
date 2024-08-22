@@ -99,8 +99,9 @@ public class GameManager : Singleton<GameManager>
         {
             //Todo : 메인 씬 이름 변경시 변경 필요
             if(sceneName != "InventoryScene")
+            {
                 loadingUI.SetActive(false);
-
+            }
             SoundManager.Instance.CreateTemporalObjects();
         };
 
