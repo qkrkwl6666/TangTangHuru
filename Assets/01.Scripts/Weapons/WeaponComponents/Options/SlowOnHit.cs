@@ -68,7 +68,7 @@ public class SlowOnHit : MonoBehaviour
         var controller = other.gameObject.GetComponent<MonsterController>();
         if (controller != null)
         {
-            controller.Slow(1);
+            controller.Slow();
         }
     }
 }

@@ -41,6 +41,9 @@ public class ItemData
     //방어구 세트 정보
     public int SetType { get; set; }
 
+    //가격
+    public int Price { get; set; }
+
 
     public ItemData DeepCopy()
     {
@@ -67,6 +70,7 @@ public class ItemData
         newItemData.TierUp_Exp = this.TierUp_Exp;
         newItemData.TierUp_NeedExp = this.TierUp_NeedExp;
         newItemData.SetType = this.SetType;
+        newItemData.Price = this.Price;
 
 
         return newItemData;
@@ -111,6 +115,22 @@ public class ItemTable : DataTable
 
         return itemDatas;
     }
+
+    public List<ItemData> GetItemsbySet(ItemTier itemTier, int setIndex)
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+
+        foreach (var item in itemTable.Values)
+        {
+            if (item.Item_Tier == (int)itemTier && item.SetType == setIndex)
+            {
+                itemDatas.Add(item);
+            }
+        }
+
+        return itemDatas;
+    }
+
 
     public override void Load(string name, Action tableLoaded)
     {

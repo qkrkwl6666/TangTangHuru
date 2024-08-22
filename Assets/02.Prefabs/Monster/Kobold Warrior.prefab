@@ -61,7 +61,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 6208cd38262e36b4a9b526f0e34927cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
+  hpBar: {fileID: 0}
 --- !u!114 &6848790760083760029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCritical: 0
 --- !u!50 &9209833736608091024
 Rigidbody2D:
   serializedVersion: 4

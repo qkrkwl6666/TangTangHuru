@@ -50,12 +50,20 @@ public class MonsterManager : MonoBehaviour
         }
     }
 
-    public void ShowDamage(float damage, Vector3 targetPos)
+    public void ShowDamage(int damage, Vector3 targetPos, bool isCritical = false)
     {
         if (textObjects.Count < 100)
         {
             var newText = Instantiate(textObject, targetPos, Quaternion.identity);
             newText.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
+            if(isCritical)
+            {
+                newText.GetComponent<TextMeshPro>().color = Color.red;
+            }
+            else
+            {
+                newText.GetComponent<TextMeshPro>().color = Color.yellow;
+            }
             textObjects.Add(newText);
             return;
         }
@@ -67,6 +75,14 @@ public class MonsterManager : MonoBehaviour
                 text.SetActive(true);
                 text.transform.position = targetPos;
                 text.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
+                if (isCritical)
+                {
+                    text.GetComponent<TextMeshPro>().color = Color.red;
+                }
+                else
+                {
+                    text.GetComponent<TextMeshPro>().color = Color.yellow;
+                }
                 return;
             }
         }

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,13 +9,14 @@ using UnityEngine.UI;
 public class PlayerHealth : LivingEntity
 {
     public Slider hpBar;
+    public ParticleSystem healPartice;
 
-    private float invincibleTime = 0.1f;
+    private float invincibleTime = 0.07f;
     private float timer = 0f;
     private bool isInvincible = false;
 
-    private float armorRate = 0f;
-    private float dodgeRate = 0f;
+    private float armorRate = 1f;
+    private float dodgeRate = 1f;
 
     private GameObject textObject;
     private List<GameObject> textObjects = new List<GameObject>();
@@ -88,6 +90,26 @@ public class PlayerHealth : LivingEntity
 
     public override void OnDamage(float damage, float Impact = 0)
     {
+        if (damage < 0)
+        {
+            if (health > startingHealth)
+            {
+                health = startingHealth;
+                hpBar.value = startingHealth;
+            }
+            else
+            {
+                health -= damage;
+                hpBar.value -= damage;
+            }
+
+            if (!healPartice.gameObject.activeSelf)
+            {
+                StartCoroutine(HealEffectPlay());
+            }
+            return;
+        }
+
         if (dead || isInvincible)
             return;
 
@@ -100,15 +122,16 @@ public class PlayerHealth : LivingEntity
             return;
         }
 
-        var totalDmg = damage - armorRate;
-        if(totalDmg <= 0 )
+        float totalDmg = damage * (damage / (damage + armorRate));
+
+        if (totalDmg <= 1 )
         {
-            //공식 변경 가능
             totalDmg = 1;
         }
 
         health -= totalDmg;
         hpBar.value = health;
+
 
         if (health <= 0 && !dead)
         {
@@ -148,11 +171,22 @@ public class PlayerHealth : LivingEntity
     {
         health += heal;
 
-        if(health > startingHealth)
+        if (health > startingHealth)
         {
-            health = startingHealth; 
+            health = startingHealth;
         }
 
         hpBar.value = health;
+    }
+
+
+    private IEnumerator HealEffectPlay()
+    {
+        healPartice.gameObject.SetActive(true);
+        healPartice.Play();
+        yield return new WaitForSeconds(1f);
+        healPartice.Stop();
+        healPartice.gameObject.SetActive(false);
+
     }
 }

@@ -20,7 +20,7 @@ public class GameOverCheck : MonoBehaviour, IPlayerObserver
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
 
-        playerHp = (PlayerHealth)playerSubject.GetPlayerLivingEntity;
+        playerHp = playerSubject.GetPlayerLivingEntity as PlayerHealth;
         playerHp.onDeath += GameOver;
     }
 

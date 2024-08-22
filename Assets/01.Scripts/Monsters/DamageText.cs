@@ -4,6 +4,9 @@ public class DamageText : MonoBehaviour
 {
     private LivingEntity monster;
 
+    private bool isTextOn = true;
+    public bool isCritical = false;
+
     private void Awake()
     {
         monster = GetComponent<LivingEntity>();
@@ -17,6 +20,15 @@ public class DamageText : MonoBehaviour
 
     private void ShowHeadUpDamage(float damage)
     {
-        MonsterManager.Instance.ShowDamage(damage, transform.position);
+        if (!isTextOn)
+            return;
+
+        MonsterManager.Instance.ShowDamage((int)damage, transform.position, isCritical);
+        isCritical = false;
+    }
+
+    public void ActiveDamageText(bool isOn)
+    {
+        isTextOn = isOn;
     }
 }

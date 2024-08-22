@@ -5,17 +5,18 @@ using UnityEngine.UI;
 
 public class LevelUpUI : MonoBehaviour
 {
+    public bool isTutorialStage = false;
     public IconLoader iconLoader;
     public List<LevelUpOption> Options_UI;
 
     private GameObject player;
     private PassiveManager passiveManager;
 
-    WeaponCreator mainWeapon;
-    List<WeaponCreator> weaponList = new List<WeaponCreator>();
-    List<PassiveData> passiveList = new List<PassiveData>();
+    private WeaponCreator mainWeapon;
+    private List<WeaponCreator> weaponList = new List<WeaponCreator>();
+    private List<PassiveData> passiveList = new List<PassiveData>();
 
-    StringTable stringMgr;
+    private StringTable stringMgr;
 
     private void OnEnable()
     {
@@ -30,8 +31,18 @@ public class LevelUpUI : MonoBehaviour
         }
 
         stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
-        SetAllOptions();
+
+        if (isTutorialStage)
+        {
+            SetTutorialOptions();
+        }
+        else
+        {
+            SetAllOptions();
+        }
         SetSelectables();
+
+        isTutorialStage = false;
     }
 
     private void OnDisable()
@@ -84,11 +95,17 @@ public class LevelUpUI : MonoBehaviour
 
     public void SetSelectables()
     {
-
         List<int> PassiveOrActive = new List<int>();
         for (int i = 0; i < 3; i++)
         {
-            PassiveOrActive.Add(Random.Range(0, 10));
+            if (isTutorialStage)
+            {
+                PassiveOrActive.Add(10);
+            }
+            else
+            {
+                PassiveOrActive.Add(Random.Range(0, 10));
+            }
         }
 
         List<int> passiveNums = Enumerable.Range(0, passiveList.Count).ToList();
@@ -161,5 +178,31 @@ public class LevelUpUI : MonoBehaviour
         }
         passiveManager.currWeaponCreators.Add(skill);
         passiveManager.weaponCreators.Remove(creator);
+    }
+
+
+    private void SetTutorialOptions()
+    {
+        weaponList.Clear();
+        passiveList.Clear();
+
+        var weaponCount = 0;
+
+        foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
+        {
+            if (!weaponCreator.isMainWeapon && weaponCreator.currLevel < 5)
+            {
+                weaponList.Add(weaponCreator);
+
+            }
+            weaponCount++; //보유중 숫자
+        }
+        if (weaponCount < 5)
+        {
+            foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
+            {
+                weaponList.Add(weaponCreator);
+            }
+        }
     }
 }

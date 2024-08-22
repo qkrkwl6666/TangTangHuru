@@ -18,6 +18,7 @@ public class WeaponData : ScriptableObject
         RandomTarget,
         RandomSeed,
         Angular,
+        RandomPos,
     }
     public enum MoveType
     {
