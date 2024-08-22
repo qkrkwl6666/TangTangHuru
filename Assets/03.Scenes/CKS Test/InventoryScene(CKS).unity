@@ -122,6 +122,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &111169924 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6507360435793995291, guid: e23d97d19624d6a4cb56e5e98bf2c5a0, type: 3}
+  m_PrefabInstance: {fileID: 8238739269947535041}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9dd0cb3736a2a44833de89e144b5ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &125023094
 GameObject:
   m_ObjectHideFlags: 0
@@ -684,6 +695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0aacf7d4ba7e14db04d4fe9bfd4de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  orbCrafter: {fileID: 111169924}
   entryPrefab: {fileID: 2184017398166999058, guid: 6b672022820f42945ade5b2c2bbd9a56, type: 3}
   content: {fileID: 2016733091}
 --- !u!1 &2016733091 stripped
@@ -3122,11 +3134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7098125860884080744, guid: e23d97d19624d6a4cb56e5e98bf2c5a0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 124.727264
+      value: 124.727295
       objectReference: {fileID: 0}
     - target: {fileID: 7098125860884080744, guid: e23d97d19624d6a4cb56e5e98bf2c5a0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -34.60625
+      value: -34.6062
       objectReference: {fileID: 0}
     - target: {fileID: 7098873483156727328, guid: e23d97d19624d6a4cb56e5e98bf2c5a0, type: 3}
       propertyPath: m_AnchorMax.y

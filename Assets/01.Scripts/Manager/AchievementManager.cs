@@ -36,33 +36,33 @@ public class AhievementTask
 {
     public List<string> armorSetNames = new List<string>
     {
-        "HolyKnightHelmet", 
-        "HolyKnightArmor", 
-        "HolyKnightShoes", 
+        "HolyKnightHelmet",
+        "HolyKnightArmor",
+        "HolyKnightShoes",
 
-        "SilverStriderHelmet", 
-        "SilverStriderArmor", 
-        "SilverStriderShoes", 
+        "SilverStriderHelmet",
+        "SilverStriderArmor",
+        "SilverStriderShoes",
 
-        "ShadowWorkHelmet", 
-        "ShadowWorkArmor", 
-        "ShadowWorkShoes", 
+        "ShadowWorkHelmet",
+        "ShadowWorkArmor",
+        "ShadowWorkShoes",
 
-        "RedStoneHelmet", 
-        "RedStoneArmor", 
-        "RedStoneShoes", 
+        "RedStoneHelmet",
+        "RedStoneArmor",
+        "RedStoneShoes",
 
-        "StormBreakerHelmet", 
-        "StormBreakerArmor", 
-        "StormBreakerShoes", 
+        "StormBreakerHelmet",
+        "StormBreakerArmor",
+        "StormBreakerShoes",
 
-        "MoonWalkerHelmet", 
-        "MoonWalkerArmor", 
-        "MoonWalkerShoes", 
+        "MoonWalkerHelmet",
+        "MoonWalkerArmor",
+        "MoonWalkerShoes",
 
-        "SkyWatchHelmet", 
-        "SkyWatchArmor", 
-        "SkyWatchShoes", 
+        "SkyWatchHelmet",
+        "SkyWatchArmor",
+        "SkyWatchShoes",
     };
 
     public List<int> SavedAchieveProgress = new List<int>();
@@ -131,34 +131,35 @@ public class AhievementTask
             { "EpicCount", 5 },
             { "AppraisalCount", 20 },
 
-            {"HolyKnightHelmet", 0 },
-            {"HolyKnightArmor", 0 },
-            {"HolyKnightShoes", 0 },
+            {"HolyKnightHelmet", 1 },
+            {"HolyKnightArmor", 1 },
+            {"HolyKnightShoes", 1 },
 
-            {"SilverStriderHelmet", 0 },
-            {"SilverStriderArmor", 0 },
-            {"SilverStriderShoes", 0 },
+            {"SilverStriderHelmet", 1 },
+            {"SilverStriderArmor", 1 },
+            {"SilverStriderShoes", 1 },
 
-            {"ShadowWorkHelmet", 0 },
-            {"ShadowWorkArmor", 0 },
-            {"ShadowWorkShoes", 0 },
+            {"ShadowWorkHelmet", 1 },
+            {"ShadowWorkArmor", 1 },
+            {"ShadowWorkShoes", 1 },
 
-            {"RedStoneHelmet", 0 },
-            {"RedStoneArmor", 0 },
-            {"RedStoneShoes", 0 },
+            {"RedStoneHelmet", 1 },
+            {"RedStoneArmor", 1 },
+            {"RedStoneShoes", 1 },
 
-            {"StormBreakerHelmet", 0 },
-            {"StormBreakerArmor", 0 },
-            {"StormBreakerShoes", 0 },
+            {"StormBreakerHelmet", 1 },
+            {"StormBreakerArmor", 1 },
+            {"StormBreakerShoes", 1 },
 
-            {"MoonWalkerHelmet", 0 },
-            {"MoonWalkerArmor", 0 },
-            {"MoonWalkerShoes", 0 },
+            {"MoonWalkerHelmet", 1 },
+            {"MoonWalkerArmor", 1 },
+            {"MoonWalkerShoes", 1 },
 
-            {"SkyWatchHelmet", 0 },
-            {"SkyWatchArmor", 0 },
-            {"SkyWatchShoes", 0 },
+            {"SkyWatchHelmet", 1 },
+            {"SkyWatchArmor", 1 },
+            {"SkyWatchShoes", 1 },
     };
+
 
     public void AddProgress(string key) //해당 도전과제 진행도 증가
     {
@@ -249,6 +250,7 @@ public class AchievementManager : Singleton<AchievementManager>
     private void InitializeAchievements()
     {
         achievements.Clear();
+        myTasks = new AhievementTask();
 
         var stringTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
@@ -261,7 +263,6 @@ public class AchievementManager : Singleton<AchievementManager>
                 onUnlock = () => Debug.Log("Achievement Unlocked!")
             });
         }
-
 
         if (SaveManager.SaveDataV1.SavedAchieveProgress.Count == 0)
             return;
@@ -305,5 +306,41 @@ public class AchievementManager : Singleton<AchievementManager>
         {
             SavedStates.Add(achievements[i].achieveState);
         }
+    }
+
+    public List<string> GetArmorNameList()
+    {
+        //List<string> armorSetNames = new List<string>
+        //{
+        //    "HolyKnightHelmet",
+        //    "HolyKnightArmor",
+        //    "HolyKnightShoes",
+
+        //    "SilverStriderHelmet",
+        //    "SilverStriderArmor",
+        //    "SilverStriderShoes",
+
+        //    "ShadowWorkHelmet",
+        //    "ShadowWorkArmor",
+        //    "ShadowWorkShoes",
+
+        //    "RedStoneHelmet",
+        //    "RedStoneArmor",
+        //    "RedStoneShoes",
+
+        //    "StormBreakerHelmet",
+        //    "StormBreakerArmor",
+        //    "StormBreakerShoes",
+
+        //    "MoonWalkerHelmet",
+        //    "MoonWalkerArmor",
+        //    "MoonWalkerShoes",
+
+        //    "SkyWatchHelmet",
+        //    "SkyWatchArmor",
+        //    "SkyWatchShoes",
+        //};
+
+        return myTasks.armorSetNames;
     }
 }

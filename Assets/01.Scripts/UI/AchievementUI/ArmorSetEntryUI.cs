@@ -15,11 +15,12 @@ public class ArmorSetEntryUI : MonoBehaviour
     [SerializeField] private Image armorBodyDark;
     [SerializeField] private Image armorShoesDark;
 
+    private List<ItemData> items;
     public Button rewardButton;
 
     public void SetImages(int index)
     {
-        var items = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+        items = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                     .GetItemsbySet(ItemTier.Normal, index);
 
         foreach(var item in items)
@@ -30,64 +31,53 @@ public class ArmorSetEntryUI : MonoBehaviour
                     Addressables.LoadAssetAsync<Sprite>(item.Texture_Id).Completed += (x) =>
                     {
                         armorHead.sprite = x.Result;
-                        if(CheckProgress(ItemType.Helmet, index))
-                        {
-                            armorHeadDark.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            armorHeadDark.gameObject.SetActive(true);
-                        }
                     };
                     break;
                 case (int)ItemType.Armor:
                     Addressables.LoadAssetAsync<Sprite>(item.Texture_Id).Completed += (x) =>
                     {
                         armorBody.sprite = x.Result;
-                        if (CheckProgress(ItemType.Armor, index))
-                        {
-                            armorBodyDark.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            armorBodyDark.gameObject.SetActive(true);
-                        }
                     };
                     break;
                 case (int)ItemType.Shose:
                     Addressables.LoadAssetAsync<Sprite>(item.Texture_Id).Completed += (x) =>
                     {
                         armorShoes.sprite = x.Result;
-                        if (CheckProgress(ItemType.Shose, index))
-                        {
-                            armorShoesDark.gameObject.SetActive(false);
-                        }
-                        else
-                        {
-                            armorShoesDark.gameObject.SetActive(true);
-                        }
                     };
                     break;
             }
         }
     }
 
-    private bool CheckProgress(ItemType type, int index)
+    public void CheckProgress(int index)
     {
-        var armorList = AchievementManager.Instance.myTasks.armorSetNames;
+        var armorList = AchievementManager.Instance.GetArmorNameList();
 
-        switch (type)
+        foreach (var item in items)
         {
-            case ItemType.Helmet:
-                return AchievementManager.Instance.Check(armorList[index-1]);
+            switch (item.Item_Type)
+            {
+                case (int)ItemType.Helmet:
+                    armorHeadDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index - 1]));
+                    break;
+                case (int)ItemType.Armor:
+                    armorBodyDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index]));
+                    break;
+                case (int)ItemType.Shose:
+                    armorShoesDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index+1]));
+                    break;
+            }
 
-            case ItemType.Armor:
-                return AchievementManager.Instance.Check(armorList[index]);
-
-            case ItemType.Shose:
-                return AchievementManager.Instance.Check(armorList[index+1]);
-            default:
-                return false;
+            if(!armorHeadDark.gameObject.activeSelf
+                && !armorBodyDark.gameObject.activeSelf
+                && !armorShoesDark.gameObject.activeSelf)
+            {
+                rewardButton.interactable = true;
+            }
+            else
+            {
+                rewardButton.interactable = false;
+            }
         }
     }
 }

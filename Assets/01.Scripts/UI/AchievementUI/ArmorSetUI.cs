@@ -4,22 +4,26 @@ using UnityEngine;
 
 public class ArmorSetUI : MonoBehaviour
 {
+    public OrbCrafter orbCrafter;
     public ArmorSetEntryUI entryPrefab;
     public GameObject content;
 
-    private List<ArmorSetEntryUI> entries;
+    private List<ArmorSetEntryUI> entries = new();
     private bool sorted = false;
     private void OnEnable()
     {
-        if (sorted)
-            return;
-
-        for (int i = 1; i <= 12; ++i)
+        if (!sorted)
         {
-            var entry = Instantiate(entryPrefab, content.transform);
-            entry.SetImages(i);
-            entries.Add(entry);
+            for (int i = 1; i <= 7; ++i)
+            {
+                var entry = Instantiate(entryPrefab, content.transform);
+                entry.SetImages(i);
+                entry.rewardButton.onClick.AddListener(IncreaseCraftPersent);
+                entries.Add(entry);
+            }
         }
+
+        RefreshList();
 
         sorted = true;
     }
@@ -29,8 +33,17 @@ public class ArmorSetUI : MonoBehaviour
         
     }
 
-    void Update()
+    private void RefreshList()
     {
-        
+        for (int i = 0; i < entries.Count; ++i)
+        {
+            entries[i].CheckProgress(i + 1);
+
+        }
+    }
+
+    private void IncreaseCraftPersent()
+    {
+        orbCrafter.CreatePersentIncrease(2);
     }
 }

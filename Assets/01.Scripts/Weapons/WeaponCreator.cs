@@ -156,6 +156,9 @@ public class WeaponCreator : MonoBehaviour
             case AimType.Angular:
                 aimer = weapon.AddComponent<AngularAim>();
                 break;
+            case AimType.RandomPos:
+                aimer = weapon.AddComponent<RandomPos>();
+                break;
 
         }
 
