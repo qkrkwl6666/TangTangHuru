@@ -34,7 +34,7 @@ public class ShopUI : MonoBehaviour
 
     private void OnDisable()
     {
-        inventory.RefreshItemSlotUI();
+        //inventory.RefreshItemSlotUI();
     }
 
     private void SetShopItems()
@@ -71,6 +71,8 @@ public class ShopUI : MonoBehaviour
             inventory.MainInventoryAddItem(itemData.Item_Id.ToString());
             inventory.Gold -= itemData.Price;
             inventory.RefreshGoldDiamondTextUI();
+
+            inventory.RefreshItemSlotUI();
 
             SoundManager.Instance.PlaySound2D("success");
         }
