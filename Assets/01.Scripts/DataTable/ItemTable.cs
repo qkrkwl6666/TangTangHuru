@@ -116,6 +116,22 @@ public class ItemTable : DataTable
         return itemDatas;
     }
 
+    public List<ItemData> GetItemsbySet(ItemTier itemTier, int setIndex)
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+
+        foreach (var item in itemTable.Values)
+        {
+            if (item.Item_Tier == (int)itemTier && item.SetType == setIndex)
+            {
+                itemDatas.Add(item);
+            }
+        }
+
+        return itemDatas;
+    }
+
+
     public override void Load(string name, Action tableLoaded)
     {
         Addressables.LoadAssetAsync<TextAsset>(name).Completed += (textAsset) =>

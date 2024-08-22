@@ -120,4 +120,9 @@ public class OrbCrafter : MonoBehaviour
     {
         gaigeNum = SaveManager.SaveDataV1.gaige;
     }
+
+    public void CreatePersentIncrease(int num)
+    {
+        createPersent += num;
+    }
 }
