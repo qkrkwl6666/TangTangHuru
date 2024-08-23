@@ -1444,7 +1444,9 @@ public class MainInventory : MonoBehaviour
 
         int needGold = Defines.defaultUpgradeGold * (item.itemData.CurrentUpgrade + 1);
 
-        if (needGold > Gold) return false;
+        int count = GetItemTypesTier(ItemType.ReinforcedStone, ItemTier.Normal).Count;
+
+        if (needGold > Gold || count < 1) return false;
 
         return true;
     }
