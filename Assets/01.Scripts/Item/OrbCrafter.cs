@@ -38,6 +38,11 @@ public class OrbCrafter : MonoBehaviour
         stonePersent.text = $"{createPersent}%"; ;
     }
 
+    private void OnEnable()
+    {
+        SetCount();
+    }
+
     private void SetCount()
     {
         stoneCount = inventory.GetItemCount(ItemType.ReinforcedStone, 0);
