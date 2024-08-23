@@ -1502,10 +1502,12 @@ public class MainInventory : MonoBehaviour
         // MainInventoryAddItem("610204");
         // MainInventoryAddItem("610304");
         // 
-        // MainInventoryAddItem("710001");
-        // MainInventoryAddItem("710002");
-        // MainInventoryAddItem("710003");
-        // MainInventoryAddItem("710004");
+
+        // Æê
+        MainInventoryAddItem("710001");
+        MainInventoryAddItem("710002");
+        MainInventoryAddItem("710003");
+        MainInventoryAddItem("710004");
         // 
         // 
         // MainInventoryAddItem("720001");
