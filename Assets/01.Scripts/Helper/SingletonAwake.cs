@@ -12,7 +12,7 @@ public class SingletonAwake : MonoBehaviour
 
         var dtm = DataTableManager.Instance;
 
-        Application.targetFrameRate = 200;
+        Application.targetFrameRate = 60;
 
         DataTableManager.Instance.OnAllTableLoaded += () =>
         {

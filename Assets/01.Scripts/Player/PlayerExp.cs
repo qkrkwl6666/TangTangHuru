@@ -7,7 +7,7 @@ public class PlayerExp : MonoBehaviour
     private float currExp;
     public float CurrExp { get => currExp; }
 
-    public float requiredExp = 1000f;
+    public float requiredExp = 1500f;
 
     public int levelinStage = 0;
 
@@ -29,7 +29,7 @@ public class PlayerExp : MonoBehaviour
         {
             currExp -= requiredExp;
 
-            requiredExp += (requiredExp * 0.1f);
+            requiredExp += (requiredExp * 0.2f);
 
             //레벨업 메소드 호출
             levelinStage++;
