@@ -17,7 +17,7 @@ public class PlayerViewUI : MonoBehaviour
 
     private void Start()
     {
-        SetNoneWeaponCharacterSkin(Defines.body033);
+        SetNoneWeaponCharacterSkin(GameManager.Instance.characterSkin);
 
         //SetCharacterWeaponSkin(Defines.body033, Defines.weapon005);
 
@@ -49,6 +49,7 @@ public class PlayerViewUI : MonoBehaviour
         if (CurrentWeaponSkin == string.Empty)
         {
             skeletonAnimation.Skeleton.SetSkin(characterSkin);
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
             return;
         }
 

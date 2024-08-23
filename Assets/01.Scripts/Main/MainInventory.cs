@@ -1039,24 +1039,38 @@ public class MainInventory : MonoBehaviour
             {
                 case ArmorSet.HolyKnightSet:
                     stringId = "SetType1";
+                    GameManager.Instance.characterSkin = Defines.body039;
+                    playerViewUI.SetCharacterSkin(Defines.body039);
                     break;
                 case ArmorSet.SilverStrider:
                     stringId = "SetType2";
+                    GameManager.Instance.characterSkin = Defines.body033;
+                    playerViewUI.SetCharacterSkin(Defines.body033);
                     break;
                 case ArmorSet.ShadowWork:
                     stringId = "SetType3";
+                    GameManager.Instance.characterSkin = Defines.body038;
+                    playerViewUI.SetCharacterSkin(Defines.body038);
                     break;
                 case ArmorSet.RedStone:
                     stringId = "SetType4";
+                    GameManager.Instance.characterSkin = Defines.body043;
+                    playerViewUI.SetCharacterSkin(Defines.body043);
                     break;
                 case ArmorSet.StormBreaker:
                     stringId = "SetType5";
+                    GameManager.Instance.characterSkin = Defines.body036;
+                    playerViewUI.SetCharacterSkin(Defines.body036);
                     break;
                 case ArmorSet.MoonWalker:
                     stringId = "SetType6";
+                    GameManager.Instance.characterSkin = Defines.body040;
+                    playerViewUI.SetCharacterSkin(Defines.body040);
                     break;
                 case ArmorSet.SkyWatch:
                     stringId = "SetType7";
+                    GameManager.Instance.characterSkin = Defines.body024;
+                    playerViewUI.SetCharacterSkin(Defines.body024);
                     break;
             }
 
@@ -1127,6 +1141,8 @@ public class MainInventory : MonoBehaviour
             case ItemType.Armor:
             case ItemType.Shose:
                 setText.text = string.Empty;
+                GameManager.Instance.characterSkin = Defines.body001;
+                playerViewUI.SetCharacterSkin(Defines.body001);
                 break;
         }
 
@@ -1361,11 +1377,11 @@ public class MainInventory : MonoBehaviour
 
 
         // 레전드 무기
-        // MainInventoryAddItem("200005", 10);
-        // MainInventoryAddItem("200105", 10);
-        // MainInventoryAddItem("210105", 10);
-        // MainInventoryAddItem("220005", 10);
-        // MainInventoryAddItem("220105", 10);
+        MainInventoryAddItem("200005", 10);
+        MainInventoryAddItem("200105", 10);
+        MainInventoryAddItem("210105", 10);
+        MainInventoryAddItem("220005", 10);
+        MainInventoryAddItem("220105", 10);
 
         // 일반 무기
         MainInventoryAddItem("200001", 0);
@@ -1380,17 +1396,17 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("220101", 0);
 
         // 레전드 장비
-        //MainInventoryAddItem("400015", 10);
-        //MainInventoryAddItem("401015", 10);
-        //MainInventoryAddItem("402015", 10);
+        MainInventoryAddItem("400015", 10);
+        MainInventoryAddItem("401015", 10);
+        MainInventoryAddItem("402015", 10);
 
         // 강화석 장비 원석
         for (int i = 0; i < 5; i++)
         {
-            //MainInventoryAddItem("600002");
-            //MainInventoryAddItem("600003");
-            //MainInventoryAddItem("600004");
-            //MainInventoryAddItem("600005");
+            MainInventoryAddItem("600002");
+            MainInventoryAddItem("600003");
+            MainInventoryAddItem("600004");
+            MainInventoryAddItem("600005");
             MainInventoryAddItem("600006");
         }
         MainInventoryAddItem("600001");

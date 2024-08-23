@@ -20,8 +20,8 @@ public class GameManager : Singleton<GameManager>
 
     // �씤寃뚯엫 �꽭�씠釉� �븘�씠�뀥
 
-    // �엫�떆 �슜�룄
-    public string characterSkin = Defines.body033;
+    // 기본 세트 효과
+    public string characterSkin = Defines.body001;
     public string weaponSkin = Defines.weapon005;
 
     // UI 
