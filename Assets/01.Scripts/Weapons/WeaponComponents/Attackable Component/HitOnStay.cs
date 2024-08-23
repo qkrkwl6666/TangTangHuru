@@ -63,7 +63,8 @@ public class HitOnStay : MonoBehaviour, IAttackable
                 if (!collider.enabled)
                     continue;
 
-                if ((AttackableLayer.value & (1 << collider.gameObject.layer)) != 0)
+                if ((AttackableLayer.value & (1 << collider.gameObject.layer)) != 0
+                    || collider.gameObject.layer == LayerMask.NameToLayer("Guardian"))
                 {
                     OnAttack(collider);
                 }

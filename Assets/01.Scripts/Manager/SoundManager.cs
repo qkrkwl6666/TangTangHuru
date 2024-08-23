@@ -15,7 +15,8 @@ public class SoundManager : Singleton<SoundManager>
 {
     public AudioMixer mAudioMixer;
 
-    private float currBGMVolume, currEffectVolume;
+    public float currBGMVolume;
+    public float currEffectVolume = 1;
 
     private Dictionary<string, AudioClip> clipDictionary;
 

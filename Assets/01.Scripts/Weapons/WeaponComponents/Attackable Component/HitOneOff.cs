@@ -32,7 +32,9 @@ public class HitOneOff : MonoBehaviour, IAttackable
     {
         var pierce = PierceCount;
 
-        if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0)
+
+        if ((AttackableLayer.value & (1 << other.gameObject.layer)) != 0
+            || other.gameObject.layer == LayerMask.NameToLayer("Guardian"))
         {
 
             if (Random.Range(0, 100) <= CriticalChance)

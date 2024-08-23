@@ -379,8 +379,8 @@ public class WeaponCreator : MonoBehaviour
         }
         else
         {
-            SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
-            //SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName);
+            //SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
+            SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName);
         }
     }
 }
