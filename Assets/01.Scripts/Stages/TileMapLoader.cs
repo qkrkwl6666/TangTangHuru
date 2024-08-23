@@ -41,11 +41,22 @@ public class TileMapLoader : MonoBehaviour
         {
             stageNum = 18;
         }
-        else if(stageNum > 20 && stageNum < 30)
+        else if(stageNum == 22)
         {
             stageNum = 21;
         }
-
+        else if (stageNum == 23 || stageNum == 24)
+        {
+            stageNum = 25;
+        }
+        else if (stageNum == 26 || stageNum == 27)
+        {
+            stageNum = 28;
+        }
+        else if (stageNum == 29)
+        {
+            stageNum = 30;
+        }
 
         Addressables.LoadAssetAsync<GameObject>($"Grounds_Stage_{stageNum}").Completed +=
             (obj) =>

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -179,6 +180,7 @@ public class PlayerEquipLoader : MonoBehaviour
                     weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
                 }
                 myPassiveManager.currWeaponCreators.Add(weapon.GetComponent<WeaponCreator>());
+                myPassiveManager.RemoveFromUnoptainWeaponList(weapon.GetComponent<WeaponCreator>());
             }
             else
             {

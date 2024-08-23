@@ -9,13 +9,27 @@ public class WeaponOrbSlot : MonoBehaviour
     public EquipPopUp equipPopUp;
     public ItemSlotUI[] upgradeSlots;
     public OrbUpgrader orbUpgrader;
+
+
     private void OnEnable()
     {
-        upgradeSlots = GetComponentsInChildren<ItemSlotUI>();
+        var currWeapon = equipPopUp.currentItem as M_Weapon;
 
         foreach (var slot in upgradeSlots)
         {
             slot.GetComponent<Button>().onClick.AddListener(() => orbUpgrader.SlotSelected(slot));
+        }
+
+        for(int i = 0; i < 4; i++)
+        {
+            if(i < (int)currWeapon.ItemTier)
+            {
+                upgradeSlots[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                upgradeSlots[i].gameObject.SetActive(false);
+            }
         }
     }
 
@@ -23,8 +37,12 @@ public class WeaponOrbSlot : MonoBehaviour
     {
         var currWeapon = equipPopUp.currentItem as M_Weapon;
 
-        foreach(var slot in upgradeSlots)
+        foreach (var slot in upgradeSlots)
         {
+            if(slot.currItemId == 0)
+                continue;
+
+            currWeapon.orbs.Add(equipPopUp.mainInventory.MainInventoryAddItem(slot.currItemId.ToString(), 0));
         }
     }
 
