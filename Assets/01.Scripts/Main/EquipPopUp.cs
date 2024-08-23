@@ -233,7 +233,7 @@ public class EquipPopUp : MonoBehaviour
 
                 if (weaponItem == null) return;
 
-                mainInventory.ItemUpgrade(currentItem);
+                mainInventory.ItemUpgrade(currentItem); // 재화 소요
                 weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);
 
                 RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
@@ -243,6 +243,14 @@ public class EquipPopUp : MonoBehaviour
             case ItemType.Helmet:
             case ItemType.Armor:
             case ItemType.Shose:
+                var armorItem = currentItem as M_Armour;
+                if (armorItem == null) return;
+
+                mainInventory.ItemUpgrade(currentItem);
+                armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade + 1);
+
+                RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
+                mainInventory.RefreshGoldDiamondTextUI();
                 break;
         }
 

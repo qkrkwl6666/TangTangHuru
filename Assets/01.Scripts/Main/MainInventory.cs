@@ -400,10 +400,6 @@ public class MainInventory : MonoBehaviour
                     {
                         m_weaponItem.subWeapons = GetRandomSubWeapon(itemData.Item_Tier);
                     }
-                    else
-                    {
-                        //m_weaponItem.subWeapons = itemData.
-                    }
 
                     return m_weaponItem;
                 }
@@ -515,7 +511,7 @@ public class MainInventory : MonoBehaviour
                 {
                     M_Armour m_armour = new M_Armour();
 
-                    m_armour.SetItemData(itemData, instanceId);
+                    m_armour.SetItemData(itemData, instanceId); 
 
                     return m_armour;
                 }
@@ -887,6 +883,11 @@ public class MainInventory : MonoBehaviour
                 case (int)ItemType.Helmet:
                 case (int)ItemType.Armor:
                 case (int)ItemType.Shose:
+                    var armorItem = item as M_Armour;
+
+                    if (armorItem == null) yield break;
+
+                    armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade);
                     break;
             }
         }
@@ -926,6 +927,11 @@ public class MainInventory : MonoBehaviour
                 case (int)ItemType.Helmet:
                 case (int)ItemType.Armor:
                 case (int)ItemType.Shose:
+                    var armorItem = item as M_Armour;
+
+                    if (armorItem == null) continue;
+
+                    armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade);
                     break;
             }
         }
