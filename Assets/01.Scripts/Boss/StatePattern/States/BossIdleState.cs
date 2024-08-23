@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossIdleState : BossState
@@ -30,7 +27,7 @@ public class BossIdleState : BossState
     {
         time += deltaTime;
 
-        if (time >= coolDown) 
+        if (time >= coolDown)
         {
             boss.ChangeState(boss.skillState);
         }

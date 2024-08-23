@@ -4,7 +4,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using static WeaponData;
 
 public class PlayerEquipLoader : MonoBehaviour
 {
@@ -222,7 +221,7 @@ public class PlayerEquipLoader : MonoBehaviour
 
         var seletedPassive = selected;
         seletedPassive.Level = 1;
-        
+
         //currPassiveList.Add(seletedPassive);
         //inGamePassiveList.Remove(selected);
 

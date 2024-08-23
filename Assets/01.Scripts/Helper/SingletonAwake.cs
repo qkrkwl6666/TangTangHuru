@@ -18,7 +18,7 @@ public class SingletonAwake : MonoBehaviour
         {
             var achieveMgr = AchievementManager.Instance;
         };
-        
+
         var sound = SoundManager.Instance;
 
         Addressables.LoadAssetAsync<AudioMixer>("AudioMixer").Completed += (x) =>

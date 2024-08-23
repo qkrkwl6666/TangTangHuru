@@ -111,7 +111,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 {
                     monsters.Add(x);
                     var hp = x.GetComponent<Monster>();
-                    if(hp.hpBar == null)
+                    if (hp.hpBar == null)
                     {
                         var hpCanvas = Instantiate(hpBarObj, x.transform);
                         hp.hpBar = hpCanvas.GetComponentInChildren<Slider>();
@@ -171,7 +171,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     //async Task<SkeletonAnimation> GetMonsterWithAnimationAsync(MonsterData monsterData)
     //{
     //    var animation = await monsterSkeletonSharing.GetSkeletonAnimationAsync(monsterData.Monster_Prefab.ToString());
-        
+
     //    return animation;
     //}
 
@@ -244,7 +244,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
         // Todo : 임시 처리 하드코딩 변경 해야함
 
-        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250 
+        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250
             || playerTransform.position.y >= 250 || playerTransform.position.x <= -250)
         {
             playerTransform.transform.position = Vector2.zero;
@@ -281,7 +281,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             playerTransform.transform.position = Vector2.zero;
         }
 
-        while (true) 
+        while (true)
         {
             float randomDistance = Random.Range(currentSpawnDistance / 2, currentSpawnDistance);
 

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class RotateObject : MonoBehaviour {
+public class RotateObject : MonoBehaviour
+{
 
     public Vector3 RotateOffset;
     Vector3 RotateMulti;
@@ -12,13 +13,13 @@ public class RotateObject : MonoBehaviour {
         m_Time = Time.time;
     }
 
-	// Update is called once per frame
-	void Update ()
+    // Update is called once per frame
+    void Update()
     {
         if (Time.time < m_Time + m_delay)
             return;
-        RotateMulti = Vector3.Lerp(RotateMulti,RotateOffset,Time.deltaTime);
+        RotateMulti = Vector3.Lerp(RotateMulti, RotateOffset, Time.deltaTime);
 
-        transform.rotation *= Quaternion.Euler(RotateMulti);		
-	}
+        transform.rotation *= Quaternion.Euler(RotateMulti);
+    }
 }

@@ -27,10 +27,10 @@ public class SkillFadeInOut : MonoBehaviour
             FadeIn();
         }
 
-        if(!fadingIn && !fadingOut)
+        if (!fadingIn && !fadingOut)
         {
             timer += Time.deltaTime;
-            if( timer > 5f)
+            if (timer > 5f)
             {
                 fadingOut = true;
                 timer = 0f;

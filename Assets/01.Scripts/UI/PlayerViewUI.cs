@@ -17,7 +17,7 @@ public class PlayerViewUI : MonoBehaviour
 
     private void Start()
     {
-        SetNoneWeaponCharacterSkin(Defines.body033);
+        SetNoneWeaponCharacterSkin(GameManager.Instance.characterSkin);
 
         //SetCharacterWeaponSkin(Defines.body033, Defines.weapon005);
 
@@ -49,6 +49,7 @@ public class PlayerViewUI : MonoBehaviour
         if (CurrentWeaponSkin == string.Empty)
         {
             skeletonAnimation.Skeleton.SetSkin(characterSkin);
+            skeletonAnimation.Skeleton.SetSlotsToSetupPose();
             return;
         }
 
@@ -69,7 +70,7 @@ public class PlayerViewUI : MonoBehaviour
         SetCharacterWeaponSkin(chSkin, CurrentWeaponSkin);
     }
 
-    public void SetNoneWeaponCharacterSkin(string chSkin) 
+    public void SetNoneWeaponCharacterSkin(string chSkin)
     {
         CurrentCharacterSkin = chSkin;
         CurrentWeaponSkin = string.Empty;
@@ -91,13 +92,13 @@ public class PlayerViewUI : MonoBehaviour
     {
         int characterIndex = Random.Range(0, Defines.characterSkins.Count);
         int weaponIndex = Random.Range(0, Defines.weaponSkins.Count);
-        
+
         var characterSkin = Defines.characterSkins[characterIndex];
         var weaponSkin = Defines.weaponSkins[weaponIndex];
 
         GameManager.Instance.characterSkin = characterSkin;
         GameManager.Instance.weaponSkin = weaponSkin;
-        
+
         SetCharacterWeaponSkin(characterSkin, weaponSkin);
     }
 

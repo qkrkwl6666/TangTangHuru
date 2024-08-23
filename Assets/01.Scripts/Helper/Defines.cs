@@ -1,8 +1,6 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 
 public static class Defines
 {
@@ -141,8 +139,8 @@ public static class Defines
     public static readonly string attack1 = "attack1";
 
     //포격 가디언 애니메이션
-    public static readonly string groundIn = "ground_in";  
-    public static readonly string groundOut = "ground_out";  
+    public static readonly string groundIn = "ground_in";
+    public static readonly string groundOut = "ground_out";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new();
@@ -210,7 +208,7 @@ public static class Defines
 
     public static Color GetColor(string key)
     {
-        switch (key) 
+        switch (key)
         {
             case "Outline_Blue":
                 return Defines.blueColor;
@@ -234,17 +232,17 @@ public static class Defines
 
     public static ArmorType GetRandomArmorType()
     {
-       ArmorType armorType = (ArmorType)Random.Range(0, (int)ArmorType.Count);
+        ArmorType armorType = (ArmorType)Random.Range(0, (int)ArmorType.Count);
 
         return armorType;
     }
 
     public static int GetArmorId(ArmorType armorType, ItemType itemType, ItemTier itemTier)
     {
-        switch(armorType)
+        switch (armorType)
         {
             case ArmorType.HolyKnight:
-                if(itemType == ItemType.Helmet)
+                if (itemType == ItemType.Helmet)
                     return (int)TotalArmorType.HolyKnight_Helmet + (int)itemTier;
                 else if (itemType == ItemType.Armor)
                     return (int)TotalArmorType.HolyKnight_Armor + (int)itemTier;

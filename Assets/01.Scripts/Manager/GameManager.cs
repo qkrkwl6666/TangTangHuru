@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -13,7 +12,7 @@ public class GameManager : Singleton<GameManager>
     private InputAction backAction;
 
     // tutorial
-    private bool isTutorial = false;
+    public bool isTutorialSceneEnd = false;
 
     public int CurrentStage { get; set; } = 1;
 
@@ -24,23 +23,23 @@ public class GameManager : Singleton<GameManager>
     public GameObject loadingUI;
 
     // �씤寃뚯엫 �꽭�씠釉� �븘�씠�뀥
-    
-    // �엫�떆 �슜�룄
-    public string characterSkin = Defines.body033;
+
+    // 기본 세트 효과
+    public string characterSkin = Defines.body001;
     public string weaponSkin = Defines.weapon005;
 
     // UI 
     public MainInventory mainInventory;
 
     // �씤 寃뚯엫 �븘�씠�뀥 ����옣 而⑦뀒�씠�꼫
-    public List<IInGameItem> inGameItems = new ();
+    public List<IInGameItem> inGameItems = new();
 
     private int BGM_Index = 0;
 
     // �씤寃뚯엫 �뿉�꽌 硫붿씤 �뵮 �씠�룞�썑 濡쒕뵫 �셿猷� �떆 �샇異�
     public void InGameItemToMainItem()
     {
-        foreach (var item in inGameItems) 
+        foreach (var item in inGameItems)
         {
             mainInventory.MainInventoryAddItem(item.ItemId.ToString());
         }
@@ -102,7 +101,7 @@ public class GameManager : Singleton<GameManager>
 
         InGameItemToMainItem();
 
-        mainInventory.SaveInventory(); 
+        mainInventory.SaveInventory();
     }
 
     // Defines �뿉�꽌 �샇異� ex) Defines.main 
@@ -121,8 +120,11 @@ public class GameManager : Singleton<GameManager>
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-            if(sceneName != Defines.mainScene) 
+
+            if (sceneName != Defines.mainScene)
+            {
                 loadingUI.SetActive(false);
+            }
             SoundManager.Instance.CreateTemporalObjects();
         };
 
@@ -157,6 +159,11 @@ public class GameManager : Singleton<GameManager>
     public void ChangeBGM()
     {
         SoundManager.Instance.PlayerBGM(BGM_Index);
+    }
+
+    public void SaveGame()
+    {
+        mainInventory.SaveInventory();
     }
 
 }

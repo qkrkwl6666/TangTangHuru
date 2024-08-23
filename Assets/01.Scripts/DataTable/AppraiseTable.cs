@@ -34,7 +34,7 @@ public class AppraiseData
     public int Level4_shoes { get; set; }
     public int Level5_shoes { get; set; }
 
-    public List<(ItemType type, ItemTier tier , float prob)> GetAppraiseData()
+    public List<(ItemType type, ItemTier tier, float prob)> GetAppraiseData()
     {
         List<(ItemType type, ItemTier tier, float prob)> list = new();
 

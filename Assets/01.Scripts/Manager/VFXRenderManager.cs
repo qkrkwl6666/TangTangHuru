@@ -2,13 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class VFXRenderManager : MonoBehaviour
 {
-    public List<ParticleSystem> particles = new ();
+    public List<ParticleSystem> particles = new();
 
-    public List<RawImage> rawImages = new ();
+    public List<RawImage> rawImages = new();
 
     private void Awake()
     {
@@ -99,6 +98,6 @@ public enum Particle
 public enum RenderRawImage
 {
     ChargeLightTexture,
-    IconWaitTexture, 
+    IconWaitTexture,
     RatingTexture,
 }

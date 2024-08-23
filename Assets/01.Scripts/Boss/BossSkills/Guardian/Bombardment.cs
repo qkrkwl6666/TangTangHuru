@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -85,7 +83,7 @@ public class Bombardment : MonoBehaviour, IBossSkill
     {
         time += deltaTime;
 
-        if(time >= SkillRate)
+        if (time >= SkillRate)
         {
             time = 0f;
             Attack();

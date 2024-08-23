@@ -126,7 +126,7 @@ public class PlayerHealth : LivingEntity
 
         float totalDmg = damage * (damage / (damage + armorRate));
 
-        if (totalDmg <= 1 )
+        if (totalDmg <= 1)
         {
             totalDmg = 1;
         }

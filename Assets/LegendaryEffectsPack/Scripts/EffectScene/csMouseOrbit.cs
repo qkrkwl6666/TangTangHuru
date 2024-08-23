@@ -20,7 +20,7 @@ public class csMouseOrbit : MonoBehaviour
     void Start()
     {
         Vector3 angles = transform.eulerAngles;
-        x = angles.x+50;
+        x = angles.x + 50;
         y = angles.y;
         distance = 30;
 
@@ -48,7 +48,7 @@ public class csMouseOrbit : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 CameraDist -= Time.deltaTime * 5;
-                CameraDist = Mathf.Clamp(CameraDist,2,40);
+                CameraDist = Mathf.Clamp(CameraDist, 2, 40);
             }
             if (Input.GetKey(KeyCode.S))
             {

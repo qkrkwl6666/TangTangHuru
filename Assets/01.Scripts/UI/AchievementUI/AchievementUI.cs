@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -107,9 +105,9 @@ public class AchievementUI : MonoBehaviour
 
     private void LoadRewardState()
     {
-        if(SaveManager.SaveDataV1.scrollStates.Count == 0)
+        if (SaveManager.SaveDataV1.scrollStates.Count == 0)
         {
-            foreach(var scroll in petScrolls)
+            foreach (var scroll in petScrolls)
             {
                 scroll.gameObject.SetActive(false);
             }

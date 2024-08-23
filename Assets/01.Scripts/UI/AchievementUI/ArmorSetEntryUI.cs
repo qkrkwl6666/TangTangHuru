@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
@@ -23,9 +20,9 @@ public class ArmorSetEntryUI : MonoBehaviour
         items = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                     .GetItemsbySet(ItemTier.Normal, index);
 
-        foreach(var item in items)
+        foreach (var item in items)
         {
-            switch(item.Item_Type)
+            switch (item.Item_Type)
             {
                 case (int)ItemType.Helmet:
                     Addressables.LoadAssetAsync<Sprite>(item.Texture_Id).Completed += (x) =>
@@ -64,11 +61,11 @@ public class ArmorSetEntryUI : MonoBehaviour
                     armorBodyDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index]));
                     break;
                 case (int)ItemType.Shose:
-                    armorShoesDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index+1]));
+                    armorShoesDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index + 1]));
                     break;
             }
 
-            if(!armorHeadDark.gameObject.activeSelf
+            if (!armorHeadDark.gameObject.activeSelf
                 && !armorBodyDark.gameObject.activeSelf
                 && !armorShoesDark.gameObject.activeSelf)
             {

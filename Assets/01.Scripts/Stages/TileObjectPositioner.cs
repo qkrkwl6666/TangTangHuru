@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -26,11 +25,11 @@ public class TileObjectPositioner : MonoBehaviour
             newPosition += initialPosition;
             positionList.Add(newPosition);
 
-            var stageObj = Instantiate(objs[Random.Range(0, objs.Length)],transform);
+            var stageObj = Instantiate(objs[Random.Range(0, objs.Length)], transform);
             decoObjects.Add(stageObj);
         }
 
-        for(int i = 0;i < decoObjects.Count; i++)
+        for (int i = 0; i < decoObjects.Count; i++)
         {
             decoObjects[i].transform.position = positionList[i];
         }

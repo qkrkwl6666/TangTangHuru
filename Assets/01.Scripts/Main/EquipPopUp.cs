@@ -42,7 +42,7 @@ public class EquipPopUp : MonoBehaviour
 
     public List<TextMeshProUGUI> itemStatusTexts = new List<TextMeshProUGUI>();
 
-    public TextMeshProUGUI itemStatusText1; 
+    public TextMeshProUGUI itemStatusText1;
     public TextMeshProUGUI itemStatusText2;
     public TextMeshProUGUI itemStatusText3;
     public TextMeshProUGUI itemStatusText4;
@@ -53,20 +53,20 @@ public class EquipPopUp : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void SetItemUI(Item item, bool isEquip = true)
     {
         currentItem = item;
 
-        if(currentItem == null)
+        if (currentItem == null)
         {
             Debug.Log("currentItem is null");
             return;
         }
 
-        foreach(var text in itemStatusTexts)
+        foreach (var text in itemStatusTexts)
         {
             text.gameObject.SetActive(false);
         }
@@ -84,7 +84,7 @@ public class EquipPopUp : MonoBehaviour
         tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
 
         // 아이템 이미지
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += 
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed +=
             (texture) =>
         {
             itemImage.sprite = texture.Result;
@@ -181,7 +181,7 @@ public class EquipPopUp : MonoBehaviour
         tierUpSlider.value = item.CurrentTierUp;
         tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
     }
-        
+
     private void Awake()
     {
         CencelButton.onClick.AddListener(OnCencelButton);
@@ -217,9 +217,9 @@ public class EquipPopUp : MonoBehaviour
 
     public void OnUpgradeButton()
     {
-        if(currentItem == null) return;
+        if (currentItem == null) return;
 
-        if(!mainInventory.CheckUpgrade(currentItem)) return;
+        if (!mainInventory.CheckUpgrade(currentItem)) return;
 
         switch (currentItem.ItemType)
         {
@@ -231,9 +231,9 @@ public class EquipPopUp : MonoBehaviour
             case ItemType.Staff:
                 var weaponItem = currentItem as M_Weapon;
 
-                if(weaponItem == null) return;
+                if (weaponItem == null) return;
 
-                mainInventory.ItemUpgrade(currentItem);
+                mainInventory.ItemUpgrade(currentItem); // 재화 소요
                 weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);
 
                 RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
@@ -243,6 +243,14 @@ public class EquipPopUp : MonoBehaviour
             case ItemType.Helmet:
             case ItemType.Armor:
             case ItemType.Shose:
+                var armorItem = currentItem as M_Armour;
+                if (armorItem == null) return;
+
+                mainInventory.ItemUpgrade(currentItem);
+                armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade + 1);
+
+                RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
+                mainInventory.RefreshGoldDiamondTextUI();
                 break;
         }
 

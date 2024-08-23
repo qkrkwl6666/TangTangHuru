@@ -24,7 +24,7 @@ public class ItemDataJsonConverter : JsonConverter
                 case "CurrentUpgrade":
                     itemData.CurrentUpgrade = property.Value.ToObject<int>();
                     break;
-                
+
             }
         }
 

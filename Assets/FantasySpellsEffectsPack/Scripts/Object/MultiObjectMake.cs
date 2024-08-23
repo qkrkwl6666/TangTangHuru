@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class MultiObjectMake : _ObjectMakeBase {
+public class MultiObjectMake : _ObjectMakeBase
+{
 
     public float m_startDelay;
     public int m_makeCount;
@@ -12,18 +13,22 @@ public class MultiObjectMake : _ObjectMakeBase {
     float m_delayTime;
     float m_count;
 
-	void Start () {
+    void Start()
+    {
         m_Time = m_Time2 = Time.time;
-	}
-	
-	void Update () {
-		if(Time.time > m_Time + m_startDelay) {
-            if(Time.time > m_Time2 + m_makeDelay && m_count < m_makeCount){
+    }
+
+    void Update()
+    {
+        if (Time.time > m_Time + m_startDelay)
+        {
+            if (Time.time > m_Time2 + m_makeDelay && m_count < m_makeCount)
+            {
                 Vector3 m_pos = transform.position + GetRandomVector(m_randomPos);
                 Quaternion m_rot = transform.rotation * Quaternion.Euler(GetRandomVector(m_randomRot));
 
-                for(int i = 0; i < m_makeObjs.Length; i++)
-                { 
+                for (int i = 0; i < m_makeObjs.Length; i++)
+                {
                     GameObject m_obj = Instantiate(m_makeObjs[i], m_pos, m_rot);
                     m_obj.transform.parent = this.transform;
 
@@ -41,5 +46,5 @@ public class MultiObjectMake : _ObjectMakeBase {
                 m_count++;
             }
         }
-	}
+    }
 }

@@ -15,7 +15,7 @@ public class ReRoll : MonoBehaviour
         }
 
         var reSkill = GameObject.FindGameObjectWithTag("Pet").GetComponent<ReRollSkill>();
-        if(reSkill != null )
+        if (reSkill != null)
         {
             countMax = reSkill.ReRollCountMax;
         }
@@ -24,7 +24,7 @@ public class ReRoll : MonoBehaviour
             countMax = 0;
         }
 
-        if(countMax == 0)
+        if (countMax == 0)
         {
             gameObject.SetActive(false);
         }
@@ -39,7 +39,7 @@ public class ReRoll : MonoBehaviour
         currCount++;
         if (currCount >= countMax)
         {
-            gameObject.SetActive (false);
+            gameObject.SetActive(false);
         }
     }
 

@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 
-public class csEffect_80_SunMove : MonoBehaviour {
+public class csEffect_80_SunMove : MonoBehaviour
+{
 
     public Transform m_movePos;
     public float m_lerpValue;
     public float DestroyTime;
 
-    void Start() {
+    void Start()
+    {
         Destroy(gameObject, DestroyTime);
     }
 
-	void Update () {
+    void Update()
+    {
         transform.position = Vector3.Lerp(transform.position, m_movePos.position, Time.deltaTime * m_lerpValue);
-	}
+    }
 }

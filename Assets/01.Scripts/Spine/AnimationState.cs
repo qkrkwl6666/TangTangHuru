@@ -1,6 +1,6 @@
+using Spine.Unity;
 using System.Collections.Generic;
 using UnityEngine;
-using Spine.Unity;
 
 public class AnimationState : MonoBehaviour
 {
@@ -58,7 +58,7 @@ public class AnimationState : MonoBehaviour
         currentFrame++;
         deltaTime += Time.deltaTime;
 
-        if(currentFrame >= frameDuration)
+        if (currentFrame >= frameDuration)
         {
             animationState.Update(deltaTime);
 

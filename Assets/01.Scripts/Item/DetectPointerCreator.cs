@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -52,7 +51,7 @@ public class DetectPointerCreator : MonoBehaviour
         if (armorSet != 5)
             return;
 
-        if(pointers.Count == 0) 
+        if (pointers.Count == 0)
             return;
 
         if (Time.timeScale > 0f)
@@ -60,7 +59,7 @@ public class DetectPointerCreator : MonoBehaviour
             stageTimer += Time.deltaTime;
         }
 
-        if(stageTimer > 3)
+        if (stageTimer > 3)
         {
             var pointerComponent = pointers[0].GetComponent<TreasurePointer>();
             pointerComponent.SetTarget(SetRandomTreasureTransform());

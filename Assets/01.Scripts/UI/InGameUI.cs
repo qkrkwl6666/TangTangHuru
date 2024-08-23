@@ -69,12 +69,12 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
         int reinforcedStoneId = 0;
 
-        foreach (var inGameItem in GameManager.Instance.inGameItems) 
+        foreach (var inGameItem in GameManager.Instance.inGameItems)
         {
             switch (inGameItem.ItemType)
             {
                 case IItemType.EquipmentGemstone: // 장비 원석
-                    foreach(var itemSlot in itemSlot)
+                    foreach (var itemSlot in itemSlot)
                     {
                         if (itemSlot.activeSelf) continue;
 

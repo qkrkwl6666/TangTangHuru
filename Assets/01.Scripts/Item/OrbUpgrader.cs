@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,7 +36,7 @@ public class OrbUpgrader : MonoBehaviour
 
     public void SlotSelected(ItemSlotUI currSlot)
     {
-        if(currSlot.isSelected)
+        if (currSlot.isSelected)
         {
             UndoSelect(currSlot);
         }
@@ -110,7 +109,7 @@ public class OrbUpgrader : MonoBehaviour
 
         orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(firstItemId.ToString());
 
-        if(orbData.Item_Tier > 3)
+        if (orbData.Item_Tier > 3)
         {
             Debug.Log("이미 최고티어 오브이다.");
             return false;

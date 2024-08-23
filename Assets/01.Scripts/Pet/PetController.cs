@@ -42,7 +42,7 @@ public class PetController : MonoBehaviour
         transform.position += direction * moveSpeed * Time.deltaTime;
 
         var difference = Vector3.Distance(transform.position, targetPosition);
-        if(difference < 0.3f)
+        if (difference < 0.3f)
         {
             transform.position = targetPosition;
         }
@@ -60,7 +60,7 @@ public class PetController : MonoBehaviour
             }
         }
 
-        if(timer >= 8f)
+        if (timer >= 8f)
         {
             isSettled = false;
             timer = 0f;
@@ -82,7 +82,7 @@ public class PetController : MonoBehaviour
             targetPosition = playerTransform.position + randomDirection;
         }
 
-        if(targetPosition.x < transform.position.x)
+        if (targetPosition.x < transform.position.x)
         {
             var scale = gameObject.transform.localScale;
             scale.x = 1;

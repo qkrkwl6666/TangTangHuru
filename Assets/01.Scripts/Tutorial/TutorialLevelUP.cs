@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialLevelUP : MonoBehaviour
@@ -10,7 +8,7 @@ public class TutorialLevelUP : MonoBehaviour
 
     private void OnEnable()
     {
-        if(LevelUpChat)
+        if (LevelUpChat)
         {
             inGameTutorialManager.StartCoroutine(inGameTutorialManager.Tutorial3Start());
             LevelUpChat = false;

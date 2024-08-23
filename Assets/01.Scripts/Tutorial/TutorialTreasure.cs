@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TutorialTreasure : MonoBehaviour
@@ -10,7 +8,7 @@ public class TutorialTreasure : MonoBehaviour
 
     private void OnDisable()
     {
-        if(isFrist)
+        if (isFrist)
             inGameTutorialManager.StartCoroutine(inGameTutorialManager.Tutorial4Start());
 
         isFrist = false;

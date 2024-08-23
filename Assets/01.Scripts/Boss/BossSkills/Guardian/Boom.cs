@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -44,9 +43,9 @@ public class Boom : MonoBehaviour
 
         float scale = Mathf.InverseLerp(0f, duration, time);
 
-        transform.localScale = new Vector3 (scale, scale, scale);
+        transform.localScale = new Vector3(scale, scale, scale);
 
-        if (time >= duration && !isFirst) 
+        if (time >= duration && !isFirst)
         {
             attack = true;
             isFirst = true;

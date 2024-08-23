@@ -52,11 +52,19 @@ public class InGameTutorialManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
 
         StartCoroutine(Tutorial2Start());
+        StartCoroutine(WaitSec());
     }
 
     private void Update()
     {
-        
+
+    }
+
+    public IEnumerator WaitSec()
+    {
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        timeControl.StopTime();
     }
 
     public IEnumerator Tutorial2Start()
@@ -84,12 +92,12 @@ public class InGameTutorialManager : MonoBehaviour
         // 버튼 선택 까지 대기
         while (true)
         {
-            if(!levelUpPanel.parent.gameObject.activeSelf) break;
+            if (!levelUpPanel.parent.gameObject.activeSelf) break;
 
             yield return null;
         }
 
-        timeControl.NormalTime() ;
+        timeControl.NormalTime();
 
         yield return new WaitForSeconds(1f);
 
@@ -149,6 +157,7 @@ public class InGameTutorialManager : MonoBehaviour
             currentCount++;
         }
 
+        timeControl.NormalTime();
         tutorialPanel.SetActive(false);
     }
 }

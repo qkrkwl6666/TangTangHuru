@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Heal : MonoBehaviour, IInGameItem, IPlayerObserver
 {
-    public int ItemId { get ; set ; }
-    public string Name { get ; set ; }
-    public IItemType ItemType { get ; set ; }
-    public string TextureId { get ; set ; }
+    public int ItemId { get; set; }
+    public string Name { get; set; }
+    public IItemType ItemType { get; set; }
+    public string TextureId { get; set; }
 
     private PlayerSubject playerSubject;
 
@@ -24,7 +22,7 @@ public class Heal : MonoBehaviour, IInGameItem, IPlayerObserver
 
     public void GetItem()
     {
-        
+
     }
 
     public void UseItem()

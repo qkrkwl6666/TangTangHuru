@@ -14,10 +14,10 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 
     public IObjectPool<GameObject> pool;
 
-    public int ItemId { get ; set ; }
-    public string Name { get ; set ; }
-    public IItemType ItemType { get ; set ; }
-    public string TextureId { get ; set ; }
+    public int ItemId { get; set; }
+    public string Name { get; set; }
+    public IItemType ItemType { get; set; }
+    public string TextureId { get; set; }
 
     private bool isUsed = false;
 
@@ -77,7 +77,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
 
     public void GetItem()
     {
-        
+
     }
 
     private void Update()
@@ -90,7 +90,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
         transform.position += dir.normalized * speed * Time.deltaTime;
 
 
-        if(Vector2.Distance(targetTransform.position, transform.position) < 0.5f)
+        if (Vector2.Distance(targetTransform.position, transform.position) < 0.5f)
         {
             UseItem();
         }

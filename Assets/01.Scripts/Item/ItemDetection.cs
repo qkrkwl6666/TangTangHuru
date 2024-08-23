@@ -1,9 +1,5 @@
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
@@ -100,7 +96,7 @@ public class ItemDetection : MonoBehaviour
 
         foreach (var treasure in treasureList)
         {
-            if (treasure == null) 
+            if (treasure == null)
                 continue;
 
             var distance = Vector2.Distance(treasure.transform.position, transform.position);
@@ -144,7 +140,7 @@ public class ItemDetection : MonoBehaviour
         treasureBar.UpdateTreasureBar(value);
 
         //보물상자 열림
-        if (treasureTime >= treasureDuration) 
+        if (treasureTime >= treasureDuration)
         {
             OpenTreasure();
             Radar();
@@ -195,7 +191,7 @@ public class ItemDetection : MonoBehaviour
     {
         if (time >= duration)
         {
-            if(!isMagnet)
+            if (!isMagnet)
                 Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
             else
             {
@@ -242,7 +238,7 @@ public class ItemDetection : MonoBehaviour
 
                     Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
                     endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
-                    Debug.Log(endScreenPos);
+                    //Debug.Log(endScreenPos);
                     DOTween.To(() => startScreenPos, x =>
                     {
                         item.transform.position = Camera.main.ScreenToWorldPoint(x);
@@ -251,7 +247,7 @@ public class ItemDetection : MonoBehaviour
                         .SetUpdate(UpdateType.Fixed)
                         .OnComplete(() =>
                     {
-                        if(!removeItems.Contains(item.gameObject))
+                        if (!removeItems.Contains(item.gameObject))
                         {
                             removeItems.Add(item.gameObject);
                             item.GetComponent<IInGameItem>().UseItem();

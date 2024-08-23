@@ -23,7 +23,7 @@ public class StringTable : DataTable
     {
         var list = new List<string>();
 
-        for(int i = 1; i <= maxTutorialCount; i++)
+        for (int i = 1; i <= maxTutorialCount; i++)
         {
             stringTable.TryGetValue(defaultTutorialId + i, out var value);
 

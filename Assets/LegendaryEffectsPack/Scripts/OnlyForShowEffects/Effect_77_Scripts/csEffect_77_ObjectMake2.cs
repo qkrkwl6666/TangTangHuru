@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csEffect_77_ObjectMake2 : MonoBehaviour {
+public class csEffect_77_ObjectMake2 : MonoBehaviour
+{
 
     public GameObject m_makeObj;
     public float m_startDelay;
@@ -8,14 +9,16 @@ public class csEffect_77_ObjectMake2 : MonoBehaviour {
     float m_Time;
     bool isMake = true;
 
-	void Start () {
+    void Start()
+    {
         m_Time = Time.time;
-	}
+    }
 
-    void Update() {
+    void Update()
+    {
         if (isMake == false)
             return;
-        if(Time.time > m_Time + m_startDelay && isMake)
+        if (Time.time > m_Time + m_startDelay && isMake)
         {
             isMake = false;
             GameObject gm = Instantiate(m_makeObj, transform.position, transform.rotation);

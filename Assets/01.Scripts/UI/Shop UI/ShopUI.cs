@@ -1,10 +1,5 @@
-using Spine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
@@ -28,7 +23,7 @@ public class ShopUI : MonoBehaviour
         {
             SetEntry(item);
         }
-        
+
         sorted = true;
     }
 
@@ -62,7 +57,7 @@ public class ShopUI : MonoBehaviour
 
     private void Purchase(ItemData itemData)
     {
-        if(inventory.Gold < itemData.Price)
+        if (inventory.Gold < itemData.Price)
         {
             SoundManager.Instance.PlaySound2D("failed");
         }

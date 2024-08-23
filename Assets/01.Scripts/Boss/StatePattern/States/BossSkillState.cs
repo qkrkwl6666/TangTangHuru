@@ -13,19 +13,19 @@ public class BossSkillState : BossState
     {
         currentBossSkill = boss.SelectSkill();
 
-        if(!boss.isGuardian)
+        if (!boss.isGuardian)
         {
             bossView.PlayAnimation(Defines.idle, true);
             return;
         }
-            
-        switch(boss.BossData.Boss_Id)
+
+        switch (boss.BossData.Boss_Id)
         {
             case 333001: // 돌진 가디언
                 bossView.PlayAnimation(Defines.attack1, true);
                 break;
             case 333002: // 포격 가디언
-                bossView.PlayAnimation(Defines.groundIn, false).Complete += (x) => 
+                bossView.PlayAnimation(Defines.groundIn, false).Complete += (x) =>
                 {
                     bossView.PlayAnimation(Defines.idle, true);
                 };
@@ -34,7 +34,7 @@ public class BossSkillState : BossState
 
                 break;
         }
-        
+
 
     }
 

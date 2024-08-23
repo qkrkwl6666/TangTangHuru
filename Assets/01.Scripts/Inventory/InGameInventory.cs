@@ -1,9 +1,9 @@
+using DG.Tweening;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using DG.Tweening;
 
 
 public class InGameInventory : MonoBehaviour
@@ -79,7 +79,7 @@ public class InGameInventory : MonoBehaviour
 
         gameUI.SetGameClearUI(Coin, Kill);
 
-        if(GameManager.Instance.CurrentStage == SaveManager.SaveDataV1.MaxStage)
+        if (GameManager.Instance.CurrentStage == SaveManager.SaveDataV1.MaxStage)
         {
             SaveManager.SaveDataV1.MaxStage++;
         }
@@ -108,7 +108,7 @@ public class InGameInventory : MonoBehaviour
             }
         }
 
-        if(isEffect) ItemBagEffect(tempItems);
+        if (isEffect) ItemBagEffect(tempItems);
 
         items.Clear();
 
@@ -119,7 +119,7 @@ public class InGameInventory : MonoBehaviour
     {
         Defines.DotweenScaleActiveTrue(bagTransform.gameObject);
 
-        for (int i = 0; i < items.Count; i++) 
+        for (int i = 0; i < items.Count; i++)
         {
             images[i].gameObject.SetActive(false);
             images[i].sprite = null;
@@ -129,7 +129,7 @@ public class InGameInventory : MonoBehaviour
             var prefabId = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
                 .GetItemData(items[i].ItemId.ToString()).Prefab_Id;
 
-            Addressables.InstantiateAsync($"{prefabId}UI", canvasTransform).Completed += 
+            Addressables.InstantiateAsync($"{prefabId}UI", canvasTransform).Completed +=
                 (gemStone) =>
                 {
                     var go = gemStone.Result;
@@ -146,7 +146,7 @@ public class InGameInventory : MonoBehaviour
                     bagCenter.y = bagRect.anchoredPosition.y + bagRect.rect.size.y * 0.25f;
 
                     go.GetComponent<RectTransform>().DOAnchorPos(bagCenter, 1f).SetEase(Ease.InOutQuad)
-                        .OnComplete(() => 
+                        .OnComplete(() =>
                         {
                             Defines.DotweenScaleActiveFalse(bagTransform.gameObject);
                             Destroy(go);
@@ -155,7 +155,7 @@ public class InGameInventory : MonoBehaviour
                             TutorialCheck();
                         });
                 };
-            
+
         }
     }
 

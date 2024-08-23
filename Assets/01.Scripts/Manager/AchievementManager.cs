@@ -24,7 +24,8 @@ public class Achievement
     public void Unlock()
     {
         if (achieveState == AchieveState.Incompleted)
-        {AchievementManager.Instance.Check("Holy");
+        {
+            AchievementManager.Instance.Check("Holy");
             achieveState = AchieveState.Completed;
             Debug.Log($"Achievement Unlocked: {title}");
             onUnlock?.Invoke();  // 도전과제 달성 시 추가 작업
@@ -302,7 +303,7 @@ public class AchievementManager : Singleton<AchievementManager>
 
         myTasks.SaveProgress();
 
-        for(int i = 0; i < achievements.Count; i++)
+        for (int i = 0; i < achievements.Count; i++)
         {
             SavedStates.Add(achievements[i].achieveState);
         }

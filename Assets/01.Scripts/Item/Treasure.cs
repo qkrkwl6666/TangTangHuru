@@ -20,7 +20,7 @@ public class Treasure : MonoBehaviour, IInGameItem
 
     public void GetItem()
     {
-        
+
     }
 
     public void UseItem()
@@ -33,8 +33,8 @@ public class Treasure : MonoBehaviour, IInGameItem
             item.transform.position = (Vector2)transform.position + dir;
             item.SetActive(true);
         }
-        
-        if(guardian != null)
+
+        if (guardian != null)
         {
             var dir = Random.insideUnitCircle;
             dir = dir.normalized * 10f;
