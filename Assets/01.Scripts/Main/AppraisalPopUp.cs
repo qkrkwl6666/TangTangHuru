@@ -144,6 +144,12 @@ public class AppraisalPopUp : MonoBehaviour
         {
             SetItemUI(currentItemList[currentItemIndex]);
             gameObject.SetActive(true);
+
+            AchievementManager.Instance.myTasks.AddProgress("AppraisalCount");
+            if (AchievementManager.Instance.Check("AppraisalCount"))
+            {
+                AchievementManager.Instance.UnlockAchievement("AppraisalCount");
+            }
         }
         else
         {

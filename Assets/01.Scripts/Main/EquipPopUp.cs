@@ -257,6 +257,32 @@ public class EquipPopUp : MonoBehaviour
         SetItemUI(currentItem);
         mainInventory.RefreshItemSlotUI();
         mainInventory.SaveInventory();
+
+        switch (currentItem.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                AchievementManager.Instance.myTasks.AddProgress("ReinforcedWeaponCount");
+                if (AchievementManager.Instance.Check("ReinforcedWeaponCount"))
+                {
+                    AchievementManager.Instance.UnlockAchievement("ReinforcedWeaponCount");
+                }
+                break;
+
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                AchievementManager.Instance.myTasks.AddProgress("ReinforcedArmorCount");
+                if (AchievementManager.Instance.Check("ReinforcedArmorCount"))
+                {
+                    AchievementManager.Instance.UnlockAchievement("ReinforcedArmorCount");
+                }
+                break;
+        }
     }
 
     // 장비 장착 버튼

@@ -70,6 +70,19 @@ public class ShopUI : MonoBehaviour
             inventory.RefreshItemSlotUI();
 
             SoundManager.Instance.PlaySound2D("success");
+
+            AchievementManager.Instance.myTasks.AddProgress("TotalPurchase");
+            if (AchievementManager.Instance.Check("TotalPurchase"))
+            {
+                AchievementManager.Instance.UnlockAchievement("TotalPurchase");
+            }
+
+            AchievementManager.Instance.myTasks.AddProgress("UsedGold", itemData.Price);
+            if (AchievementManager.Instance.Check("UsedGold"))
+            {
+                AchievementManager.Instance.UnlockAchievement("UsedGold");
+            }
+
         }
 
     }

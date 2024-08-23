@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public enum AchieveState
 {
@@ -25,7 +26,6 @@ public class Achievement
     {
         if (achieveState == AchieveState.Incompleted)
         {
-            AchievementManager.Instance.Check("Holy");
             achieveState = AchieveState.Completed;
             Debug.Log($"Achievement Unlocked: {title}");
             onUnlock?.Invoke();  // 도전과제 달성 시 추가 작업
@@ -115,7 +115,7 @@ public class AhievementTask
 
         };
 
-    private Dictionary<string, int> completeConditions
+    public Dictionary<string, int> completeConditions
     = new Dictionary<string, int>
     {
             { "SummonedCount", 2 },
@@ -173,6 +173,19 @@ public class AhievementTask
             Debug.LogError("Invalid key value!");
         }
     }
+
+    public void AddProgress(string key, int num) //해당 도전과제 진행도 증가
+    {
+        if (progressValues.ContainsKey(key))
+        {
+            progressValues[key] += num;
+        }
+        else
+        {
+            Debug.LogError("Invalid key value!");
+        }
+    }
+
 
     public bool CheckCompleted(string key)
     {
@@ -255,11 +268,13 @@ public class AchievementManager : Singleton<AchievementManager>
 
         var stringTable = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
+        List<string> keyList = new List<string>(myTasks.completeConditions.Keys);
+
         for (int i = 0; i < 12; i++)
         {
             achievements.Add(new Achievement
             {
-                title = stringTable.Get($"Achieve_Name{i + 1}").Text,
+                title = keyList[i],
                 description = stringTable.Get($"Achieve_Desc{i + 1}").Text,
                 onUnlock = () => Debug.Log("Achievement Unlocked!")
             });
