@@ -12,6 +12,11 @@ public class M_Armour : Item
 
     }
 
+    public void UpgradeArmor(int UpgradeCount)
+    {
+
+    }
+
     public void SetItemData(ItemData itemData, int instanceId)
     {
         ItemId = itemData.Item_Id;
