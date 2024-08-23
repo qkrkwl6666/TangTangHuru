@@ -97,11 +97,6 @@ public class WeaponCreator : MonoBehaviour
                     index++;
                 }
 
-                //¹ß»çÀ½
-                if (!isSoundLooping)
-                {
-                    PlayWeaponSound();
-                }
 
                 OptionsOnEnable(weapon);
 
@@ -110,10 +105,16 @@ public class WeaponCreator : MonoBehaviour
 
                 if (weaponDataInStage.BurstRate > 0f)
                 {
+
+
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
 
+            if (!isSoundLooping)
+            {
+                PlayWeaponSound();
+            }
 
             while (index < weaponDataInStage.BurstCount)
             {
@@ -379,8 +380,8 @@ public class WeaponCreator : MonoBehaviour
         }
         else
         {
-            //SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
-            SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName);
+            SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
+            //SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName);
         }
     }
 }
