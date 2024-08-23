@@ -40,6 +40,9 @@ public static class Defines
 
     public static readonly int maxGuardian = 3;
 
+    //mapsize
+    public static readonly int maxMapSize = 250;
+
     // 아웃라이너 컬러
     public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
     public static readonly Color greenColor = new Color(20 / 255f, 46 / 255f, 34 / 255f);

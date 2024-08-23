@@ -823,14 +823,14 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
 
         // 로드 후 업그레이드 
         LoadWeaponUpgrade();
 
-        RefreshItemSlotUI();
+        //RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        //yield return new WaitForSeconds(0.3f);
 
         // 내가 현재 장착하고 있는 아이템 플레이어에 장착 시키기
         LoadDataPlayerEquip();
@@ -858,7 +858,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        yield return new WaitForSecondsRealtime(0.4f);
 
         foreach (var itemSlot in itemSlotUI)
         {
@@ -892,9 +892,9 @@ public class MainInventory : MonoBehaviour
             }
         }
 
-        RefreshItemSlotUI();
+        //RefreshItemSlotUI();
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        //yield return new WaitForSecondsRealtime(0.4f);
 
         LoadDataPlayerEquip();
 
@@ -1474,11 +1474,11 @@ public class MainInventory : MonoBehaviour
         // 튜토리얼 재료
         MainInventoryAddItem("200002", 0);
 
-        MainInventoryAddItem("200101", 0);
-        MainInventoryAddItem("210001", 0);
-        MainInventoryAddItem("210101", 0);
-        MainInventoryAddItem("220001", 0);
-        MainInventoryAddItem("220101", 0);
+        //MainInventoryAddItem("200101", 0);
+        //MainInventoryAddItem("210001", 0);
+        //MainInventoryAddItem("210101", 0);
+        //MainInventoryAddItem("220001", 0);
+        //MainInventoryAddItem("220101", 0);
 
         // 레전드 장비
         //MainInventoryAddItem("400015", 10);
