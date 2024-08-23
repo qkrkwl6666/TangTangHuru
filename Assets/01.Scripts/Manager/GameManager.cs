@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -6,34 +5,37 @@ using UnityEngine.AddressableAssets;
 
 public class GameManager : Singleton<GameManager>
 {
+    // tutorial
+    public bool isTutorialSceneEnd = false;
+
     public int CurrentStage { get; set; } = 1;
 
     public string currentWeapon = "OneSword";
 
-    // ÇÃ·¹ÀÌ¾î ÀåÂø
+    // ï¿½ëµ†ï¿½ì …ï¿½ì” ï¿½ë¼± ï¿½ì˜£ï§¡ï¿½
     public Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
 
-    // ·Îµù UI 
+    // æ¿¡ì’•ëµ« UI 
     public GameObject loadingUI;
 
-    // ÀÎ°ÔÀÓ ¼¼ÀÌºê ¾ÆÀÌÅÛ
-    
-    // ÀÓ½Ã ¿ëµµ
-    public string characterSkin = Defines.body033;
+    // ï¿½ì”¤å¯ƒëš¯ì—« ï¿½ê½­ï¿½ì” é‡‰ï¿½ ï¿½ë¸˜ï¿½ì” ï¿½ë€¥
+
+    // ê¸°ë³¸ ì„¸íŠ¸ íš¨ê³¼
+    public string characterSkin = Defines.body001;
     public string weaponSkin = Defines.weapon005;
 
     // UI 
     public MainInventory mainInventory;
 
-    // ÀÎ °ÔÀÓ ¾ÆÀÌÅÛ ÀúÀå ÄÁÅ×ÀÌ³Ê
-    public List<IInGameItem> inGameItems = new ();
+    // ï¿½ì”¤ å¯ƒëš¯ì—« ï¿½ë¸˜ï¿½ì” ï¿½ë€¥ ï¿½ï¿½ï¿½ï¿½ì˜£ è€Œâ‘¦ë€’ï¿½ì” ï¿½ê¼«
+    public List<IInGameItem> inGameItems = new();
 
     private int BGM_Index = 0;
 
-    // ÀÎ°ÔÀÓ ¿¡¼­ ¸ŞÀÎ ¾À ÀÌµ¿ÈÄ ·Îµù ¿Ï·á ½Ã È£Ãâ
+    // ï¿½ì”¤å¯ƒëš¯ì—« ï¿½ë¿‰ï¿½ê½Œ ï§ë¶¿ì”¤ ï¿½ëµ® ï¿½ì” ï¿½ë£ï¿½ì‘ æ¿¡ì’•ëµ« ï¿½ì…¿çŒ·ï¿½ ï¿½ë–† ï¿½ìƒ‡ç•°ï¿½
     public void InGameItemToMainItem()
     {
-        foreach (var item in inGameItems) 
+        foreach (var item in inGameItems)
         {
             mainInventory.MainInventoryAddItem(item.ItemId.ToString());
         }
@@ -69,7 +71,7 @@ public class GameManager : Singleton<GameManager>
 
     public void InitSaveLoaded()
     {
-        // Todo : ÄÚµå ±³Ã¼ ÇÊ¿ä 
+        // Todo : è‚„ë¶¾ë±¶ æ´ë¨¯ê»œ ï¿½ë¸˜ï¿½ìŠ‚ 
         mainInventory = GameObject.FindWithTag("MainInventory")
             .GetComponent<MainInventory>();
 
@@ -78,33 +80,33 @@ public class GameManager : Singleton<GameManager>
 
         InGameItemToMainItem();
 
-        mainInventory.SaveInventory(); 
+        mainInventory.SaveInventory();
     }
 
-    // Defines ¿¡¼­ È£Ãâ ex) Defines.main 
+    // Defines ï¿½ë¿‰ï¿½ê½Œ ï¿½ìƒ‡ç•°ï¿½ ex) Defines.main 
     public void LoadSceneAsync(string sceneName)
     {
         SoundManager.Instance.ClearSoundPlayerPool();
 
         loadingUI.SetActive(true);
 
-        // Todo : ¸ŞÀÎ ¾À ÀÌ¸§ º¯°æ½Ã º¯°æ ÇÊ¿ä
-        if (sceneName != "InventoryScene")
-        {
+        // Todo : ï§ë¶¿ì”¤ ï¿½ëµ® ï¿½ì” ç”±ï¿½ è¹‚ï¿½å¯ƒìŒë–† è¹‚ï¿½å¯ƒï¿½ ï¿½ë¸˜ï¿½ìŠ‚
+
+        if (sceneName != Defines.mainScene)
             mainInventory.SaveMainInventory();
-        }
+
 
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-            //Todo : ¸ŞÀÎ ¾À ÀÌ¸§ º¯°æ½Ã º¯°æ ÇÊ¿ä
-            if(sceneName != "InventoryScene")
-                loadingUI.SetActive(false);
+            //Todo : ï§ë¶¿ì”¤ ï¿½ëµ® ï¿½ì” ç”±ï¿½ è¹‚ï¿½å¯ƒìŒë–† è¹‚ï¿½å¯ƒï¿½ ï¿½ë¸˜ï¿½ìŠ‚
 
+            if (sceneName != Defines.mainScene)
+                loadingUI.SetActive(false);
             SoundManager.Instance.CreateTemporalObjects();
         };
 
-        if (sceneName == "InventoryScene")
+        if (sceneName == Defines.mainScene)
         {
             BGM_Index = 0;
         }
@@ -135,6 +137,11 @@ public class GameManager : Singleton<GameManager>
     public void ChangeBGM()
     {
         SoundManager.Instance.PlayerBGM(BGM_Index);
+    }
+
+    public void SaveGame()
+    {
+        mainInventory.SaveInventory();
     }
 
 }

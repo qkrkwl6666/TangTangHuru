@@ -124,13 +124,14 @@ public class PlayerHealth : LivingEntity
 
         float totalDmg = damage * (damage / (damage + armorRate));
 
-        if (totalDmg <= 1 )
+        if (totalDmg <= 1)
         {
             totalDmg = 1;
         }
 
         health -= totalDmg;
-        hpBar.value -= totalDmg;
+        hpBar.value = health;
+
 
         if (health <= 0 && !dead)
         {
@@ -166,6 +167,18 @@ public class PlayerHealth : LivingEntity
         invincibleTime = 0.1f;
     }
 
+    public void Health(float heal)
+    {
+        health += heal;
+
+        if (health > startingHealth)
+        {
+            health = startingHealth;
+        }
+
+        hpBar.value = health;
+    }
+
 
     private IEnumerator HealEffectPlay()
     {
@@ -174,5 +187,6 @@ public class PlayerHealth : LivingEntity
         yield return new WaitForSeconds(1f);
         healPartice.Stop();
         healPartice.gameObject.SetActive(false);
+
     }
 }

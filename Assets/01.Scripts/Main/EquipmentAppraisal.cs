@@ -24,10 +24,12 @@ public class EquipmentAppraisal : MonoBehaviour
     public AppraisalPopUp appraisalPopUp;
 
     public Button appraisalButton;
+    public VFXRenderManager renderManager;
+    public MainUI mainUI;
 
     private void Awake()
     {
-        appraisalButton.onClick.AddListener(OnAppraisal);
+        appraisalButton.onClick.AddListener(() => StartCoroutine(OnAppraisal()));
     }
 
     private void OnEnable()
@@ -53,7 +55,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
     private void OnDestroy()
     {
-        
+
     }
 
     public void RefreshGemStoneSlotUI()
@@ -67,7 +69,7 @@ public class EquipmentAppraisal : MonoBehaviour
             gemStone.Value.gameObject.SetActive(false);
         }
 
-        foreach(var gemStone in allGemStone)
+        foreach (var gemStone in allGemStone)
         {
             if (gemStone.Value.Count == 0) continue;
 
@@ -88,7 +90,7 @@ public class EquipmentAppraisal : MonoBehaviour
             selectGemStone.Add((ItemTier)i, 0);
         }
 
-        for(int i = 0; i < (int)ItemTier.Count; i++)
+        for (int i = 0; i < (int)ItemTier.Count; i++)
         {
             int tempItemId = defaultGemStoneItemId;
             ItemTier tempType = (ItemTier)i;
@@ -112,7 +114,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
         var apprasieTable = DataTableManager.Instance.Get<AppraiseTable>(DataTableManager.appraise).appraiseTable;
 
-        foreach(var apprasie in apprasieTable)
+        foreach (var apprasie in apprasieTable)
         {
             appraisalId.Add(apprasie.Value.Id);
         }
@@ -127,7 +129,7 @@ public class EquipmentAppraisal : MonoBehaviour
 
     public int GetMaxGemStoneCount(ItemTier itemTier)
     {
-        if(allGemStone.ContainsKey(itemTier))
+        if (allGemStone.ContainsKey(itemTier))
         {
             return allGemStone[itemTier].Count;
         }
@@ -240,15 +242,15 @@ public class EquipmentAppraisal : MonoBehaviour
     }
 
     // 감정 버튼 누르면 호출
-    public void OnAppraisal()
+    public System.Collections.IEnumerator OnAppraisal()
     {
         // 내가 현재 선택한 원석들 가져와서 한번에 다 뽑고 n번 팝업창 띄우기
 
-        List<Item> itemList = new ();
+        List<Item> itemList = new();
 
-        foreach(var appraisal in selectGemStone)
+        foreach (var appraisal in selectGemStone)
         {
-            for(int i = 0; i < appraisal.Value; i++)
+            for (int i = 0; i < appraisal.Value; i++)
             {
                 int appraiseId = defaultAppraisalItemId + (int)appraisal.Key;
 
@@ -259,14 +261,14 @@ public class EquipmentAppraisal : MonoBehaviour
                 Item item = RandomItemCreate(appraiseData);
 
                 itemList.Add(item);
+
             }
         }
 
-        appraisalPopUp.gameObject.SetActive(true);
-        appraisalPopUp.SetPopUp(itemList);
+        if (itemList.Count <= 0) yield break;
 
         // 선택한 재화 소모하기
-        for(int i = 0; i < (int)ItemTier.Count; i ++)
+        for (int i = 0; i < (int)ItemTier.Count; i++)
         {
             int removeCount = selectGemStone[(ItemTier)i];
 
@@ -283,6 +285,16 @@ public class EquipmentAppraisal : MonoBehaviour
         }
 
         mainInventory.SaveInventory();
+
+        renderManager.PlayAppraisalParticle(3f);
+        mainUI.allCloseUI.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+
+        mainUI.allCloseUI.SetActive(false);
+        appraisalPopUp.gameObject.SetActive(true);
+        appraisalPopUp.SetPopUp(itemList);
+
     }
 
 }

@@ -13,6 +13,22 @@ public class BossStageData
     public int Middle2_Id { get; set; }
     public int Middle3_Id { get; set; }
     public int Boss_Id { get; set; }
+
+    public List<int> GetGuardianId()
+    {
+        var list = new List<int>();
+
+        if (Middle1_Id == -1) return list;
+        list.Add(Middle1_Id);
+
+        if (Middle2_Id == -1) return list;
+        list.Add(Middle2_Id);
+
+        if (Middle3_Id == -1) return list;
+        list.Add(Middle3_Id);
+
+        return list;
+    }
 }
 
 public class BossStageTable : DataTable

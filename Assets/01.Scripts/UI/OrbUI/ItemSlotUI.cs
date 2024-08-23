@@ -32,7 +32,7 @@ public class ItemSlotUI : MonoBehaviour
 
     public void ClearInfo()
     {
-        if(connected != null)
+        if (connected != null)
         {
             connected.UnSelected();
             connected = null;

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class OrbCrafter : MonoBehaviour
 {
@@ -119,5 +118,10 @@ public class OrbCrafter : MonoBehaviour
     public void LoadGaige()
     {
         gaigeNum = SaveManager.SaveDataV1.gaige;
+    }
+
+    public void CreatePersentIncrease(int num)
+    {
+        createPersent += num;
     }
 }

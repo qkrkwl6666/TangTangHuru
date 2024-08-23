@@ -90,7 +90,7 @@ public class ItemTable : DataTable
 
     public ItemData GetItemData(ItemType itemType, ItemTier itemTier)
     {
-        foreach (var item in itemTable.Values) 
+        foreach (var item in itemTable.Values)
         {
             if (item.Item_Type == (int)itemType && item.Item_Tier == (int)itemTier)
             {
@@ -115,6 +115,22 @@ public class ItemTable : DataTable
 
         return itemDatas;
     }
+
+    public List<ItemData> GetItemsbySet(ItemTier itemTier, int setIndex)
+    {
+        List<ItemData> itemDatas = new List<ItemData>();
+
+        foreach (var item in itemTable.Values)
+        {
+            if (item.Item_Tier == (int)itemTier && item.SetType == setIndex)
+            {
+                itemDatas.Add(item);
+            }
+        }
+
+        return itemDatas;
+    }
+
 
     public override void Load(string name, Action tableLoaded)
     {

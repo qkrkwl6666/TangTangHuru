@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 public class TemporalSoundPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
-    public AudioSource AudioSource {  get { return audioSource; } }
+    public AudioSource AudioSource { get { return audioSource; } }
     public string ClipName
     {
         get

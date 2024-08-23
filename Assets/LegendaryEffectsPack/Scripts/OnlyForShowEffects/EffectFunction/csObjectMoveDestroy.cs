@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csObjectMoveDestroy : MonoBehaviour {
+public class csObjectMoveDestroy : MonoBehaviour
+{
 
     public GameObject m_gameObjectMain;
     public GameObject m_gameObjectTail;
@@ -16,10 +17,10 @@ public class csObjectMoveDestroy : MonoBehaviour {
 
     void LateUpdate()
     {
-      //  time += Time.deltaTime;
-       // if (time > maxTime)
-       //     Destroy(this.gameObject);
-        
+        //  time += Time.deltaTime;
+        // if (time > maxTime)
+        //     Destroy(this.gameObject);
+
         transform.Translate(Vector3.forward * -Time.deltaTime * MoveSpeed);
         if (!ishit)
         {

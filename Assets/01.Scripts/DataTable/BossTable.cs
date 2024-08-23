@@ -26,6 +26,36 @@ public class BossData
     public int Skill5_Id { get; set; }
     public float Skill5_Probability { get; set; }
 
+    public BossData GetDeepCopyBossData()
+    {
+        BossData bossData = new BossData();
+
+        bossData.Boss_Id = Boss_Id;
+        bossData.Boss_Prefab = Boss_Prefab;
+        bossData.Boss_Hp = Boss_Hp;
+        bossData.Boss_Damage = Boss_Damage;
+        bossData.Boss_MoveSpeed = Boss_MoveSpeed;
+        bossData.Boss_Cooldown = Boss_Cooldown;
+        bossData.Gold = Gold;
+
+        bossData.Skill1_Id = Skill1_Id;
+        bossData.Skill1_Probability = Skill1_Probability;
+
+        bossData.Skill2_Id = Skill2_Id;
+        bossData.Skill2_Probability = Skill2_Probability;
+
+        bossData.Skill3_Id = Skill3_Id;
+        bossData.Skill3_Probability = Skill3_Probability;
+
+        bossData.Skill4_Id = Skill4_Id;
+        bossData.Skill4_Probability = Skill4_Probability;
+
+        bossData.Skill5_Id = Skill5_Id;
+        bossData.Skill5_Probability = Skill5_Probability;
+
+        return bossData;
+    }
+
     public List<(int, float)> GetBossSkillId()
     {
         List<(int, float)> skills = new();

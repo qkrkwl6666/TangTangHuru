@@ -10,35 +10,41 @@ using UnityEngine.UI;
 public class MainInventory : MonoBehaviour
 {
     // 전체 아이템 컨테이너
-    private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new ();
+    private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new();
 
     // 플레이어가 가지고있는 아이템 컨테이너 장비 
-    private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new ();
+    private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
 
-    public List<Image> subWeaponImages = new ();
+    // ArmorSet
+    private PlayerEquipment[] armorSet = { PlayerEquipment.Helmet, PlayerEquipment.Armor, PlayerEquipment.Shoes };
 
-    public List<TextMeshProUGUI> equipmentTextUI = new (); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
-    public List<GameObject> defaultEquipmentSlotUI = new (); // 기본 UI           접근시 (PlayerEquipment) - 1
-    public List<GameObject> EquipmentSlotUI = new (); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
+    public List<Image> subWeaponImages = new();
 
-    public List<M_UISlot> equipmentSlotUI = new ();
+    public List<TextMeshProUGUI> equipmentTextUI = new(); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
+    public List<GameObject> defaultEquipmentSlotUI = new(); // 기본 UI           접근시 (PlayerEquipment) - 1
+    public List<GameObject> EquipmentSlotUI = new(); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
+
+    public List<M_UISlot> equipmentSlotUI = new();
 
     // 펫 정보
-    public List<GameObject> petSlotUI = new ();
+    public List<GameObject> petSlotUI = new();
     public Button petEquipSlotUI;
     public M_UISlot petMUISlot;
 
     // 현재 생성된 UI 슬롯 아이템
-    private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new ();
+    private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new();
 
     // 소모품 아이템 컨테이너
     private Dictionary<string, (Item item, int count)> consumableItems = new();
 
+    // 세트 효과 텍스트
+    public TextMeshProUGUI setText;
+
     public Transform content;
 
     // 아이템 랜덤 테스트 코드 
-    public List<int> items = new ();
-    
+    public List<int> items = new();
+
     public PlayerViewUI playerViewUI;
 
     private MainUI mainUI;
@@ -47,12 +53,12 @@ public class MainInventory : MonoBehaviour
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI diamondText;
 
-    public int Gold {  get; set; }
-    public int Diamond {  get; set; }
+    public int Gold { get; set; }
+    public int Diamond { get; set; }
 
     #region 정렬
     public Button allFilterButton;    // 전체
-    public TextMeshProUGUI allFilterText; 
+    public TextMeshProUGUI allFilterText;
     public Button weaponFilterButton; // 무기
     public Button consumableButton;   // 소모품
     public Button petButton;          // 펫
@@ -62,7 +68,7 @@ public class MainInventory : MonoBehaviour
     public TextMeshProUGUI allFoucsText;
 
     // 기본 아이콘
-    public GameObject weaponNormalIcon; 
+    public GameObject weaponNormalIcon;
     public GameObject consumableNormalIcon;
     public GameObject petNormalIcon;
 
@@ -77,9 +83,9 @@ public class MainInventory : MonoBehaviour
     public GameObject consumableFocusLine;
     public GameObject petFocusLine;
 
-    private Dictionary<FilterType, GameObject> filterNormalIcon = new ();
-    private Dictionary<FilterType, GameObject> filterFoucsIcon = new ();
-    private Dictionary<FilterType, GameObject> filterFoucsLine = new ();
+    private Dictionary<FilterType, GameObject> filterNormalIcon = new();
+    private Dictionary<FilterType, GameObject> filterFoucsIcon = new();
+    private Dictionary<FilterType, GameObject> filterFoucsLine = new();
 
     public void AwakeFilterDictionary()
     {
@@ -214,7 +220,7 @@ public class MainInventory : MonoBehaviour
         items.Add(600003);
         items.Add(600004);
         items.Add(600005);
-        
+
         items.Add(600006);
         //items.Add(610001);
 
@@ -242,11 +248,12 @@ public class MainInventory : MonoBehaviour
 
     private void OnDestroy()
     {
-        
-    }   
+
+    }
 
     public void CoSaveDataLoadMainInventory()
     {
+        Debug.Log("CoSaveDataLoadMainInventory");
         StartCoroutine(SaveDataLoadMainInventory());
     }
 
@@ -275,7 +282,7 @@ public class MainInventory : MonoBehaviour
         var mainItem = MakeItem(item);
         // 아이템 타입이 없다면
 
-        if (!allItem.ContainsKey(itemType)) 
+        if (!allItem.ContainsKey(itemType))
         {
             allItem.Add(itemType, new Dictionary<ItemTier, List<Item>>());
             allItem[itemType].Add(itemTier, new List<Item>());
@@ -314,7 +321,9 @@ public class MainInventory : MonoBehaviour
         ItemType itemType = item.ItemType;
         ItemTier itemTier = item.ItemTier;
 
-        var mainItem = MakeItem(itemData, true, item.InstanceId);
+        //var mainItem = MakeItem(itemData, true, item.InstanceId);
+
+        var mainItem = LoadMakeItem(item, itemData, item.InstanceId);
 
         mainItem.CurrentTierUp = item.CurrentTierUp;
 
@@ -346,18 +355,18 @@ public class MainInventory : MonoBehaviour
     public void SaveInventory()
     {
         SaveManager.SaveDataV1.allItem.Clear();
-        
+
         SaveManager.SaveDataV1.Gold = Gold;
         SaveManager.SaveDataV1.Diamond = Diamond;
         SaveManager.SaveDataV1.CurrentStage = GameManager.Instance.CurrentStage;
 
         SaveManager.SaveDataV1.playerEquipment = playerEquipment.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Item1);
 
-        foreach (var itemTypeDir in allItem) 
-        { 
-            foreach(var itemTierDir in itemTypeDir.Value)
+        foreach (var itemTypeDir in allItem)
+        {
+            foreach (var itemTierDir in itemTypeDir.Value)
             {
-                foreach(var item in itemTierDir.Value) 
+                foreach (var item in itemTierDir.Value)
                 {
                     SaveManager.SaveDataV1.allItem.Add(item);
                 }
@@ -387,10 +396,14 @@ public class MainInventory : MonoBehaviour
 
                     m_weaponItem.SetItemData(itemData, instanceId);
 
-                    if((ItemTier)itemData.Item_Tier != ItemTier.Normal)
+                    if ((ItemTier)itemData.Item_Tier != ItemTier.Normal && !isInstanceId)
                     {
                         m_weaponItem.subWeapons = GetRandomSubWeapon(itemData.Item_Tier);
-                    }     
+                    }
+                    else
+                    {
+                        //m_weaponItem.subWeapons = itemData.
+                    }
 
                     return m_weaponItem;
                 }
@@ -421,7 +434,7 @@ public class MainInventory : MonoBehaviour
                     if (!isInstanceId)
                     {
                         instanceId = m_armour.GetHashCode() + UnityEngine.Random.Range(1, 100000);
-                    }  
+                    }
 
                     m_armour.SetItemData(itemData, instanceId);
 
@@ -447,6 +460,80 @@ public class MainInventory : MonoBehaviour
         return null;
     }
 
+    public Item LoadMakeItem(Item item,ItemData itemData, int instanceId = 0)
+    {
+        switch (item.ItemType)
+        {
+            case ItemType.Axe: // Axe
+            case ItemType.Sword: // Sword
+            case ItemType.Bow: // Bow
+            case ItemType.Crossbow: // CrossBow
+            case ItemType.Wand: // Wand
+            case ItemType.Staff: // Staff
+                {
+                    M_Weapon m_weaponItem = new M_Weapon();
+
+                    m_weaponItem.SetItemData(itemData, instanceId);
+
+                    if (item.ItemTier != ItemTier.Normal)
+                    {
+                        M_Weapon tempWeapon = item as M_Weapon;
+
+                        if (tempWeapon.subWeapons == null) return m_weaponItem;
+
+                        List<ItemData> subWeaponData = new List<ItemData>();
+
+                        foreach(var subitem in tempWeapon.subWeapons)
+                        {
+                            var subdata = DataTableManager.Instance.Get<ItemTable>
+                                (DataTableManager.item).GetItemData(subitem.Item_Id.ToString()).DeepCopy();
+
+                            subWeaponData.Add(subdata);
+                        }
+
+                        m_weaponItem.subWeapons = subWeaponData;
+                    }
+
+                    return m_weaponItem;
+                }
+
+            case ItemType.OrbAttack: // Orb
+            case ItemType.OrbHp: // Orb
+            case ItemType.OrbDodge: // Orb
+            case ItemType.OrbDefence: // Orb
+            case ItemType.Pet: // Pet
+                {
+                    M_Item m_item = new M_Item();
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
+            case ItemType.Helmet: // 투구
+            case ItemType.Armor: // 갑옷
+            case ItemType.Shose: // 신발
+                {
+                    M_Armour m_armour = new M_Armour();
+
+                    m_armour.SetItemData(itemData, instanceId);
+
+                    return m_armour;
+                }
+            case ItemType.EquipmentGem: // 장비 원석
+            case ItemType.ReinforcedStone: // 강화석
+            case ItemType.PetFood: // PetFood
+                {
+                    M_Item m_item = new M_Item();
+
+                    m_item.SetItemData(itemData, instanceId);
+
+                    return m_item;
+                }
+        }
+
+        return null;
+    }
+
     // 현재 가지고 있는 아이템 ui 에 생성 이미 생성된 아이템 ui라면 넘기기
     // 새로고침 타이밍은 게임에 처음 접속시 인 게임 종료 후 메인씬 이동 시
     // 아이템을 획득시
@@ -461,7 +548,7 @@ public class MainInventory : MonoBehaviour
             consumableItems[key] = (consumableItems[key].item, 0);
         }
 
-        foreach(var ItemTypeDictionary in allItem)
+        foreach (var ItemTypeDictionary in allItem)
         {
             //if (ItemTypeDictionary.Key == ItemType.Orb) continue;
 
@@ -469,7 +556,7 @@ public class MainInventory : MonoBehaviour
             {
                 var itemList = ItemTierDictionary.Value;
 
-                for(int i = 0; i < itemList.Count; i++)
+                for (int i = 0; i < itemList.Count; i++)
                 {
                     switch (ItemTypeDictionary.Key)
                     {
@@ -496,7 +583,7 @@ public class MainInventory : MonoBehaviour
                             UpdateConsumableItemCount(itemList[i]);
                             break;
 
-                        //case ItemType.Orb:
+                            //case ItemType.Orb:
                             //break;
                     }
                 }
@@ -505,9 +592,9 @@ public class MainInventory : MonoBehaviour
 
         // 소모품 UI 업데이트
 
-        foreach(var kvp in consumableItems)
+        foreach (var kvp in consumableItems)
         {
-            if(kvp.Value.count > 0)
+            if (kvp.Value.count > 0)
             {
                 CreateOrUpdateItemSlot(kvp.Value.item, true, kvp.Value.count);
             }
@@ -524,9 +611,9 @@ public class MainInventory : MonoBehaviour
 
     public void CreateOrUpdateItemSlot(Item item, bool isConsumable = false, int itemCount = 0)
     {
-        if(isConsumable)
+        if (isConsumable)
         {
-            if(!itemSlotUI.ContainsKey(item.ItemId))
+            if (!itemSlotUI.ContainsKey(item.ItemId))
             {
                 Addressables.InstantiateAsync(Defines.itemSlot, content).Completed += (itemGo) =>
                 {
@@ -546,9 +633,9 @@ public class MainInventory : MonoBehaviour
             return;
         }
 
-        if(!itemSlotUI.ContainsKey(item.InstanceId))
+        if (!itemSlotUI.ContainsKey(item.InstanceId))
         {
-            Addressables.InstantiateAsync(Defines.itemSlot, content).Completed += (itemGo) => 
+            Addressables.InstantiateAsync(Defines.itemSlot, content).Completed += (itemGo) =>
             {
                 var go = itemGo.Result;
 
@@ -587,6 +674,7 @@ public class MainInventory : MonoBehaviour
         if (!itemSlotUI.ContainsKey(instanceId)) return;
 
         // 아이템 장착 중이면 장착에서도 삭제
+
         if (!isPet)
         {
             PlayerEquipRemove(instanceId);
@@ -625,7 +713,7 @@ public class MainInventory : MonoBehaviour
 
         if (!allItem[itemType].ContainsKey(itemTier)) return false;
 
-        if(allItem[itemType][itemTier].Count == 0) return false;
+        if (allItem[itemType][itemTier].Count == 0) return false;
 
         var list = allItem[itemType][itemTier];
 
@@ -653,7 +741,7 @@ public class MainInventory : MonoBehaviour
     {
         if (!allItem.ContainsKey(itemType))
         {
-            if(!allItem[itemType].ContainsKey(itemTier))
+            if (!allItem[itemType].ContainsKey(itemTier))
             {
                 return false;
             }
@@ -665,14 +753,14 @@ public class MainInventory : MonoBehaviour
 
         if (list.Count < removeCount) return false;
 
-        List<Item> removeItems = new ();
+        List<Item> removeItems = new();
 
-        for(int i = 0; i < removeCount; i++)
+        for (int i = 0; i < removeCount; i++)
         {
             removeItems.Add(list[i]);
         }
 
-        foreach (var item in removeItems) 
+        foreach (var item in removeItems)
         {
             list.Remove(item);
         }
@@ -686,18 +774,18 @@ public class MainInventory : MonoBehaviour
         return true;
     }
 
-    public void PlayerEquipRemove(int instanceId) 
-    { 
-        foreach(var item in playerEquipment)
+    public void PlayerEquipRemove(int instanceId)
+    {
+        foreach (var item in playerEquipment)
         {
-            if(item.Value.Item1.InstanceId == instanceId)
+            if (item.Value.Item1.InstanceId == instanceId)
             {
                 playerEquipment.Remove(item.Key);
 
                 defaultEquipmentSlotUI[(int)item.Key - 1].SetActive(true);
                 EquipmentSlotUI[(int)item.Key - 1].SetActive(false);
 
-                foreach(var image in subWeaponImages)
+                foreach (var image in subWeaponImages)
                 {
                     image.gameObject.SetActive(false);
                 }
@@ -720,13 +808,14 @@ public class MainInventory : MonoBehaviour
     {
         var items = SaveManager.SaveDataV1.allItem;
 
-        foreach (var item in items) 
+        foreach (var item in items)
         {
             MainInventoryAddItem(item);
         }
 
         // 초기 아이템 지급
         initializeNewPlayerItems();
+        //CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
@@ -751,17 +840,20 @@ public class MainInventory : MonoBehaviour
         LoadDataPlayerEquip();
 
         OnMainInventorySaveLoaded?.Invoke();
+
+        SaveInventory();
     }
 
     public IEnumerator SceneLoadMainInventory()
     {
+        Debug.Log("SceneLoadMainInventory");
         var items = SaveManager.SaveDataV1.allItem;
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
 
         goldText.text = SaveManager.SaveDataV1.Gold.ToString();
-        diamondText.text= SaveManager.SaveDataV1.Diamond.ToString();
+        diamondText.text = SaveManager.SaveDataV1.Diamond.ToString();
 
         foreach (var item in items)
         {
@@ -770,7 +862,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         foreach (var itemSlot in itemSlotUI)
         {
@@ -801,7 +893,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         LoadDataPlayerEquip();
 
@@ -932,6 +1024,8 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+
+        PlayerArmorSetCheck();
     }
 
 
@@ -940,7 +1034,7 @@ public class MainInventory : MonoBehaviour
     {
         if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
 
-        switch(item.ItemType)
+        switch (item.ItemType)
         {
             case ItemType.Axe:
             case ItemType.Sword:
@@ -968,6 +1062,7 @@ public class MainInventory : MonoBehaviour
         }
 
         GameManager.Instance.playerEquipment = playerEquipment;
+
     }
 
     public void LoadSubWeaponImage(Item item)
@@ -1006,11 +1101,68 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+
+        PlayerArmorSetCheck();
+    }
+
+    public void PlayerArmorSetCheck()
+    {
+        if (armorSet.Any(armor => !playerEquipment.ContainsKey(armor)))
+            return;
+
+        ArmorSet setType = (ArmorSet)playerEquipment[PlayerEquipment.Helmet].Item1.itemData.SetType;
+
+        if (armorSet.All(armor => playerEquipment[armor].Item1.itemData.SetType == (int)setType))
+        {
+            string stringId = string.Empty;
+
+            switch (setType)
+            {
+                case ArmorSet.HolyKnightSet:
+                    stringId = "SetType1";
+                    GameManager.Instance.characterSkin = Defines.body039;
+                    playerViewUI.SetCharacterSkin(Defines.body039);
+                    break;
+                case ArmorSet.SilverStrider:
+                    stringId = "SetType2";
+                    GameManager.Instance.characterSkin = Defines.body033;
+                    playerViewUI.SetCharacterSkin(Defines.body033);
+                    break;
+                case ArmorSet.ShadowWork:
+                    stringId = "SetType3";
+                    GameManager.Instance.characterSkin = Defines.body038;
+                    playerViewUI.SetCharacterSkin(Defines.body038);
+                    break;
+                case ArmorSet.RedStone:
+                    stringId = "SetType4";
+                    GameManager.Instance.characterSkin = Defines.body043;
+                    playerViewUI.SetCharacterSkin(Defines.body043);
+                    break;
+                case ArmorSet.StormBreaker:
+                    stringId = "SetType5";
+                    GameManager.Instance.characterSkin = Defines.body036;
+                    playerViewUI.SetCharacterSkin(Defines.body036);
+                    break;
+                case ArmorSet.MoonWalker:
+                    stringId = "SetType6";
+                    GameManager.Instance.characterSkin = Defines.body040;
+                    playerViewUI.SetCharacterSkin(Defines.body040);
+                    break;
+                case ArmorSet.SkyWatch:
+                    stringId = "SetType7";
+                    GameManager.Instance.characterSkin = Defines.body024;
+                    playerViewUI.SetCharacterSkin(Defines.body024);
+                    break;
+            }
+
+            setText.text = DataTableManager.Instance
+                .Get<StringTable>(DataTableManager.String).Get(stringId).Text;
+        }
     }
 
     public void UnequipItem(Item item)
     {
-        switch(currentFilterType)
+        switch (currentFilterType)
         {
             case FilterType.All:
                 playerEquipment[GetPlayerEquipmentItemType(item.ItemType)]
@@ -1018,10 +1170,10 @@ public class MainInventory : MonoBehaviour
                 break;
 
             case FilterType.Weapon:
-                if(item.ItemType == ItemType.Axe || item.ItemType == ItemType.Sword
+                if (item.ItemType == ItemType.Axe || item.ItemType == ItemType.Sword
                     || item.ItemType == ItemType.Bow || item.ItemType == ItemType.Crossbow
                     || item.ItemType == ItemType.Wand || item.ItemType == ItemType.Staff
-                    || item.ItemType == ItemType.Helmet || item.ItemType == ItemType.Armor 
+                    || item.ItemType == ItemType.Helmet || item.ItemType == ItemType.Armor
                     || item.ItemType == ItemType.Shose)
                 {
                     playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
@@ -1029,7 +1181,7 @@ public class MainInventory : MonoBehaviour
                 break;
             case FilterType.Consumable:
                 if (item.ItemType == ItemType.EquipmentGem || item.ItemType == ItemType.ReinforcedStone
-                    || item.ItemType == ItemType.OrbAttack || item.ItemType == ItemType.OrbHp 
+                    || item.ItemType == ItemType.OrbAttack || item.ItemType == ItemType.OrbHp
                     || item.ItemType == ItemType.OrbDefence || item.ItemType == ItemType.OrbDodge)
                 {
                     playerEquipment[GetPlayerEquipmentItemType(item.ItemType)].ItemSlot.SetActive(true);
@@ -1043,7 +1195,7 @@ public class MainInventory : MonoBehaviour
                 break;
         }
 
-        switch(item.ItemType)
+        switch (item.ItemType)
         {
             case ItemType.Axe:
             case ItemType.Sword:
@@ -1058,7 +1210,7 @@ public class MainInventory : MonoBehaviour
                 break;
 
             case ItemType.Pet:
-                foreach(var pet in petSlotUI)
+                foreach (var pet in petSlotUI)
                 {
                     pet.gameObject.SetActive(false);
                 }
@@ -1066,6 +1218,13 @@ public class MainInventory : MonoBehaviour
                 GameManager.Instance.playerEquipment = playerEquipment;
                 petEquipSlotUI.interactable = false;
                 return;
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                setText.text = string.Empty;
+                GameManager.Instance.characterSkin = Defines.body001;
+                playerViewUI.SetCharacterSkin(Defines.body001);
+                break;
         }
 
         playerEquipment.Remove(GetPlayerEquipmentItemType(item.ItemType));
@@ -1137,7 +1296,7 @@ public class MainInventory : MonoBehaviour
                 {
                     return true;
                 }
-                    break;
+                break;
             case FilterType.Consumable:
                 if (item.ItemType == ItemType.EquipmentGem || item.ItemType == ItemType.ReinforcedStone
                     || item.ItemType == ItemType.OrbAttack || item.ItemType == ItemType.OrbHp
@@ -1145,13 +1304,13 @@ public class MainInventory : MonoBehaviour
                 {
                     return true;
                 }
-                    break;
+                break;
             case FilterType.Pet:
                 if (item.ItemType == ItemType.Pet)
                 {
                     return true;
                 }
-                    break;
+                break;
         }
 
         return false;
@@ -1159,7 +1318,7 @@ public class MainInventory : MonoBehaviour
 
     public PlayerEquipment GetPlayerEquipmentItemType(ItemType itemType)
     {
-        switch (itemType) 
+        switch (itemType)
         {
             case ItemType.Axe:
             case ItemType.Sword:
@@ -1187,7 +1346,7 @@ public class MainInventory : MonoBehaviour
     {
         if (allItem.ContainsKey(itemType))
         {
-            if(allItem[itemType].ContainsKey(itemTier))
+            if (allItem[itemType].ContainsKey(itemTier))
             {
                 return allItem[itemType][itemTier].Count;
             }
@@ -1229,7 +1388,7 @@ public class MainInventory : MonoBehaviour
 
     public Dictionary<ItemTier, List<Item>> GetItemTypes(ItemType itemType)
     {
-        if(!allItem.ContainsKey(itemType)) return null;
+        if (!allItem.ContainsKey(itemType)) return null;
 
         return allItem[itemType];
     }
@@ -1252,9 +1411,9 @@ public class MainInventory : MonoBehaviour
     {
         foreach (var itemType in playerEquipment)
         {
-            if(itemType.Value.Item1 == null) continue;
+            if (itemType.Value.Item1 == null) continue;
 
-            switch (itemType.Key) 
+            switch (itemType.Key)
             {
                 case PlayerEquipment.Weapon:
                     playerViewUI.SetWeaponSkin(itemType.Value.Item1.itemData.Spine_Id);
@@ -1279,7 +1438,7 @@ public class MainInventory : MonoBehaviour
 
         int needGold = Defines.defaultUpgradeGold * (item.itemData.CurrentUpgrade + 1);
 
-        if(needGold > Gold) return false;
+        if (needGold > Gold) return false;
 
         return true;
     }
@@ -1297,14 +1456,18 @@ public class MainInventory : MonoBehaviour
         if (SaveManager.isSaveFile) return;
 
         // 레전드 무기
-        MainInventoryAddItem("200005", 10);
-        MainInventoryAddItem("200105", 10);
-        MainInventoryAddItem("210105", 10);
-        MainInventoryAddItem("220005", 10);
-        MainInventoryAddItem("220105", 10);
+        // MainInventoryAddItem("200005", 10);
+        // MainInventoryAddItem("200105", 10);
+        // MainInventoryAddItem("210105", 10);
+        // MainInventoryAddItem("220005", 10);
+        // MainInventoryAddItem("220105", 10);
 
         // 일반 무기
         MainInventoryAddItem("200001", 0);
+
+        // 튜토리얼 재료
+        MainInventoryAddItem("200002", 0);
+
         MainInventoryAddItem("200101", 0);
         MainInventoryAddItem("210001", 0);
         MainInventoryAddItem("210101", 0);
@@ -1312,48 +1475,47 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("220101", 0);
 
         // 레전드 장비
-        MainInventoryAddItem("400015", 10);
-        MainInventoryAddItem("401015", 10);
-        MainInventoryAddItem("402015", 10);
+        //MainInventoryAddItem("400015", 10);
+        //MainInventoryAddItem("401015", 10);
+        //MainInventoryAddItem("402015", 10);
 
         // 강화석 장비 원석
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < 5; i++)
         {
-            MainInventoryAddItem("600001");
-            MainInventoryAddItem("600002");
-            MainInventoryAddItem("600003");
-            MainInventoryAddItem("600004");
-            MainInventoryAddItem("600005");
+            //MainInventoryAddItem("600002");
+            //MainInventoryAddItem("600003");
+            //MainInventoryAddItem("600004");
+            //MainInventoryAddItem("600005");
             MainInventoryAddItem("600006");
         }
-
+        MainInventoryAddItem("600001");
         // 오브
-        MainInventoryAddItem("610004");
-
-        MainInventoryAddItem("610104");
-        MainInventoryAddItem("610204");
-        MainInventoryAddItem("610304");
-
-        MainInventoryAddItem("710001");
-        MainInventoryAddItem("710002");
-        MainInventoryAddItem("710003");
-        MainInventoryAddItem("710004");
-
-
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720001");
-        MainInventoryAddItem("720002");
+        // MainInventoryAddItem("610004");
+        // 
+        // MainInventoryAddItem("610104");
+        // MainInventoryAddItem("610204");
+        // MainInventoryAddItem("610304");
+        // 
+        // MainInventoryAddItem("710001");
+        // MainInventoryAddItem("710002");
+        // MainInventoryAddItem("710003");
+        // MainInventoryAddItem("710004");
+        // 
+        // 
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720001");
+        // MainInventoryAddItem("720002");
 
         //MainInventoryAddItem("200001", 0);
         //MainInventoryAddItem("200101", 0);
@@ -1488,17 +1650,216 @@ public class MainInventory : MonoBehaviour
         //MainInventoryAddItem("402075", 0);
     }
 
+    public void CheatinitializeNewPlayerItems()
+    {
+        if (SaveManager.isSaveFile) return;
+
+        // 레전드 무기
+        MainInventoryAddItem("200005", 10);
+        MainInventoryAddItem("200105", 10);
+        MainInventoryAddItem("210105", 10);
+        MainInventoryAddItem("220005", 10);
+        MainInventoryAddItem("220105", 10);
+
+        // 일반 무기
+        MainInventoryAddItem("200001", 0);
+
+        // 튜토리얼 재료
+        MainInventoryAddItem("200002", 0);
+
+        MainInventoryAddItem("200101", 0);
+        MainInventoryAddItem("210001", 0);
+        MainInventoryAddItem("210101", 0);
+        MainInventoryAddItem("220001", 0);
+        MainInventoryAddItem("220101", 0);
+
+        // 레전드 장비
+        MainInventoryAddItem("400015", 10);
+        MainInventoryAddItem("401015", 10);
+        MainInventoryAddItem("402015", 10);
+
+        // 강화석 장비 원석
+        for (int i = 0; i < 100; i++)
+        {
+            MainInventoryAddItem("600002");
+            MainInventoryAddItem("600003");
+            MainInventoryAddItem("600004");
+            MainInventoryAddItem("600005");
+            MainInventoryAddItem("600006");
+        }
+        MainInventoryAddItem("600001");
+        //오브
+        MainInventoryAddItem("610004");
+        
+        MainInventoryAddItem("610104");
+        MainInventoryAddItem("610204");
+        MainInventoryAddItem("610304");
+        
+        MainInventoryAddItem("710001");
+        MainInventoryAddItem("710002");
+        MainInventoryAddItem("710003");
+        MainInventoryAddItem("710004");
+        
+        
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720001");
+        MainInventoryAddItem("720002");
+
+        MainInventoryAddItem("200001", 0);
+        MainInventoryAddItem("200101", 0);
+        MainInventoryAddItem("210001", 0);
+        MainInventoryAddItem("210101", 0);
+        MainInventoryAddItem("220001", 0);
+
+        MainInventoryAddItem("710001", 0);
+        MainInventoryAddItem("710002", 0);
+        MainInventoryAddItem("710003", 0);
+        MainInventoryAddItem("710004", 0);
+
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
+        MainInventoryAddItem("600006", 0);
+
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610001", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+        MainInventoryAddItem("610101", 0);
+
+        MainInventoryAddItem("400001", 0);
+        MainInventoryAddItem("400002", 0);
+        MainInventoryAddItem("400003", 0);
+        MainInventoryAddItem("400004", 0);
+        MainInventoryAddItem("400005", 0);
+        MainInventoryAddItem("401001", 0);
+        MainInventoryAddItem("401002", 0);
+        MainInventoryAddItem("401003", 0);
+        MainInventoryAddItem("401004", 0);
+        MainInventoryAddItem("401005", 0);
+        MainInventoryAddItem("402001", 0);
+        MainInventoryAddItem("402002", 0);
+        MainInventoryAddItem("402003", 0);
+        MainInventoryAddItem("402004", 0);
+        MainInventoryAddItem("402005", 0);
+        MainInventoryAddItem("400011", 0);
+        MainInventoryAddItem("400012", 0);
+        MainInventoryAddItem("400013", 0);
+        MainInventoryAddItem("400014", 0);
+        MainInventoryAddItem("400015", 0);
+        MainInventoryAddItem("401011", 0);
+        MainInventoryAddItem("401012", 0);
+        MainInventoryAddItem("401013", 0);
+        MainInventoryAddItem("401014", 0);
+        MainInventoryAddItem("401015", 0);
+        MainInventoryAddItem("402011", 0);
+        MainInventoryAddItem("402012", 0);
+        MainInventoryAddItem("402013", 0);
+        MainInventoryAddItem("402014", 0);
+        MainInventoryAddItem("402015", 0);
+        MainInventoryAddItem("400021", 0);
+        MainInventoryAddItem("400022", 0);
+        MainInventoryAddItem("400023", 0);
+        MainInventoryAddItem("400024", 0);
+        MainInventoryAddItem("400025", 0);
+        MainInventoryAddItem("401021", 0);
+        MainInventoryAddItem("401022", 0);
+        MainInventoryAddItem("401023", 0);
+        MainInventoryAddItem("401024", 0);
+        MainInventoryAddItem("401025", 0);
+        MainInventoryAddItem("402021", 0);
+        MainInventoryAddItem("402022", 0);
+        MainInventoryAddItem("402023", 0);
+        MainInventoryAddItem("402024", 0);
+        MainInventoryAddItem("402025", 0);
+        MainInventoryAddItem("400031", 0);
+        MainInventoryAddItem("400032", 0);
+        MainInventoryAddItem("400033", 0);
+        MainInventoryAddItem("400034", 0);
+        MainInventoryAddItem("400035", 0);
+        MainInventoryAddItem("401031", 0);
+        MainInventoryAddItem("401032", 0);
+        MainInventoryAddItem("401033", 0);
+        MainInventoryAddItem("401034", 0);
+        MainInventoryAddItem("401035", 0);
+        MainInventoryAddItem("402031", 0);
+        MainInventoryAddItem("402032", 0);
+        MainInventoryAddItem("402033", 0);
+        MainInventoryAddItem("402034", 0);
+        MainInventoryAddItem("402035", 0);
+        MainInventoryAddItem("400041", 0);
+        MainInventoryAddItem("400042", 0);
+        MainInventoryAddItem("400043", 0);
+        MainInventoryAddItem("400044", 0);
+        MainInventoryAddItem("400045", 0);
+        MainInventoryAddItem("401041", 0);
+        MainInventoryAddItem("401042", 0);
+        MainInventoryAddItem("401043", 0);
+        MainInventoryAddItem("401044", 0);
+        MainInventoryAddItem("401045", 0);
+        MainInventoryAddItem("402051", 0);
+        MainInventoryAddItem("402052", 0);
+        MainInventoryAddItem("402053", 0);
+        MainInventoryAddItem("402054", 0);
+        MainInventoryAddItem("402055", 0);
+        MainInventoryAddItem("400061", 0);
+        MainInventoryAddItem("400062", 0);
+        MainInventoryAddItem("400063", 0);
+        MainInventoryAddItem("400064", 0);
+        MainInventoryAddItem("400065", 0);
+        MainInventoryAddItem("401061", 0);
+        MainInventoryAddItem("401062", 0);
+        MainInventoryAddItem("401063", 0);
+        MainInventoryAddItem("401064", 0);
+        MainInventoryAddItem("401065", 0);
+        MainInventoryAddItem("402061", 0);
+        MainInventoryAddItem("402062", 0);
+        MainInventoryAddItem("402063", 0);
+        MainInventoryAddItem("402064", 0);
+        MainInventoryAddItem("402065", 0);
+        MainInventoryAddItem("400071", 0);
+        MainInventoryAddItem("400072", 0);
+        MainInventoryAddItem("400073", 0);
+        MainInventoryAddItem("400074", 0);
+        MainInventoryAddItem("400075", 0);
+        MainInventoryAddItem("401071", 0);
+        MainInventoryAddItem("401072", 0);
+        MainInventoryAddItem("401073", 0);
+        MainInventoryAddItem("401074", 0);
+        MainInventoryAddItem("401075", 0);
+        MainInventoryAddItem("402071", 0);
+        MainInventoryAddItem("402072", 0);
+        MainInventoryAddItem("402073", 0);
+        MainInventoryAddItem("402074", 0);
+        MainInventoryAddItem("402075", 0);
+    }
+
     public void ItemFilterUISlot(FilterType filterType)
     {
         currentFilterType = filterType;
 
         switch (filterType)
         {
-            case FilterType.All:        
+            case FilterType.All:
                 foreach (var itemSlot in itemSlotUI)
                 {
                     bool isPass = false;
-                    foreach(var equipItem in playerEquipment)
+                    foreach (var equipItem in playerEquipment)
                     {
                         if (itemSlot.Value.Item1.InstanceId == equipItem.Value.Item1.InstanceId)
                         {
@@ -1510,19 +1871,19 @@ public class MainInventory : MonoBehaviour
                     if (!isPass)
                     {
                         itemSlot.Value.ItemSlot.SetActive(true);
-                    }         
+                    }
                 }
                 break;
             case FilterType.Weapon:
                 foreach (var itemSlot in itemSlotUI)
                 {
-                    if(itemSlot.Value.Item1.ItemType != ItemType.Axe
+                    if (itemSlot.Value.Item1.ItemType != ItemType.Axe
                         && itemSlot.Value.Item1.ItemType != ItemType.Sword
                         && itemSlot.Value.Item1.ItemType != ItemType.Bow
                         && itemSlot.Value.Item1.ItemType != ItemType.Crossbow
                         && itemSlot.Value.Item1.ItemType != ItemType.Wand
                         && itemSlot.Value.Item1.ItemType != ItemType.Staff
-                        && itemSlot.Value.Item1.ItemType != ItemType.Helmet 
+                        && itemSlot.Value.Item1.ItemType != ItemType.Helmet
                         && itemSlot.Value.Item1.ItemType != ItemType.Armor
                         && itemSlot.Value.Item1.ItemType != ItemType.Shose)
                     {
@@ -1550,7 +1911,7 @@ public class MainInventory : MonoBehaviour
                 foreach (var itemSlot in itemSlotUI)
                 {
                     if (itemSlot.Value.Item1.ItemType != ItemType.EquipmentGem
-                        && itemSlot.Value.Item1.ItemType != ItemType.ReinforcedStone 
+                        && itemSlot.Value.Item1.ItemType != ItemType.ReinforcedStone
                         && itemSlot.Value.Item1.ItemType != ItemType.OrbAttack && itemSlot.Value.Item1.ItemType != ItemType.OrbHp
                         && itemSlot.Value.Item1.ItemType != ItemType.OrbDefence && itemSlot.Value.Item1.ItemType != ItemType.OrbDodge)
                     {
@@ -1611,26 +1972,26 @@ public class MainInventory : MonoBehaviour
         var subWeapons = DataTableManager.Instance.Get<ItemTable>
             (DataTableManager.item).GetItemDatas(ItemType.SubWeapon, ItemTier.Normal);
 
-        while(subWeaponItems.Count < count)
+        while (subWeaponItems.Count < count)
         {
             int random = UnityEngine.Random.Range(0, subWeapons.Count);
 
             bool isPass = true;
 
-            foreach(var itemData in subWeaponItems)
+            foreach (var itemData in subWeaponItems)
             {
                 if (itemData.Item_Id == subWeapons[random].Item_Id)
                 {
                     isPass = false;
                 }
             }
-            
-            if(isPass) subWeaponItems.Add(subWeapons[random]);
+
+            if (isPass) subWeaponItems.Add(subWeapons[random]);
         }
 
         return subWeaponItems;
     }
-    
+
 }
 
 public enum ItemType
@@ -1684,4 +2045,15 @@ public enum FilterType
     Weapon,
     Consumable,
     Pet,
+}
+
+public enum ArmorSet
+{
+    HolyKnightSet = 1,
+    SilverStrider,
+    ShadowWork,
+    RedStone,
+    StormBreaker,
+    MoonWalker,
+    SkyWatch,
 }

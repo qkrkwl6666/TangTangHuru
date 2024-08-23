@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csObjectMake3 : MonoBehaviour {
+public class csObjectMake3 : MonoBehaviour
+{
 
     public GameObject m_gameObject;
     public Transform[] m_makePositions;
@@ -12,14 +13,15 @@ public class csObjectMake3 : MonoBehaviour {
 
 
 
-	void Update () {
+    void Update()
+    {
         m_Time += Time.deltaTime;
         m_Time2 += Time.deltaTime;
 
         if (m_Time2 > m_durationTime)
             return;
 
-        if(m_Time > m_makeDelay)
+        if (m_Time > m_makeDelay)
         {
             m_Time = 0;
             int a = Random.Range(0, m_makePositions.Length);
@@ -28,5 +30,5 @@ public class csObjectMake3 : MonoBehaviour {
             Destroy(ob, m_destroyTime);
         }
 
-	}
+    }
 }

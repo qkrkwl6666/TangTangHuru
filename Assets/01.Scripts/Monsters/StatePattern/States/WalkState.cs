@@ -41,18 +41,18 @@ public class WalkState : IMonsterState
     public void Update(float deltaTime)
     {
         float dis = Vector2.Distance(playerTransform.position, monsterView.transform.position);
-        
+
         time += deltaTime;
-        
+
         if (dis <= monsterController.Monster.Range && time >= attackInterval)
         {
             // monsterController.MonsterStateMachine.TransitionTo
             //     (monsterController.MonsterStateMachine.attackState);
-        
+
             monsterController.PlayerTransform.GetComponent<IDamagable>().OnDamage(monsterController.Monster.Damage, 0);
             time = 0f;
         }
-        
+
         switch (monsterMoveType)
         {
             case MonsterMoveType.Chase:

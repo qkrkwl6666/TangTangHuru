@@ -46,6 +46,8 @@ public class SaveManager : Singleton<SaveManager>
             serializer.TypeNameHandling = TypeNameHandling.All;
             serializer.Serialize(writer, saveData);
         }
+
+        isSaveFile = true;
     }
 
     public SaveDatas LoadGame()
@@ -78,6 +80,6 @@ public class SaveManager : Singleton<SaveManager>
             return saveData;
         }
 
-       
+
     }
 }

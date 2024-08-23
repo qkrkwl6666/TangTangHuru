@@ -29,6 +29,7 @@ public class EquipPopUp : MonoBehaviour
 
     // 아이템 설명
     public TextMeshProUGUI itemDescText;
+    public TextMeshProUGUI damageTypeText;
 
     // 업그레이드 
     public TextMeshProUGUI needUpgradeGold;
@@ -41,7 +42,7 @@ public class EquipPopUp : MonoBehaviour
 
     public List<TextMeshProUGUI> itemStatusTexts = new List<TextMeshProUGUI>();
 
-    public TextMeshProUGUI itemStatusText1; 
+    public TextMeshProUGUI itemStatusText1;
     public TextMeshProUGUI itemStatusText2;
     public TextMeshProUGUI itemStatusText3;
     public TextMeshProUGUI itemStatusText4;
@@ -52,20 +53,20 @@ public class EquipPopUp : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     public void SetItemUI(Item item, bool isEquip = true)
     {
         currentItem = item;
 
-        if(currentItem == null)
+        if (currentItem == null)
         {
             Debug.Log("currentItem is null");
             return;
         }
 
-        foreach(var text in itemStatusTexts)
+        foreach (var text in itemStatusTexts)
         {
             text.gameObject.SetActive(false);
         }
@@ -83,7 +84,7 @@ public class EquipPopUp : MonoBehaviour
         tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
 
         // 아이템 이미지
-        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed += 
+        Addressables.LoadAssetAsync<Sprite>(item.itemData.Texture_Id).Completed +=
             (texture) =>
         {
             itemImage.sprite = texture.Result;
@@ -132,18 +133,42 @@ public class EquipPopUp : MonoBehaviour
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
                 break;
             case (int)ItemType.Armor:
                 itemStatusText1.text = Defines.hp + item.itemData.Hp;
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
                 break;
             case (int)ItemType.Shose:
                 itemStatusText1.text = Defines.dodge + item.itemData.Dodge;
                 itemStatusTexts[0].gameObject.SetActive(true);
                 TierUpButton.transform.parent.gameObject.SetActive(true);
                 UpgradeButton.transform.parent.gameObject.SetActive(true);
+                damageTypeText.gameObject.SetActive(false);
+                break;
+            case (int)ItemType.Pet:
+                TierUpButton.transform.parent.gameObject.SetActive(false);
+                UpgradeButton.transform.parent.gameObject.SetActive(false);
+                damageTypeText.gameObject.SetActive(false);
+                break;
+        }
+
+        switch (item.itemData.Item_Type)
+        {
+            case (int)ItemType.Axe:
+            case (int)ItemType.Crossbow:
+            case (int)ItemType.Staff:
+                damageTypeText.gameObject.SetActive(true);
+                damageTypeText.text = "파워 타입";
+                break;
+            case (int)ItemType.Sword:
+            case (int)ItemType.Bow:
+            case (int)ItemType.Wand:
+                damageTypeText.gameObject.SetActive(true);
+                damageTypeText.text = "스피드 타입";
                 break;
         }
 
@@ -156,7 +181,7 @@ public class EquipPopUp : MonoBehaviour
         tierUpSlider.value = item.CurrentTierUp;
         tierUpText.text = $"{item.CurrentTierUp / item.itemData.TierUp_NeedExp * 100}%";
     }
-        
+
     private void Awake()
     {
         CencelButton.onClick.AddListener(OnCencelButton);
@@ -192,9 +217,9 @@ public class EquipPopUp : MonoBehaviour
 
     public void OnUpgradeButton()
     {
-        if(currentItem == null) return;
+        if (currentItem == null) return;
 
-        if(!mainInventory.CheckUpgrade(currentItem)) return;
+        if (!mainInventory.CheckUpgrade(currentItem)) return;
 
         switch (currentItem.ItemType)
         {
@@ -206,7 +231,7 @@ public class EquipPopUp : MonoBehaviour
             case ItemType.Staff:
                 var weaponItem = currentItem as M_Weapon;
 
-                if(weaponItem == null) return;
+                if (weaponItem == null) return;
 
                 mainInventory.ItemUpgrade(currentItem);
                 weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);

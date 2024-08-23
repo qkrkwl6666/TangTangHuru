@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4277181748097118895}
-  - component: {fileID: 8351080698883228165}
   - component: {fileID: 7507364899896454643}
   - component: {fileID: 7483709330281990494}
   - component: {fileID: 6711286745034806814}
-  m_Layer: 6
+  - component: {fileID: 1973126727261559453}
+  m_Layer: 3
   m_Name: Stoneturtle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,27 +29,13 @@ Transform:
   m_GameObject: {fileID: 2071678431359654326}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.7, y: 0, z: 0}
+  m_LocalPosition: {x: 5000, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5023882063036277265}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8351080698883228165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2071678431359654326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
 --- !u!114 &7507364899896454643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,6 +110,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.48}
   m_Size: {x: 1.06, y: 1.14}
   m_Direction: 0
+--- !u!114 &1973126727261559453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071678431359654326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0
 --- !u!1 &3116149584622109513
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,9 +135,10 @@ GameObject:
   - component: {fileID: 5023882063036277265}
   - component: {fileID: 4003012693720652124}
   - component: {fileID: 1547207663814078823}
-  - component: {fileID: 7685828045709018730}
-  m_Layer: 6
-  m_Name: MonsterView
+  - component: {fileID: 3543989828413463240}
+  - component: {fileID: 8889012784160887183}
+  m_Layer: 3
+  m_Name: GuardianView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -185,7 +186,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 3b7632b3d3364b44fa97bb29e35b32fd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -207,7 +209,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7685828045709018730
+--- !u!114 &3543989828413463240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3116149584622109513}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 5c9da9fcbc7cc51439a0ec390abf4740, type: 2}
@@ -241,3 +243,19 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: ground_in
+  loop: 0
+  timeScale: 1
+--- !u!114 &8889012784160887183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3116149584622109513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 3543989828413463240}

@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-public class csRiseDown : MonoBehaviour {
+public class csRiseDown : MonoBehaviour
+{
 
     public float m_y_Value;
     public float m_durationTime;
     public float m_endTime;
-    public float m_lerpTime; 
+    public float m_lerpTime;
     float m_max_Y_Coord;
     float m_Time;
     Vector3 m_original_Pos;

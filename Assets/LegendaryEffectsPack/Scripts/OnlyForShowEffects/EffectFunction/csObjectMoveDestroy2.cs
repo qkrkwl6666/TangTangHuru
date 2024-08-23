@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csObjectMoveDestroy2 : MonoBehaviour {
+public class csObjectMoveDestroy2 : MonoBehaviour
+{
 
     public GameObject m_gameObjectMain;
     public GameObject m_gameObjectTail;

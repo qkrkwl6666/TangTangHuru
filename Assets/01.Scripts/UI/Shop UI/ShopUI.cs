@@ -1,10 +1,5 @@
-using Spine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
@@ -28,13 +23,13 @@ public class ShopUI : MonoBehaviour
         {
             SetEntry(item);
         }
-        
+
         sorted = true;
     }
 
     private void OnDisable()
     {
-        inventory.RefreshItemSlotUI();
+        //inventory.RefreshItemSlotUI();
     }
 
     private void SetShopItems()
@@ -62,7 +57,7 @@ public class ShopUI : MonoBehaviour
 
     private void Purchase(ItemData itemData)
     {
-        if(inventory.Gold < itemData.Price)
+        if (inventory.Gold < itemData.Price)
         {
             SoundManager.Instance.PlaySound2D("failed");
         }
@@ -71,6 +66,8 @@ public class ShopUI : MonoBehaviour
             inventory.MainInventoryAddItem(itemData.Item_Id.ToString());
             inventory.Gold -= itemData.Price;
             inventory.RefreshGoldDiamondTextUI();
+
+            inventory.RefreshItemSlotUI();
 
             SoundManager.Instance.PlaySound2D("success");
         }

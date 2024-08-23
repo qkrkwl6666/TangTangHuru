@@ -31,5 +31,6 @@ public class EquipmentGemstone : MonoBehaviour, IInGameItem
     {
         // 인게임 인벤토리에 들어가야 함
         inventory.AddItem(this);
+        gameObject.SetActive(false);
     }
 }

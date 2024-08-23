@@ -20,12 +20,12 @@ public class LevelUpUI : MonoBehaviour
 
     private void OnEnable()
     {
-        if(player == null)
+        if (player == null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
             passiveManager = player.GetComponentInChildren<PassiveManager>();
         }
-        if(mainWeapon == null)
+        if (mainWeapon == null)
         {
             mainWeapon = player.GetComponent<PlayerEquipLoader>().GetMainWeapon();
         }
@@ -170,7 +170,7 @@ public class LevelUpUI : MonoBehaviour
         skill.transform.SetParent(player.transform, false);
         var creators = skill.gameObject.GetComponents<WeaponCreator>();
 
-        foreach(var weaponCreator in creators)
+        foreach (var weaponCreator in creators)
         {
             weaponCreator.SetMainInfo(
                 mainWeapon.GetMainDamage(), mainWeapon.GetMainCoolDown(),

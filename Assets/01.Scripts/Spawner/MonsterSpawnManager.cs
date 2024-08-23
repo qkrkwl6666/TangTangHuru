@@ -156,4 +156,12 @@ public class MonsterSpawnManager : MonoBehaviour
         }
     }
 
+    public void BossSpawnCheat()
+    {
+        if (IsStop) return;
+
+        IsStop = true;
+        StartCoroutine(SpawnBoss());
+    }
+
 }

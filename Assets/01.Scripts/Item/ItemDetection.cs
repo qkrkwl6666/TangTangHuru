@@ -1,13 +1,11 @@
 using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemDetection : MonoBehaviour
 {
+    public bool isTutorial = false;
+
     public bool raderOwner = true;
 
     private LinkedList<GameObject> followMeItems = new();
@@ -52,12 +50,17 @@ public class ItemDetection : MonoBehaviour
     private bool isMagnet = false;
     Vector3 endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
 
+    public TutorialGameInit tutorialGameInit;
+
     private void Awake()
     {
         hitCollider = new Collider[maxCollider];
 
-        treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
-        treasureList = treasureManager.treasures;
+        if (!isTutorial)
+        {
+            treasureManager = GameObject.FindWithTag("TreasureSpawnManager").GetComponent<TreasureSpawnManager>();
+            treasureList = treasureManager.treasures;
+        }
 
         gameUI = GameObject.FindWithTag("InGameUI").GetComponent<InGameUI>();
         treasureBar = Instantiate(treasureBarPrefab);
@@ -93,7 +96,7 @@ public class ItemDetection : MonoBehaviour
 
         foreach (var treasure in treasureList)
         {
-            if (treasure == null) 
+            if (treasure == null)
                 continue;
 
             var distance = Vector2.Distance(treasure.transform.position, transform.position);
@@ -137,7 +140,7 @@ public class ItemDetection : MonoBehaviour
         treasureBar.UpdateTreasureBar(value);
 
         //보물상자 열림
-        if (treasureTime >= treasureDuration) 
+        if (treasureTime >= treasureDuration)
         {
             OpenTreasure();
             Radar();
@@ -188,7 +191,7 @@ public class ItemDetection : MonoBehaviour
     {
         if (time >= duration)
         {
-            if(!isMagnet)
+            if (!isMagnet)
                 Physics.OverlapSphereNonAlloc(transform.position, radius, hitCollider, itemLayerMask);
             else
             {
@@ -204,7 +207,7 @@ public class ItemDetection : MonoBehaviour
                         followMeItems.AddLast(item.gameObject);
 
                         Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
-
+                        endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
                         DOTween.To(() => startScreenPos, x =>
                         {
                             item.transform.position = Camera.main.ScreenToWorldPoint(x);
@@ -234,7 +237,8 @@ public class ItemDetection : MonoBehaviour
                     followMeItems.AddLast(item.gameObject);
 
                     Vector3 startScreenPos = Camera.main.WorldToScreenPoint(item.transform.position);
-
+                    endScreenPos = new Vector3(Screen.width / 2f, Screen.height / 2f, 0);
+                    //Debug.Log(endScreenPos);
                     DOTween.To(() => startScreenPos, x =>
                     {
                         item.transform.position = Camera.main.ScreenToWorldPoint(x);
@@ -243,7 +247,7 @@ public class ItemDetection : MonoBehaviour
                         .SetUpdate(UpdateType.Fixed)
                         .OnComplete(() =>
                     {
-                        if(!removeItems.Contains(item.gameObject))
+                        if (!removeItems.Contains(item.gameObject))
                         {
                             removeItems.Add(item.gameObject);
                             item.GetComponent<IInGameItem>().UseItem();
@@ -267,6 +271,14 @@ public class ItemDetection : MonoBehaviour
     public void MagnetOn()
     {
         isMagnet = true;
+    }
+
+    public void SetTutorialTreasure(Treasure treasure)
+    {
+        treasureList = new()
+        {
+            treasure
+        };
     }
 
 }

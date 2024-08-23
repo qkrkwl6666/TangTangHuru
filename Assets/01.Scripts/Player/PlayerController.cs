@@ -1,9 +1,11 @@
+using System.Collections;
 using UnityEngine;
 
 public enum PlayerState
 {
     Idle,
-    Run
+    Run,
+    Stun,
 }
 
 public class PlayerController : MonoBehaviour
@@ -22,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject viewPlayer;
 
-
+    private bool isStun = false;
 
     void Start()
     {
@@ -33,6 +35,8 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isStun) return;
+
         velocity = joystick.InputValue * moveSpeed * Time.deltaTime;
 
         transform.Translate(velocity);
@@ -47,6 +51,22 @@ public class PlayerController : MonoBehaviour
         {
             viewPlayer.transform.localScale = Right;
         }
+    }
+
+    public void StartStun(float stunDuration)
+    {
+        StartCoroutine(Stunned(stunDuration));
+    }
+
+    public IEnumerator Stunned(float stunDuration)
+    {
+        isStun = true;
+        state = PlayerState.Stun;
+
+        yield return new WaitForSeconds(stunDuration);
+
+        isStun = false;
+        state = PlayerState.Idle;
     }
 
 }

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 using TMPro;
-using UnityEngine.UI;
+using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
@@ -17,6 +17,8 @@ public class MainUI : MonoBehaviour
         DOTween.Init();
         mainInventory.OnMainInventorySaveLoaded += SaveLoadMainStageText;
     }
+
+    public GameObject allCloseUI;
 
     #region 메인 스테이지 UI
 
@@ -32,7 +34,7 @@ public class MainUI : MonoBehaviour
 
         if (data.Texture != "-1")
         {
-            Addressables.LoadAssetAsync<Sprite>(data.Texture).Completed += (sprite) => 
+            Addressables.LoadAssetAsync<Sprite>(data.Texture).Completed += (sprite) =>
             {
                 mainStageImage.sprite = sprite.Result;
             };
@@ -95,7 +97,7 @@ public class MainUI : MonoBehaviour
     {
         mainInventory.RefreshItemSlotUI();
 
-        for (int i = 0; i < uiGameObjects.Count; i ++)
+        for (int i = 0; i < uiGameObjects.Count; i++)
         {
             uiGameObjects[i].SetActive(UIObject.Inventory == (UIObject)i);
         }
@@ -128,11 +130,11 @@ public class MainUI : MonoBehaviour
 
     #region UI 팝업
 
-    public EquipPopUp EquipPopUp; 
+    public EquipPopUp EquipPopUp;
 
     public void SetActiveEquipPopUpUI(bool active)
     {
-        if (active) 
+        if (active)
         {
             EquipPopUp.gameObject.SetActive(active);
             var seq = DOTween.Sequence();
@@ -148,7 +150,7 @@ public class MainUI : MonoBehaviour
 
             seq.Append(EquipPopUp.transform.DOScale(0.0f, 0.1f));
 
-            seq.onComplete += () => 
+            seq.onComplete += () =>
             {
                 EquipPopUp.gameObject.SetActive(active);
             };
@@ -228,7 +230,7 @@ public class MainUI : MonoBehaviour
         petPopUp.SetItemUI(item, false);
     }
 
-#endregion
+    #endregion
 }
 
 public enum UIObject

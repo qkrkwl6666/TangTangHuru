@@ -16,6 +16,25 @@ public class StringTable : DataTable
 {
     public Dictionary<string, StringData> stringTable { get; private set; } = new();
 
+    private int maxTutorialCount = 19;
+    private string defaultTutorialId = "Tutorial";
+
+    public List<string> GetTutorialTexts()
+    {
+        var list = new List<string>();
+
+        for (int i = 1; i <= maxTutorialCount; i++)
+        {
+            stringTable.TryGetValue(defaultTutorialId + i, out var value);
+
+            if (value == null) continue;
+
+            list.Add(value.Text);
+        }
+
+        return list;
+    }
+
     public StringData Get(string id)
     {
         if (!stringTable.ContainsKey(id)) return null;

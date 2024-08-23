@@ -39,7 +39,7 @@ public class TierUpItemSlotUI : MonoBehaviour
 
     public void OnTierUpItemSlotButton()
     {
-        if(tierUpPopUp.OnSlotButton(item, !IsFocus))
+        if (tierUpPopUp.OnSlotButton(item, !IsFocus))
         {
             IsFocus = !IsFocus;
 

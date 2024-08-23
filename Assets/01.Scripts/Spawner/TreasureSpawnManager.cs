@@ -23,12 +23,24 @@ public class TreasureSpawnManager : MonoBehaviour
     private PlayerEquipLoader equipLoader;
     private InGameInventory inventory;
 
+    private List<int> guardianId;
+    private int currentGuardianIndex = 0;
+
+    private PlayerSubject playerSubject;
+
     private float bonusProb = 60f;
 
     private void Start()
     {
+        playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
+
         treasureData = DataTableManager.Instance.Get<TreasureTable>(DataTableManager.treasure)
-            .GetTreasure((GameManager.Instance.CurrentStage).ToString()); // stage name
+            .GetTreasure(GameManager.Instance.CurrentStage.ToString()); // stage name
+
+        var stageData = DataTableManager.Instance.Get<BossStageTable>(DataTableManager.stageBoss)
+            .GetBossData(GameManager.Instance.CurrentStage.ToString());
+
+        guardianId = stageData.GetGuardianId();
 
         SpawnWall();
 
@@ -93,7 +105,7 @@ public class TreasureSpawnManager : MonoBehaviour
         //세트효과 삽입(스톤 확률 조정)
         if (armorSet == 1)
         {
-            for(int i = 1; i < stones.Count; i++)
+            for (int i = 1; i < stones.Count; i++)
             {
                 if (stones[i].id == -1) break;
                 var newProb = stones[i].prob + bonusProb;
@@ -126,8 +138,15 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     var treasure = treasureGo.AddComponent<Treasure>();
 
+                    // 회복
+
+                    Addressables.InstantiateAsync(Defines.healItem).Completed += (x) =>
+                    {
+                        treasure.AddItem(x.Result);
+                    };
+
                     // 자석
-                    Addressables.InstantiateAsync(Defines.magnet).Completed += (x) => 
+                    Addressables.InstantiateAsync(Defines.magnet).Completed += (x) =>
                     {
                         treasure.AddItem(x.Result);
                     };
@@ -165,6 +184,25 @@ public class TreasureSpawnManager : MonoBehaviour
 
                     treasureGo.transform.position = SetPosition(treasure);
                     treasures.Add(treasure);
+
+                    // 가디언 
+                    if (guardianId.Count > currentGuardianIndex)
+                    {
+                        var bossData = DataTableManager.Instance.Get<BossTable>
+                        (DataTableManager.boss).GetBossData(guardianId[currentGuardianIndex].ToString());
+
+                        Addressables.InstantiateAsync(bossData.Boss_Prefab).Completed
+                            += (x) =>
+                        {
+                            var go = x.Result;
+                            go.GetComponent<Boss>().Initialize(playerSubject, bossData);
+                            go.SetActive(false);
+                            treasure.guardian = go;
+                        };
+
+                        currentGuardianIndex++;
+                    }
+
                     break;
                 }
             }

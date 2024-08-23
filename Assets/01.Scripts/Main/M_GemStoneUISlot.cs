@@ -52,7 +52,7 @@ public class M_GemStoneUISlot : MonoBehaviour
         itemTotalCountText.text = $" {itemCount}";
     }
 
-    public void RefreshCurrentCount(int itemCount, int maxCount) 
+    public void RefreshCurrentCount(int itemCount, int maxCount)
     {
         itemCurrentCountText.text = $"{itemCount} /";
         itemTotalCountText.text = $" {maxCount}";
@@ -65,7 +65,7 @@ public class M_GemStoneUISlot : MonoBehaviour
         if (isAdd)
         {
             RefreshCurrentCount(equipmentAppraisal
-                .GetSelectGemStoneCount((ItemTier)itemData.Item_Tier), 
+                .GetSelectGemStoneCount((ItemTier)itemData.Item_Tier),
                 equipmentAppraisal
                 .GetMaxGemStoneCount((ItemTier)itemData.Item_Tier));
 

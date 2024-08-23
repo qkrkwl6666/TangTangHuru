@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -31,6 +32,7 @@ public class Monster : LivingEntity, IPlayerObserver
     {
         this.playerSubject = playerSubject;
     }
+
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
     {
         this.playerSubject = playerSubject;
@@ -73,7 +75,11 @@ public class Monster : LivingEntity, IPlayerObserver
     // 몬스터 죽을 떄 호출 해야함
     public void PoolRelease()
     {
-        if (pool == null) Destroy(gameObject);
+        if (pool == null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         pool.Release(gameObject);
     }
@@ -95,6 +101,8 @@ public class Monster : LivingEntity, IPlayerObserver
         dead = true;
 
         PoolRelease();
+
+        DOTween.Kill(transform);
     }
 
     public void IObserverUpdate()
@@ -104,15 +112,19 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public override void OnDamage(float damage, float impact = 0)
     {
+        NuckBack(impact);
+
         health -= damage;
 
         OnDamaged?.Invoke(damage);
-        OnImpact?.Invoke(impact);
+        //OnImpact?.Invoke(impact);
 
         if (health <= 0 && !dead)
         {
             Die();
         }
+
+        if (hpBar == null) return;
 
         if (isSliderVisible)
         {
@@ -135,5 +147,15 @@ public class Monster : LivingEntity, IPlayerObserver
             isSliderVisible = false;
             hpBar.gameObject.SetActive(false);
         }
+    }
+
+    private void NuckBack(float impact)
+    {
+        //transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
+
+        Vector3 direction = (transform.position - playerTransform.position).normalized;
+        Vector3 targetPosition = transform.position + direction * impact;
+
+        transform.DOMove(targetPosition, 0.3f).SetEase(Ease.OutQuad);
     }
 }

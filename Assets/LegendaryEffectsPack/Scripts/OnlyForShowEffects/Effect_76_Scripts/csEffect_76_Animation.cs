@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csEffect_76_Animation : MonoBehaviour {
+public class csEffect_76_Animation : MonoBehaviour
+{
 
     //--First move ( when sword object down ) variables--
     public float m_y_StopPos;
@@ -28,14 +29,14 @@ public class csEffect_76_Animation : MonoBehaviour {
     {
         m_Time = Time.time;
         m_originalPos = transform.position;
-        if(m_y_randomValue != 0)
-        m_addedRandom = Random.Range(m_y_randomValue, 0);
+        if (m_y_randomValue != 0)
+            m_addedRandom = Random.Range(m_y_randomValue, 0);
     }
 
     void FirstMove()
     {
         if (Time.time < m_Time + m_durationTime)
-            transform.position = Vector3.Lerp(this.transform.position, 
+            transform.position = Vector3.Lerp(this.transform.position,
                 new Vector3(m_originalPos.x, m_y_StopPos + m_addedRandom, m_originalPos.z),
                 Time.deltaTime * m_firstLerpValue);
     }
@@ -69,7 +70,7 @@ public class csEffect_76_Animation : MonoBehaviour {
                 if (m_onlyYValueMove)
                 {
                     Vector3 m_originalPos = transform.position;
-                    transform.position = Vector3.Lerp(transform.position, m_originalPos + new Vector3(0, m_secondMovePos.y+m_downYPos, 0), Time.deltaTime * m_secondLerpValue);
+                    transform.position = Vector3.Lerp(transform.position, m_originalPos + new Vector3(0, m_secondMovePos.y + m_downYPos, 0), Time.deltaTime * m_secondLerpValue);
                 }
                 else
                     transform.position = Vector3.Lerp(transform.position, m_secondMovePos, Time.deltaTime * m_secondLerpValue);

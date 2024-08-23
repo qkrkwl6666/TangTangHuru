@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class TreasurePointer : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class TreasurePointer : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(targetTreasure != null)
+        if (targetTreasure != null)
         {
             SetDirection();
 

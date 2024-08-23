@@ -22,7 +22,7 @@ public class HealSkill : MonoBehaviour
         currHealth = maxHp;
         healAmount = maxHp / 20;
 
-        if(!isEvolved)
+        if (!isEvolved)
         {
             healGround = Instantiate(groundPrefab);
             healGround.transform.localScale *= 1.8f;
@@ -48,7 +48,7 @@ public class HealSkill : MonoBehaviour
 
                 Collider2D[] nearbyObjects = Physics2D.OverlapCircleAll
                     (playerHp.transform.position, 20, LayerMask.NameToLayer("Enemy"));
-                foreach(Collider2D collider in nearbyObjects)
+                foreach (Collider2D collider in nearbyObjects)
                 {
                     var monsterHp = collider.GetComponent<Monster>();
                     if (monsterHp != null)

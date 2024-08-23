@@ -4,5 +4,4 @@ using UnityEngine;
 public class MonsterView : MonoBehaviour
 {
     public SkeletonRenderer skeletonRenderer;
-
 }

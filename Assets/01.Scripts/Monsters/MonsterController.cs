@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public class MonsterController : MonoBehaviour, IPlayerObserver
@@ -9,10 +10,9 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
     public MonsterView MonsterView { get; private set; }
     public Transform PlayerTransform { get; private set; }
 
-    private float currSpeed = 2f;
     public float MoveSpeed { get; set; } = 2f;
     private bool slowed = false;
-    private float slowTimer = 0;
+    private float slowTimer = 1.5f;
     private float slowTime = 0;
 
     public Monster Monster { get; private set; }
@@ -46,17 +46,14 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
 
     private void Update()
     {
-
-
         MonsterStateMachine.Update(Time.deltaTime);
         if (slowed)
         {
-            slowTimer += Time.deltaTime;
-            if (slowTimer > slowTime)
+            slowTime += Time.deltaTime;
+            if (slowTime > slowTimer)
             {
-                currSpeed = MoveSpeed;
                 slowed = false;
-                slowTimer = 0;
+                slowTime = 0;
             }
         }
     }
@@ -80,20 +77,32 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         Monster.OnImpact -= NuckBack;
     }
 
-    // Todo : currMove 가slowTimer > slowTime 일때만 MoveSpeed 에서 가져와서
-    // MoveSpeed 가 적용안되는 문제가 있습니다. 그래서 임시로 일단 MoveSpeed 넣었습니다.
     public void ChasePlayer(float deltaTime)
     {
         if (PlayerTransform == null) return;
 
         Vector2 dir = (PlayerTransform.position - transform.position).normalized;
 
-        transform.Translate(dir * deltaTime * MoveSpeed);
+        if (!slowed)
+        {
+            transform.Translate(dir * deltaTime * MoveSpeed);
+        }
+        else
+        {
+            transform.Translate(dir * deltaTime * (MoveSpeed * 0.4f));
+        }
     }
 
     public void MoveToInitialPlayerPosition(float deltaTime)
     {
-        transform.Translate(playerDirection * deltaTime * MoveSpeed);
+        if (!slowed)
+        {
+            transform.Translate(playerDirection * deltaTime * MoveSpeed);
+        }
+        else
+        {
+            transform.Translate(playerDirection * deltaTime * (MoveSpeed * 0.4f));
+        }
     }
 
     public void IObserverUpdate()
@@ -101,24 +110,25 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         PlayerTransform = playerSubject.GetPlayerTransform;
     }
 
-    public void Slow(float maxTime)
+    public void Slow()
     {
-        slowTimer = 0;
-        slowTime = maxTime;
-        currSpeed = MoveSpeed * 0.5f;
-        slowed = true;
-    }
-    public void Stop(float maxTime)
-    {
-        slowTimer = 0;
-        slowTime = maxTime;
-        currSpeed = 0f;
+        slowTime = 0;
         slowed = true;
     }
 
     private void NuckBack(float impact)
     {
-        transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
+        //transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
+
+        if (Monster.dead)
+        {
+            Vector3 direction = (transform.position - PlayerTransform.position).normalized;
+            Vector3 targetPosition = transform.position + direction * impact;
+
+            transform.DOMove(targetPosition, 0.3f).SetEase(Ease.OutQuad);
+        }
+
+
     }
 
 }

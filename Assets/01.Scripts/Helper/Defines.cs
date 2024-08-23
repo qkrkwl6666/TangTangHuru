@@ -1,11 +1,10 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using DG.Tweening.Core;
-using DG.Tweening.Plugins.Options;
 
 public static class Defines
 {
+    // item
     public static readonly string exp = "Exp";
     public static readonly string magnet = "Magnet";
     public static readonly string normalBullet = "NormalBullet";
@@ -16,6 +15,7 @@ public static class Defines
     public static readonly string playBoss = "PlayBoss";
     public static readonly string obstacles = "Obstacles";
     public static readonly string rangeArea = "RangeArea";
+    public static readonly string healItem = "HealItem";
 
     public static readonly string loadingUI = "LoadingUI";
     public static readonly string main = "Main";
@@ -24,8 +24,21 @@ public static class Defines
     public static readonly string skeletonData = "SkeletonData";
     public static readonly string stageImage = "StageImage";
     public static readonly string emptyRect = "EmptyRect";
+    public static readonly string boom = "Boom";
+    public static readonly string stunCirlce = "StunCircle";
 
     public static readonly string player = "Player";
+
+    // Scene
+    public static readonly string tutorialScene = "TutorialScene";
+    public static readonly string mainScene = "MainScene";
+
+    // 가디언 보스 ID
+    public static readonly int chargeGuardian = 333001;
+    public static readonly int boomGuardian = 333002;
+    public static readonly int sternGuardian = 333003;
+
+    public static readonly int maxGuardian = 3;
 
     // 아웃라이너 컬러
     public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
@@ -114,16 +127,25 @@ public static class Defines
     public static readonly string weapon027 = "weapon_027";
     public static readonly string weapon028 = "weapon_028";
 
-    // 몬스터 애니메이션
+    // 애니메이션
     public static readonly string idle = "idle";
     public static readonly string walk = "walk";
     public static readonly string attack = "attack";
     public static readonly string attack2 = "attack2";
     public static readonly string dead = "dead";
+    public static readonly string passOut = "passout";
+
+    //돌진 가디언 애니메이션
+    public static readonly string attack1 = "attack1";
+
+    //포격 가디언 애니메이션
+    public static readonly string groundIn = "ground_in";
+    public static readonly string groundOut = "ground_out";
 
     // 캐릭터 랜덤 뽑기 테스트 용도
     public static List<string> characterSkins = new();
     public static List<string> weaponSkins = new();
+
 
     public static void SetSkins()
     {
@@ -186,7 +208,7 @@ public static class Defines
 
     public static Color GetColor(string key)
     {
-        switch (key) 
+        switch (key)
         {
             case "Outline_Blue":
                 return Defines.blueColor;
@@ -210,17 +232,17 @@ public static class Defines
 
     public static ArmorType GetRandomArmorType()
     {
-       ArmorType armorType = (ArmorType)Random.Range(0, (int)ArmorType.Count);
+        ArmorType armorType = (ArmorType)Random.Range(0, (int)ArmorType.Count);
 
         return armorType;
     }
 
     public static int GetArmorId(ArmorType armorType, ItemType itemType, ItemTier itemTier)
     {
-        switch(armorType)
+        switch (armorType)
         {
             case ArmorType.HolyKnight:
-                if(itemType == ItemType.Helmet)
+                if (itemType == ItemType.Helmet)
                     return (int)TotalArmorType.HolyKnight_Helmet + (int)itemTier;
                 else if (itemType == ItemType.Armor)
                     return (int)TotalArmorType.HolyKnight_Armor + (int)itemTier;

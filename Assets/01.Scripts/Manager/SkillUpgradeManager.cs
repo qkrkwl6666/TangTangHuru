@@ -17,7 +17,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
         playerExp = playerSubject.GetPlayerExp;
         playerExp.OnLevelChanged += HandleLevelChanged;
 
-        if(playerSubject == null)
+        if (playerSubject == null)
         {
             Debug.Log("플레이어 서브젝트 찾을 수 없음");
         }
@@ -43,7 +43,7 @@ public class SkillUpgradeManager : MonoBehaviour, IPlayerObserver
     }
     public void CheckLevelUpPanelOn()
     {
-        if(levelUpCount > 0)
+        if (levelUpCount > 0)
         {
             Invoke("ActivateLevelUpMenu", 0.2f);
             levelUpCount--;

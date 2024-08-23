@@ -6,7 +6,7 @@ public interface Item
     public ItemType ItemType { get; set; }
     public ItemTier ItemTier { get; set; } // 아이템 티어
 
-    public float CurrentTierUp {  get; set; }
+    public float CurrentTierUp { get; set; }
 
     public ItemData itemData { get; set; }
 

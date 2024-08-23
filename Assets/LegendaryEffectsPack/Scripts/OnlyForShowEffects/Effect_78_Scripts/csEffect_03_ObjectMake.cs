@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public class csEffect_03_ObjectMake : MonoBehaviour {
+public class csEffect_03_ObjectMake : MonoBehaviour
+{
 
     public float m_startDelay;
     public GameObject[] m_makeObjs;
@@ -19,16 +20,16 @@ public class csEffect_03_ObjectMake : MonoBehaviour {
         return rnd;
     }
 
-    void Start ()
+    void Start()
     {
         m_Time = m_Time2 = Time.time;
-	}
-	
-	void Update ()
+    }
+
+    void Update()
     {
         if (Time.time < m_Time + m_startDelay)
             return;
-        if(Time.time > m_Time2 + m_makeDelay && m_count < m_makeCount)
+        if (Time.time > m_Time2 + m_makeDelay && m_count < m_makeCount)
         {
             m_Time2 = Time.time;
             float m_posX = RandomValue(m_vectorRandom.x);
@@ -38,11 +39,11 @@ public class csEffect_03_ObjectMake : MonoBehaviour {
             for (int i = 0; i < m_makeObjs.Length; i++)
             {
                 GameObject m_obj = Instantiate(m_makeObjs[i], m_makePos.position +
-                    new Vector3(m_posX, m_posY,m_posZ),Quaternion.identity);
+                    new Vector3(m_posX, m_posY, m_posZ), Quaternion.identity);
                 m_obj.transform.parent = this.transform;
                 Destroy(m_obj, m_destroyTime);
             }
             m_count++;
         }
-	}
+    }
 }

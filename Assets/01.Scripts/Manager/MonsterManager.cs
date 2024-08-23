@@ -56,7 +56,7 @@ public class MonsterManager : MonoBehaviour
         {
             var newText = Instantiate(textObject, targetPos, Quaternion.identity);
             newText.GetComponent<TextMeshPro>().text = (damage / 1).ToString();
-            if(isCritical)
+            if (isCritical)
             {
                 newText.GetComponent<TextMeshPro>().color = Color.red;
             }

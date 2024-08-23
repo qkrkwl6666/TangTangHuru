@@ -156,6 +156,9 @@ public class WeaponCreator : MonoBehaviour
             case AimType.Angular:
                 aimer = weapon.AddComponent<AngularAim>();
                 break;
+            case AimType.RandomPos:
+                aimer = weapon.AddComponent<RandomPos>();
+                break;
 
         }
 
@@ -258,7 +261,7 @@ public class WeaponCreator : MonoBehaviour
             else
             {
                 hit.Damage = ((mainDamage * 0.6f) * weaponDataInStage.Damage) + typePassive.Damage;
-            } 
+            }
 
         }
     }

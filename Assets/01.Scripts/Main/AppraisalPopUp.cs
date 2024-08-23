@@ -31,7 +31,17 @@ public class AppraisalPopUp : MonoBehaviour
     private int currentItemIndex;
     private bool isProcessingItems;
 
-    // Todo : 서브 무기 슬롯도 나중에 추가
+    public VFXRenderManager renderManager;
+
+    private void OnEnable()
+    {
+        renderManager.PlayIconWaitParticle();
+    }
+
+    private void OnDisable()
+    {
+        renderManager.AllSetActiveFalse();
+    }
 
     private void Start()
     {
@@ -52,6 +62,8 @@ public class AppraisalPopUp : MonoBehaviour
 
     public void SetItemUI(Item item, bool isEquip = true)
     {
+
+        renderManager.PlayTierParticle(item.ItemTier);
 
         foreach (var text in itemStatusTexts)
         {
@@ -115,6 +127,7 @@ public class AppraisalPopUp : MonoBehaviour
                 itemStatusTexts[0].gameObject.SetActive(true);
                 break;
         }
+
     }
 
     public void SetPopUp(List<Item> itemList)

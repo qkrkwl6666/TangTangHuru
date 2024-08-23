@@ -19,19 +19,22 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public static Action OnDead;
 
+    public bool isGuardian = false;
+
     // 골드
     public int Gold { get; private set; }
 
     // 보스 상태 패턴
     private BossState currentState;
 
+    public BossIdleState idleState;
     public BossWalkState walkState;
     public BossSkillState skillState;
     public BossDeadState deadState;
 
     // View
     private BossView bossView;
-
+    public BossData BossData { get; private set; }
     public InGameUI GameUI { get; private set; }
 
     private void Awake()
@@ -42,6 +45,7 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public void Initialize(PlayerSubject playerSubject, BossData bossData)
     {
+        BossData = bossData;
         this.playerSubject = playerSubject;
 
         playerSubject.AddObserver(this);
@@ -52,6 +56,7 @@ public class Boss : LivingEntity, IPlayerObserver
         Speed = bossData.Boss_MoveSpeed;
         Gold = bossData.Gold;
 
+        //idleState = new BossIdleState(this, bossView);
         walkState = new BossWalkState(this, bossView);
         skillState = new BossSkillState(this, bossView);
         deadState = new BossDeadState(this, bossView);
@@ -134,6 +139,23 @@ public class Boss : LivingEntity, IPlayerObserver
                         laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Left);
                     }
                     break;
+
+                // 가디언
+                case 510013:
+                    {
+                        var dash = AddSkill<Dash>(skill.Item1, skill.Item2);
+                    }
+                    break;
+                case 510014:
+                    {
+                        var bombardment = AddSkill<Bombardment>(skill.Item1, skill.Item2);
+                    }
+                    break;
+                case 510015:
+                    {
+                        var stunned = AddSkill<Stunned>(skill.Item1, skill.Item2);
+                    }
+                    break;
             }
         }
 
@@ -209,7 +231,9 @@ public class Boss : LivingEntity, IPlayerObserver
         base.Die();
 
         InGameInventory.OnCoinAdd?.Invoke(Gold);
-        OnDead?.Invoke();
+
+        if (!isGuardian)
+            OnDead?.Invoke();
 
         ChangeState(deadState);
     }

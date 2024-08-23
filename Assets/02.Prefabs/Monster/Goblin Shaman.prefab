@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2217570120926672114}
-  - component: {fileID: 2059804478861540055}
   - component: {fileID: 5493199656372081385}
   - component: {fileID: 3210912016144151178}
   - component: {fileID: 9077005614078134671}
+  - component: {fileID: 2332122985585658177}
   m_Layer: 6
   m_Name: Goblin Shaman
   m_TagString: Untagged
@@ -37,20 +37,6 @@ Transform:
   - {fileID: 1540522774680884993}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2059804478861540055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3609226015697165379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
 --- !u!114 &5493199656372081385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCritical: 0
 --- !u!50 &3210912016144151178
 Rigidbody2D:
   serializedVersion: 4
@@ -125,6 +112,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.55}
   m_Size: {x: 1.22, y: 1.1}
   m_Direction: 0
+--- !u!114 &2332122985585658177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3609226015697165379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0
 --- !u!1 &4907028417416651827
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,9 +137,10 @@ GameObject:
   - component: {fileID: 7429844218434936942}
   - component: {fileID: 2050700499878166605}
   - component: {fileID: 4593104388601986513}
-  - component: {fileID: 6561171122222113826}
+  - component: {fileID: 6667040249692152039}
+  - component: {fileID: 2035727378325226623}
   m_Layer: 6
-  m_Name: MonsterView
+  m_Name: BossView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -186,7 +188,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 4fcc79fd0a35f5a40a5bee05e39471db, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -208,7 +211,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6561171122222113826
+--- !u!114 &6667040249692152039
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,7 +220,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4907028417416651827}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 2035727378325226623}
+--- !u!114 &2035727378325226623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4907028417416651827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 09fc08fb2ca37f84aad514d93d2f6b4b, type: 2}
@@ -242,6 +258,9 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: idle
+  loop: 0
+  timeScale: 1
 --- !u!1001 &8934033358399652330
 PrefabInstance:
   m_ObjectHideFlags: 0

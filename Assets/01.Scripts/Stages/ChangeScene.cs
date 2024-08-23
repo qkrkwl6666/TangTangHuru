@@ -13,7 +13,7 @@ public class ChangeScene : MonoBehaviour
 
     public void MoveToLobby()
     {
-        SceneManager.LoadScene(0);
+        GameManager.Instance.LoadSceneAsync(Defines.mainScene);
     }
 
     public void Quit()
