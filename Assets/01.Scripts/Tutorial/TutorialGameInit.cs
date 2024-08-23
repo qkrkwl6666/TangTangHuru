@@ -74,6 +74,12 @@ public class TutorialGameInit : MonoBehaviour
 
         var itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("600001");
 
+        // 자석
+        Addressables.InstantiateAsync(Defines.magnet).Completed += (x) =>
+        {
+            treasure.AddItem(x.Result);
+        };
+
         // 장비 원석 생성
         Addressables.InstantiateAsync("1_GemStone").Completed +=
         (x) =>
