@@ -19,8 +19,6 @@ public class Barrage : MonoBehaviour
     private bool attackable = false;
     private float attackTime = 3f;
 
-    public LayerMask attackableLayer;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!attackable) return;
