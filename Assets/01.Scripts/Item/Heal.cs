@@ -28,6 +28,7 @@ public class Heal : MonoBehaviour, IInGameItem, IPlayerObserver
     public void UseItem()
     {
         playerHealth.Health(health);
+        gameObject.SetActive(false);
     }
 
     public void IObserverUpdate()

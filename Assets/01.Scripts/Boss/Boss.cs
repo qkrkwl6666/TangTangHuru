@@ -160,6 +160,25 @@ public class Boss : LivingEntity, IPlayerObserver
                         reflect.SetReflect(true, 1f, 15f, 5f, 5);
                     }
                     break;
+                    //
+                case 500016:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(1, PlayerTransform, bossView);
+                    }
+                    break;
+                case 500017:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(5, PlayerTransform, bossView);
+                    }
+                    break;
+                case 500018:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(12, PlayerTransform, bossView);
+                    }
+                    break;
 
                 // °¡µð¾ð
                 case 510013:
