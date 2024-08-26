@@ -31,7 +31,7 @@ public static class Defines
 
     // Scene
     public static readonly string tutorialScene = "TutorialScene";
-    public static readonly string mainScene = "MainScene";
+    public static readonly string mainScene = "InventoryScene";
 
     // 가디언 보스 ID
     public static readonly int chargeGuardian = 333001;
