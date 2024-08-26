@@ -11,6 +11,7 @@ public class ShopUI : MonoBehaviour
     private List<ShopEntry> shopEntries = new List<ShopEntry>();
     private bool sorted = false;
 
+    private bool isCheatOn = false;
     private void OnEnable()
     {
         if (sorted)
@@ -52,7 +53,7 @@ public class ShopUI : MonoBehaviour
 
     private void Purchase(ItemData itemData)
     {
-        if (inventory.Gold < itemData.Price)
+        if (inventory.Gold < itemData.Price && !isCheatOn)
         {
             SoundManager.Instance.PlaySound2D("failed");
         }
@@ -80,5 +81,10 @@ public class ShopUI : MonoBehaviour
 
         }
 
+    }
+
+    public void CheatOn()
+    {
+        isCheatOn = !isCheatOn;
     }
 }
