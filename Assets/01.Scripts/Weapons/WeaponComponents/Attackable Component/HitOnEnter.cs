@@ -33,13 +33,26 @@ public class HitOnEnter : MonoBehaviour, IAttackable
             {
                 TotalDamage = Damage * CriticalValue;
                 other.GetComponent<DamageText>().isCritical = true;
+
+                if(SoundManager.Instance.hitCoolTime <= 0f)
+                {
+                    SoundManager.Instance.PlayShortSound("Hit_crit", 0, false, SoundType.HIT_EFFECT);
+                    SoundManager.Instance.HitCoolTimeOn();
+                }
             }
             else
             {
                 TotalDamage = Damage;
+
+                if (SoundManager.Instance.hitCoolTime <= 0f)
+                {
+                    SoundManager.Instance.PlayShortSound("Hit_normal", 0, false, SoundType.HIT_EFFECT);
+                    SoundManager.Instance.HitCoolTimeOn();
+                }
             }
 
             other.gameObject.GetComponentInParent<IDamagable>().OnDamage(TotalDamage, Impact);
+
 
             if (pierce > 0)
             {
