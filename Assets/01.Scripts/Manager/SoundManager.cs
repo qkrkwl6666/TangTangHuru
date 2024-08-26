@@ -183,8 +183,6 @@ public class SoundManager : Singleton<SoundManager>
 
     public void PlayerBGM(int index)
     {
-        currPlayingSounds.Clear();
-
         string BGM_Name = "BGM_stage_";
 
         switch (index)
