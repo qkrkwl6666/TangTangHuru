@@ -110,12 +110,10 @@ public class GameManager : Singleton<GameManager>
 
         loadingUI.SetActive(true);
 
-        // Todo : 硫붿씤 �뵮 �씠由� 蹂�寃쎌떆 蹂�寃� �븘�슂
-
         if (sceneName != Defines.mainScene)
             mainInventory.SaveMainInventory();
 
-
+        CancelInvoke("ChangeBGM");
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
@@ -136,7 +134,7 @@ public class GameManager : Singleton<GameManager>
             BGM_Index = CurrentStage;
             SoundManager.Instance.EnterStage();
         }
-        Invoke("ChangeBGM", 2);
+        Invoke("ChangeBGM", 1.5f);
     }
 
     public void StartGame()
