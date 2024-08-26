@@ -277,7 +277,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             else break;
         }
 
-        Debug.Log(spawnPos);
         return spawnPos;
     }
 

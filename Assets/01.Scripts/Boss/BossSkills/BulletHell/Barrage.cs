@@ -69,7 +69,7 @@ public class Barrage : MonoBehaviour
             pool.Release(gameObject);
         }
 
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * dir);
     }
 
     public void SetObjectPool(IObjectPool<GameObject> pool)
