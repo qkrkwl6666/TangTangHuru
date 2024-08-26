@@ -15,7 +15,8 @@ public class SoundManager : Singleton<SoundManager>
 {
     public AudioMixer mAudioMixer;
 
-    private float currBGMVolume, currEffectVolume;
+    public float currBGMVolume;
+    public float currEffectVolume = 1;
 
     private Dictionary<string, AudioClip> clipDictionary;
 
@@ -184,7 +185,7 @@ public class SoundManager : Singleton<SoundManager>
     {
         currPlayingSounds.Clear();
 
-        string BGM_Name = "BGM_Stage_";
+        string BGM_Name = "BGM_stage_";
 
         switch (index)
         {
@@ -192,7 +193,7 @@ public class SoundManager : Singleton<SoundManager>
                 BGM_Name = "BGM_main";
                 break;
             default:
-                BGM_Name += index.ToString();
+                BGM_Name = BGM_Name + index.ToString();
                 break;
         }
 
@@ -214,6 +215,13 @@ public class SoundManager : Singleton<SoundManager>
             // 루프가 아닌 경우 일정 시간 후 사운드 플레이어 반환
             StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer));
         }
+    }
+
+    public void PlayShortSound(string clipName, float delay = 0f, bool isLoop = false, SoundType type = SoundType.EFFECT)
+    {
+        var soundPlayer = GetSoundPlayer();
+        soundPlayer.AudioSource.PlayOneShot(GetClip(clipName), currEffectVolume);
+        StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer));
     }
 
     private IEnumerator ReturnSoundPlayerAfterPlay(TemporalSoundPlayer soundPlayer)

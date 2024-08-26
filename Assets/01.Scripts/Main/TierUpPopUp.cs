@@ -173,6 +173,7 @@ public class TierUpPopUp : MonoBehaviour
         mainInventory.RefreshItemSlotUI();
         mainInventory.SaveInventory();
         gameObject.SetActive(false);
+
     }
 
     public void TierUpNewItemPopUp()
@@ -190,5 +191,24 @@ public class TierUpPopUp : MonoBehaviour
         appraisalPopUp.SetPopUp(newItems);
 
         mainInventory.SaveInventory();
+
+        foreach(var item in newItems)
+        {
+            if(item.ItemTier == ItemTier.Epic)
+            {
+                AchievementManager.Instance.myTasks.AddProgress("EpicCount");
+                if (AchievementManager.Instance.Check("EpicCount"))
+                {
+                    AchievementManager.Instance.UnlockAchievement("EpicCount");
+                }
+            }
+        }
+
+        AchievementManager.Instance.myTasks.AddProgress("AcendCount");
+        if (AchievementManager.Instance.Check("AcendCount"))
+        {
+            AchievementManager.Instance.UnlockAchievement("AcendCount");
+        }
+        
     }
 }

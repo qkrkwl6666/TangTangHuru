@@ -21,6 +21,8 @@ public class PlayerHealth : LivingEntity
     private GameObject textObject;
     private List<GameObject> textObjects = new List<GameObject>();
 
+    private bool cheatOn = false;
+
     void Start()
     {
         hpBar.maxValue = startingHealth;
@@ -155,16 +157,20 @@ public class PlayerHealth : LivingEntity
         dead = true;
     }
 
-    public void HealthCheatOn()
+    public void ToggleHealthCheat()
     {
-        isInvincible = true;
-        invincibleTime = 999999f;
-    }
+        cheatOn = !cheatOn;
 
-    public void HealthCheatOff()
-    {
-        isInvincible = false;
-        invincibleTime = 0.1f;
+        if(cheatOn)
+        {
+            isInvincible = true;
+            invincibleTime = 999999f;
+        }
+        else
+        {
+            isInvincible = false;
+            invincibleTime = 0.1f;
+        }
     }
 
     public void Health(float heal)

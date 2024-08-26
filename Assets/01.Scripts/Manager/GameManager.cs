@@ -1,10 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.InputSystem;
 
 
 public class GameManager : Singleton<GameManager>
 {
+    public InputActionAsset inputActionAsset;
+
+    private InputAction backAction;
+
     // tutorial
     public bool isTutorialSceneEnd = false;
 
@@ -12,10 +17,8 @@ public class GameManager : Singleton<GameManager>
 
     public string currentWeapon = "OneSword";
 
-    // �뵆�젅�씠�뼱 �옣李�
     public Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
 
-    // 濡쒕뵫 UI 
     public GameObject loadingUI;
 
     // �씤寃뚯엫 �꽭�씠釉� �븘�씠�뀥
@@ -69,6 +72,23 @@ public class GameManager : Singleton<GameManager>
         mainInventory.OnMainInventorySaveLoaded += InitSaveLoaded;
     }
 
+    private void OnEnable()
+    {
+        var playerInput = new InputActionMap("PlayerControls");
+        backAction = playerInput.AddAction("Back", binding: "<AndroidGamepad>/buttonEast");
+        backAction.performed += OnBackPressed;
+        backAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        backAction.Disable();
+    }
+    private void OnBackPressed(InputAction.CallbackContext context)
+    {
+        Application.Quit();
+    }
+
     public void InitSaveLoaded()
     {
         // Todo : 肄붾뱶 援먯껜 �븘�슂 
@@ -99,10 +119,11 @@ public class GameManager : Singleton<GameManager>
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-            //Todo : 硫붿씤 �뵮 �씠由� 蹂�寃쎌떆 蹂�寃� �븘�슂
 
             if (sceneName != Defines.mainScene)
+            {
                 loadingUI.SetActive(false);
+            }
             SoundManager.Instance.CreateTemporalObjects();
         };
 
@@ -112,7 +133,7 @@ public class GameManager : Singleton<GameManager>
         }
         else
         {
-            BGM_Index = 1;
+            BGM_Index = CurrentStage;
             SoundManager.Instance.EnterStage();
         }
         Invoke("ChangeBGM", 2);

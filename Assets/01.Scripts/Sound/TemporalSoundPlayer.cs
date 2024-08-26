@@ -23,6 +23,7 @@ public class TemporalSoundPlayer : MonoBehaviour
         audioSource.outputAudioMixerGroup = audioMixer;
         audioSource.loop = isLoop;
         audioSource.Play();
+        //audioSource.PlayOneShot(audioSource.clip);
     }
 
     public void InitSound2D(AudioClip clip)

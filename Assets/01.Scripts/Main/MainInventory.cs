@@ -400,10 +400,6 @@ public class MainInventory : MonoBehaviour
                     {
                         m_weaponItem.subWeapons = GetRandomSubWeapon(itemData.Item_Tier);
                     }
-                    else
-                    {
-                        //m_weaponItem.subWeapons = itemData.
-                    }
 
                     return m_weaponItem;
                 }
@@ -515,7 +511,7 @@ public class MainInventory : MonoBehaviour
                 {
                     M_Armour m_armour = new M_Armour();
 
-                    m_armour.SetItemData(itemData, instanceId);
+                    m_armour.SetItemData(itemData, instanceId); 
 
                     return m_armour;
                 }
@@ -827,14 +823,14 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.4f);
 
         // 로드 후 업그레이드 
         LoadWeaponUpgrade();
 
-        RefreshItemSlotUI();
+        //RefreshItemSlotUI();
 
-        yield return new WaitForSeconds(0.3f);
+        //yield return new WaitForSeconds(0.3f);
 
         // 내가 현재 장착하고 있는 아이템 플레이어에 장착 시키기
         LoadDataPlayerEquip();
@@ -862,7 +858,7 @@ public class MainInventory : MonoBehaviour
 
         RefreshItemSlotUI();
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        yield return new WaitForSecondsRealtime(0.4f);
 
         foreach (var itemSlot in itemSlotUI)
         {
@@ -887,13 +883,18 @@ public class MainInventory : MonoBehaviour
                 case (int)ItemType.Helmet:
                 case (int)ItemType.Armor:
                 case (int)ItemType.Shose:
+                    var armorItem = item as M_Armour;
+
+                    if (armorItem == null) yield break;
+
+                    armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade);
                     break;
             }
         }
 
-        RefreshItemSlotUI();
+        //RefreshItemSlotUI();
 
-        yield return new WaitForSecondsRealtime(0.3f);
+        //yield return new WaitForSecondsRealtime(0.4f);
 
         LoadDataPlayerEquip();
 
@@ -926,6 +927,11 @@ public class MainInventory : MonoBehaviour
                 case (int)ItemType.Helmet:
                 case (int)ItemType.Armor:
                 case (int)ItemType.Shose:
+                    var armorItem = item as M_Armour;
+
+                    if (armorItem == null) continue;
+
+                    armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade);
                     break;
             }
         }
@@ -1438,7 +1444,9 @@ public class MainInventory : MonoBehaviour
 
         int needGold = Defines.defaultUpgradeGold * (item.itemData.CurrentUpgrade + 1);
 
-        if (needGold > Gold) return false;
+        int count = GetItemTypesTier(ItemType.ReinforcedStone, ItemTier.Normal).Count;
+
+        if (needGold > Gold || count < 1) return false;
 
         return true;
     }
@@ -1468,11 +1476,11 @@ public class MainInventory : MonoBehaviour
         // 튜토리얼 재료
         MainInventoryAddItem("200002", 0);
 
-        MainInventoryAddItem("200101", 0);
-        MainInventoryAddItem("210001", 0);
-        MainInventoryAddItem("210101", 0);
-        MainInventoryAddItem("220001", 0);
-        MainInventoryAddItem("220101", 0);
+        //MainInventoryAddItem("200101", 0);
+        //MainInventoryAddItem("210001", 0);
+        //MainInventoryAddItem("210101", 0);
+        //MainInventoryAddItem("220001", 0);
+        //MainInventoryAddItem("220101", 0);
 
         // 레전드 장비
         //MainInventoryAddItem("400015", 10);
@@ -1496,10 +1504,12 @@ public class MainInventory : MonoBehaviour
         // MainInventoryAddItem("610204");
         // MainInventoryAddItem("610304");
         // 
-        // MainInventoryAddItem("710001");
-        // MainInventoryAddItem("710002");
-        // MainInventoryAddItem("710003");
-        // MainInventoryAddItem("710004");
+
+        // 펫
+        MainInventoryAddItem("710001");
+        MainInventoryAddItem("710002");
+        MainInventoryAddItem("710003");
+        MainInventoryAddItem("710004");
         // 
         // 
         // MainInventoryAddItem("720001");

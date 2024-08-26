@@ -233,7 +233,7 @@ public class EquipPopUp : MonoBehaviour
 
                 if (weaponItem == null) return;
 
-                mainInventory.ItemUpgrade(currentItem);
+                mainInventory.ItemUpgrade(currentItem); // 재화 소요
                 weaponItem.UpgradeWeapon(weaponItem.itemData.CurrentUpgrade + 1);
 
                 RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
@@ -243,12 +243,46 @@ public class EquipPopUp : MonoBehaviour
             case ItemType.Helmet:
             case ItemType.Armor:
             case ItemType.Shose:
+                var armorItem = currentItem as M_Armour;
+                if (armorItem == null) return;
+
+                mainInventory.ItemUpgrade(currentItem);
+                armorItem.UpgradeArmor(armorItem.itemData.CurrentUpgrade + 1);
+
+                RefreshUpgradeTextUI(currentItem.itemData.CurrentUpgrade);
+                mainInventory.RefreshGoldDiamondTextUI();
                 break;
         }
 
         SetItemUI(currentItem);
         mainInventory.RefreshItemSlotUI();
         mainInventory.SaveInventory();
+
+        switch (currentItem.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+                AchievementManager.Instance.myTasks.AddProgress("ReinforcedWeaponCount");
+                if (AchievementManager.Instance.Check("ReinforcedWeaponCount"))
+                {
+                    AchievementManager.Instance.UnlockAchievement("ReinforcedWeaponCount");
+                }
+                break;
+
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                AchievementManager.Instance.myTasks.AddProgress("ReinforcedArmorCount");
+                if (AchievementManager.Instance.Check("ReinforcedArmorCount"))
+                {
+                    AchievementManager.Instance.UnlockAchievement("ReinforcedArmorCount");
+                }
+                break;
+        }
     }
 
     // 장비 장착 버튼

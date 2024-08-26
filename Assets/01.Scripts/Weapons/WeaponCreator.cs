@@ -38,6 +38,8 @@ public class WeaponCreator : MonoBehaviour
     private float mainCriticalValue;
     private WeaponData.Type mainType;
 
+    private bool isSoundLooping = false;
+
     private void Start()
     {
         weaponUpgrader = GetComponent<WeaponUpgrader>();
@@ -91,9 +93,14 @@ public class WeaponCreator : MonoBehaviour
 
                     weapon.gameObject.transform.position = transform.position;
                     weapon.SetActive(true);
+                    if (!isSoundLooping)
+                    {
+                        PlayWeaponSound();
+                    }
 
                     index++;
                 }
+
 
                 OptionsOnEnable(weapon);
 
@@ -102,10 +109,11 @@ public class WeaponCreator : MonoBehaviour
 
                 if (weaponDataInStage.BurstRate > 0f)
                 {
+
+
                     yield return new WaitForSeconds(weaponDataInStage.BurstRate);
                 }
             }
-
 
             while (index < weaponDataInStage.BurstCount)
             {
@@ -355,5 +363,24 @@ public class WeaponCreator : MonoBehaviour
     public Type GetMainType()
     {
         return mainType;
+    }
+
+    private void PlayWeaponSound()
+    {
+        if(weaponDataRef.WeaponName == "Staff"
+            && weaponDataRef.WeaponName == "Orbit"
+            && weaponDataRef.WeaponName == "OrbitEvo"
+            && weaponDataRef.WeaponName == "Axe"
+            && weaponDataRef.WeaponName == "AxeEvo"
+            && weaponDataRef.WeaponName == "SpreadEvo")
+        {
+            SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName, 0, true);
+            isSoundLooping = true;
+        }
+        else
+        {
+            //SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
+            SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName);
+        }
     }
 }

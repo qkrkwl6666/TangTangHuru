@@ -34,7 +34,7 @@ public class OrbUpgrader : MonoBehaviour
         popUp_OrbPanel.ResetOn();
     }
 
-    private void SlotSelected(ItemSlotUI currSlot)
+    public void SlotSelected(ItemSlotUI currSlot)
     {
         if (currSlot.isSelected)
         {

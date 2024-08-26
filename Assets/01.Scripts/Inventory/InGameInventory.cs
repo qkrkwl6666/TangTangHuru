@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -108,17 +109,18 @@ public class InGameInventory : MonoBehaviour
             }
         }
 
-        if (isEffect) ItemBagEffect(tempItems);
+        if (isEffect) StartCoroutine(ItemBagEffect(tempItems));
 
         items.Clear();
 
         return items;
     }
 
-    public void ItemBagEffect(List<IInGameItem> items)
+    public IEnumerator ItemBagEffect(List<IInGameItem> items)
     {
         Defines.DotweenScaleActiveTrue(bagTransform.gameObject);
 
+        bool isItem = false;
         for (int i = 0; i < items.Count; i++)
         {
             images[i].gameObject.SetActive(false);
@@ -148,6 +150,8 @@ public class InGameInventory : MonoBehaviour
                     go.GetComponent<RectTransform>().DOAnchorPos(bagCenter, 1f).SetEase(Ease.InOutQuad)
                         .OnComplete(() =>
                         {
+                            isItem = true;
+
                             Defines.DotweenScaleActiveFalse(bagTransform.gameObject);
                             Destroy(go);
 
@@ -157,6 +161,14 @@ public class InGameInventory : MonoBehaviour
                 };
 
         }
+
+        if(!isItem)
+        {
+            yield return new WaitForSeconds(1f);
+
+            Defines.DotweenScaleActiveFalse(bagTransform.gameObject);
+        }
+
     }
 
     public void TutorialCheck()

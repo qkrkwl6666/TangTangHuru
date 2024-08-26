@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8104833145706400291}
   - component: {fileID: 8039174528921591858}
   - component: {fileID: 2508640082135800310}
-  - component: {fileID: 6457221398251709690}
+  - component: {fileID: 7956576835433368689}
   m_Layer: 6
   m_Name: Rogues Assassin
   m_TagString: Untagged
@@ -111,7 +111,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.57}
   m_Size: {x: 0.94, y: 1.43}
   m_Direction: 0
---- !u!114 &6457221398251709690
+--- !u!114 &7956576835433368689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +120,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6610451247038614946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  isGuardian: 0
+  playerSubject: {fileID: 0}
+  hpBar: {fileID: 0}
 --- !u!1 &7885695401632452447
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,8 +137,7 @@ GameObject:
   - component: {fileID: 2638084326344027067}
   - component: {fileID: 4310140771671968192}
   - component: {fileID: 6234311490517136806}
-  - component: {fileID: 6579170503315983684}
-  - component: {fileID: 1612452372672568763}
+  - component: {fileID: 2659056389931915128}
   m_Layer: 6
   m_Name: BossView
   m_TagString: Untagged
@@ -187,8 +187,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f2f60d2a1ebf51245a65f1b758fbcae6, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -210,7 +209,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6579170503315983684
+--- !u!114 &2659056389931915128
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,20 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7885695401632452447}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 1612452372672568763}
---- !u!114 &1612452372672568763
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7885695401632452447}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: d07887fdf328b90458902ec4bc703f24, type: 2}
@@ -257,6 +243,3 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
-  timeScale: 1

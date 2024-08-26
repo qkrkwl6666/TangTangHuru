@@ -40,11 +40,6 @@ public class ShopUI : MonoBehaviour
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720004"));
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("600006"));
 
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610001"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610101"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610201"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610301"));
-
     }
 
     private void SetEntry(ItemData itemData)
@@ -70,6 +65,19 @@ public class ShopUI : MonoBehaviour
             inventory.RefreshItemSlotUI();
 
             SoundManager.Instance.PlaySound2D("success");
+
+            AchievementManager.Instance.myTasks.AddProgress("TotalPurchase");
+            if (AchievementManager.Instance.Check("TotalPurchase"))
+            {
+                AchievementManager.Instance.UnlockAchievement("TotalPurchase");
+            }
+
+            AchievementManager.Instance.myTasks.AddProgress("UsedGold", itemData.Price);
+            if (AchievementManager.Instance.Check("UsedGold"))
+            {
+                AchievementManager.Instance.UnlockAchievement("UsedGold");
+            }
+
         }
 
     }

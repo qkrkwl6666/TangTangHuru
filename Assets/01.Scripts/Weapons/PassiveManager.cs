@@ -30,6 +30,8 @@ public class PassiveManager : MonoBehaviour
         totalSpeedPassive = Instantiate(emptyPassiveData);
         totalNoneTypePassive = Instantiate(emptyPassiveData);
 
+
+        Invoke("RemoveFromUnoptainWeaponList", 1.5f);
     }
 
     public void PassiveAdd(PassiveData selected)
@@ -41,6 +43,12 @@ public class PassiveManager : MonoBehaviour
         inGamePassiveList.Remove(selected);
         SetTotalPassive();
         PassiveEquip();
+
+        foreach(var weapon in currWeaponCreators)
+        {
+            weapon.SetWeaponData();
+        }
+
         return;
     }
     public void PassiveLevelUp(PassiveData selected)
@@ -52,6 +60,11 @@ public class PassiveManager : MonoBehaviour
                 currPassive.Level++;
                 SetTotalPassive();
                 PassiveEquip();
+
+                foreach (var weapon in currWeaponCreators)
+                {
+                    weapon.SetWeaponData();
+                }
                 return;
             }
         }
@@ -110,5 +123,10 @@ public class PassiveManager : MonoBehaviour
         data.CoolDown = 0;
         data.CriticalChance = 0;
         data.CriticalValue = 0;
+    }
+
+    public void RemoveFromUnoptainWeaponList(WeaponCreator creator)
+    {
+        weaponCreators.RemoveAll(c => c.weaponDataRef.WeaponName == creator.weaponDataRef.WeaponName);
     }
 }

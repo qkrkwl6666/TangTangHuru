@@ -70,6 +70,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
     {
         if (!isUsed)
         {
+            SoundManager.Instance.PlayShortSound("exp");
             Release();
         }
     }

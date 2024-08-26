@@ -17,11 +17,15 @@ public class ItemSlotUI : MonoBehaviour
 
     public void SetOrbInfo(OrbDesc orbDesc)
     {
-        connected = orbDesc;
-        connected.Seleted();
+        if (connected != null)
+        {
+            connected = orbDesc;
+            connected.Seleted();
+            //currItemId = connected.orbId;
+        }
+        currItemId = orbDesc.orbId;
 
-        currItemId = connected.orbId;
-        var itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(connected.orbId.ToString());
+        var itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(currItemId.ToString());
         Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             slotIcon.sprite = x.Result;

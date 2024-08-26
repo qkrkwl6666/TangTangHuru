@@ -38,6 +38,11 @@ public class OrbCrafter : MonoBehaviour
         stonePersent.text = $"{createPersent}%"; ;
     }
 
+    private void OnEnable()
+    {
+        SetCount();
+    }
+
     private void SetCount()
     {
         stoneCount = inventory.GetItemCount(ItemType.ReinforcedStone, 0);
@@ -78,7 +83,7 @@ public class OrbCrafter : MonoBehaviour
     {
         int rndIndex = Random.Range(0, orbIdList.Count);
 
-        if (gaigeNum < 5)
+        if (gaigeNum < 4)
         {
             gaige[gaigeNum].color = Color.yellow;
             gaigeNum++;

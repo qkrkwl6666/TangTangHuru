@@ -36,6 +36,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private InGameUI gameUI;
     private float currentSpawnDistance = 0f;
 
+    private float mapMaxSize = 250f;
     private MonsterSkeletonSharing monsterSkeletonSharing;
 
     private void Awake()
@@ -244,8 +245,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
         // Todo : 임시 처리 하드코딩 변경 해야함
 
-        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250
-            || playerTransform.position.y >= 250 || playerTransform.position.x <= -250)
+        if (playerTransform.position.x >= Defines.maxMapSize || playerTransform.position.x <= -Defines.maxMapSize
+            || playerTransform.position.y >= Defines.maxMapSize || playerTransform.position.y <= -Defines.maxMapSize)
         {
             playerTransform.transform.position = Vector2.zero;
         }
@@ -258,13 +259,25 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
             spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-            if (spawnPos.x >= 250 || spawnPos.x <= -250 || spawnPos.y >= 250 || spawnPos.x <= -250)
+            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize 
+                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
             {
+                // x 좌표 조정
+                if (spawnPos.x >= Defines.maxMapSize)
+                    spawnPos.x = Defines.maxMapSize - 2;
+                else if (spawnPos.x <= -Defines.maxMapSize)
+                    spawnPos.x = -Defines.maxMapSize + 2;
 
+                // y 좌표 조정
+                if (spawnPos.y >= Defines.maxMapSize)
+                    spawnPos.y = Defines.maxMapSize - 2;
+                else if (spawnPos.y <= -Defines.maxMapSize)
+                    spawnPos.y = -Defines.maxMapSize + 2;
             }
             else break;
         }
 
+        Debug.Log(spawnPos);
         return spawnPos;
     }
 
@@ -275,8 +288,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 spawnPos;
 
         // Todo : 임시 처리 하드코딩 변경 해야함
-        if (playerTransform.position.x >= 250 || playerTransform.position.x <= -250
-            || playerTransform.position.y >= 250 || playerTransform.position.x <= -250)
+        if (playerTransform.position.x >= mapMaxSize || playerTransform.position.x <= -mapMaxSize
+            || playerTransform.position.y >= mapMaxSize || playerTransform.position.y <= -mapMaxSize)
         {
             playerTransform.transform.position = Vector2.zero;
         }
@@ -288,13 +301,25 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
             spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-            if (spawnPos.x >= 250 || spawnPos.x <= -250 || spawnPos.y >= 250 || spawnPos.x <= -250)
+            if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize 
+                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
             {
+                // x 좌표 조정
+                if (spawnPos.x >= mapMaxSize)
+                    spawnPos.x = mapMaxSize - 2;
+                else if (spawnPos.x <= -mapMaxSize)
+                    spawnPos.x = -mapMaxSize + 2;
 
+                // y 좌표 조정
+                if (spawnPos.y >= mapMaxSize)
+                    spawnPos.y = mapMaxSize - 2;
+                else if (spawnPos.y <= -mapMaxSize)
+                    spawnPos.y = -mapMaxSize + 2;
             }
             else break;
         }
 
+        //Debug.Log(spawnPos);
         return spawnPos;
     }
 
@@ -306,6 +331,22 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * currentSpawnDistance;
+
+        if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize
+                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
+        {
+            // x 좌표 조정
+            if (spawnPos.x >= mapMaxSize)
+                spawnPos.x = mapMaxSize - 2;
+            else if (spawnPos.x <= -mapMaxSize)
+                spawnPos.x = -mapMaxSize + 2;
+
+            // y 좌표 조정
+            if (spawnPos.y >= mapMaxSize)
+                spawnPos.y = mapMaxSize - 2;
+            else if (spawnPos.y <= -mapMaxSize)
+                spawnPos.y = -mapMaxSize + 2;
+        }
 
         return spawnPos;
     }
@@ -320,7 +361,25 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         for (int i = 0; i < spawnCount; i++)
         {
             Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (padding * i);
-            lines.Add(point + pos);
+            Vector2 spawnPos = point + pos;
+
+            if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize 
+                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
+            {
+                // x 좌표 조정
+                if (spawnPos.x >= mapMaxSize)
+                    spawnPos.x = mapMaxSize - 2;
+                else if (spawnPos.x <= -mapMaxSize)
+                    spawnPos.x = -mapMaxSize + 2;
+
+                // y 좌표 조정
+                if (spawnPos.y >= mapMaxSize)
+                    spawnPos.y = mapMaxSize - 2;
+                else if (spawnPos.y <= -mapMaxSize)
+                    spawnPos.y = -mapMaxSize + 2;
+            }
+
+            lines.Add(spawnPos);
         }
 
         return lines;
