@@ -326,37 +326,6 @@ public class AchievementManager : Singleton<AchievementManager>
 
     public List<string> GetArmorNameList()
     {
-        //List<string> armorSetNames = new List<string>
-        //{
-        //    "HolyKnightHelmet",
-        //    "HolyKnightArmor",
-        //    "HolyKnightShoes",
-
-        //    "SilverStriderHelmet",
-        //    "SilverStriderArmor",
-        //    "SilverStriderShoes",
-
-        //    "ShadowWorkHelmet",
-        //    "ShadowWorkArmor",
-        //    "ShadowWorkShoes",
-
-        //    "RedStoneHelmet",
-        //    "RedStoneArmor",
-        //    "RedStoneShoes",
-
-        //    "StormBreakerHelmet",
-        //    "StormBreakerArmor",
-        //    "StormBreakerShoes",
-
-        //    "MoonWalkerHelmet",
-        //    "MoonWalkerArmor",
-        //    "MoonWalkerShoes",
-
-        //    "SkyWatchHelmet",
-        //    "SkyWatchArmor",
-        //    "SkyWatchShoes",
-        //};
-
         return myTasks.armorSetNames;
     }
 }

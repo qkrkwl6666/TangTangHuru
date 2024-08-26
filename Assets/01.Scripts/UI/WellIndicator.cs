@@ -18,7 +18,7 @@ public class WellIndicator : MonoBehaviour
 
         wellUI.SetActive(false);
 
-        canvasRect = wellUI.GetComponent<RectTransform>();
+        //canvasRect = wellUI.GetComponent<RectTransform>();
 
         foreach (Transform t in wellUI.transform)
         {

@@ -25,6 +25,7 @@ public class BossData
     public float Skill4_Probability { get; set; }
     public int Skill5_Id { get; set; }
     public float Skill5_Probability { get; set; }
+    public float SizeScale { get; set; }
 
     public BossData GetDeepCopyBossData()
     {
@@ -52,6 +53,8 @@ public class BossData
 
         bossData.Skill5_Id = Skill5_Id;
         bossData.Skill5_Probability = Skill5_Probability;
+
+        bossData.SizeScale = SizeScale;
 
         return bossData;
     }

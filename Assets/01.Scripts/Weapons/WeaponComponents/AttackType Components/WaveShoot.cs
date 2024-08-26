@@ -12,7 +12,7 @@ public class WaveShoot : MonoBehaviour, IProjectile
     private Vector2 targetPosition;
 
     private float frequency = 15f; // 출렁이는 빈도
-    private float magnitude = 2f; // 출렁이는 강도
+    private float magnitude = 1.5f; // 출렁이는 강도
     private float currFrequency;
 
     public float Range { get; set; }
