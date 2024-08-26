@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 100
   playerSubject: {fileID: 0}
+  hpBar: {fileID: 0}
 --- !u!114 &1250074132078640497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,6 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5a7f85745f46ce43a0aba4fc4aca107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCritical: 0
 --- !u!50 &3333322647810660637
 Rigidbody2D:
   serializedVersion: 4
@@ -76,7 +78,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 80
-  m_AngularDrag: 0.05
+  m_AngularDrag: 10
   m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
