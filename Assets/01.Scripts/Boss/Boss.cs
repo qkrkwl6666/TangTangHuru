@@ -64,6 +64,8 @@ public class Boss : LivingEntity, IPlayerObserver
         SetBossSkill(bossData);
 
         AwakeHealth();
+
+        SetScale();
     }
     public void SetBossSkill(BossData bossData)
     {
@@ -263,5 +265,10 @@ public class Boss : LivingEntity, IPlayerObserver
     public void OnDestroy()
     {
         OnDead = null;
+    }
+
+    public void SetScale()
+    {
+        gameObject.transform.localScale = new Vector3(BossData.SizeScale, BossData.SizeScale);
     }
 }
