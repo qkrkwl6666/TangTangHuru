@@ -19,8 +19,6 @@ public class Barrage : MonoBehaviour
     private bool attackable = false;
     private float attackTime = 3f;
 
-    public LayerMask attackableLayer;
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!attackable) return;
@@ -71,7 +69,7 @@ public class Barrage : MonoBehaviour
             pool.Release(gameObject);
         }
 
-        transform.Translate(dir * speed * Time.deltaTime);
+        transform.Translate(speed * Time.deltaTime * dir);
     }
 
     public void SetObjectPool(IObjectPool<GameObject> pool)

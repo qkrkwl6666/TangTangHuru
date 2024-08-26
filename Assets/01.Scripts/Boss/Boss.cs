@@ -141,6 +141,25 @@ public class Boss : LivingEntity, IPlayerObserver
                         laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Left);
                     }
                     break;
+                case 500013:
+                    // 분열 X 그냥 팅기기
+                    {
+                        var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
+                        reflect.SetReflect(false, 1f, 10f, 10f, 0);
+                    }
+                    break;
+                case 500014:
+                    {
+                        var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
+                        reflect.SetReflect(true, 1f, 15f, 7f, 2);
+                    }
+                    break;
+                case 500015:
+                    {
+                        var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
+                        reflect.SetReflect(true, 1f, 15f, 5f, 5);
+                    }
+                    break;
 
                 // 가디언
                 case 510013:
