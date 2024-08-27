@@ -108,7 +108,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                             rangeSkill.Initialize(monsterData, playerTransform);
                             break;
                         case (int)MonsterType.Explosion:
-
+                            monsterScript.isBoomType = true;
                             break;
                     }
 
