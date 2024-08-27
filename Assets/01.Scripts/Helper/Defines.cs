@@ -26,8 +26,11 @@ public static class Defines
     public static readonly string emptyRect = "EmptyRect";
     public static readonly string boom = "Boom";
     public static readonly string stunCirlce = "StunCircle";
+    public static readonly string monsterBoom = "MonsterBoom";
 
     public static readonly string player = "Player";
+    //public static readonly string monster = "Monster";
+    public static readonly string enemy = "Enemy";
 
     // Scene
     public static readonly string tutorialScene = "TutorialScene";
