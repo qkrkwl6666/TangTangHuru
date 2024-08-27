@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 6234311490517136806}
   - component: {fileID: 2659056389931915128}
   m_Layer: 6
-  m_Name: BossView
+  m_Name: MonsterView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,7 +187,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: f2f60d2a1ebf51245a65f1b758fbcae6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
