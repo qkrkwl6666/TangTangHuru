@@ -55,9 +55,9 @@ public class LaserShoot : MonoBehaviour, IProjectile
     void SetDestination()
     {
         laserHit = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, attackableMask);
-        laserHitGuardian = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, LayerMask.NameToLayer("Guardian"));
+        //laserHitGuardian = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, LayerMask.NameToLayer("Guardian"));
         
-        if (laserHit.collider != null || laserHitGuardian.collider != null)
+        if (laserHit.collider != null)
         {
             endPoint = laserHit.point;
         }
