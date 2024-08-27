@@ -1,6 +1,7 @@
 using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -26,6 +27,8 @@ public class SwordSkill : MonoBehaviour, IBossSkill
     private Transform playerTransform;
     private BossView bossView;
 
+    private bool allAttackCount = false;
+
     public void Activate()
     {
         enabled = true;
@@ -39,11 +42,12 @@ public class SwordSkill : MonoBehaviour, IBossSkill
         IsChange = false;
     }
 
-    public void SetSwordSkill(int attackCount, Transform transform, BossView bossView)
+    public void SetSwordSkill(int attackCount, Transform transform, BossView bossView, bool isAllAttck = false)
     {
         this.attackCount = attackCount;
         playerTransform = transform;
         this.bossView = bossView;
+        this.allAttackCount = isAllAttck;
     }
 
     public void Initialize(BossSkillData bossSkillData, float damage)
@@ -100,34 +104,44 @@ public class SwordSkill : MonoBehaviour, IBossSkill
 
         bossView.PlayAnimation(Defines.attack).Complete += (x) => 
         {
-            for(int i = 0; i < attackCount; i++)
+            if(allAttackCount)
             {
-                if (attackCount == 1)
+                for(int i =0; i < attackCount; i++)
                 {
-                    Vector2 playerDir = (playerTransform.position - transform.position).normalized;
-                    var tornado2 = pool.Get().GetComponent<Tornado>().GetComponent<Tornado>();
-
-                    tornado2.transform.position = transform.position;
-                    tornado2.Init(playerDir, disableDuration, speed, scale);
-                    break;
+                    CirlcePosition(i, attackCount);
                 }
+            }
+            else
+            {
+                for (int i = 0; i < attackCount; i++)
+                {
+                    if (attackCount == 1)
+                    {
+                        Vector2 playerDir = (playerTransform.position - transform.position).normalized;
+                        var tornado2 = pool.Get().GetComponent<Tornado>().GetComponent<Tornado>();
 
-                Vector2 dir = (playerTransform.position - transform.position).normalized;
-                float defaultAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                        tornado2.transform.position = transform.position;
+                        tornado2.Init(playerDir, disableDuration, speed, scale);
+                        break;
+                    }
 
-                float angle = (maxAngle / attackCount * (i + 1)) + defaultAngle;
-                int minus = attackCount / 2 + 1;
-                float finalAngle = angle - (minus * (maxAngle / attackCount));
+                    Vector2 dir = (playerTransform.position - transform.position).normalized;
+                    float defaultAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-                Vector2 reflectBallDir = new Vector2(Mathf.Cos(finalAngle * Mathf.Deg2Rad),
-                        Mathf.Sin(finalAngle * Mathf.Deg2Rad));
+                    float angle = (maxAngle / attackCount * (i + 1)) + defaultAngle;
+                    int minus = attackCount / 2 + 1;
+                    float finalAngle = angle - (minus * (maxAngle / attackCount));
 
-                reflectBallDir.Normalize();
+                    Vector2 reflectBallDir = new Vector2(Mathf.Cos(finalAngle * Mathf.Deg2Rad),
+                            Mathf.Sin(finalAngle * Mathf.Deg2Rad));
 
-                var tornado = pool.Get().GetComponent<Tornado>().GetComponent<Tornado>();
+                    reflectBallDir.Normalize();
 
-                tornado.transform.position = transform.position;
-                tornado.Init(reflectBallDir, disableDuration, speed, scale);
+                    var tornado = pool.Get().GetComponent<Tornado>().GetComponent<Tornado>();
+
+                    tornado.transform.position = transform.position;
+                    tornado.Init(reflectBallDir, disableDuration, speed, scale);
+                }
             }
 
         };
@@ -137,6 +151,18 @@ public class SwordSkill : MonoBehaviour, IBossSkill
             IsChange = true;
             return;
         }
+    }
+
+    public void CirlcePosition(int index, float randomCount)
+    {
+        float angle = ((360 / randomCount) * index) * Mathf.Deg2Rad;
+
+        Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)).normalized;
+        if (pool == null) return;
+
+        var tornado = pool.Get().GetComponent<Tornado>().GetComponent<Tornado>();
+        tornado.transform.position = transform.position;
+        tornado.Init(CirclePos, disableDuration, speed, scale);
     }
 
 }

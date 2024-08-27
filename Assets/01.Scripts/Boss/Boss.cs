@@ -176,7 +176,7 @@ public class Boss : LivingEntity, IPlayerObserver
                 case 500018:
                     {
                         var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
-                        sword.SetSwordSkill(12, PlayerTransform, bossView);
+                        sword.SetSwordSkill(12, PlayerTransform, bossView, true);
                     }
                     break;
 
