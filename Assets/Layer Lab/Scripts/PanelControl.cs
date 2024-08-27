@@ -13,18 +13,22 @@ namespace LayerLab.GUIScripts
         private int _page;
         private bool _isReady;
         private TextMeshProUGUI _textTitle;
-        [SerializeField] private List<GameObject> defaultPanels = new();
-        [SerializeField] private List<GameObject> otherPanels = new();
-
+        [SerializeField] private List<GameObject> defaultPanels = new ();
+        [SerializeField] private List<GameObject> otherPanels = new ();
+        
         [SerializeField] private Transform panelTransformDefault;
         [SerializeField] private Transform panelTransformOther;
         [SerializeField] private Button buttonPrev;
         [SerializeField] private Button buttonNext;
 
+        private bool IsOtherMode { get; set; }
+
 
         private void OnValidate()
         {
-            panelTransformDefault = GameObject.Find("Panels").transform;
+            var panels = GameObject.Find("Panels");
+            if (panels) panelTransformDefault = panels.transform;
+            
             buttonPrev = transform.GetChild(0).GetComponent<Button>();
             buttonNext = transform.GetChild(2).GetComponent<Button>();
         }
@@ -34,7 +38,6 @@ namespace LayerLab.GUIScripts
             OnValidate();
         }
 
-        private bool IsOtherMode { get; set; }
         private void Start()
         {
             _textTitle = transform.GetComponentInChildren<TextMeshProUGUI>();
@@ -47,28 +50,27 @@ namespace LayerLab.GUIScripts
                 t.gameObject.SetActive(false);
             }
             defaultPanels[_page].SetActive(true);
-
-
-
-
-            if (otherPanels.Count > 0)
+            
+            
+            if(panelTransformOther == null) return;
+            
+            foreach (Transform t in panelTransformOther)
             {
-                foreach (Transform t in panelTransformOther)
-                {
-                    otherPanels.Add(t.gameObject);
-                    t.gameObject.SetActive(false);
-                }
-                otherPanels[_page].SetActive(true);
+                otherPanels.Add(t.gameObject);
+                t.gameObject.SetActive(false);
             }
+            
+            
+            if (otherPanels.Count > 0) otherPanels[_page].SetActive(true);
 
-
-
-
+            
+            
+            
             _isReady = true;
             CheckControl();
         }
 
-        void Update()
+        private void Update()
         {
             if (defaultPanels.Count <= 0 || !_isReady) return;
 
@@ -95,16 +97,16 @@ namespace LayerLab.GUIScripts
 
         //Click_Prev
         //Click_Prev
-        public void Click_Prev()
+        private void Click_Prev()
         {
             if (_page <= 0) return;
 
             defaultPanels[_page].SetActive(false);
-            if (otherPanels.Count > 0) otherPanels[_page].SetActive(false);
+            if(otherPanels.Count > 0) otherPanels[_page].SetActive(false);
             _page -= 1;
-
+            
             defaultPanels[_page].SetActive(true);
-            if (otherPanels.Count > 0) otherPanels[_page].SetActive(true);
+            if(otherPanels.Count > 0) otherPanels[_page].SetActive(true);
 
             if (!IsOtherMode)
             {
@@ -117,26 +119,26 @@ namespace LayerLab.GUIScripts
                     _textTitle.text = otherPanels[_page].name;
                 }
             }
-
+            
             CheckControl();
         }
 
         //Click_Next
-        public void Click_Next()
+        private void Click_Next()
         {
             if (_page >= defaultPanels.Count - 1) return;
-
+            
             defaultPanels[_page].SetActive(false);
-            if (otherPanels.Count > 0) otherPanels[_page].SetActive(false);
+            if(otherPanels.Count > 0) otherPanels[_page].SetActive(false);
             _page += 1;
-
+            
             defaultPanels[_page].SetActive(true);
-            if (otherPanels.Count > 0) otherPanels[_page].SetActive(true);
+            if(otherPanels.Count > 0) otherPanels[_page].SetActive(true);
             CheckControl();
         }
 
 
-        void SetArrowActive()
+        private void SetArrowActive()
         {
             buttonPrev.gameObject.SetActive(_page > 0);
             buttonNext.gameObject.SetActive(_page < defaultPanels.Count - 1);
@@ -147,7 +149,7 @@ namespace LayerLab.GUIScripts
         {
             if (!IsOtherMode)
             {
-                _textTitle.text = defaultPanels[_page].name.Replace("_", " ");
+                _textTitle.text = defaultPanels[_page].name.Replace("_", " ");    
             }
             else
             {
@@ -156,21 +158,21 @@ namespace LayerLab.GUIScripts
                     _textTitle.text = otherPanels[_page].name.Replace("_", " ");
                 }
             }
-
+            
             SetArrowActive();
         }
-
+        
         public void Click_Mode()
         {
             IsOtherMode = !IsOtherMode;
             SetMode();
             CheckControl();
         }
-
-        void SetMode()
+        
+        private void SetMode()
         {
-            panelTransformDefault.gameObject.SetActive(IsOtherMode);
-            if (otherPanels.Count > 0) panelTransformOther.gameObject.SetActive(!IsOtherMode);
+            panelTransformDefault.gameObject.SetActive(!IsOtherMode);
+            if(otherPanels.Count > 0) panelTransformOther.gameObject.SetActive(IsOtherMode);
         }
     }
 }

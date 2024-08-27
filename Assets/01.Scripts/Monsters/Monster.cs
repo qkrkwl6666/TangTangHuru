@@ -22,6 +22,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public Slider hpBar;
     private bool isSliderVisible = true;
+    public bool isBoomType = false;
 
     public void Initialize(PlayerSubject playerSubject)
     {
@@ -90,6 +91,13 @@ public class Monster : LivingEntity, IPlayerObserver
 
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
+
+        if(isBoomType)
+        {
+            var boom = ObjectPoolManager.boomPool.Get();
+            boom.GetComponent<MonsterBoom>().Init(Damage);
+            boom.transform.position = transform.position;
+        }
 
         dead = true;
 

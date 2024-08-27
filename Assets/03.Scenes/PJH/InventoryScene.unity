@@ -33610,63 +33610,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 1, y: 0.5}
---- !u!1001 &1577994543797198966
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.97
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3919914328529504570, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4190610150193212913, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
-      propertyPath: m_Name
-      value: vfx_Projectile_Orb01_Red_Mobile
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 52a5f9cd47eaef640b2996e6472809f8, type: 3}
 --- !u!1 &1584270920604013599
 GameObject:
   m_ObjectHideFlags: 0
@@ -49522,7 +49465,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 10
+  m_fontSize: 9.9
   m_fontSizeBase: 29
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -94711,6 +94654,11 @@ MonoBehaviour:
   - {fileID: 1979460127400160256}
   - {fileID: 7341206486964455619}
   - {fileID: 1115891555050861548}
+  playerStatusTexts:
+  - {fileID: 4983208972405431591}
+  - {fileID: 370227765539796349}
+  - {fileID: 4072763683992531153}
+  - {fileID: 4574740304364230426}
   equipmentTextUI:
   - {fileID: 979832}
   - {fileID: 294398440}
@@ -115733,4 +115681,3 @@ SceneRoots:
   - {fileID: 535717634}
   - {fileID: 9029579616281102888}
   - {fileID: 1627006221706115095}
-  - {fileID: 1577994543797198966}

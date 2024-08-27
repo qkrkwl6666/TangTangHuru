@@ -31,7 +31,7 @@ public class MonsterController : MonoBehaviour, IPlayerObserver
         MonsterView = GetComponentInChildren<MonsterView>();
         Monster = GetComponent<Monster>();
 
-        MonsterStateMachine = new MonsterStateMachine(this, MoveType);
+        MonsterStateMachine = new MonsterStateMachine(this, MoveType, Monster);
     }
 
     public void Initialize()
