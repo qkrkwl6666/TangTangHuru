@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class LevelUpUI : MonoBehaviour
 {
     public bool isTutorialStage = false;
+    private int tutorialProgress = 0;
+
     public IconLoader iconLoader;
     public List<LevelUpOption> Options_UI;
 
@@ -32,6 +34,19 @@ public class LevelUpUI : MonoBehaviour
 
         stringMgr = DataTableManager.Instance.Get<StringTable>(DataTableManager.String);
 
+        SetLevelUpUI();
+    }
+
+    private void OnDisable()
+    {
+        foreach (var option in Options_UI)
+        {
+            option.GetComponent<Button>().onClick.RemoveAllListeners();
+        }
+    }
+
+    public void SetLevelUpUI()
+    {
         if (isTutorialStage)
         {
             SetTutorialOptions();
@@ -42,14 +57,9 @@ public class LevelUpUI : MonoBehaviour
         }
         SetSelectables();
 
-        isTutorialStage = false;
-    }
-
-    private void OnDisable()
-    {
-        foreach (var option in Options_UI)
+        if (tutorialProgress > 1)
         {
-            option.GetComponent<Button>().onClick.RemoveAllListeners();
+            isTutorialStage = false;
         }
     }
 
@@ -100,7 +110,14 @@ public class LevelUpUI : MonoBehaviour
         {
             if (isTutorialStage)
             {
-                PassiveOrActive.Add(10);
+                if(tutorialProgress == 1)
+                {
+                    PassiveOrActive.Add(10);
+                }
+                else
+                {
+                    PassiveOrActive.Add(0);
+                }
             }
             else
             {
@@ -188,21 +205,39 @@ public class LevelUpUI : MonoBehaviour
 
         var weaponCount = 0;
 
-        foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
+        if (tutorialProgress == 0)
         {
-            if (!weaponCreator.isMainWeapon && weaponCreator.currLevel < 5)
+            foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
             {
-                weaponList.Add(weaponCreator);
+                if (!weaponCreator.isMainWeapon && weaponCreator.currLevel < 5)
+                {
+                    weaponList.Add(weaponCreator);
+                }
+                weaponCount++; //보유중 숫자
+            }
+            if (weaponCount < 5)
+            {
+                foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
+                {
+                    weaponList.Add(weaponCreator);
+                }
+            }
+        }
+        else if(tutorialProgress == 1)
+        {
+            foreach (var passiveData in passiveManager.inGamePassiveList) //추가될 패시브
+            {
+                if (passiveList.Count < 5)
+                {
+                    passiveList.Add(passiveData);
+                }
 
             }
-            weaponCount++; //보유중 숫자
         }
-        if (weaponCount < 5)
-        {
-            foreach (var weaponCreator in passiveManager.weaponCreators) //추가될 스킬
-            {
-                weaponList.Add(weaponCreator);
-            }
-        }
+
+        tutorialProgress++;
+
     }
+
+
 }
