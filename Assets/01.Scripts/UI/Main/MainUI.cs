@@ -96,6 +96,7 @@ public class MainUI : MonoBehaviour
     public void InventoryUIButton()
     {
         mainInventory.RefreshItemSlotUI();
+        mainInventory.RefreshPlayerStatusText();
 
         for (int i = 0; i < uiGameObjects.Count; i++)
         {

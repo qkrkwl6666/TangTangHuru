@@ -177,6 +177,7 @@ public class PlayerHealth : LivingEntity
 
     public void Health(float heal)
     {
+        Debug.Log("Health");
         health += heal;
 
         if (health > startingHealth)
