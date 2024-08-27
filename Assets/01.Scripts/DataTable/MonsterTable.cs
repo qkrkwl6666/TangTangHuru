@@ -20,6 +20,8 @@ public class MonsterData
     public float Cooldown { get; set; }
     public float Range { get; set; }
     public float AttackInterval { get; set; }
+    public int Type { get; set; }
+    public string Skill_Prefab { get; set; }
 
     public MonsterData GetDeepCopyMonsterData()
     {
@@ -37,6 +39,8 @@ public class MonsterData
         monsterData.Cooldown = Cooldown;
         monsterData.Range = Range;
         monsterData.AttackInterval = AttackInterval;
+        monsterData.Type = Type;
+        monsterData.Skill_Prefab = Skill_Prefab;
 
         return monsterData;
     }

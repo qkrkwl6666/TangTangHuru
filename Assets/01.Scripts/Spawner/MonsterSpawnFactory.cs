@@ -98,13 +98,27 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     var mc = go.AddComponent<MonsterController>();
                     mc.MoveSpeed = monsterData.Monster_MoveSpeed;
 
-                    if (monsterData.Monster_Skill_Id == -1) return go;
+                    switch(monsterData.Type)
+                    {
+                        case (int)MonsterType.Default:
 
-                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
-                    (DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
-                         .Monster_Skill_Id.ToString());
+                            break;
+                        case (int)MonsterType.Range:
+                            var rangeSkill = go.AddComponent<RangeSkill>();
+                            rangeSkill.Initialize(monsterData, playerTransform);
+                            break;
+                        case (int)MonsterType.Explosion:
 
-                    MonsterSkillAddComponent(go, skillData);
+                            break;
+                    }
+
+                    //if (monsterData.Monster_Skill_Id == -1) return go;
+
+                    //var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
+                    //(DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
+                    //     .Monster_Skill_Id.ToString());
+
+                    //MonsterSkillAddComponent(go, skillData);
 
                     return go;
                 },
@@ -390,4 +404,11 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         playerTransform = playerSubject.GetPlayerTransform;
     }
+}
+
+public enum MonsterType
+{
+    Default = 1,
+    Range,
+    Explosion,
 }
