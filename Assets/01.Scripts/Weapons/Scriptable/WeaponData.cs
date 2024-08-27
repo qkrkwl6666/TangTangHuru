@@ -70,7 +70,7 @@ public class WeaponData : ScriptableObject
     private AimType aimType;
     public AimType WeaponAimType { get { return aimType; } set { aimType = value; } }
 
-    [Header("공격 방식(생성 후 움직임)")]
+    [Header("발사 방식")]
     [SerializeField]
     private MoveType moveType;
     public MoveType WeaponMoveType { get { return moveType; } set { moveType = value; } }
