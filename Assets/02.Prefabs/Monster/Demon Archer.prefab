@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2579497038471785354}
   - component: {fileID: 160334834872959974}
   - component: {fileID: 1116909870429385181}
-  - component: {fileID: 8061830718695388778}
+  - component: {fileID: 6218649359301815043}
   m_Layer: 6
   m_Name: Demon Archer
   m_TagString: Untagged
@@ -64,7 +64,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 80
   m_AngularDrag: 10
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,7 +111,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.66}
   m_Size: {x: 1.74, y: 1.71}
   m_Direction: 0
---- !u!114 &8061830718695388778
+--- !u!114 &6218649359301815043
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,11 +120,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 129812815686108976}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 100
-  isGuardian: 0
+  playerSubject: {fileID: 0}
+  hpBar: {fileID: 0}
 --- !u!1 &5158903877088167640
 GameObject:
   m_ObjectHideFlags: 0
@@ -136,10 +137,9 @@ GameObject:
   - component: {fileID: 5713622809541771585}
   - component: {fileID: 5130488255951991500}
   - component: {fileID: 6144739987545755722}
-  - component: {fileID: 3229969307970589087}
-  - component: {fileID: 3232635826904440862}
+  - component: {fileID: 6100280226919642294}
   m_Layer: 6
-  m_Name: BossView
+  m_Name: MonsterView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -187,8 +187,7 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: d423a082297abc14e8ab9c7af9043cba, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -210,7 +209,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &3229969307970589087
+--- !u!114 &6100280226919642294
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,7 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5158903877088167640}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
+  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 86fc94ae479f1d74d937e60ce2102f41, type: 2}
@@ -244,19 +243,3 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
-  _animationName: 
-  loop: 0
-  timeScale: 1
---- !u!114 &3232635826904440862
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5158903877088167640}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skeletonAnimation: {fileID: 3229969307970589087}

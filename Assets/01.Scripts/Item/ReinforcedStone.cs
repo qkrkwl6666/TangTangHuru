@@ -24,5 +24,6 @@ public class ReinforcedStone : MonoBehaviour, IInGameItem
     public void UseItem()
     {
         inventory.AddItem(this);
+        gameObject.SetActive(false);
     }
 }

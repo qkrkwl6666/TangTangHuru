@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// 안쓰는 스크립트
+
 public class Guardian : LivingEntity, IPlayerObserver
 {
     public float MoveSpeed { get; private set; }

@@ -21,6 +21,8 @@ public class ReflectBall : MonoBehaviour
     private bool fission = false;
     private int copyCount = 0;
 
+    private float maxAngle = 90f;
+
     public void Init(Vector2 dir, Transform bossTransform, float circleScale
         , float ballSpeed, float disableDuration, bool fission = false,
         float currentTime = 0f, int copyCount = 0)
@@ -89,15 +91,12 @@ public class ReflectBall : MonoBehaviour
                 // 현재 각도 의 반대 각도
                 float defaultAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 180;
 
-                // 분열 각도
-                float angle = ((defaultAngle / copyCount / 2) + defaultAngle) / copyCount;
+                float angle = (maxAngle / copyCount * (i + 1)) + defaultAngle;
+                int minus = copyCount / 2 + 1;
+                float finalAngle = angle - (minus * (maxAngle / copyCount));
 
-                angle *= i + 1;
-
-                Vector2 reflectBallDir = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad),
-                    Mathf.Sin(angle * Mathf.Deg2Rad));
-
-                reflectBallDir.Normalize();
+                Vector2 reflectBallDir = new Vector2(Mathf.Cos(finalAngle * Mathf.Deg2Rad),
+                        Mathf.Sin(finalAngle * Mathf.Deg2Rad)).normalized;
 
                 var ball = pool.Get().GetComponent<ReflectBall>();
                 ball.transform.position = transform.position;
@@ -112,8 +111,6 @@ public class ReflectBall : MonoBehaviour
         {
             dir = Vector2.Reflect(dir.normalized, -dir.normalized);
         }
-
-
             
     }
 

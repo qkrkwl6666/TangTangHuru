@@ -21,11 +21,6 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public float SkillRate { get; set; } = 5f;
     public float DamageFactor { get; set; } = 1f;
 
-    private void Awake()
-    {
-
-    }
-
     public void SetCountScale(int count, float scale)
     {
         attackCount = count;
