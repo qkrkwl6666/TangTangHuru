@@ -9,6 +9,8 @@ public enum SoundType
 {
     BGM,
     EFFECT,
+    ATTACK_EFFECT,
+    HIT_EFFECT,
 }
 
 public class SoundManager : Singleton<SoundManager>
@@ -33,6 +35,16 @@ public class SoundManager : Singleton<SoundManager>
 
     private bool soundLoaded = false;
 
+    private int totalPlayLimit = 30;
+    private int totalPlayCount = 0;
+    private int attackPlayLimit = 10;
+    private int attackPlayCount = 0;
+    private int hitPlayLimit = 5;
+    private int hitPlayCount = 0;
+
+    public float hitCoolTime = 0;
+    public float hitMaxTime = 0.15f;
+
     private void Start()
     {
         clipDictionary = new Dictionary<string, AudioClip>();
@@ -46,6 +58,14 @@ public class SoundManager : Singleton<SoundManager>
         Addressables.LoadAssetsAsync<AudioClip>("BGM", OnClipLoaded).Completed += OnLoadCheck;
         Addressables.LoadAssetsAsync<AudioClip>("StageSound", OnClipLoaded).Completed += OnLoadCheck;
         Addressables.LoadAssetsAsync<AudioClip>("WeaponSound", OnClipLoaded).Completed += OnLoadCheck;
+    }
+
+    private void Update()
+    {
+        if(hitCoolTime > 0)
+        {
+            hitCoolTime -= Time.deltaTime;
+        }
     }
 
     public void CreateTemporalObjects()
@@ -77,6 +97,9 @@ public class SoundManager : Singleton<SoundManager>
     public void ClearSoundPlayerPool()
     {
         soundPlayerPool.Clear();
+        totalPlayCount = 0;
+        attackPlayCount = 0;
+        hitPlayCount = 0;
     }
 
     private void OnLoadCheck(AsyncOperationHandle<IList<AudioClip>> handle)
@@ -127,8 +150,39 @@ public class SoundManager : Singleton<SoundManager>
 
 
 
-    private TemporalSoundPlayer GetSoundPlayer()
+    private TemporalSoundPlayer GetSoundPlayer(SoundType type)
     {
+        switch(type)
+        {
+            case SoundType.EFFECT:
+                //totalPlayCount++;
+                if (totalPlayCount > totalPlayLimit)
+                {
+                    return null;
+                }
+                break;
+            case SoundType.ATTACK_EFFECT:
+                if (attackPlayCount > attackPlayLimit)
+                {
+                    return null;
+                }
+                else
+                {
+                    attackPlayCount++;
+                }
+                break;
+            case SoundType.HIT_EFFECT:
+                if (hitPlayCount > hitPlayLimit)
+                {
+                    return null;
+                }
+                else
+                {
+                    hitPlayCount++;
+                }
+                break;
+        }
+
         if (soundPlayerPool.Count > 0)
         {
             var soundPlayer = soundPlayerPool.Dequeue();
@@ -143,10 +197,23 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    private void ReturnSoundPlayer(TemporalSoundPlayer soundPlayer)
+    private void ReturnSoundPlayer(TemporalSoundPlayer soundPlayer, SoundType type = SoundType.EFFECT)
     {
         soundPlayer.gameObject.SetActive(false);
         soundPlayerPool.Enqueue(soundPlayer);
+
+        switch (type)
+        {
+            case SoundType.EFFECT:
+                totalPlayCount--;
+                break;
+            case SoundType.ATTACK_EFFECT:
+                attackPlayCount--;
+                break;
+            case SoundType.HIT_EFFECT:
+                hitPlayCount--;
+                break;
+        }
     }
 
     private AudioClip GetClip(string clipName)
@@ -200,7 +267,10 @@ public class SoundManager : Singleton<SoundManager>
 
     public void PlaySound2D(string clipName, float delay = 0f, bool isLoop = false, SoundType type = SoundType.EFFECT)
     {
-        var soundPlayer = GetSoundPlayer();
+        var soundPlayer = GetSoundPlayer(type);
+
+        if (soundPlayer == null)
+            return;
 
         // 루프를 사용하는 경우 사운드를 저장
         if (isLoop) { AddToList(soundPlayer); }
@@ -211,21 +281,25 @@ public class SoundManager : Singleton<SoundManager>
         if (!isLoop)
         {
             // 루프가 아닌 경우 일정 시간 후 사운드 플레이어 반환
-            StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer));
+            StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer, type));
         }
     }
 
     public void PlayShortSound(string clipName, float delay = 0f, bool isLoop = false, SoundType type = SoundType.EFFECT)
     {
-        var soundPlayer = GetSoundPlayer();
+        var soundPlayer = GetSoundPlayer(type);
+
+        if (soundPlayer == null)
+            return;
+
         soundPlayer.AudioSource.PlayOneShot(GetClip(clipName), currEffectVolume);
-        StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer));
+        StartCoroutine(ReturnSoundPlayerAfterPlay(soundPlayer, type));
     }
 
-    private IEnumerator ReturnSoundPlayerAfterPlay(TemporalSoundPlayer soundPlayer)
+    private IEnumerator ReturnSoundPlayerAfterPlay(TemporalSoundPlayer soundPlayer, SoundType type)
     {
         yield return new WaitUntil(() => !soundPlayer.AudioSource.isPlaying);
-        ReturnSoundPlayer(soundPlayer);
+        ReturnSoundPlayer(soundPlayer, type);
     }
 
     public void InitVolumes(float bgmVolume, float effectVolume)
@@ -237,5 +311,10 @@ public class SoundManager : Singleton<SoundManager>
     public void SetVolume(SoundType type, float value)
     {
         mAudioMixer.SetFloat(type.ToString(), value);
+    }
+
+    public void HitCoolTimeOn()
+    {
+        hitCoolTime = hitMaxTime;
     }
 }

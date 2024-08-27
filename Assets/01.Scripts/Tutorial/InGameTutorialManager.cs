@@ -83,11 +83,17 @@ public class InGameTutorialManager : MonoBehaviour
         levelUpPanel.offsetMax = new Vector2(levelUpPanel.offsetMax.x, -topLevelUpRectTop);
         levelUpPanel.offsetMin = new Vector2(levelUpPanel.offsetMin.x, topLevelUpRectBottom);
 
+        levelUpPanel.GetComponent<LevelUpUI>().SetLevelUpUI();
+
         yield return StartCoroutine(ChatActive(3, 1, true));
 
         // 복원
         levelUpPanel.offsetMax = new Vector2(levelUpPanel.offsetMax.x, -defaultlevelupRect);
         levelUpPanel.offsetMin = new Vector2(levelUpPanel.offsetMin.x, defaultlevelupRect);
+
+        levelUpPanel.GetComponent<LevelUpUI>().SetLevelUpUI();
+
+        levelUpPanel.gameObject.SetActive(true);
 
         // 버튼 선택 까지 대기
         while (true)

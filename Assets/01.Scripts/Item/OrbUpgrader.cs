@@ -15,6 +15,12 @@ public class OrbUpgrader : MonoBehaviour
 
     private void OnEnable()
     {
+        if(inventory == null)
+        {
+            var inventoryObj = GameObject.FindGameObjectWithTag("MainInventory");
+            inventory = inventoryObj.GetComponent<MainInventory>();
+        }
+
         upgradeSlots = GetComponentsInChildren<ItemSlotUI>();
 
         foreach (var slot in upgradeSlots)

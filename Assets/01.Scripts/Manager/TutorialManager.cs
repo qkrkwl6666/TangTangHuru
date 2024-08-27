@@ -141,7 +141,7 @@ public class TutorialManager : MonoBehaviour
             StartCoroutine(Tutorial1Start());
         }
 
-        // 譬配府倔 纠捞 场炒阑 版快
+        // 譬配府倔 纠捞 场车阑 版快
         if (GameManager.Instance.isTutorialSceneEnd)
         {
             GameManager.Instance.isTutorialSceneEnd = false;
