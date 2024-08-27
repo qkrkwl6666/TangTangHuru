@@ -25,10 +25,14 @@ public class AngularAim : MonoBehaviour, IAimer
             angle = (180f / TotalCount) * Index;
 
         }
-        else
+        else if(TotalCount == 3)
         {
             angle = (360f / TotalCount) * Index;
             angle -= 90;
+        }
+        else
+        {
+            angle = (360f / TotalCount) * Index;
         }
         angle *= Mathf.Deg2Rad;
         direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));

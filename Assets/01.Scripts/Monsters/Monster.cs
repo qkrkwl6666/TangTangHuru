@@ -3,15 +3,10 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
-public enum MonsterType
-{
-    MeleeAttackType = 1,
-    RangedAttackType,
-    ChargeMeleeType,
-}
-
 public class Monster : LivingEntity, IPlayerObserver
 {
+    private IObjectPool<GameObject> pool;
+
     public float MoveSpeed { get; private set; }
 
     public float Damage { get; private set; }
@@ -64,8 +59,6 @@ public class Monster : LivingEntity, IPlayerObserver
 
         hpBar.gameObject.SetActive(false);
     }
-
-    private IObjectPool<GameObject> pool;
 
     public void SetPool(IObjectPool<GameObject> pool)
     {

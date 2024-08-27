@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2611468922892360520}
-  - component: {fileID: 935256294181669628}
   - component: {fileID: 1250074132078640497}
   - component: {fileID: 3333322647810660637}
   - component: {fileID: 4628550903651585989}
+  - component: {fileID: 2635420776200938960}
   m_Layer: 6
   m_Name: Cannonshooter
   m_TagString: Untagged
@@ -36,21 +36,6 @@ Transform:
   - {fileID: 698468760823433783}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &935256294181669628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1307613036530452169}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
-  hpBar: {fileID: 0}
 --- !u!114 &1250074132078640497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,10 +61,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 80
   m_AngularDrag: 10
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -126,6 +111,20 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.24}
   m_Size: {x: 2, y: 2.5}
   m_Direction: 0
+--- !u!114 &2635420776200938960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307613036530452169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0
 --- !u!1 &2932874755533029943
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,7 +136,8 @@ GameObject:
   - component: {fileID: 698468760823433783}
   - component: {fileID: 582925333523727239}
   - component: {fileID: 895608410841745767}
-  - component: {fileID: 6087578628103512572}
+  - component: {fileID: 8519918350956674465}
+  - component: {fileID: 7318845885212761296}
   m_Layer: 6
   m_Name: MonsterView
   m_TagString: Untagged
@@ -187,7 +187,8 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 95aadcf8d629ace438db8d7f2ff135a0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -209,7 +210,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &6087578628103512572
+--- !u!114 &8519918350956674465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,7 +219,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 2932874755533029943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 7318845885212761296}
+--- !u!114 &7318845885212761296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2932874755533029943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: d7a10a9902eeaa94a9ba5ea0d5d05654, type: 2}
@@ -243,3 +257,6 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1

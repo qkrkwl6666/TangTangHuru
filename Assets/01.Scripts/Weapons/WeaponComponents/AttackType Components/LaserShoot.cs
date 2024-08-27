@@ -14,6 +14,7 @@ public class LaserShoot : MonoBehaviour, IProjectile
     private float redirectionTimer = 0f;
 
     private Vector2 endPoint;
+    private Vector3 aimDir;
 
     public float Range { get; set; }
     public float Size { get; set; }
@@ -54,16 +55,25 @@ public class LaserShoot : MonoBehaviour, IProjectile
 
     void SetDestination()
     {
-        laserHit = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, attackableMask);
-        laserHitGuardian = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, LayerMask.NameToLayer("Guardian"));
+        if(currAimer.AimDirection() == Vector3.zero)
+        {
+            aimDir = new Vector3(0, -1, 0);
+        }
+        else
+        {
+            aimDir = currAimer.AimDirection();
+        }
+
+        laserHit = Physics2D.Raycast(currAimer.Player.transform.position, aimDir, Range, attackableMask);
+        //laserHitGuardian = Physics2D.Raycast(currAimer.Player.transform.position, currAimer.AimDirection(), Range, LayerMask.NameToLayer("Guardian"));
         
-        if (laserHit.collider != null || laserHitGuardian.collider != null)
+        if (laserHit.collider != null)
         {
             endPoint = laserHit.point;
         }
         else
         {
-            endPoint = currAimer.Player.transform.position + currAimer.AimDirection() * Range;
+            endPoint = currAimer.Player.transform.position + aimDir * Range;
         }
     }
 

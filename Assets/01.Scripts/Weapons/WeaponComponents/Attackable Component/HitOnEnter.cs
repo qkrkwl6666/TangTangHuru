@@ -17,6 +17,11 @@ public class HitOnEnter : MonoBehaviour, IAttackable
         OnAttack(other);
     }
 
+    private void OnTriggerExit2D(Collider2D border)
+    {
+        //¿€º∫¡ﬂ
+    }
+
     public void OnAttack(Collider2D other)
     {
         AttackableLayer = LayerMask.GetMask("Enemy");

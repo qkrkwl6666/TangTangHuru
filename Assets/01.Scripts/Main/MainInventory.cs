@@ -222,13 +222,6 @@ public class MainInventory : MonoBehaviour
         items.Add(600005);
 
         items.Add(600006);
-        //items.Add(610001);
-
-        //items.Add(710001);
-        //items.Add(710002);
-        //items.Add(710003);
-        //items.Add(710004);
-
     }
 
     private void Start()
