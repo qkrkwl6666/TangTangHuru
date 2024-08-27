@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public enum MonsterMoveType
 {
@@ -8,24 +9,28 @@ public enum MonsterMoveType
 
 public class WalkState : IMonsterState
 {
-    private Transform playerTransform;
+    private UnityEngine.Transform playerTransform;
     private MonsterView monsterView;
     private MonsterController monsterController;
+    private Monster monster;
 
     private MonsterMoveType monsterMoveType;
 
     private float attackInterval = 1f;
     private float time = 0f;
+    private bool isBoom = false;
 
-    public WalkState(MonsterController monsterController, MonsterMoveType monsterMoveType)
+    public WalkState(MonsterController monsterController, MonsterMoveType monsterMoveType, Monster monster)
     {
         this.monsterMoveType = monsterMoveType;
         this.monsterController = monsterController;
+        this.monster = monster;
 
         monsterView = monsterController.MonsterView;
         playerTransform = monsterController.PlayerTransform;
 
         attackInterval = monsterController.Monster.AttackInterval;
+        isBoom = monster.isBoomType;
     }
 
     public void Enter()
@@ -43,6 +48,14 @@ public class WalkState : IMonsterState
         float dis = Vector2.Distance(playerTransform.position, monsterView.transform.position);
 
         time += deltaTime;
+
+        if(dis <= monsterController.Monster.Range)
+        {
+            if (isBoom)
+            {
+                monster.Die();
+            }
+        }
 
         if (dis <= monsterController.Monster.Range && time >= attackInterval)
         {

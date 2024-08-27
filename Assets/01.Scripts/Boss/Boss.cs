@@ -272,8 +272,14 @@ public class Boss : LivingEntity, IPlayerObserver
 
         InGameInventory.OnCoinAdd?.Invoke(Gold);
 
-        if (!isGuardian)
-            OnDead?.Invoke();
+        if (isGuardian)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+            
+
+        OnDead?.Invoke();
 
         ChangeState(deadState);
     }

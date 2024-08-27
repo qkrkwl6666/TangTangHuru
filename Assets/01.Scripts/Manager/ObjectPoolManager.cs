@@ -57,7 +57,8 @@ public class ObjectPoolManager : MonoBehaviour
             (() =>
             {
                 var go = Instantiate(expPrefab);
-                go.GetComponent<MonsterBoom>().SetObjectPool(boomPool);
+                var boom = go.GetComponent<MonsterBoom>();
+                boom.SetObjectPool(boomPool);
                 return go;
             },
             (x) =>

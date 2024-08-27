@@ -95,6 +95,7 @@ public class Monster : LivingEntity, IPlayerObserver
         if(isBoomType)
         {
             var boom = ObjectPoolManager.boomPool.Get();
+            boom.GetComponent<MonsterBoom>().Init(Damage);
             boom.transform.position = transform.position;
         }
 
