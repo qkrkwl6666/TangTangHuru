@@ -70,7 +70,7 @@ public class M_UISlot : MonoBehaviour
 
         if (isConsumable) return;
 
-        CreateRankImage(item.ItemTier);
+        CreateRankImage((ItemTier)itemData.Item_Tier);
     }
 
     public void SetItemDataConsumable(Item item, int itemCount)

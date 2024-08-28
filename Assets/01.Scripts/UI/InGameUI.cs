@@ -81,7 +81,7 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
                         var itemData = DataTableManager.Instance.Get<ItemTable>
                             (DataTableManager.item).GetItemData(inGameItem.ItemId.ToString());
 
-                        itemSlot.GetComponentInChildren<M_UISlot>().SetItemData(itemData);
+                        itemSlot.GetComponentInChildren<M_UISlot>().SetItemData(itemData);// 에러 나는곳
                         itemSlot.SetActive(true);
                         break;
                     }
