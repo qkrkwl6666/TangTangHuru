@@ -469,21 +469,39 @@ public class MainInventory : MonoBehaviour
 
                     if (item.ItemTier != ItemTier.Normal)
                     {
-                        M_Weapon tempWeapon = item as M_Weapon;
+                        // 서브 무기
 
-                        if (tempWeapon.subWeapons == null) return m_weaponItem;
+                        M_Weapon tempWeapon = item as M_Weapon; 
 
-                        List<ItemData> subWeaponData = new List<ItemData>();
-
-                        foreach(var subitem in tempWeapon.subWeapons)
+                        if (tempWeapon.subWeapons != null)
                         {
-                            var subdata = DataTableManager.Instance.Get<ItemTable>
-                                (DataTableManager.item).GetItemData(subitem.Item_Id.ToString()).DeepCopy();
+                            List<ItemData> subWeaponData = new List<ItemData>();
 
-                            subWeaponData.Add(subdata);
+                            foreach (var subitem in tempWeapon.subWeapons)
+                            {
+                                var subdata = DataTableManager.Instance.Get<ItemTable>
+                                    (DataTableManager.item).GetItemData(subitem.Item_Id.ToString()).DeepCopy();
+
+                                subWeaponData.Add(subdata);
+                            }
+
+                            m_weaponItem.subWeapons = subWeaponData;
                         }
 
-                        m_weaponItem.subWeapons = subWeaponData;
+                        if(tempWeapon.orbs != null)
+                        {
+                            List<Item> items = new List<Item>();
+
+                            foreach (var orb in tempWeapon.orbs)
+                            {
+                                var orbData = DataTableManager.Instance.Get<ItemTable>
+                                    (DataTableManager.item).GetItemData(orb.ItemId.ToString()).DeepCopy();
+
+                                items.Add(LoadMakeItem(orb, orbData, orb.InstanceId));
+                            }
+
+                            m_weaponItem.orbs = items;
+                        }
                     }
 
                     return m_weaponItem;
@@ -829,8 +847,8 @@ public class MainInventory : MonoBehaviour
         }
 
         // 초기 아이템 지급
-        initializeNewPlayerItems();
-        //CheatinitializeNewPlayerItems();
+        //initializeNewPlayerItems();
+        CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
