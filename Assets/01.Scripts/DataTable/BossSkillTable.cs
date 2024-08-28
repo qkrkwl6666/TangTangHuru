@@ -13,6 +13,7 @@ public class BossSkillData
     public float Damage_Factor { get; set; }
     public int Skill_Count { get; set; }
     public float Skill_Rate { get; set; }
+    public int Skill_Type { get; set; }
 }
 public class BossSkillTable : DataTable
 {
