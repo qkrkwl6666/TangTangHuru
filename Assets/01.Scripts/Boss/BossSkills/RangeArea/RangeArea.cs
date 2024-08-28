@@ -65,7 +65,7 @@ public class RangeArea : MonoBehaviour, IBossSkill
             (() =>
             {
                 var go = Instantiate(prefab);
-                var area = go.GetComponent<Area>();
+                var area = go.AddComponent<Area>();
                 area.SetObjectPool(pool);
                 area.SetDamage(Damage);
                 return go;
