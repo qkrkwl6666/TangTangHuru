@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -2051,6 +2052,39 @@ public class MainInventory : MonoBehaviour
                         .Item1.itemData.Dodge.ToString() : "0";
                     break;
             }
+        }
+    }
+
+    public void TestOrbAdd()
+    {
+        foreach(var itemType in allItem)
+        {
+            foreach(var itemTier in itemType.Value)
+            {
+                foreach(var item in itemTier.Value)
+                {
+                    switch (itemType.Key)
+                    {
+                        case ItemType.Axe:
+                        case ItemType.Wand:
+                        case ItemType.Sword:
+                        case ItemType.Bow:
+                        case ItemType.Crossbow:
+                        case ItemType.Staff:
+                            var weapon = item as M_Weapon;
+                            var orbs = new List<Item>();
+
+                            var data = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+                                .GetItemData("610001");
+
+                            orbs.Add(MakeItem(data));
+
+                            weapon.orbs = orbs;
+                            break;
+                    }
+                }
+            }
+
         }
     }
 
