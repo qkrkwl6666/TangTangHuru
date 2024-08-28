@@ -997,8 +997,6 @@ public class MainInventory : MonoBehaviour
             }
             LoadEquipItem(item.Value.Item1);
         }
-
-
     }
 
     public void LoadEquipPet((Item item, GameObject slotUI) equipInfo)
