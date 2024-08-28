@@ -86,10 +86,10 @@ public class LaserSkill : MonoBehaviour, IBossSkill
     }
 
     // 레이저 회전 방향 설정 해줘야함
-    public void SetLaser(int laserCount, float yScale,
+    public void SetLaser(int laserCount,float rotationTime ,float yScale,
         float rotationSpeed, float laserDistance)
     {
-        laserSetting.SetData(laserCount, SkillCount, yScale, rotationSpeed,
+        laserSetting.SetData(laserCount, rotationTime, yScale, rotationSpeed,
             SkillRate, laserDistance);
     }
 

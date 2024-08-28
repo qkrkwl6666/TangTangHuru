@@ -14,6 +14,13 @@ public class BossSkillData
     public int Skill_Count { get; set; }
     public float Skill_Rate { get; set; }
     public int Skill_Type { get; set; }
+    public int Obect_Count { get; set; }
+    public float Object_Scale { get; set; }
+    public int Random_Count { get; set; }
+    public float Obejct_Speed { get; set; }
+    public float Disable_Duration { get; set; }
+
+
 }
 public class BossSkillTable : DataTable
 {
