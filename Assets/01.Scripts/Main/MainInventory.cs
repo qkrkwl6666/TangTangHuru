@@ -828,8 +828,8 @@ public class MainInventory : MonoBehaviour
         }
 
         // 초기 아이템 지급
-        //initializeNewPlayerItems();
-        CheatinitializeNewPlayerItems();
+        initializeNewPlayerItems();
+        //CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;

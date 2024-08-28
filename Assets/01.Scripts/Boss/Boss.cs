@@ -104,19 +104,19 @@ public class Boss : LivingEntity, IPlayerObserver
                 case 500007:
                     {
                         var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(3f, 6f);
+                        bn.SetScaleDuration(3f, 2f);
                     }
                     break;
                 case 500008:
                     {
                         var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(2f, 4.5f);
+                        bn.SetScaleDuration(2f, 1f);
                     }
                     break;
                 case 500009:
                     {
                         var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(1.5f, 2f);
+                        bn.SetScaleDuration(1.5f, 0.5f);
                     }
                     break;
                 case 500010:

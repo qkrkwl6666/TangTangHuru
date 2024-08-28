@@ -14,7 +14,7 @@ public class WellIndicator : MonoBehaviour
     {
         cemera = Camera.main;
 
-        wellUI = Instantiate(wellUIPrefab);
+        wellUI = Instantiate(wellUIPrefab, transform);
 
         wellUI.SetActive(false);
 
