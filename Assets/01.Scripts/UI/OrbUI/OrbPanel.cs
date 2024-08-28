@@ -28,6 +28,18 @@ public class OrbPanel : MonoBehaviour
         if (!reset)
             return;
 
+        SetList();
+
+        reset = false;
+    }
+
+    public void ResetOn()
+    {
+        reset = true;
+    }
+
+    public void SetList()
+    {
         equippedOrbList.Clear();
 
         for (int i = 0; i < orbList.Count; i++)
@@ -64,16 +76,9 @@ public class OrbPanel : MonoBehaviour
             }
         }
 
-        foreach(var equippedOrb in equippedOrbList)
+        foreach (var equippedOrb in equippedOrbList)
         {
             equippedOrb.Seleted();
         }
-
-        reset = false;
-    }
-
-    public void ResetOn()
-    {
-        reset = true;
     }
 }

@@ -91,6 +91,7 @@ public class WeaponOrbSlot : MonoBehaviour
             if(weaponOrb ==  null)
                 continue;
 
+            orbPanel.SetList();
 
             //안켜진 상태로 호출해서 다 꺼져있음
             foreach (var invenOrb in orbPanel.orbList)
