@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -847,8 +846,8 @@ public class MainInventory : MonoBehaviour
         }
 
         // 초기 아이템 지급
-        //initializeNewPlayerItems();
-        CheatinitializeNewPlayerItems();
+        initializeNewPlayerItems();
+        //CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
