@@ -610,7 +610,7 @@ public class MainInventory : MonoBehaviour
                 {
                     var go = itemGo.Result;
 
-                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
+                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI, false, true);
                     go.GetComponent<M_UISlot>().SetItemDataConsumable(item, itemCount);
 
                     itemSlotUI.Add(item.ItemId, (item, go));
@@ -2065,7 +2065,8 @@ public enum ItemTier
     Epic,
     Unique,
     Legendary,
-    Count
+    Count,
+    None,
 }
 
 public enum PlayerEquipment

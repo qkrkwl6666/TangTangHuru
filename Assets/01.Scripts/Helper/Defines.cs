@@ -32,6 +32,14 @@ public static class Defines
     //public static readonly string monster = "Monster";
     public static readonly string enemy = "Enemy";
 
+    public static readonly string aRank = "A_Rank";
+    public static readonly string bRank = "B_Rank";
+    public static readonly string cRank = "C_Rank";
+    public static readonly string sRank = "S_Rank";
+    public static readonly string ssRank = "SS_Rank";
+
+
+
     // Scene
     public static readonly string tutorialScene = "TutorialScene";
     public static readonly string mainScene = "InventoryScene";
