@@ -36,6 +36,11 @@ public class MonsterBoom : MonoBehaviour
         totalLayer = 1 << layerPlayer | 1 << layerMonster;
     }
 
+    public void Init(float damage)
+    {
+        this.damage = damage;
+    }
+
     private void OnEnable()
     {
         ps.Play();

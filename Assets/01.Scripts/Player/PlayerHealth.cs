@@ -134,6 +134,8 @@ public class PlayerHealth : LivingEntity
         health -= totalDmg;
         hpBar.value = health;
 
+        Debug.Log(health);
+
 
         if (health <= 0 && !dead)
         {
@@ -175,6 +177,7 @@ public class PlayerHealth : LivingEntity
 
     public void Health(float heal)
     {
+        Debug.Log("Health");
         health += heal;
 
         if (health > startingHealth)
