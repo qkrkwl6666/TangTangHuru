@@ -144,10 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7719025847992780045}
-  - component: {fileID: 6759596024460200430}
   - component: {fileID: 4906701211556242197}
   - component: {fileID: 8050179853523743710}
   - component: {fileID: 6305942610440664522}
+  - component: {fileID: 6447139215853964968}
   m_Layer: 6
   m_Name: Stormcutter
   m_TagString: Untagged
@@ -171,21 +171,6 @@ Transform:
   - {fileID: 6324643987662284773}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6759596024460200430
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3232474763179573515}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
-  hpBar: {fileID: 0}
 --- !u!114 &4906701211556242197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,10 +196,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 80
   m_AngularDrag: 10
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -261,3 +246,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.04}
   m_Size: {x: 1.84, y: 2.12}
   m_Direction: 0
+--- !u!114 &6447139215853964968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3232474763179573515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0

@@ -22,5 +22,6 @@ public class Magnet : MonoBehaviour, IInGameItem
     public void UseItem()
     {
         ItemDetection.MagnetOn();
+        gameObject.SetActive(false);
     }
 }

@@ -160,6 +160,25 @@ public class Boss : LivingEntity, IPlayerObserver
                         reflect.SetReflect(true, 1f, 15f, 5f, 5);
                     }
                     break;
+                    //
+                case 500016:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(1, PlayerTransform, bossView);
+                    }
+                    break;
+                case 500017:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(5, PlayerTransform, bossView);
+                    }
+                    break;
+                case 500018:
+                    {
+                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
+                        sword.SetSwordSkill(12, PlayerTransform, bossView, true);
+                    }
+                    break;
 
                 // °¡µð¾ð
                 case 510013:
@@ -253,8 +272,14 @@ public class Boss : LivingEntity, IPlayerObserver
 
         InGameInventory.OnCoinAdd?.Invoke(Gold);
 
-        if (!isGuardian)
-            OnDead?.Invoke();
+        if (isGuardian)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+            
+
+        OnDead?.Invoke();
 
         ChangeState(deadState);
     }

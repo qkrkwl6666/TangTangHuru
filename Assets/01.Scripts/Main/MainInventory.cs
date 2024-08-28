@@ -20,7 +20,9 @@ public class MainInventory : MonoBehaviour
 
     public List<Image> subWeaponImages = new();
 
-    public List<TextMeshProUGUI> equipmentTextUI = new(); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 (적용 안됨)
+    public List<TextMeshProUGUI> playerStatusTexts = new(); // 스텟 텍스트
+
+    public List<TextMeshProUGUI> equipmentTextUI = new(); // 업그레이드 텍스트   접근시 (PlayerEquipment) - 1 
     public List<GameObject> defaultEquipmentSlotUI = new(); // 기본 UI           접근시 (PlayerEquipment) - 1
     public List<GameObject> EquipmentSlotUI = new(); // 실제 아이템 UI           접근시 (PlayerEquipment) - 1
 
@@ -608,7 +610,7 @@ public class MainInventory : MonoBehaviour
                 {
                     var go = itemGo.Result;
 
-                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
+                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI, false, true);
                     go.GetComponent<M_UISlot>().SetItemDataConsumable(item, itemCount);
 
                     itemSlotUI.Add(item.ItemId, (item, go));
@@ -803,8 +805,8 @@ public class MainInventory : MonoBehaviour
         }
 
         // 초기 아이템 지급
-        initializeNewPlayerItems();
-        //CheatinitializeNewPlayerItems();
+        //initializeNewPlayerItems();
+        CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
@@ -827,6 +829,7 @@ public class MainInventory : MonoBehaviour
 
         // 내가 현재 장착하고 있는 아이템 플레이어에 장착 시키기
         LoadDataPlayerEquip();
+        RefreshPlayerStatusText();
 
         OnMainInventorySaveLoaded?.Invoke();
 
@@ -890,6 +893,7 @@ public class MainInventory : MonoBehaviour
         //yield return new WaitForSecondsRealtime(0.4f);
 
         LoadDataPlayerEquip();
+        RefreshPlayerStatusText();
 
         GameManager.Instance.InitSaveLoaded();
         mainUI.SaveLoadMainStageText();
@@ -1061,6 +1065,7 @@ public class MainInventory : MonoBehaviour
         }
 
         GameManager.Instance.playerEquipment = playerEquipment;
+        RefreshPlayerStatusText();
 
     }
 
@@ -1234,6 +1239,7 @@ public class MainInventory : MonoBehaviour
         GameManager.Instance.playerEquipment = playerEquipment;
 
         RefreshCharacterSpine();
+        RefreshPlayerStatusText();
     }
 
     // 펫 장착
@@ -1995,6 +2001,36 @@ public class MainInventory : MonoBehaviour
         return subWeaponItems;
     }
 
+    public void RefreshPlayerStatusText()
+    {
+        for(int i = 0; i < playerStatusTexts.Count; i++)
+        {
+            switch(i)
+            {
+                case (int)PlayerStatus.Attack:
+                    playerStatusTexts[i].text = playerEquipment.ContainsKey
+                        (PlayerEquipment.Weapon) ? playerEquipment[PlayerEquipment.Weapon]
+                        .Item1.itemData.Damage.ToString() : "0";
+                    break;
+                case (int)PlayerStatus.Health:
+                    playerStatusTexts[i].text = playerEquipment.ContainsKey
+                        (PlayerEquipment.Armor) ? playerEquipment[PlayerEquipment.Armor]
+                        .Item1.itemData.Hp.ToString() : "0";
+                    break;
+                case (int)PlayerStatus.Defence:
+                    playerStatusTexts[i].text = playerEquipment.ContainsKey
+                        (PlayerEquipment.Helmet) ? playerEquipment[PlayerEquipment.Helmet]
+                        .Item1.itemData.Defense.ToString() : "0";
+                    break;
+                case (int)PlayerStatus.Dodge:
+                    playerStatusTexts[i].text = playerEquipment.ContainsKey
+                        (PlayerEquipment.Shoes) ? playerEquipment[PlayerEquipment.Shoes]
+                        .Item1.itemData.Dodge.ToString() : "0";
+                    break;
+            }
+        }
+    }
+
 }
 
 public enum ItemType
@@ -2029,7 +2065,8 @@ public enum ItemTier
     Epic,
     Unique,
     Legendary,
-    Count
+    Count,
+    None,
 }
 
 public enum PlayerEquipment
@@ -2059,4 +2096,12 @@ public enum ArmorSet
     StormBreaker,
     MoonWalker,
     SkyWatch,
+}
+
+public enum PlayerStatus
+{
+    Attack,
+    Health,
+    Defence,
+    Dodge,
 }

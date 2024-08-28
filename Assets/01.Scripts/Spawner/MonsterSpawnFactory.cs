@@ -37,6 +37,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private float currentSpawnDistance = 0f;
 
     private float mapMaxSize = 250f;
+    private float spawnSpace = 5f;
     private MonsterSkeletonSharing monsterSkeletonSharing;
 
     private void Awake()
@@ -94,17 +95,31 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
                     monsterScript.Initialize(playerSubject, monsterData);
 
+                    switch (monsterData.Type)
+                    {
+                        case (int)MonsterType.Default:
+
+                            break;
+                        case (int)MonsterType.Range:
+                            var rangeSkill = go.AddComponent<RangeSkill>();
+                            rangeSkill.Initialize(monsterData, playerTransform);
+                            break;
+                        case (int)MonsterType.Explosion:
+                            monsterScript.isBoomType = true;
+                            break;
+                    }
+
                     // ¸ó½ºÅÍ ÄÁÆ®·Ñ·¯ »ý¼º
                     var mc = go.AddComponent<MonsterController>();
                     mc.MoveSpeed = monsterData.Monster_MoveSpeed;
 
-                    if (monsterData.Monster_Skill_Id == -1) return go;
+                    //if (monsterData.Monster_Skill_Id == -1) return go;
 
-                    var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
-                    (DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
-                         .Monster_Skill_Id.ToString());
+                    //var skillData = DataTableManager.Instance.Get<MonsterSkillTable>
+                    //(DataTableManager.monsterSkill).GetMonsterSkillData(monsterData
+                    //     .Monster_Skill_Id.ToString());
 
-                    MonsterSkillAddComponent(go, skillData);
+                    //MonsterSkillAddComponent(go, skillData);
 
                     return go;
                 },
@@ -215,6 +230,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 var monsterGo = x.Result;
                 monsterGo.GetComponent<Boss>().Initialize(playerSubject, bossData);
+                var atk = monsterGo.AddComponent<DafultAttack>();
+                atk.Init(playerTransform, 1f, bossData.Boss_Damage, 1f);
 
                 gameUI.SetActiveBossHpBar(true);
             };
@@ -264,15 +281,15 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 // x ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.x >= Defines.maxMapSize)
-                    spawnPos.x = Defines.maxMapSize - 2;
+                    spawnPos.x = Defines.maxMapSize - 5;
                 else if (spawnPos.x <= -Defines.maxMapSize)
                     spawnPos.x = -Defines.maxMapSize + 2;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= Defines.maxMapSize)
-                    spawnPos.y = Defines.maxMapSize - 2;
+                    spawnPos.y = Defines.maxMapSize - 5;
                 else if (spawnPos.y <= -Defines.maxMapSize)
-                    spawnPos.y = -Defines.maxMapSize + 2;
+                    spawnPos.y = -Defines.maxMapSize + 5;
             }
             else break;
         }
@@ -307,15 +324,15 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 // x ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.x >= mapMaxSize)
-                    spawnPos.x = mapMaxSize - 2;
+                    spawnPos.x = mapMaxSize - spawnSpace;
                 else if (spawnPos.x <= -mapMaxSize)
-                    spawnPos.x = -mapMaxSize + 2;
+                    spawnPos.x = -mapMaxSize + spawnSpace;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= mapMaxSize)
-                    spawnPos.y = mapMaxSize - 2;
+                    spawnPos.y = mapMaxSize - spawnSpace;
                 else if (spawnPos.y <= -mapMaxSize)
-                    spawnPos.y = -mapMaxSize + 2;
+                    spawnPos.y = -mapMaxSize + spawnSpace;
             }
             else break;
         }
@@ -338,15 +355,15 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         {
             // x ÁÂÇ¥ Á¶Á¤
             if (spawnPos.x >= mapMaxSize)
-                spawnPos.x = mapMaxSize - 2;
+                spawnPos.x = mapMaxSize - spawnSpace;
             else if (spawnPos.x <= -mapMaxSize)
-                spawnPos.x = -mapMaxSize + 2;
+                spawnPos.x = -mapMaxSize + spawnSpace;
 
             // y ÁÂÇ¥ Á¶Á¤
             if (spawnPos.y >= mapMaxSize)
-                spawnPos.y = mapMaxSize - 2;
+                spawnPos.y = mapMaxSize - spawnSpace;
             else if (spawnPos.y <= -mapMaxSize)
-                spawnPos.y = -mapMaxSize + 2;
+                spawnPos.y = -mapMaxSize + spawnSpace;
         }
 
         return spawnPos;
@@ -369,15 +386,15 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 // x ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.x >= mapMaxSize)
-                    spawnPos.x = mapMaxSize - 2;
+                    spawnPos.x = mapMaxSize - spawnSpace;
                 else if (spawnPos.x <= -mapMaxSize)
-                    spawnPos.x = -mapMaxSize + 2;
+                    spawnPos.x = -mapMaxSize + spawnSpace;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= mapMaxSize)
-                    spawnPos.y = mapMaxSize - 2;
+                    spawnPos.y = mapMaxSize - spawnSpace;
                 else if (spawnPos.y <= -mapMaxSize)
-                    spawnPos.y = -mapMaxSize + 2;
+                    spawnPos.y = -mapMaxSize + spawnSpace;
             }
 
             lines.Add(spawnPos);
@@ -390,4 +407,11 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     {
         playerTransform = playerSubject.GetPlayerTransform;
     }
+}
+
+public enum MonsterType
+{
+    Default = 1,
+    Range,
+    Explosion,
 }

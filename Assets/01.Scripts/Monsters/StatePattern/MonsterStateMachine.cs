@@ -6,10 +6,10 @@ public class MonsterStateMachine
     public WalkState walkState;
     //public AttackState attackState;
 
-    public MonsterStateMachine(MonsterController monsterController, MonsterMoveType monsterMoveType)
+    public MonsterStateMachine(MonsterController monsterController, MonsterMoveType monsterMoveType, Monster monster)
     {
         this.idleState = new IdleState(monsterController);
-        this.walkState = new WalkState(monsterController, monsterMoveType);
+        this.walkState = new WalkState(monsterController, monsterMoveType, monster);
         //this.attackState = new AttackState(monsterController);
     }
 

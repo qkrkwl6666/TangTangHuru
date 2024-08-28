@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 609003388750975362}
   - component: {fileID: 6128220419589543394}
   - component: {fileID: 6454499154726270057}
-  - component: {fileID: 5824129013994548639}
+  - component: {fileID: 9077886656301475557}
+  - component: {fileID: 5368095967676170740}
   m_Layer: 6
-  m_Name: MonsterView
+  m_Name: BossView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +85,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5824129013994548639
+--- !u!114 &9077886656301475557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -93,7 +94,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5083565121872003817}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 5368095967676170740}
+--- !u!114 &5368095967676170740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5083565121872003817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 962b4ac1551b87943937a226cb6e5678, type: 2}
@@ -118,6 +132,9 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1
 --- !u!1 &5929513288582837129
 GameObject:
   m_ObjectHideFlags: 0
@@ -127,10 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1860222036811262639}
-  - component: {fileID: 3985410447614018740}
   - component: {fileID: 3211744330661480177}
   - component: {fileID: 5442528283398671694}
   - component: {fileID: 7822935839138689439}
+  - component: {fileID: 7360482239863671740}
   m_Layer: 6
   m_Name: Pirate Warrior
   m_TagString: Untagged
@@ -154,21 +171,6 @@ Transform:
   - {fileID: 609003388750975362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3985410447614018740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5929513288582837129}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
-  hpBar: {fileID: 0}
 --- !u!114 &3211744330661480177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,10 +196,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 80
   m_AngularDrag: 10
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -244,3 +246,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.63}
   m_Size: {x: 1, y: 1.33}
   m_Direction: 0
+--- !u!114 &7360482239863671740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5929513288582837129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0

@@ -4,15 +4,10 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 
-public enum MonsterType
-{
-    MeleeAttackType = 1,
-    RangedAttackType,
-    ChargeMeleeType,
-}
-
 public class Monster : LivingEntity, IPlayerObserver
 {
+    private IObjectPool<GameObject> pool;
+
     public float MoveSpeed { get; private set; }
 
     public float Damage { get; private set; }
@@ -28,6 +23,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
     public Slider hpBar;
     private bool isSliderVisible = true;
+    public bool isBoomType = false;
 
     private MeshRenderer meshRenderer;
     private Color originalColor;
@@ -71,8 +67,6 @@ public class Monster : LivingEntity, IPlayerObserver
         hpBar.gameObject.SetActive(false);
     }
 
-    private IObjectPool<GameObject> pool;
-
     public void SetPool(IObjectPool<GameObject> pool)
     {
         this.pool = pool;
@@ -103,6 +97,13 @@ public class Monster : LivingEntity, IPlayerObserver
 
         var go = ObjectPoolManager.expPool.Get();
         go.GetComponent<MonsterExp>().Initialize(playerSubject, transform, Exp);
+
+        if(isBoomType)
+        {
+            var boom = ObjectPoolManager.boomPool.Get();
+            boom.GetComponent<MonsterBoom>().Init(Damage);
+            boom.transform.position = transform.position;
+        }
 
         dead = true;
 

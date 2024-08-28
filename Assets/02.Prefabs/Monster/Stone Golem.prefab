@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4850899735956172427}
   - component: {fileID: 2466641054225987138}
   - component: {fileID: 5399664804645898234}
-  - component: {fileID: 4085086675808370558}
+  - component: {fileID: 5058719718504265026}
+  - component: {fileID: 6151185905970843589}
   m_Layer: 6
-  m_Name: MonsterView
+  m_Name: BossView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,7 +62,10 @@ MeshRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: 2100000, guid: 534a45bd789293c40b8a329280a8da94, type: 2}
+  - {fileID: 2100000, guid: c3bac5fb946ecf346bd005499441edde, type: 2}
+  - {fileID: 2100000, guid: 534a45bd789293c40b8a329280a8da94, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -83,7 +87,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4085086675808370558
+--- !u!114 &5058719718504265026
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,7 +96,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2708348358702267962}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e075b9a3e08e2f74fbd651c858ab16ed, type: 3}
+  m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   skeletonDataAsset: {fileID: 11400000, guid: 8f55622827c534345be9d3d4b2a571a1, type: 2}
@@ -117,6 +121,22 @@ MonoBehaviour:
     materialsInsideMask: []
     materialsOutsideMask: []
   disableRenderingOnOverride: 1
+  _animationName: 
+  loop: 0
+  timeScale: 1
+--- !u!114 &6151185905970843589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2708348358702267962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e946ca184b151048af27bb62baa2de8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skeletonAnimation: {fileID: 5058719718504265026}
 --- !u!1 &2916268425368567277
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,10 +146,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5077936019820870032}
-  - component: {fileID: 60116168493055540}
   - component: {fileID: 6581818228913368334}
   - component: {fileID: 5473262029072763704}
   - component: {fileID: 8950052577215189491}
+  - component: {fileID: 7739558166536725762}
   m_Layer: 6
   m_Name: Stone Golem
   m_TagString: Untagged
@@ -153,21 +173,6 @@ Transform:
   - {fileID: 4850899735956172427}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &60116168493055540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2916268425368567277}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e91742d4c8e6dd847a8cec11a10fd7e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 100
-  playerSubject: {fileID: 0}
-  hpBar: {fileID: 0}
 --- !u!114 &6581818228913368334
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,10 +198,10 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 100
   m_LinearDrag: 80
   m_AngularDrag: 10
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -243,3 +248,17 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 2}
   m_Size: {x: 4.5, y: 1}
   m_Direction: 0
+--- !u!114 &7739558166536725762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2916268425368567277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28ac97590d9365443a0d8ec67e2bb015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  isGuardian: 0
