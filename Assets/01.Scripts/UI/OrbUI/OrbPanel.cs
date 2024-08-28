@@ -13,6 +13,8 @@ public class OrbPanel : MonoBehaviour
 
     private bool reset = true;
 
+    private List<OrbDesc> equippedOrbList = new();
+
     private List<ItemType> orbTypes = new List<ItemType>
     {
         ItemType.OrbAttack,
@@ -26,8 +28,15 @@ public class OrbPanel : MonoBehaviour
         if (!reset)
             return;
 
+        equippedOrbList.Clear();
+
         for (int i = 0; i < orbList.Count; i++)
         {
+            if (orbList[i].GetConnection() != null)
+            {
+                equippedOrbList.Add(orbList[i]);
+            }
+
             orbList[i].UnSelected();
             orbList[i].gameObject.SetActive(false);
         }
@@ -55,6 +64,10 @@ public class OrbPanel : MonoBehaviour
             }
         }
 
+        foreach(var equippedOrb in equippedOrbList)
+        {
+            equippedOrb.Seleted();
+        }
 
         reset = false;
     }

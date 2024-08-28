@@ -54,7 +54,6 @@ public class PlayerEquipLoader : MonoBehaviour
                     dodgeValue = equipDodge.itemData.Dodge;
                 }
             }
-            playerHealth.SetInfo(hpValue, defValue, dodgeValue);
 
 
             if (equipHp != null && equipDef != null && equipDodge != null)
@@ -82,6 +81,30 @@ public class PlayerEquipLoader : MonoBehaviour
                 mainCoolDown = mainWeapon.itemData.CoolDown;
                 mainCriticalChance = mainWeapon.itemData.CriticalChance;
                 mainCriticalValue = mainWeapon.itemData.Criticaldam;
+
+                if (mainWeapon.orbs != null)
+                {
+                    foreach (var orb in mainWeapon.orbs)
+                    {
+                        switch (orb.ItemType)
+                        {
+                            case ItemType.OrbAttack:
+                                mainDmg += orb.itemData.Damage;
+                                break;
+                            case ItemType.OrbHp:
+                                hpValue += orb.itemData.Hp;
+                                break;
+                            case ItemType.OrbDefence:
+                                defValue += orb.itemData.Defense;
+                                break;
+                            case ItemType.OrbDodge:
+                                dodgeValue += orb.itemData.Dodge;
+                                break;
+                        }
+                    }
+                }
+
+                playerHealth.SetInfo(hpValue, defValue, dodgeValue);
                 MainWeaponAdd(mainWeapon);
 
                 var subWeaponList = mainWeapon.subWeapons;
