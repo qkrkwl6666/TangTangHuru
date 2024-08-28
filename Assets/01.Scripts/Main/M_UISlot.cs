@@ -126,6 +126,17 @@ public class M_UISlot : MonoBehaviour
                 mainUI.SetEquipPetData(item);
                 mainUI.SetActivePetPopUpUI(true);
                 break;
+
+            case (int)ItemType.EquipmentGem: // 장비 원석
+            case (int)ItemType.ReinforcedStone: // 장비 원석
+            case (int)ItemType.OrbAttack: // 장비 원석
+            case (int)ItemType.OrbDefence: // 장비 원석
+            case (int)ItemType.OrbHp: // 장비 원석
+            case (int)ItemType.OrbDodge: // 장비 원석
+            case (int)ItemType.PetFood: // 장비 원석
+                mainUI.SetConsumablePopUpData(item);
+                mainUI.SetActiveConsumablePopUpUI(true);
+                break;
         }
     }
 
