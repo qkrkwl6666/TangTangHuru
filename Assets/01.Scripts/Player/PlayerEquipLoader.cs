@@ -124,7 +124,7 @@ public class PlayerEquipLoader : MonoBehaviour
                     weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
                 }
                 weaponCreators[0].isMainWeapon = true;
-                myPassiveManager.currWeaponCreators.Add(weaponCreators[0]);
+                myPassiveManager.currWeaponCreators.Insert(0, weaponCreators[0]);
                 mainWeaponCreator = weaponCreators[0];
             }
             else

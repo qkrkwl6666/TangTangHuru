@@ -1,4 +1,5 @@
 using DG.Tweening;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -24,9 +25,14 @@ public class Monster : LivingEntity, IPlayerObserver
     private bool isSliderVisible = true;
     public bool isBoomType = false;
 
+    private MeshRenderer meshRenderer;
+    private Color originalColor;
+
     public void Initialize(PlayerSubject playerSubject)
     {
         this.playerSubject = playerSubject;
+
+        meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
@@ -159,4 +165,6 @@ public class Monster : LivingEntity, IPlayerObserver
 
         transform.DOMove(targetPosition, 0.3f).SetEase(Ease.OutQuad);
     }
+
+
 }
