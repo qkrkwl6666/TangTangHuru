@@ -87,6 +87,7 @@ public class WeaponUpgrader : MonoBehaviour
                 weapons.Clear();
                 firstWeaponCreator.enabled = false;
                 finalWeaponCreator.enabled = true;
+                finalWeaponCreator.currLevel = 5;
                 break;
         }
     }

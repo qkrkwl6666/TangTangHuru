@@ -29,7 +29,7 @@ public class WeaponCreator : MonoBehaviour
     private PassiveData typePassive; //파워, 스피드 타입으로 구분되는 패시브. 패시브매니저가 구분해서 할당함.
     private PassiveData commonPassive;
 
-    public int currLevel = 0;
+    public int currLevel = 0; // 순수 레벨 표시만을 의도
 
     public bool isMainWeapon = false;
     private float mainDamage;
@@ -292,9 +292,9 @@ public class WeaponCreator : MonoBehaviour
 
     private void LevelUp()
     {
-        if (weaponDataInStage.Level >= 5)
+        if (currLevel >= 5)
         {
-            weaponDataInStage.Level = 5;
+            currLevel = 5;
             weaponUpgrader.Evolution(weapons);
         }
         else
