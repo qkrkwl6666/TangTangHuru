@@ -18,12 +18,13 @@ public class Area : MonoBehaviour
         this.duration = duration;
         this.playerTransform = playerTransform;
 
-        Debug.Log($"Scale : {this.scale} Duration : {this.duration}");
+        //Debug.Log($"Scale : {this.scale} Duration : {this.duration}");
     }
 
     private void OnDisable()
     {
         time = 0f;
+        transform.localScale = Vector3.zero;
     }
 
     private void Update()

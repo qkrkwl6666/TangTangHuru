@@ -7,6 +7,10 @@ public class M_UISlot : MonoBehaviour
 {
     public Item item;
 
+    // 티어 이미지 변수
+    private ItemTier currentTier = ItemTier.None;
+    public Transform rankTransform;
+
     public GameObject textGameobject;
 
     public TextMeshProUGUI itemCountText;
@@ -18,7 +22,7 @@ public class M_UISlot : MonoBehaviour
 
     public MainUI mainUI;
 
-    public void SetItemData(Item item, MainUI mainUI, bool isPetEquipSlot = false)
+    public void SetItemData(Item item, MainUI mainUI, bool isPetEquipSlot = false, bool isConsumable = false)
     {
         this.item = item;
         this.mainUI = mainUI;
@@ -41,9 +45,13 @@ public class M_UISlot : MonoBehaviour
 
         // 배경 색깔
         background.color = Defines.GetColor(item.itemData.Outline);
+
+        if (isConsumable) return;
+
+        CreateRankImage(item.ItemTier);
     }
 
-    public void SetItemData(ItemData itemData)
+    public void SetItemData(ItemData itemData, bool isConsumable = false)
     {
         // 아이템 아이콘
         Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (texture) =>
@@ -59,11 +67,15 @@ public class M_UISlot : MonoBehaviour
 
         // 배경 색깔
         background.color = Defines.GetColor(itemData.Outline);
+
+        if (isConsumable) return;
+
+        CreateRankImage((ItemTier)itemData.Item_Tier);
     }
 
     public void SetItemDataConsumable(Item item, int itemCount)
     {
-        SetItemData(item, mainUI);
+        SetItemData(item, mainUI, false, true);
 
         // 소모품 개수 새서 텍스트 오브젝트 활성화 해주고 개수 넣어주기
         textGameobject.SetActive(true);
@@ -73,7 +85,7 @@ public class M_UISlot : MonoBehaviour
 
     public void SetItemDataConsumable(ItemData itemData, int itemCount)
     {
-        SetItemData(itemData);
+        SetItemData(itemData, true);
 
         textGameobject.SetActive(true);
         itemCountText.text = itemCount.ToString();
@@ -113,6 +125,48 @@ public class M_UISlot : MonoBehaviour
             case (int)ItemType.Pet: //펫팝업
                 mainUI.SetEquipPetData(item);
                 mainUI.SetActivePetPopUpUI(true);
+                break;
+
+            case (int)ItemType.EquipmentGem: // 장비 원석
+            case (int)ItemType.ReinforcedStone: // 장비 원석
+            case (int)ItemType.OrbAttack: // 장비 원석
+            case (int)ItemType.OrbDefence: // 장비 원석
+            case (int)ItemType.OrbHp: // 장비 원석
+            case (int)ItemType.OrbDodge: // 장비 원석
+            case (int)ItemType.PetFood: // 장비 원석
+                mainUI.SetConsumablePopUpData(item);
+                mainUI.SetActiveConsumablePopUpUI(true);
+                break;
+        }
+    }
+
+    public void CreateRankImage(ItemTier itemTier)
+    {
+        if (currentTier != ItemTier.None && currentTier == itemTier) return;
+
+        foreach (Transform t in rankTransform)
+        {
+            Destroy(t.gameObject);
+        }
+
+        currentTier = itemTier;
+
+        switch (itemTier)
+        {
+            case ItemTier.Normal:
+                Addressables.InstantiateAsync(Defines.cRank, rankTransform);
+                break;
+            case ItemTier.Rare:
+                Addressables.InstantiateAsync(Defines.bRank, rankTransform);
+                break;
+            case ItemTier.Epic:
+                Addressables.InstantiateAsync(Defines.aRank, rankTransform);
+                break;
+            case ItemTier.Unique:
+                Addressables.InstantiateAsync(Defines.sRank, rankTransform);
+                break;
+            case ItemTier.Legendary:
+                Addressables.InstantiateAsync(Defines.ssRank, rankTransform);
                 break;
         }
     }

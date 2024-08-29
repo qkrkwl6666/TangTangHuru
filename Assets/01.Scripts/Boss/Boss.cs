@@ -75,128 +75,95 @@ public class Boss : LivingEntity, IPlayerObserver
         {
             if (skill.Item1 == -1) break;
 
-            switch (skill.Item1)
+            var skillData = DataTableManager.Instance.Get<BossSkillTable>(DataTableManager.bossSkill)
+                .Get(skill.Item1.ToString());
+
+            switch(skillData.Skill_Type)
             {
-                case 500001:
+                case 1:
                     {
                         var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
-
-                        bn.SetCountScale(10, 1.0f);
+                        bn.SetCountScale(skillData.Obect_Count, skillData.Object_Scale,
+                            skillData.Random_Count, skillData.Obejct_Speed);
                     }
                     break;
-                case 500002:
+                case 2:
                     {
-                        var bn = AddSkill<BarrageNormal>(skill.Item1, skill.Item2);
-
-                        bn.SetCountScale(20, 0.7f);
+                        var bs = AddSkill<BarrageSnail>(skill.Item1, skill.Item2);
+                        bs.Init(skillData.Skill_Rate, skillData.Object_Scale, skillData.Obejct_Speed);
                     }
                     break;
-                case 500003:
+                case 3:
                     {
-                        var bn = AddSkill<BarrageSnail>(skill.Item1, skill.Item2);
+                        var rush = AddSkill<Rush>(skill.Item1, skill.Item2);
                     }
                     break;
-                case 500004:
+                case 4:
                     {
-                        var bn = AddSkill<Rush>(skill.Item1, skill.Item2);
+                        var ra = AddSkill<RangeArea>(skill.Item1, skill.Item2);
                     }
                     break;
-                case 500007:
-                    {
-                        var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(3f, 6f);
-                    }
-                    break;
-                case 500008:
-                    {
-                        var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(2f, 4.5f);
-                    }
-                    break;
-                case 500009:
-                    {
-                        var bn = AddSkill<RangeArea>(skill.Item1, skill.Item2);
-                        bn.SetScaleDuration(1.5f, 2f);
-                    }
-                    break;
-                case 500010:
+                case 5:
                     {
                         var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
-                        laser.SetLaser(1, 10f, 50f, 2f);
+                        laser.SetLaser(skillData.Obect_Count, skillData.Skill_Count, skillData.Object_Scale, skillData.Obejct_Speed, 2f);
                         laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
                     }
                     break;
-                case 500011:
+                case 6:
                     {
                         var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
-                        laser.SetLaser(4, 10f, 50f, 2f);
-                        laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
-                    }
-                    break;
-                case 500012:
-                    {
-                        var laser = AddSkill<LaserSkill>(skill.Item1, skill.Item2);
-                        laser.SetLaser(4, 10f, 50f, 2f);
+                        laser.SetLaser(skillData.Obect_Count, skillData.Skill_Count, skillData.Object_Scale, skillData.Obejct_Speed, 2f);
                         laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Right);
                         laser.laserSetting.rotationTypes.Add(LaserSkill.RotationType.Left);
                     }
                     break;
-                case 500013:
-                    // 분열 X 그냥 팅기기
+                case 7:
+                    // 분열 X
                     {
                         var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
-                        reflect.SetReflect(false, 1f, 10f, 10f, 0);
+                        reflect.SetReflect(false, skillData.Object_Scale, skillData.Obejct_Speed, 
+                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count);
                     }
                     break;
-                case 500014:
+                case 8:
+                    // 분열 O
                     {
                         var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
-                        reflect.SetReflect(true, 1f, 15f, 7f, 2);
+                        reflect.SetReflect(true, skillData.Object_Scale, skillData.Obejct_Speed,
+                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count);
                     }
                     break;
-                case 500015:
-                    {
-                        var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
-                        reflect.SetReflect(true, 1f, 15f, 5f, 5);
-                    }
-                    break;
-                    //
-                case 500016:
+                case 9:
                     {
                         var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
-                        sword.SetSwordSkill(1, PlayerTransform, bossView);
+                        sword.SetSwordSkill(skillData.Obect_Count, PlayerTransform, bossView);
                     }
                     break;
-                case 500017:
+                case 10:
                     {
                         var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
-                        sword.SetSwordSkill(5, PlayerTransform, bossView);
+                        sword.SetSwordSkill(skillData.Obect_Count, PlayerTransform, bossView, true);
                     }
                     break;
-                case 500018:
-                    {
-                        var sword = AddSkill<SwordSkill>(skill.Item1, skill.Item2);
-                        sword.SetSwordSkill(12, PlayerTransform, bossView, true);
-                    }
-                    break;
-
-                // 가디언
-                case 510013:
+                case 11:
                     {
                         var dash = AddSkill<Dash>(skill.Item1, skill.Item2);
                     }
                     break;
-                case 510014:
+                case 12:
                     {
                         var bombardment = AddSkill<Bombardment>(skill.Item1, skill.Item2);
                     }
                     break;
-                case 510015:
+                case 13:
                     {
                         var stunned = AddSkill<Stunned>(skill.Item1, skill.Item2);
                     }
                     break;
+
             }
+
         }
 
         currentState = walkState;

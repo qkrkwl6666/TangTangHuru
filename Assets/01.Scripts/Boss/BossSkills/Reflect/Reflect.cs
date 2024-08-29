@@ -1,6 +1,3 @@
-using Spine;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -24,6 +21,7 @@ public class Reflect : MonoBehaviour, IBossSkill
     private float time = 0f;
     private int copyCount = 0;
     private bool fission = false;
+    private int randomCount = 0;
 
     public void Activate()
     {
@@ -51,13 +49,14 @@ public class Reflect : MonoBehaviour, IBossSkill
     }
 
     public void SetReflect(bool fission, float circleScale, float ballSpeed, 
-        float disableDuration, int copyCount)
+        float disableDuration, int copyCount, int randomCount = 0)
     {
         this.fission = fission;
         this.attackScale = circleScale;
         this.disableDuration = disableDuration;
         this.ballSpeed = ballSpeed;
         this.copyCount = copyCount;
+        this.randomCount = randomCount;
     }
 
     public void InstantiateBall(AsyncOperationHandle<GameObject> op)
@@ -103,7 +102,7 @@ public class Reflect : MonoBehaviour, IBossSkill
         var reflectBall = pool.Get().GetComponent<ReflectBall>();
 
         reflectBall.Init(randomDir, transform, attackScale, 
-            ballSpeed, disableDuration, fission, 0f, copyCount);
+            ballSpeed, disableDuration, fission, 0f, copyCount + Random.Range(0, randomCount + 1));
 
         reflectBall.transform.position = transform.position;
         currentSkillCount++;

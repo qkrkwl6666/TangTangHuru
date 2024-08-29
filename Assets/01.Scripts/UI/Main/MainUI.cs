@@ -170,6 +170,41 @@ public class MainUI : MonoBehaviour
         EquipPopUp.SetItemUI(item, false);
     }
 
+    // 소모품 팝업
+    public ConsumablePopUp consumablePopUp;
+
+    public void SetActiveConsumablePopUpUI(bool active)
+    {
+        if (active)
+        {
+            consumablePopUp.gameObject.SetActive(active);
+            var seq = DOTween.Sequence();
+
+            seq.Append(consumablePopUp.transform.DOScale(1.1f, 0.2f));
+            seq.Append(consumablePopUp.transform.DOScale(1f, 0.1f));
+
+            seq.Play();
+        }
+        else
+        {
+            var seq = DOTween.Sequence();
+
+            seq.Append(consumablePopUp.transform.DOScale(0.0f, 0.1f));
+
+            seq.onComplete += () =>
+            {
+                consumablePopUp.gameObject.SetActive(active);
+            };
+
+            seq.Play();
+        }
+    }
+
+    public void SetConsumablePopUpData(Item item)
+    {
+        consumablePopUp.SetItemUI(item);
+    }
+
     #endregion
 
     #region 장비 감정 

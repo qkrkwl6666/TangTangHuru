@@ -134,7 +134,7 @@ public class PlayerHealth : LivingEntity
         health -= totalDmg;
         hpBar.value = health;
 
-        Debug.Log(health);
+        //Debug.Log(health);
 
 
         if (health <= 0 && !dead)

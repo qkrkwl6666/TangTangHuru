@@ -8,15 +8,13 @@ public class TreasureSpawnManager : MonoBehaviour
     public Well well = null;
     public readonly int treasuresCount = 3;
 
-    private float minRadius = 150f;
-    private float maxRadius = 250f;
+    private float minRadius = 100f;
+
     private float treasuresRadius = 50f;
 
     private TreasureData treasureData = null;
     public WellIndicator wellIndicator;
 
-    private readonly int maxMapSizeHeight = 250;
-    private readonly int maxMapSizeWidth = 250;
     private float wallSpace = 1f;
     private float currentSize = 0;
 
@@ -62,13 +60,13 @@ public class TreasureSpawnManager : MonoBehaviour
 
         while (!isSame)
         {
-            float randomDistance = Random.Range(minRadius, maxRadius);
+            float randomDistance = Random.Range(minRadius, Defines.maxMapSize);
 
             randomPos = (Random.insideUnitCircle.normalized) * randomDistance;
 
             // 맵 밖으로 나갔는지 체크
-            if (randomPos.x <= maxMapSizeWidth - 5 && randomPos.x >= -maxMapSizeWidth - 5 &&
-                    randomPos.y <= maxMapSizeHeight - 5 && randomPos.y >= -maxMapSizeHeight - 5)
+            if (randomPos.x <= Defines.maxMapSize - 5 && randomPos.x >= -Defines.maxMapSize - 5 &&
+                    randomPos.y <= Defines.maxMapSize - 5 && randomPos.y >= -Defines.maxMapSize - 5)
             {
                 isSame = true;
 
@@ -222,13 +220,13 @@ public class TreasureSpawnManager : MonoBehaviour
         Transform walls = new GameObject("walls").transform;
 
         // 벽 생성 위
-        currentSize = -maxMapSizeWidth;
+        currentSize = -Defines.maxMapSize;
         while (true)
         {
-            Vector2 pos = new Vector2(currentSize, maxMapSizeWidth);
+            Vector2 pos = new Vector2(currentSize, Defines.maxMapSize);
             Addressables.InstantiateAsync(Defines.obstacles, pos, Quaternion.identity, walls);
 
-            if (currentSize >= maxMapSizeWidth)
+            if (currentSize >= Defines.maxMapSize)
             {
                 break;
             }
@@ -237,13 +235,13 @@ public class TreasureSpawnManager : MonoBehaviour
         }
 
         // 벽 생성 아래
-        currentSize = -maxMapSizeWidth;
+        currentSize = -Defines.maxMapSize;
         while (true)
         {
-            Vector2 pos = new Vector2(currentSize, -maxMapSizeWidth);
+            Vector2 pos = new Vector2(currentSize, -Defines.maxMapSize);
             Addressables.InstantiateAsync(Defines.obstacles, pos, Quaternion.identity, walls);
 
-            if (currentSize >= maxMapSizeWidth)
+            if (currentSize >= Defines.maxMapSize)
             {
                 break;
             }
@@ -252,13 +250,13 @@ public class TreasureSpawnManager : MonoBehaviour
         }
 
         // 벽 생성 왼쪽
-        currentSize = -maxMapSizeHeight;
+        currentSize = -Defines.maxMapSize;
         while (true)
         {
-            Vector2 pos = new Vector2(-maxMapSizeWidth, currentSize);
+            Vector2 pos = new Vector2(-Defines.maxMapSize, currentSize);
             Addressables.InstantiateAsync(Defines.obstacles, pos, Quaternion.Euler(new Vector3(0f, 0f, 90f)), walls);
 
-            if (currentSize >= maxMapSizeHeight)
+            if (currentSize >= Defines.maxMapSize)
             {
                 break;
             }
@@ -267,13 +265,13 @@ public class TreasureSpawnManager : MonoBehaviour
         }
 
         // 벽 생성 오른쪽
-        currentSize = -maxMapSizeHeight;
+        currentSize = -Defines.maxMapSize;
         while (true)
         {
-            Vector2 pos = new Vector2(maxMapSizeWidth, currentSize);
+            Vector2 pos = new Vector2(Defines.maxMapSize, currentSize);
             Addressables.InstantiateAsync(Defines.obstacles, pos, Quaternion.Euler(new Vector3(0f, 0f, 90f)), walls);
 
-            if (currentSize >= maxMapSizeHeight)
+            if (currentSize >= Defines.maxMapSize)
             {
                 break;
             }

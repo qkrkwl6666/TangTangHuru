@@ -1,11 +1,8 @@
-using Spine;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UIElements;
 
 public class SwordSkill : MonoBehaviour, IBossSkill
 {
@@ -28,6 +25,7 @@ public class SwordSkill : MonoBehaviour, IBossSkill
     private BossView bossView;
 
     private bool allAttackCount = false;
+    private int randomAttackCount = 0;
 
     public void Activate()
     {
@@ -59,6 +57,10 @@ public class SwordSkill : MonoBehaviour, IBossSkill
         DamageFactor = bossSkillData.Damage_Factor;
         SkillRate = bossSkillData.Skill_Rate;
         Damage = damage * DamageFactor;
+        scale = bossSkillData.Object_Scale;
+        randomAttackCount = bossSkillData.Random_Count;
+        speed = bossSkillData.Obejct_Speed;
+        disableDuration = bossSkillData.Disable_Duration;
         enabled = false;
     }
 

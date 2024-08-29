@@ -468,21 +468,39 @@ public class MainInventory : MonoBehaviour
 
                     if (item.ItemTier != ItemTier.Normal)
                     {
-                        M_Weapon tempWeapon = item as M_Weapon;
+                        // 서브 무기
 
-                        if (tempWeapon.subWeapons == null) return m_weaponItem;
+                        M_Weapon tempWeapon = item as M_Weapon; 
 
-                        List<ItemData> subWeaponData = new List<ItemData>();
-
-                        foreach(var subitem in tempWeapon.subWeapons)
+                        if (tempWeapon.subWeapons != null)
                         {
-                            var subdata = DataTableManager.Instance.Get<ItemTable>
-                                (DataTableManager.item).GetItemData(subitem.Item_Id.ToString()).DeepCopy();
+                            List<ItemData> subWeaponData = new List<ItemData>();
 
-                            subWeaponData.Add(subdata);
+                            foreach (var subitem in tempWeapon.subWeapons)
+                            {
+                                var subdata = DataTableManager.Instance.Get<ItemTable>
+                                    (DataTableManager.item).GetItemData(subitem.Item_Id.ToString()).DeepCopy();
+
+                                subWeaponData.Add(subdata);
+                            }
+
+                            m_weaponItem.subWeapons = subWeaponData;
                         }
 
-                        m_weaponItem.subWeapons = subWeaponData;
+                        if(tempWeapon.orbs != null)
+                        {
+                            List<Item> items = new List<Item>();
+
+                            foreach (var orb in tempWeapon.orbs)
+                            {
+                                var orbData = DataTableManager.Instance.Get<ItemTable>
+                                    (DataTableManager.item).GetItemData(orb.ItemId.ToString()).DeepCopy();
+
+                                items.Add(LoadMakeItem(orb, orbData, orb.InstanceId));
+                            }
+
+                            m_weaponItem.orbs = items;
+                        }
                     }
 
                     return m_weaponItem;
@@ -600,8 +618,32 @@ public class MainInventory : MonoBehaviour
         //Debug.Log($"걸린 시간 : {time}");
     }
 
-    public void CreateOrUpdateItemSlot(Item item, bool isConsumable = false, int itemCount = 0)
+    public void CreateOrUpdateItemSlot(Item item, bool isConsumable = false, int itemCount = 0, bool isImageRank = false)
     {
+        switch(item.ItemType)
+        {
+            case ItemType.Axe:
+            case ItemType.Sword:
+            case ItemType.Bow:
+            case ItemType.Crossbow:
+            case ItemType.Wand:
+            case ItemType.Staff:
+            case ItemType.Helmet:
+            case ItemType.Armor:
+            case ItemType.Shose:
+                isImageRank = false;
+                break;
+            case ItemType.OrbAttack:
+            case ItemType.OrbHp:
+            case ItemType.OrbDodge:
+            case ItemType.OrbDefence:
+            case ItemType.Pet:
+            case ItemType.PetFood:
+                isImageRank = true;
+                break;
+        }
+
+
         if (isConsumable)
         {
             if (!itemSlotUI.ContainsKey(item.ItemId))
@@ -609,8 +651,7 @@ public class MainInventory : MonoBehaviour
                 Addressables.InstantiateAsync(Defines.itemSlot, content).Completed += (itemGo) =>
                 {
                     var go = itemGo.Result;
-
-                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
+                    go.GetComponent<M_UISlot>().SetItemData(item, mainUI, false, isImageRank);
                     go.GetComponent<M_UISlot>().SetItemDataConsumable(item, itemCount);
 
                     itemSlotUI.Add(item.ItemId, (item, go));
@@ -630,7 +671,7 @@ public class MainInventory : MonoBehaviour
             {
                 var go = itemGo.Result;
 
-                go.GetComponent<M_UISlot>().SetItemData(item, mainUI);
+                go.GetComponent<M_UISlot>().SetItemData(item, mainUI, false, isImageRank);
 
                 go.GetComponent<M_UISlot>().SetEquipUpgradeUI(item);
 
@@ -805,8 +846,8 @@ public class MainInventory : MonoBehaviour
         }
 
         // 초기 아이템 지급
-        //initializeNewPlayerItems();
-        CheatinitializeNewPlayerItems();
+        initializeNewPlayerItems();
+        //CheatinitializeNewPlayerItems();
 
         Gold = SaveManager.SaveDataV1.Gold;
         Diamond = SaveManager.SaveDataV1.Diamond;
@@ -955,8 +996,6 @@ public class MainInventory : MonoBehaviour
             }
             LoadEquipItem(item.Value.Item1);
         }
-
-
     }
 
     public void LoadEquipPet((Item item, GameObject slotUI) equipInfo)
@@ -2031,6 +2070,39 @@ public class MainInventory : MonoBehaviour
         }
     }
 
+    public void TestOrbAdd()
+    {
+        foreach(var itemType in allItem)
+        {
+            foreach(var itemTier in itemType.Value)
+            {
+                foreach(var item in itemTier.Value)
+                {
+                    switch (itemType.Key)
+                    {
+                        case ItemType.Axe:
+                        case ItemType.Wand:
+                        case ItemType.Sword:
+                        case ItemType.Bow:
+                        case ItemType.Crossbow:
+                        case ItemType.Staff:
+                            var weapon = item as M_Weapon;
+                            var orbs = new List<Item>();
+
+                            var data = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item)
+                                .GetItemData("610001");
+
+                            orbs.Add(MakeItem(data));
+
+                            weapon.orbs = orbs;
+                            break;
+                    }
+                }
+            }
+
+        }
+    }
+
 }
 
 public enum ItemType
@@ -2065,7 +2137,8 @@ public enum ItemTier
     Epic,
     Unique,
     Legendary,
-    Count
+    Count,
+    None,
 }
 
 public enum PlayerEquipment

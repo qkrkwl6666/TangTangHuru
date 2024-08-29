@@ -28,6 +28,7 @@ public class OrbDesc : MonoBehaviour
         Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             iconImage.sprite = x.Result;
+            iconImage.gameObject.SetActive(true);
         };
     }
 
@@ -50,5 +51,10 @@ public class OrbDesc : MonoBehaviour
     public void UnSelected()
     {
         button.interactable = true;
+    }
+
+    public ItemSlotUI GetConnection()
+    {
+        return connectedSlot;
     }
 }

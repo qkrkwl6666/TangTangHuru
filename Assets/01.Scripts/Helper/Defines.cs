@@ -32,6 +32,14 @@ public static class Defines
     //public static readonly string monster = "Monster";
     public static readonly string enemy = "Enemy";
 
+    public static readonly string aRank = "A_Rank";
+    public static readonly string bRank = "B_Rank";
+    public static readonly string cRank = "C_Rank";
+    public static readonly string sRank = "S_Rank";
+    public static readonly string ssRank = "SS_Rank";
+
+
+
     // Scene
     public static readonly string tutorialScene = "TutorialScene";
     public static readonly string mainScene = "InventoryScene";
@@ -44,7 +52,7 @@ public static class Defines
     public static readonly int maxGuardian = 3;
 
     //mapsize
-    public static readonly int maxMapSize = 250;
+    public static readonly int maxMapSize = 200;
 
     // 아웃라이너 컬러
     public static readonly Color blueColor = new Color(2 / 255f, 19 / 255f, 52 / 255f);
