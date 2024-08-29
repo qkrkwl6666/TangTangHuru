@@ -13,9 +13,25 @@ public class WeaponOrbSlot : MonoBehaviour
 
     private bool resetOn = true;
 
+    private ItemType currItemType;
+
     private void OnEnable()
     {
-        var currWeapon = equipPopUp.currentItem as M_Weapon;
+        currItemType = equipPopUp.currentItem.ItemType;
+
+        var currItem = equipPopUp.currentItem as M_Weapon;
+
+        //switch (equipPopUp.currentItem.ItemType)
+        //{
+        //    case ItemType.Weapon:
+        //        currItem = equipPopUp.currentItem as M_Weapon;
+        //        break;
+        //    case ItemType.Helmet:
+        //    case ItemType.Armor:
+        //    case ItemType.Shose:
+        //        currItem = equipPopUp.currentItem as M_Armour;
+        //        break;
+        //}
 
         if (resetOn)
         {
@@ -23,8 +39,7 @@ public class WeaponOrbSlot : MonoBehaviour
             {
                 slot.GetComponent<Button>().onClick.AddListener(() => orbUpgrader.SlotSelected(slot));
             }
-
-            if(currWeapon.orbs != null)
+            if (currItem.orbs != null)
             {
                 LoadEquippedOrbList();
             }
@@ -32,7 +47,7 @@ public class WeaponOrbSlot : MonoBehaviour
 
         for (int i = 0; i < 4; i++)
         {
-            if (i < (int)currWeapon.ItemTier)
+            if (i < (int)currItem.ItemTier)
             {
                 upgradeSlots[i].gameObject.SetActive(true);
             }
