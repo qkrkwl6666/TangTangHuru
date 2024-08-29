@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -116,10 +117,10 @@ public class EquipPopUp : MonoBehaviour
             case (int)ItemType.Crossbow:
             case (int)ItemType.Wand:
             case (int)ItemType.Staff:
-                itemStatusText1.text = Defines.damage + item.itemData.Damage;
-                itemStatusText2.text = Defines.attackCoolTime + item.itemData.CoolDown;
-                itemStatusText3.text = Defines.criticalChance + item.itemData.CriticalChance + "%";
-                itemStatusText4.text = Defines.criticalDamage + item.itemData.Criticaldam + "%";
+                itemStatusText1.text = Defines.damage + Math.Round(item.itemData.Damage, 2);
+                itemStatusText2.text = Defines.attackCoolTime + Math.Round(item.itemData.CoolDown, 2);
+                itemStatusText3.text = Defines.criticalChance + Math.Round(item.itemData.CriticalChance, 2) + "%";
+                itemStatusText4.text = Defines.criticalDamage + Math.Round(item.itemData.Criticaldam, 2) + "%";
 
                 foreach (var text in itemStatusTexts)
                 {
