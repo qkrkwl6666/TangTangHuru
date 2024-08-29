@@ -56,28 +56,28 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     private void Start()
     {
-        if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
-        {
-            switch (GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1.ItemType)
-            {
-                case ItemType.Axe:
-                case ItemType.Crossbow:
-                case ItemType.Staff:
-                    powerImage.SetActive(true);
-                    levelUpPowerImage.SetActive(true);
-                    break;
-                case ItemType.Sword:
-                case ItemType.Bow:
-                case ItemType.Wand:
-                    speedImage.SetActive(true);
-                    levelUpSpeedImage.SetActive(true);
-                    break;
-            }
-        }
-        else
-        {
-            speedImage.SetActive(true);
-        }
+        //if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
+        //{
+        //    switch (GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1.ItemType)
+        //    {
+        //        case ItemType.Axe:
+        //        case ItemType.Crossbow:
+        //        case ItemType.Staff:
+        //            powerImage.SetActive(true);
+        //            levelUpPowerImage.SetActive(true);
+        //            break;
+        //        case ItemType.Sword:
+        //        case ItemType.Bow:
+        //        case ItemType.Wand:
+        //            speedImage.SetActive(true);
+        //            levelUpSpeedImage.SetActive(true);
+        //            break;
+        //    }
+        //}
+        //else
+        //{
+        //    speedImage.SetActive(true);
+        //}
     }
 
     public void ActiveGameClearUI()
