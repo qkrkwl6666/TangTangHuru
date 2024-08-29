@@ -27,6 +27,7 @@ public class IconLoader : MonoBehaviour
         iconNames.Add("IconOrbit");
         iconNames.Add("IconPassive");
         iconNames.Add("IconEmptySlot");
+        iconNames.Add("IconChest");
     }
     private void Start()
     {

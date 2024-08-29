@@ -24,7 +24,7 @@ public class OrbDesc : MonoBehaviour
         var stringDesc = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Desc_Id);
         var stringType = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Name_Id);
 
-        descripton.text = stringDesc.Text + " / " + stringType.Text;
+        descripton.text = stringDesc.Text;
         Addressables.LoadAssetAsync<Sprite>(itemData.Texture_Id).Completed += (x) =>
         {
             iconImage.sprite = x.Result;

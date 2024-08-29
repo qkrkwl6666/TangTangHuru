@@ -55,6 +55,7 @@ public class LevelUpUI : MonoBehaviour
         {
             SetAllOptions();
         }
+
         SetSelectables();
 
         if (tutorialProgress > 1)
@@ -73,7 +74,11 @@ public class LevelUpUI : MonoBehaviour
         foreach (var weaponCreator in passiveManager.currWeaponCreators) //갖고 있는 액티브 스킬
         {
             weaponCount++; //보유중 숫자
-            if (weaponCreator.currLevel < 5)
+            if (weaponCreator.currLevel < 4)
+            {
+                weaponList.Add(weaponCreator);
+            }
+            else if(weaponCreator.currLevel == 4 && weaponCreator.GetEvolovable())
             {
                 weaponList.Add(weaponCreator);
             }
@@ -94,37 +99,61 @@ public class LevelUpUI : MonoBehaviour
             }
         }
 
-        if (passiveList.Count < 5)
+        foreach (var passiveData in passiveManager.inGamePassiveList) //추가될 패시브
         {
-            foreach (var passiveData in passiveManager.inGamePassiveList) //추가될 패시브
-            {
-                passiveList.Add(passiveData);
-            }
+            passiveList.Add(passiveData);
         }
     }
 
     public void SetSelectables()
     {
         List<int> PassiveOrActive = new List<int>();
-        for (int i = 0; i < 3; i++)
+
+        if (weaponList.Count == 0 && passiveList.Count == 0)
         {
-            if (isTutorialStage)
+            PassiveOrActive.Add(11);
+            PassiveOrActive.Add(11);
+            PassiveOrActive.Add(11);
+        }
+        else if (weaponList.Count == 0 && passiveList.Count < 3)
+        {
+            PassiveOrActive.Add(0);
+            PassiveOrActive.Add(11);
+            PassiveOrActive.Add(11);
+        }
+        else if (weaponList.Count == 0)
+        {
+            PassiveOrActive.Add(0);
+            PassiveOrActive.Add(0);
+            PassiveOrActive.Add(0);
+        }
+        else if(weaponList.Count < 3)
+        {
+            PassiveOrActive.Add(10);
+            PassiveOrActive.Add(0);
+            PassiveOrActive.Add(0);
+        }
+        else
+        {
+            for (int i = 0; i < 3; i++)
             {
-                if(tutorialProgress == 1)
+                if (isTutorialStage)
                 {
-                    PassiveOrActive.Add(10);
+                    if (tutorialProgress == 1)
+                    {
+                        PassiveOrActive.Add(10);
+                    }
+                    else
+                    {
+                        PassiveOrActive.Add(0);
+                    }
                 }
                 else
                 {
-                    PassiveOrActive.Add(0);
+                    PassiveOrActive.Add(Random.Range(0, 10));
                 }
             }
-            else
-            {
-                PassiveOrActive.Add(Random.Range(0, 10));
-            }
         }
-
         List<int> passiveNums = Enumerable.Range(0, passiveList.Count).ToList();
         List<int> activeNums = Enumerable.Range(0, weaponList.Count).ToList();
         var random = new System.Random();
@@ -133,7 +162,6 @@ public class LevelUpUI : MonoBehaviour
 
         for (int i = 0; i < Options_UI.Count; i++)
         {
-
             if (PassiveOrActive[i] < 4) //패시브 선택
             {
                 var select = passiveNums[i];
@@ -152,7 +180,7 @@ public class LevelUpUI : MonoBehaviour
                 Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("IconPassive");
                 Options_UI[i].text_Desc.text = passiveList[select].PassiveDesc;
             }
-            else //액티브 선택
+            else if(PassiveOrActive[i] < 11)//액티브 선택
             {
 
                 var selectedCreator = weaponList[activeNums[i]];
@@ -166,9 +194,6 @@ public class LevelUpUI : MonoBehaviour
 
                 if (selectedCreator.currLevel == 0)
                 {
-                    //Options_UI[i].GetComponent<Button>().onClick.AddListener(()
-                    //=> selectedCreator.gameObject.SetActive(true));
-
                     Options_UI[i].GetComponent<Button>().onClick.AddListener(()
                         => CreateSkill(selectedCreator));
                 }
@@ -176,6 +201,15 @@ public class LevelUpUI : MonoBehaviour
                 {
                     Options_UI[i].GetComponent<Button>().onClick.AddListener(selectedCreator.LevelUpReady);
                 }
+            }
+            else
+            {
+                Options_UI[i].text_Name.text = "골드";
+                Options_UI[i].image_Icon.sprite = iconLoader.SetIconByName("IconChest");
+                Options_UI[i].text_Desc.text = "500골드";
+
+                Options_UI[i].GetComponent<Button>().onClick.AddListener(()
+                    => InGameInventory.OnCoinAdd?.Invoke(500));
             }
         }
 

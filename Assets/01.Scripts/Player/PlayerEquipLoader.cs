@@ -197,6 +197,7 @@ public class PlayerEquipLoader : MonoBehaviour
                 foreach (var weaponCreator in weaponCreators)
                 {
                     weaponCreator.SetMainInfo(mainDmg, mainCoolDown, mainCriticalChance, mainCriticalValue, mainType);
+                    weaponCreator.SetEvolovable(true);
                 }
                 myPassiveManager.currWeaponCreators.Add(weapon.GetComponent<WeaponCreator>());
                 myPassiveManager.RemoveFromUnoptainWeaponList(weapon.GetComponent<WeaponCreator>());

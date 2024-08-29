@@ -43,9 +43,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
     public GameObject powerImage;
     public GameObject speedImage;
 
-    public GameObject levelUpPowerImage;
-    public GameObject levelUpSpeedImage;
-
     public GameObject bagUI;
 
     private void Awake()
@@ -53,7 +50,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         playerSubject = GameObject.FindWithTag("PlayerSubject").GetComponent<PlayerSubject>();
         playerSubject.AddObserver(this);
     }
-
     private void Start()
     {
         //if (GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
@@ -79,7 +75,6 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
         //    speedImage.SetActive(true);
         //}
     }
-
     public void ActiveGameClearUI()
     {
         bossHpBar.gameObject.SetActive(false);
