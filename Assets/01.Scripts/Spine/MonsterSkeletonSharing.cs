@@ -37,7 +37,7 @@ public class MonsterSkeletonSharing : MonoBehaviour
 
                 foreach (var skeletonRenderer in skeletonRendererList.Value)
                 {
-                    //if(!skeletonRenderer.gameObject.activeSelf) continue;
+                    if(!skeletonRenderer.gameObject.activeSelf) continue;
 
                     sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
                     skeletonRenderer.skeleton.UpdateWorldTransform();
@@ -68,7 +68,7 @@ public class MonsterSkeletonSharing : MonoBehaviour
         sharedAnimationState.Add(key, new Spine.AnimationState(skeletonRenderer
             .skeletonDataAsset.GetAnimationStateData()));
 
-        Debug.Log(skeletonRenderer.skeleton);
+        //Debug.Log(skeletonRenderer.skeleton);
 
         sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
         skeletonRenderer.skeleton.UpdateWorldTransform();
@@ -77,8 +77,11 @@ public class MonsterSkeletonSharing : MonoBehaviour
         skeletonRenderer.skeleton.SetToSetupPose();
 
         // 스켈레톤 데이터에서 애니메이션 가져오기
+
+        string name = key == "119" ? Defines.walk2 : Defines.walk;
+
         Spine.Animation animation = skeletonRenderer.skeleton.Data.
-            FindAnimation(Defines.walk);
+            FindAnimation(name);
 
         sharedAnimationState[key].SetAnimation(0, animation, true);
     }

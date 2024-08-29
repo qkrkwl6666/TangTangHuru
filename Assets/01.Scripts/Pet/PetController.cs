@@ -21,7 +21,7 @@ public class PetController : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Player with tag 'Player' not found.");
+            //Debug.LogError("Player with tag 'Player' not found.");
         }
 
         SetRandomTargetPosition();

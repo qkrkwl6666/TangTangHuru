@@ -27,11 +27,10 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
-
-namespace Spine {
-	/// <summary>Attachment that has a polygon for bounds checking.</summary>
-	public class BoundingBoxAttachment : VertexAttachment {
+namespace Spine
+{
+    /// <summary>Attachment that has a polygon for bounds checking.</summary>
+    public class BoundingBoxAttachment : VertexAttachment {
 		public BoundingBoxAttachment (string name)
 			: base(name) {
 		}

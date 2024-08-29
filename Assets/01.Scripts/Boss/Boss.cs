@@ -123,7 +123,7 @@ public class Boss : LivingEntity, IPlayerObserver
                     {
                         var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
                         reflect.SetReflect(false, skillData.Object_Scale, skillData.Obejct_Speed, 
-                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count);
+                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count, skillData.Preafab_Id);
                     }
                     break;
                 case 8:
@@ -131,7 +131,7 @@ public class Boss : LivingEntity, IPlayerObserver
                     {
                         var reflect = AddSkill<Reflect>(skill.Item1, skill.Item2);
                         reflect.SetReflect(true, skillData.Object_Scale, skillData.Obejct_Speed,
-                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count);
+                            skillData.Disable_Duration, skillData.Obect_Count, skillData.Random_Count, skillData.Preafab_Id);
                     }
                     break;
                 case 9:
@@ -198,7 +198,7 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public IBossSkill SelectSkill()
     {
-        Debug.Log("SelectSkill");
+        //Debug.Log("SelectSkill");
 
         if (currentSkill != null)
         {

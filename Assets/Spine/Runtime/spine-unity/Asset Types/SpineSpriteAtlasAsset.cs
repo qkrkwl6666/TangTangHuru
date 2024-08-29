@@ -33,9 +33,7 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using Spine;
 using UnityEngine.U2D;
 
 #if UNITY_EDITOR
@@ -43,9 +41,10 @@ using UnityEditor;
 using System.Reflection;
 #endif
 
-namespace Spine.Unity {
-	/// <summary>Loads and stores a Spine atlas and list of materials.</summary>
-	[CreateAssetMenu(fileName = "New Spine SpriteAtlas Asset", menuName = "Spine/Spine SpriteAtlas Asset")]
+namespace Spine.Unity
+{
+    /// <summary>Loads and stores a Spine atlas and list of materials.</summary>
+    [CreateAssetMenu(fileName = "New Spine SpriteAtlas Asset", menuName = "Spine/Spine SpriteAtlas Asset")]
 	public class SpineSpriteAtlasAsset : AtlasAssetBase {
 		public SpriteAtlas spriteAtlasFile;
 		public Material[] materials;

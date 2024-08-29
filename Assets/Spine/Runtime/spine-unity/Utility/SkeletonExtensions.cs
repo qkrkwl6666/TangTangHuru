@@ -29,8 +29,9 @@
 
 using UnityEngine;
 
-namespace Spine.Unity {
-	public static class SkeletonExtensions {
+namespace Spine.Unity
+{
+    public static class SkeletonExtensions {
 
 		#region Colors
 		const float ByteToFloat = 1f / 255f;
@@ -297,11 +298,11 @@ namespace Spine.Unity {
 	}
 }
 
-namespace Spine {
-	using System;
-	using System.Collections.Generic;
+namespace Spine
+{
+    using System;
 
-	public struct BoneMatrix {
+    public struct BoneMatrix {
 		public float a, b, c, d, x, y;
 
 		/// <summary>Recursively calculates a worldspace bone matrix based on BoneData.</summary>

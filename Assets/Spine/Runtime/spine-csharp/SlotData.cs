@@ -29,8 +29,9 @@
 
 using System;
 
-namespace Spine {
-	public class SlotData {
+namespace Spine
+{
+    public class SlotData {
 		internal int index;
 		internal string name;
 		internal BoneData boneData;

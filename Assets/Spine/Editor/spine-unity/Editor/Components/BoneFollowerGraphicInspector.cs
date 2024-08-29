@@ -29,14 +29,14 @@
 
 using UnityEngine;
 using UnityEditor;
-using Spine.Unity;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	using Editor = UnityEditor.Editor;
-	using Event = UnityEngine.Event;
+    using Editor = UnityEditor.Editor;
+    using Event = UnityEngine.Event;
 
-	[CustomEditor(typeof(BoneFollowerGraphic)), CanEditMultipleObjects]
+    [CustomEditor(typeof(BoneFollowerGraphic)), CanEditMultipleObjects]
 	public class BoneFollowerGraphicInspector : Editor {
 
 		SerializedProperty boneName, skeletonGraphic, followXYPosition, followZPosition, followBoneRotation,

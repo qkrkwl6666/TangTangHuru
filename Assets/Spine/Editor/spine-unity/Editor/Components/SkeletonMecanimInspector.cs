@@ -32,8 +32,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	[CustomEditor(typeof(SkeletonMecanim))]
+namespace Spine.Unity.Editor
+{
+    [CustomEditor(typeof(SkeletonMecanim))]
 	[CanEditMultipleObjects]
 	public class SkeletonMecanimInspector : SkeletonRendererInspector {
 		public static bool mecanimSettingsFoldout;

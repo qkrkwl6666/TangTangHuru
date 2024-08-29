@@ -1,6 +1,5 @@
 #if UNITY_BURST && UNITY_MATHEMATICS && UNITY_COLLECTIONS
 
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Mathematics;
 using UnityEngine;

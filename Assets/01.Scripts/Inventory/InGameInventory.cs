@@ -140,6 +140,8 @@ public class InGameInventory : MonoBehaviour
 
                     goRect.position = imageRect.position;
 
+                    goRect.anchoredPosition += new Vector2(15, -5);
+
                     RectTransform bagRect = bagTransform;
 
                     Vector2 bagCenter;

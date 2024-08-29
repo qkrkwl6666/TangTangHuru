@@ -127,7 +127,7 @@ public class PlayerEquipLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No PassiveManager!");
+            //Debug.LogError("No PassiveManager!");
         }
     }
 
@@ -152,7 +152,7 @@ public class PlayerEquipLoader : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Failed to instantiate the weapon.");
+                //Debug.LogError("Failed to instantiate the weapon.");
             }
         };
     }
@@ -178,7 +178,7 @@ public class PlayerEquipLoader : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Failed to instantiate the weapon.");
+                //Debug.LogError("Failed to instantiate the weapon.");
             }
         };
     }
@@ -203,7 +203,7 @@ public class PlayerEquipLoader : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Failed to instantiate the weapon.");
+                //Debug.LogError("Failed to instantiate the weapon.");
             }
         };
     }
@@ -215,11 +215,11 @@ public class PlayerEquipLoader : MonoBehaviour
         {
             if (obj.Status == AsyncOperationStatus.Succeeded)
             {
-                Debug.Log("Succeed to instantiate the pet.");
+                //Debug.Log("Succeed to instantiate the pet.");
             }
             else
             {
-                Debug.Log("Failed to instantiate the pet.");
+                //Debug.Log("Failed to instantiate the pet.");
             }
         };
     }
@@ -231,11 +231,11 @@ public class PlayerEquipLoader : MonoBehaviour
         {
             if (obj.Status == AsyncOperationStatus.Succeeded)
             {
-                Debug.Log("Succeed to instantiate the pet.");
+                //Debug.Log("Succeed to instantiate the pet.");
             }
             else
             {
-                Debug.Log("Failed to instantiate the pet.");
+                // Debug.Log("Failed to instantiate the pet.");
             }
         };
 

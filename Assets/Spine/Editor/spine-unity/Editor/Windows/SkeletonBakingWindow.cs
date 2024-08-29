@@ -27,17 +27,14 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
+    using Icons = SpineEditorUtilities.Icons;
 
-	using Editor = UnityEditor.Editor;
-	using Icons = SpineEditorUtilities.Icons;
-
-	public class SkeletonBakingWindow : EditorWindow {
+    public class SkeletonBakingWindow : EditorWindow {
 		const bool IsUtilityWindow = true;
 
 		[MenuItem("CONTEXT/SkeletonDataAsset/Skeleton Baking", false, 5000)]

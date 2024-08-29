@@ -5,7 +5,6 @@
 
 using AssetKits.ParticleImage.Enumerations;
 using UnityEditor;
-using UnityEditor.Experimental.SceneManagement;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using PlayMode = AssetKits.ParticleImage.Enumerations.PlayMode;

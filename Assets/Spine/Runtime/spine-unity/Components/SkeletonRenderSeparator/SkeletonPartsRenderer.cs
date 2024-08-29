@@ -29,8 +29,9 @@
 
 using UnityEngine;
 
-namespace Spine.Unity {
-	[RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
+namespace Spine.Unity
+{
+    [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
 	[HelpURL("http://esotericsoftware.com/spine-unity#SkeletonRenderSeparator")]
 	public class SkeletonPartsRenderer : MonoBehaviour {
 

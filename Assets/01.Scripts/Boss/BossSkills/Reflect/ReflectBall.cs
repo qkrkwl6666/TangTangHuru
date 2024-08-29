@@ -19,10 +19,11 @@ public class ReflectBall : MonoBehaviour
     private int copyCount = 0;
 
     private float maxAngle = 90f;
+    private string prefabId = string.Empty;
 
     public void Init(Vector2 dir, Transform bossTransform, float circleScale
         , float ballSpeed, float disableDuration, bool fission = false,
-        float currentTime = 0f, int copyCount = 0)
+        float currentTime = 0f, int copyCount = 0, string prefabId = "")
     {
         this.dir = dir;
         this.bossTransform = bossTransform;
@@ -32,8 +33,17 @@ public class ReflectBall : MonoBehaviour
         this.time = currentTime;
         this.disableDuration = disableDuration;
         this.copyCount = copyCount;
+        this.prefabId = prefabId;
 
         transform.localScale = new Vector3(circleScale, circleScale, circleScale);
+
+        if (prefabId == Defines.tornado)
+        {
+            foreach (Transform t in transform)
+            {
+                t.localScale = new Vector3(circleScale, circleScale, circleScale);
+            }
+        }
     }
 
     public void SetDamage(float damage)
@@ -98,7 +108,7 @@ public class ReflectBall : MonoBehaviour
                 var ball = pool.Get().GetComponent<ReflectBall>();
                 ball.transform.position = transform.position;
 
-                ball.Init(reflectBallDir, bossTransform, circleScale / copyCount, speed, disableDuration, true, time);
+                ball.Init(reflectBallDir, bossTransform, circleScale / copyCount, speed, disableDuration, true, time, 0,prefabId);
             }
 
             pool.Release(gameObject);

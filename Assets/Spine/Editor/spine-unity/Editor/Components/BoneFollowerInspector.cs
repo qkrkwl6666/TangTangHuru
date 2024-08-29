@@ -30,12 +30,13 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	using Editor = UnityEditor.Editor;
-	using Event = UnityEngine.Event;
+    using Editor = UnityEditor.Editor;
+    using Event = UnityEngine.Event;
 
-	[CustomEditor(typeof(BoneFollower)), CanEditMultipleObjects]
+    [CustomEditor(typeof(BoneFollower)), CanEditMultipleObjects]
 	public class BoneFollowerInspector : Editor {
 		SerializedProperty boneName, skeletonRenderer, followXYPosition, followZPosition, followBoneRotation,
 			followLocalScale, followSkeletonFlip, maintainedAxisOrientation;

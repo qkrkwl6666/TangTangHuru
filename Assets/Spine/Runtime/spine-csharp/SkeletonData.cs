@@ -29,10 +29,11 @@
 
 using System;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>Stores the setup pose and all of the stateless data for a skeleton.</summary>
-	public class SkeletonData {
+    /// <summary>Stores the setup pose and all of the stateless data for a skeleton.</summary>
+    public class SkeletonData {
 		internal string name;
 		internal ExposedList<BoneData> bones = new ExposedList<BoneData>(); // Ordered parents first
 		internal ExposedList<SlotData> slots = new ExposedList<SlotData>(); // Setup pose draw order.

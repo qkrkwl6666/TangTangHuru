@@ -28,16 +28,16 @@
  *****************************************************************************/
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Spine.Collections;
 
-namespace Spine {
-	/// <summary>Stores attachments by slot index and attachment name.
-	/// <para>See SkeletonData <see cref="Spine.SkeletonData.DefaultSkin"/>, Skeleton <see cref="Spine.Skeleton.Skin"/>, and
-	/// <a href="http://esotericsoftware.com/spine-runtime-skins">Runtime skins</a> in the Spine Runtimes Guide.</para>
-	/// </summary>
-	public class Skin {
+namespace Spine
+{
+    /// <summary>Stores attachments by slot index and attachment name.
+    /// <para>See SkeletonData <see cref="Spine.SkeletonData.DefaultSkin"/>, Skeleton <see cref="Spine.Skeleton.Skin"/>, and
+    /// <a href="http://esotericsoftware.com/spine-runtime-skins">Runtime skins</a> in the Spine Runtimes Guide.</para>
+    /// </summary>
+    public class Skin {
 		internal string name;
 		private OrderedDictionary<SkinEntry, Attachment> attachments = new OrderedDictionary<SkinEntry, Attachment>(SkinEntryComparer.Instance);
 		internal readonly ExposedList<BoneData> bones = new ExposedList<BoneData>();

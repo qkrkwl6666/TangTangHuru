@@ -29,14 +29,15 @@
 
 using UnityEngine;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	/// <summary>
-	/// Utility component to support flipping of hinge chains (chains of HingeJoint objects) along with the parent skeleton.
-	/// 
-	/// Note: This component is automatically attached when calling "Create Hinge Chain" at <see cref="SkeletonUtilityBone"/>.
-	/// </summary>
-	[RequireComponent(typeof(Rigidbody2D))]
+    /// <summary>
+    /// Utility component to support flipping of hinge chains (chains of HingeJoint objects) along with the parent skeleton.
+    /// 
+    /// Note: This component is automatically attached when calling "Create Hinge Chain" at <see cref="SkeletonUtilityBone"/>.
+    /// </summary>
+    [RequireComponent(typeof(Rigidbody2D))]
 	public class FollowLocationRigidbody2D : MonoBehaviour {
 	
 		public Transform reference;

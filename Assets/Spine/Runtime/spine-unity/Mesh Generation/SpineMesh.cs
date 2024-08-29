@@ -32,11 +32,10 @@
 //#define SPINE_DEBUG
 
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 
-namespace Spine.Unity {
-	public static class SpineMesh {
+namespace Spine.Unity
+{
+    public static class SpineMesh {
 		internal const HideFlags MeshHideflags = HideFlags.DontSaveInBuild | HideFlags.DontSaveInEditor;
 
 		/// <summary>Factory method for creating a new mesh for use in Spine components. This can be called in field initializers.</summary>

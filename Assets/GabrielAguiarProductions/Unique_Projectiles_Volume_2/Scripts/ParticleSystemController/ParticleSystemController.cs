@@ -63,7 +63,7 @@ namespace GAP_ParticleSystemController
                 }
                 else
                 {
-                    Debug.Log("Make sure the ActiveParticleSystems list has the same amount as the ParticleSystems list.");
+                    //Debug.Log("Make sure the ActiveParticleSystems list has the same amount as the ParticleSystems list.");
                     return;
                 }
             }
@@ -405,8 +405,8 @@ namespace GAP_ParticleSystemController
                 }
 #endif
             }
-            else
-                Debug.Log("No Particle Systems added to the Particle Systems list");
+            //else
+                //Debug.Log("No Particle Systems added to the Particle Systems list");
         }
 
         public void ChangeColorOnly()
@@ -708,7 +708,7 @@ namespace GAP_ParticleSystemController
 #if UNITY_2018_3_OR_NEWER
                 SaveParticleSystemScript.SaveNestedPrefab(gameObject);
 #endif
-                Debug.Log(gameObject.name + " reseted to default.");
+                //Debug.Log(gameObject.name + " reseted to default.");
             }
         }
 
@@ -761,7 +761,7 @@ namespace GAP_ParticleSystemController
             }
             else
             {
-                Debug.Log("Lists already have GameObjects. For automatic filling consider emptying the lists and try again.");
+                //Debug.Log("Lists already have GameObjects. For automatic filling consider emptying the lists and try again.");
             }
         }
 

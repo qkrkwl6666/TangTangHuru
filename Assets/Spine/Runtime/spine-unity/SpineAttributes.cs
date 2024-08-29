@@ -29,11 +29,11 @@
 
 using UnityEngine;
 using System;
-using System.Collections;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	[AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Field, Inherited = true, AllowMultiple = false)]
 	public abstract class SpineAttributeBase : PropertyAttribute {
 		public string dataField = "";
 		public string startsWith = "";

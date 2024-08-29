@@ -46,7 +46,7 @@ public class MonsterManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Failed to load DamageText prefab.");
+            //Debug.LogError("Failed to load DamageText prefab.");
         }
     }
 

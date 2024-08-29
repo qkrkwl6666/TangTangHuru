@@ -29,9 +29,10 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>Attachment that displays a texture region using a mesh.</summary>
-	public class MeshAttachment : VertexAttachment, IHasRendererObject {
+namespace Spine
+{
+    /// <summary>Attachment that displays a texture region using a mesh.</summary>
+    public class MeshAttachment : VertexAttachment, IHasRendererObject {
 		internal float regionOffsetX, regionOffsetY, regionWidth, regionHeight, regionOriginalWidth, regionOriginalHeight;
 		private MeshAttachment parentMesh;
 		internal float[] uvs, regionUVs;

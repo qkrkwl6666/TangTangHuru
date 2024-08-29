@@ -38,15 +38,11 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	public partial class SpineEditorUtilities {
+    public partial class SpineEditorUtilities {
 		public static class DataReloadHandler {
 
 			internal static Dictionary<int, string> savedSkeletonDataAssetAtSKeletonGraphicID = new Dictionary<int, string>();

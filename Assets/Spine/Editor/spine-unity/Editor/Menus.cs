@@ -27,13 +27,11 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
-using System.IO;
 using UnityEditor;
-using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	public static class Menus {
+namespace Spine.Unity.Editor
+{
+    public static class Menus {
 		[MenuItem("GameObject/Spine/SkeletonRenderer", false, 10)]
 		static public void CreateSkeletonRendererGameObject () {
 			EditorInstantiation.InstantiateEmptySpineGameObject<SkeletonRenderer>("New SkeletonRenderer", true);

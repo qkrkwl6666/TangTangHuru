@@ -30,10 +30,11 @@
 using System;
 using System.Collections.Generic;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>Stores mix (crossfade) durations to be applied when AnimationState animations are changed.</summary>
-	public class AnimationStateData {
+    /// <summary>Stores mix (crossfade) durations to be applied when AnimationState animations are changed.</summary>
+    public class AnimationStateData {
 		internal SkeletonData skeletonData;
 		readonly Dictionary<AnimationPair, float> animationToMixTime = new Dictionary<AnimationPair, float>(AnimationPairComparer.Instance);
 		internal float defaultMix;

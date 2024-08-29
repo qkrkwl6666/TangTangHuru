@@ -50,16 +50,11 @@
 #if BUILT_IN_SPRITE_MASK_COMPONENT
 
 using UnityEngine;
-using UnityEditor;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	public class SpineMaskUtilities	{
+    public class SpineMaskUtilities	{
 
 		private const string MATERIAL_FILENAME_SUFFIX_INSIDE_MASK = "_InsideMask";
 		private const string MATERIAL_FILENAME_SUFFIX_OUTSIDE_MASK = "_OutsideMask";

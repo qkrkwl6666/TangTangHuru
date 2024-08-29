@@ -34,10 +34,11 @@
 using UnityEngine;
 using UnityEditor;
 
-namespace Spine.Unity.Editor {
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Icons = SpineEditorUtilities.Icons;
 
-	[CustomEditor(typeof(SkeletonGraphic))]
+    [CustomEditor(typeof(SkeletonGraphic))]
 	[CanEditMultipleObjects]
 	public class SkeletonGraphicInspector : UnityEditor.Editor {
 

@@ -31,8 +31,9 @@ using UnityEngine;
 using UnityEditor;
 using Spine.Unity.Editor;
 
-namespace Spine.Unity.Examples {
-	[CustomEditor(typeof(SkeletonPartsRenderer))]
+namespace Spine.Unity.Examples
+{
+    [CustomEditor(typeof(SkeletonPartsRenderer))]
 	public class SkeletonRenderPartInspector : UnityEditor.Editor {
 		SpineInspectorUtility.SerializedSortingProperties sortingProperties;
 

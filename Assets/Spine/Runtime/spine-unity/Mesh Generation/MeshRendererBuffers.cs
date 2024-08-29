@@ -33,11 +33,11 @@
 
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 
-namespace Spine.Unity {
-	/// <summary>A double-buffered Mesh, and a shared material array, bundled for use by Spine components that need to push a Mesh and materials to a Unity MeshRenderer and MeshFilter.</summary>
-	public class MeshRendererBuffers : IDisposable {
+namespace Spine.Unity
+{
+    /// <summary>A double-buffered Mesh, and a shared material array, bundled for use by Spine components that need to push a Mesh and materials to a Unity MeshRenderer and MeshFilter.</summary>
+    public class MeshRendererBuffers : IDisposable {
 		DoubleBuffered<SmartMesh> doubleBufferedMesh;
 		internal readonly ExposedList<Material> submeshMaterials = new ExposedList<Material>();
 		internal Material[] sharedMaterials = new Material[0];

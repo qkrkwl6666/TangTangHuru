@@ -35,8 +35,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Spine {
-	[DebuggerDisplay("Count={Count}")]
+namespace Spine
+{
+    [DebuggerDisplay("Count={Count}")]
 	public class ExposedList<T> : IEnumerable<T> {
 		public T[] Items;
 		public int Count;

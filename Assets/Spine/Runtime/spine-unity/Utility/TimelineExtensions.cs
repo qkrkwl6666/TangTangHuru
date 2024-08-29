@@ -28,11 +28,10 @@
  *****************************************************************************/
 
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
-namespace Spine.Unity.AnimationTools {
-	public static class TimelineExtensions {
+namespace Spine.Unity.AnimationTools
+{
+    public static class TimelineExtensions {
 
 		/// <summary>Evaluates the resulting value of a TranslateTimeline at a given time.
 		/// SkeletonData can be accessed from Skeleton.Data or from SkeletonDataAsset.GetSkeletonData.

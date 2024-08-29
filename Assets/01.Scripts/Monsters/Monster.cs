@@ -40,7 +40,7 @@ public class Monster : LivingEntity, IPlayerObserver
 
         if (playerSubject == null)
         {
-            Debug.Log("MonsterExp Script PlayerSubject is Null");
+            //Debug.Log("MonsterExp Script PlayerSubject is Null");
             return;
         }
 

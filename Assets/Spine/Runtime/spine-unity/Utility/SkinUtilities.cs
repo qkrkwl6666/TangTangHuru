@@ -27,13 +27,10 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
+namespace Spine.Unity.AttachmentTools
+{
 
-namespace Spine.Unity.AttachmentTools {
-
-	public static class SkinUtilities {
+    public static class SkinUtilities {
 
 		#region Skeleton Skin Extensions
 		/// <summary>

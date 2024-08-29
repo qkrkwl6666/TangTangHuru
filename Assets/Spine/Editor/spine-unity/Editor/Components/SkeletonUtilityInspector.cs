@@ -33,15 +33,13 @@
 
 using UnityEngine;
 using UnityEditor;
-using UnityEditor.AnimatedValues;
-using System.Collections.Generic;
-using Spine;
 using System.Reflection;
 
-namespace Spine.Unity.Editor {
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Icons = SpineEditorUtilities.Icons;
 
-	[CustomEditor(typeof(SkeletonUtility))]
+    [CustomEditor(typeof(SkeletonUtility))]
 	public class SkeletonUtilityInspector : UnityEditor.Editor {
 
 		SkeletonUtility skeletonUtility;

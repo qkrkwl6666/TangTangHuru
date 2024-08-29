@@ -36,9 +36,10 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 #endif
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	public static class SkeletonDataCompatibility {
+    public static class SkeletonDataCompatibility {
 
 	#if UNITY_EDITOR
 		static readonly int[][] compatibleBinaryVersions = { new[] { 3, 8, 0 } };

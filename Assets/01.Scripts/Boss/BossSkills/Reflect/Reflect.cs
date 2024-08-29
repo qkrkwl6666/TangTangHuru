@@ -23,6 +23,8 @@ public class Reflect : MonoBehaviour, IBossSkill
     private bool fission = false;
     private int randomCount = 0;
 
+    private string prefabId;
+
     public void Activate()
     {
         enabled = true;
@@ -49,7 +51,7 @@ public class Reflect : MonoBehaviour, IBossSkill
     }
 
     public void SetReflect(bool fission, float circleScale, float ballSpeed, 
-        float disableDuration, int copyCount, int randomCount = 0)
+        float disableDuration, int copyCount, int randomCount = 0, string prefabId = "")
     {
         this.fission = fission;
         this.attackScale = circleScale;
@@ -57,6 +59,7 @@ public class Reflect : MonoBehaviour, IBossSkill
         this.ballSpeed = ballSpeed;
         this.copyCount = copyCount;
         this.randomCount = randomCount;
+        this.prefabId = prefabId;
     }
 
     public void InstantiateBall(AsyncOperationHandle<GameObject> op)
@@ -102,7 +105,7 @@ public class Reflect : MonoBehaviour, IBossSkill
         var reflectBall = pool.Get().GetComponent<ReflectBall>();
 
         reflectBall.Init(randomDir, transform, attackScale, 
-            ballSpeed, disableDuration, fission, 0f, copyCount + Random.Range(0, randomCount + 1));
+            ballSpeed, disableDuration, fission, 0f, copyCount + Random.Range(0, randomCount + 1), prefabId);
 
         reflectBall.transform.position = transform.position;
         currentSkillCount++;

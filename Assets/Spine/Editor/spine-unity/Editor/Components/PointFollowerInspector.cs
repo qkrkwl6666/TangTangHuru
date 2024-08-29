@@ -27,16 +27,16 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System.Collections;
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	using Editor = UnityEditor.Editor;
-	using Event = UnityEngine.Event;
+    using Editor = UnityEditor.Editor;
+    using Event = UnityEngine.Event;
 
-	[CustomEditor(typeof(PointFollower)), CanEditMultipleObjects]
+    [CustomEditor(typeof(PointFollower)), CanEditMultipleObjects]
 	public class PointFollowerInspector : Editor {
 		SerializedProperty slotName, pointAttachmentName, skeletonRenderer, followZPosition, followBoneRotation, followSkeletonFlip;
 		PointFollower targetPointFollower;
