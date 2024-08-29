@@ -39,9 +39,10 @@ using UnityEngine;
 using UnityEditor;
 using System.Threading;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	public class SpinePreferences : ScriptableObject {
+    public class SpinePreferences : ScriptableObject {
 
 		#if NEW_PREFERENCES_SETTINGS_PROVIDER
 		static int wasPreferencesDirCreated = 0;

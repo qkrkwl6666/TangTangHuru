@@ -46,14 +46,10 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
-	public partial class SpineEditorUtilities {
+namespace Spine.Unity.Editor
+{
+    public partial class SpineEditorUtilities {
 
 	#if NEW_PREFERENCES_SETTINGS_PROVIDER
 		static class SpineSettingsProviderRegistration

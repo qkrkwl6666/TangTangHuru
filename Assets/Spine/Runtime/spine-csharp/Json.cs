@@ -30,12 +30,12 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Collections;
 using System.Globalization;
 using System.Collections.Generic;
 
-namespace Spine {
-	public static class Json {
+namespace Spine
+{
+    public static class Json {
 		public static object Deserialize (TextReader text) {
 			var parser = new SharpJson.JsonDecoder();
 			parser.parseNumbersAsFloat = true;
@@ -72,7 +72,7 @@ namespace Spine {
  */
 namespace SharpJson
 {
-	class Lexer
+    class Lexer
 	{
 		public enum Token {
 			None,

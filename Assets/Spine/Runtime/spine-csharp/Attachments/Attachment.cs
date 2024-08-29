@@ -29,8 +29,9 @@
 
 using System;
 
-namespace Spine {
-	abstract public class Attachment {
+namespace Spine
+{
+    abstract public class Attachment {
 		public string Name { get; private set; }
 
 		protected Attachment (string name) {

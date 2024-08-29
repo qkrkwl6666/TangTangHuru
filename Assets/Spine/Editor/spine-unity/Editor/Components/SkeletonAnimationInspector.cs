@@ -29,11 +29,11 @@
 
 using UnityEditor;
 using UnityEngine;
-using Spine;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	[CustomEditor(typeof(SkeletonAnimation))]
+    [CustomEditor(typeof(SkeletonAnimation))]
 	[CanEditMultipleObjects]
 	public class SkeletonAnimationInspector : SkeletonRendererInspector {
 		protected SerializedProperty animationName, loop, timeScale, autoReset;

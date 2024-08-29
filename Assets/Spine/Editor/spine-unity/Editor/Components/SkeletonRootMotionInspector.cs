@@ -30,8 +30,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	[CustomEditor(typeof(SkeletonRootMotion))]
+namespace Spine.Unity.Editor
+{
+    [CustomEditor(typeof(SkeletonRootMotion))]
 	[CanEditMultipleObjects]
 	public class SkeletonRootMotionInspector : SkeletonRootMotionBaseInspector {
 		protected SerializedProperty animationTrackFlags;

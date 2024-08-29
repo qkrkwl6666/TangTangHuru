@@ -29,14 +29,15 @@
 
 using System;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>
-	/// Stores a slot's current pose. Slots organize attachments for {@link Skeleton#drawOrder} purposes and provide a place to store
-	/// state for an attachment.State cannot be stored in an attachment itself because attachments are stateless and may be shared
-	/// across multiple skeletons.
-	/// </summary>
-	public class Slot {
+    /// <summary>
+    /// Stores a slot's current pose. Slots organize attachments for {@link Skeleton#drawOrder} purposes and provide a place to store
+    /// state for an attachment.State cannot be stored in an attachment itself because attachments are stateless and may be shared
+    /// across multiple skeletons.
+    /// </summary>
+    public class Slot {
 		internal SlotData data;
 		internal Bone bone;
 		internal float r, g, b, a;

@@ -29,12 +29,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
-using Spine;
 
-namespace Spine.Unity {
-	[System.Serializable]
+namespace Spine.Unity
+{
+    [System.Serializable]
 	public class BlendModeMaterials {
 
 		[System.Serializable]

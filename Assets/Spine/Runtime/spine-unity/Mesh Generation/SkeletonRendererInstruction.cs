@@ -32,12 +32,11 @@
 //#define SPINE_DEBUG
 
 using UnityEngine;
-using System;
-using System.Collections.Generic;
 
-namespace Spine.Unity {
-	/// <summary>Instructions used by a SkeletonRenderer to render a mesh.</summary>
-	public class SkeletonRendererInstruction {
+namespace Spine.Unity
+{
+    /// <summary>Instructions used by a SkeletonRenderer to render a mesh.</summary>
+    public class SkeletonRendererInstruction {
 		public readonly ExposedList<SubmeshInstruction> submeshInstructions = new ExposedList<SubmeshInstruction>();
 
 		public bool immutableTriangles;

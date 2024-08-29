@@ -32,12 +32,13 @@ using System.Collections.Generic;
 using Spine.Unity.AnimationTools;
 using System;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	/// <summary>
-	/// Base class for skeleton root motion components.
-	/// </summary>
-	abstract public class SkeletonRootMotionBase : MonoBehaviour {
+    /// <summary>
+    /// Base class for skeleton root motion components.
+    /// </summary>
+    abstract public class SkeletonRootMotionBase : MonoBehaviour {
 
 		#region Inspector
 		[SpineBone]

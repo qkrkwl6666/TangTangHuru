@@ -29,9 +29,9 @@
 
 #define SPINE_SKELETON_MECANIM
 
- #if (UNITY_2017_4 || UNITY_2018_1_OR_NEWER )
- #define SPINE_UNITY_2018_PREVIEW_API
- #endif
+#if (UNITY_2017_4 || UNITY_2018_1_OR_NEWER)
+#define SPINE_UNITY_2018_PREVIEW_API
+#endif
 
 
 using System;
@@ -42,12 +42,13 @@ using UnityEngine;
 
 using CompatibilityProblemInfo = Spine.Unity.SkeletonDataCompatibility.CompatibilityProblemInfo;
 
-namespace Spine.Unity.Editor {
-	using Event = UnityEngine.Event;
-	using Icons = SpineEditorUtilities.Icons;
-	using Animation = Spine.Animation;
+namespace Spine.Unity.Editor
+{
+    using Event = UnityEngine.Event;
+    using Icons = SpineEditorUtilities.Icons;
+    using Animation = Spine.Animation;
 
-	[CustomEditor(typeof(SkeletonDataAsset)), CanEditMultipleObjects]
+    [CustomEditor(typeof(SkeletonDataAsset)), CanEditMultipleObjects]
 	public class SkeletonDataAssetInspector : UnityEditor.Editor {
 		internal static bool showAnimationStateData = true;
 		internal static bool showAnimationList = true;

@@ -27,8 +27,9 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-namespace Spine {
-	public interface AttachmentLoader {
+namespace Spine
+{
+    public interface AttachmentLoader {
 		/// <return>May be null to not load any attachment.</return>
 		RegionAttachment NewRegionAttachment (Skin skin, string name, string path);
 

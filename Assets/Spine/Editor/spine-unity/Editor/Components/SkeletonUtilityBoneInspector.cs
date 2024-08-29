@@ -36,12 +36,12 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using Spine;
 
-namespace Spine.Unity.Editor {
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Icons = SpineEditorUtilities.Icons;
 
-	[CustomEditor(typeof(SkeletonUtilityBone)), CanEditMultipleObjects]
+    [CustomEditor(typeof(SkeletonUtilityBone)), CanEditMultipleObjects]
 	public class SkeletonUtilityBoneInspector : UnityEditor.Editor {
 		SerializedProperty mode, boneName, zPosition, position, rotation, scale, overrideAlpha, hierarchy, parentReference;
 		GUIContent hierarchyLabel;

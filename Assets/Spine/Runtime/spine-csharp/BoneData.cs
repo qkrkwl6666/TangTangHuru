@@ -29,8 +29,9 @@
 
 using System;
 
-namespace Spine {
-	public class BoneData {
+namespace Spine
+{
+    public class BoneData {
 		internal int index;
 		internal string name;
 		internal BoneData parent;

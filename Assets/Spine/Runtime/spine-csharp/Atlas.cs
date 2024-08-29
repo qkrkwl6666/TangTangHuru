@@ -35,15 +35,15 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
 
 #if WINDOWS_STOREAPP
 using System.Threading.Tasks;
 using Windows.Storage;
 #endif
 
-namespace Spine {
-	public class Atlas : IEnumerable<AtlasRegion> {
+namespace Spine
+{
+    public class Atlas : IEnumerable<AtlasRegion> {
 		readonly List<AtlasPage> pages = new List<AtlasPage>();
 		List<AtlasRegion> regions = new List<AtlasRegion>();
 		TextureLoader textureLoader;

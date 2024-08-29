@@ -29,15 +29,16 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>
-	/// <para>
-	/// Stores the current pose for a transform constraint. A transform constraint adjusts the world transform of the constrained
-	/// bones to match that of the target bone.</para>
-	/// <para>
-	/// See <a href="http://esotericsoftware.com/spine-transform-constraints">Transform constraints</a> in the Spine User Guide.</para>
-	/// </summary>
-	public class TransformConstraint : IUpdatable {
+namespace Spine
+{
+    /// <summary>
+    /// <para>
+    /// Stores the current pose for a transform constraint. A transform constraint adjusts the world transform of the constrained
+    /// bones to match that of the target bone.</para>
+    /// <para>
+    /// See <a href="http://esotericsoftware.com/spine-transform-constraints">Transform constraints</a> in the Spine User Guide.</para>
+    /// </summary>
+    public class TransformConstraint : IUpdatable {
 		internal TransformConstraintData data;
 		internal ExposedList<Bone> bones;
 		internal Bone target;

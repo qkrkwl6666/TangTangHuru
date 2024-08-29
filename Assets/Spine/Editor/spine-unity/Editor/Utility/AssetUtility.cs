@@ -57,9 +57,10 @@ using System.Reflection;
 
 using CompatibilityProblemInfo = Spine.Unity.SkeletonDataCompatibility.CompatibilityProblemInfo;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	public class PathAndProblemInfo {
+    public class PathAndProblemInfo {
 		public string path;
 		public CompatibilityProblemInfo compatibilityProblems;
 		public string otherProblemDescription;

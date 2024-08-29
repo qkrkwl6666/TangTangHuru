@@ -27,10 +27,9 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
-
-namespace Spine {
-	public class PathConstraintData : ConstraintData {
+namespace Spine
+{
+    public class PathConstraintData : ConstraintData {
 		internal ExposedList<BoneData> bones = new ExposedList<BoneData>();
 		internal SlotData target;
 		internal PositionMode positionMode;

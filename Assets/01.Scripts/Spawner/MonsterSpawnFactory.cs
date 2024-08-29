@@ -36,7 +36,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private InGameUI gameUI;
     private float currentSpawnDistance = 0f;
 
-    private float spawnSpace = 5f;
+    private float spawnSpace = 10f;
     private MonsterSkeletonSharing monsterSkeletonSharing;
 
     private void Awake()
@@ -280,15 +280,15 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             {
                 // x ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.x >= Defines.maxMapSize)
-                    spawnPos.x = Defines.maxMapSize - 5;
+                    spawnPos.x = Defines.maxMapSize - 10;
                 else if (spawnPos.x <= -Defines.maxMapSize)
-                    spawnPos.x = -Defines.maxMapSize + 5;
+                    spawnPos.x = -Defines.maxMapSize + 10;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= Defines.maxMapSize)
-                    spawnPos.y = Defines.maxMapSize - 5;
+                    spawnPos.y = Defines.maxMapSize - 10;
                 else if (spawnPos.y <= -Defines.maxMapSize)
-                    spawnPos.y = -Defines.maxMapSize + 5;
+                    spawnPos.y = -Defines.maxMapSize + 10;
             }
             else break;
         }

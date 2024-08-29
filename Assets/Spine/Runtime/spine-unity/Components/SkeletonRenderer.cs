@@ -49,10 +49,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spine.Unity {
-	/// <summary>Base class of animated Spine skeleton components. This component manages and renders a skeleton.</summary>
-	#if NEW_PREFAB_SYSTEM
-	[ExecuteAlways]
+namespace Spine.Unity
+{
+    /// <summary>Base class of animated Spine skeleton components. This component manages and renders a skeleton.</summary>
+#if NEW_PREFAB_SYSTEM
+    [ExecuteAlways]
 	#else
 	[ExecuteInEditMode]
 	#endif

@@ -28,25 +28,24 @@
  *****************************************************************************/
 
 using UnityEngine;
-using System.Collections.Generic;
-using Spine.Unity.AnimationTools;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	/// <summary>
-	/// Add this component to a SkeletonAnimation or SkeletonGraphic GameObject
-	/// to turn motion of a selected root bone into Transform or RigidBody motion.
-	/// Local bone translation movement is used as motion.
-	/// All top-level bones of the skeleton are moved to compensate the root
-	/// motion bone location, keeping the distance relationship between bones intact.
-	/// </summary>
-	/// <remarks>
-	/// Only compatible with SkeletonAnimation (or other components that implement
-	/// ISkeletonComponent, ISkeletonAnimation and IAnimationStateComponent).
-	/// For <c>SkeletonMecanim</c> please use
-	/// <see cref="SkeletonMecanimRootMotion">SkeletonMecanimRootMotion</see> instead.
-	/// </remarks>
-	[HelpURL("http://esotericsoftware.com/spine-unity#SkeletonRootMotion")]
+    /// <summary>
+    /// Add this component to a SkeletonAnimation or SkeletonGraphic GameObject
+    /// to turn motion of a selected root bone into Transform or RigidBody motion.
+    /// Local bone translation movement is used as motion.
+    /// All top-level bones of the skeleton are moved to compensate the root
+    /// motion bone location, keeping the distance relationship between bones intact.
+    /// </summary>
+    /// <remarks>
+    /// Only compatible with SkeletonAnimation (or other components that implement
+    /// ISkeletonComponent, ISkeletonAnimation and IAnimationStateComponent).
+    /// For <c>SkeletonMecanim</c> please use
+    /// <see cref="SkeletonMecanimRootMotion">SkeletonMecanimRootMotion</see> instead.
+    /// </remarks>
+    [HelpURL("http://esotericsoftware.com/spine-unity#SkeletonRootMotion")]
 	public class SkeletonRootMotion : SkeletonRootMotionBase {
 		#region Inspector
 		const int DefaultAnimationTrackFlags = -1;

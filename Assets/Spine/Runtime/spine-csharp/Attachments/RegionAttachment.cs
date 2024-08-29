@@ -29,9 +29,10 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>Attachment that displays a texture region.</summary>
-	public class RegionAttachment : Attachment, IHasRendererObject {
+namespace Spine
+{
+    /// <summary>Attachment that displays a texture region.</summary>
+    public class RegionAttachment : Attachment, IHasRendererObject {
 		public const int BLX = 0;
 		public const int BLY = 1;
 		public const int ULX = 2;

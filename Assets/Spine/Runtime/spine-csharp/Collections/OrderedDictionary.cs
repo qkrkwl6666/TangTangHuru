@@ -41,18 +41,18 @@ using System.Linq;
 
 namespace Spine.Collections
 {
-	/// <summary>
-	/// Represents a dictionary that tracks the order that items were added.
-	/// </summary>
-	/// <typeparam name="TKey">The type of the dictionary keys.</typeparam>
-	/// <typeparam name="TValue">The type of the dictionary values.</typeparam>
-	/// <remarks>
-	/// This dictionary makes it possible to get the index of a key and a key based on an index.
-	/// It can be costly to find the index of a key because it must be searched for linearly.
-	/// It can be costly to insert a key/value pair because other key's indexes must be adjusted.
-	/// It can be costly to remove a key/value pair because other keys' indexes must be adjusted.
-	/// </remarks>
-	[DebuggerDisplay("Count = {Count}")]
+    /// <summary>
+    /// Represents a dictionary that tracks the order that items were added.
+    /// </summary>
+    /// <typeparam name="TKey">The type of the dictionary keys.</typeparam>
+    /// <typeparam name="TValue">The type of the dictionary values.</typeparam>
+    /// <remarks>
+    /// This dictionary makes it possible to get the index of a key and a key based on an index.
+    /// It can be costly to find the index of a key because it must be searched for linearly.
+    /// It can be costly to insert a key/value pair because other key's indexes must be adjusted.
+    /// It can be costly to remove a key/value pair because other keys' indexes must be adjusted.
+    /// </remarks>
+    [DebuggerDisplay("Count = {Count}")]
 	[DebuggerTypeProxy(typeof(OrderedDictionaryDebugView<,>))]
 	public sealed class OrderedDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IList<KeyValuePair<TKey, TValue>>
 	{

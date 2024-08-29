@@ -38,9 +38,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Spine.Unity {
-	#if NEW_PREFAB_SYSTEM
-	[ExecuteAlways]
+namespace Spine.Unity
+{
+#if NEW_PREFAB_SYSTEM
+    [ExecuteAlways]
 	#else
 	[ExecuteInEditMode]
 	#endif

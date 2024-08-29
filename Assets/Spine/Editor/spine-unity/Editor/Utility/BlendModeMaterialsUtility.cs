@@ -37,9 +37,10 @@ using System.Collections.Generic;
 using System.IO;
 using System;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	public class BlendModeMaterialsUtility {
+    public class BlendModeMaterialsUtility {
 
 		public const string MATERIAL_SUFFIX_MULTIPLY = "-Multiply";
 		public const string MATERIAL_SUFFIX_SCREEN = "-Screen";

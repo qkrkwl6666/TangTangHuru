@@ -29,16 +29,17 @@
 
 using System;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>
-	/// <para>
-	/// Stores the current pose for a path constraint. A path constraint adjusts the rotation, translation, and scale of the
-	/// constrained bones so they follow a {@link PathAttachment}.</para>
-	/// <para>
-	/// See <a href="http://esotericsoftware.com/spine-path-constraints">Path constraints</a> in the Spine User Guide.</para>
-	/// </summary>
-	public class PathConstraint : IUpdatable {
+    /// <summary>
+    /// <para>
+    /// Stores the current pose for a path constraint. A path constraint adjusts the rotation, translation, and scale of the
+    /// constrained bones so they follow a {@link PathAttachment}.</para>
+    /// <para>
+    /// See <a href="http://esotericsoftware.com/spine-path-constraints">Path constraints</a> in the Spine User Guide.</para>
+    /// </summary>
+    public class PathConstraint : IUpdatable {
 		const int NONE = -1, BEFORE = -2, AFTER = -3;
 		const float Epsilon = 0.00001f;
 

@@ -54,16 +54,13 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
-	using EventType = UnityEngine.EventType;
+namespace Spine.Unity.Editor
+{
+    using EventType = UnityEngine.EventType;
 
-	// Analysis disable once ConvertToStaticType
-	[InitializeOnLoad]
+    // Analysis disable once ConvertToStaticType
+    [InitializeOnLoad]
 	public partial class SpineEditorUtilities : AssetPostprocessor {
 
 		public static string editorPath = "";

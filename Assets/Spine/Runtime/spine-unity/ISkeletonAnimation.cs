@@ -27,8 +27,9 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-namespace Spine.Unity {
-	public enum UpdateMode {
+namespace Spine.Unity
+{
+    public enum UpdateMode {
 		Nothing = 0,
 		OnlyAnimationStatus,
 		OnlyEventTimelines = 4, // added as index 4 to keep scene behavior unchanged.

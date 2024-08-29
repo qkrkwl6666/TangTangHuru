@@ -32,8 +32,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace Spine.Unity.Editor {
-	public static class SpineInspectorUtility {
+namespace Spine.Unity.Editor
+{
+    public static class SpineInspectorUtility {
 
 		public static string Pluralize (int n, string singular, string plural) {
 			return n + " " + (n == 1 ? singular : plural);

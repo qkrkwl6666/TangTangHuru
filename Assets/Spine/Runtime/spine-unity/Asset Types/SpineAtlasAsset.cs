@@ -31,11 +31,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using Spine;
 
-namespace Spine.Unity {
-	/// <summary>Loads and stores a Spine atlas and list of materials.</summary>
-	[CreateAssetMenu(fileName = "New Spine Atlas Asset", menuName = "Spine/Spine Atlas Asset")]
+namespace Spine.Unity
+{
+    /// <summary>Loads and stores a Spine atlas and list of materials.</summary>
+    [CreateAssetMenu(fileName = "New Spine Atlas Asset", menuName = "Spine/Spine Atlas Asset")]
 	public class SpineAtlasAsset : AtlasAssetBase {
 		public TextAsset atlasFile;
 		public Material[] materials;

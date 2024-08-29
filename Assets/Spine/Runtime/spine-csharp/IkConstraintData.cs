@@ -27,12 +27,10 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
-using System.Collections.Generic;
-
-namespace Spine {
-	/// <summary>Stores the setup pose for an IkConstraint.</summary>
-	public class IkConstraintData : ConstraintData {
+namespace Spine
+{
+    /// <summary>Stores the setup pose for an IkConstraint.</summary>
+    public class IkConstraintData : ConstraintData {
 		internal ExposedList<BoneData> bones = new ExposedList<BoneData>();
 		internal BoneData target;
 		internal int bendDirection = 1;

@@ -37,9 +37,10 @@ using System.Collections.Generic;
 using System;
 
 
-namespace Spine.Unity.AttachmentTools {
+namespace Spine.Unity.AttachmentTools
+{
 
-	public static class AtlasUtilities {
+    public static class AtlasUtilities {
 		internal const TextureFormat SpineTextureFormat = TextureFormat.RGBA32;
 		internal const float DefaultMipmapBias = -0.5f;
 		internal const bool UseMipMaps = false;

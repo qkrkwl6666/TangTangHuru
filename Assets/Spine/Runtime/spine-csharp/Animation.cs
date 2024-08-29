@@ -30,11 +30,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>
-	/// A simple container for a list of timelines and a name.</summary>
-	public class Animation {
+    /// <summary>
+    /// A simple container for a list of timelines and a name.</summary>
+    public class Animation {
 		internal String name;
 		internal ExposedList<Timeline> timelines;
 		internal HashSet<int> timelineIds;

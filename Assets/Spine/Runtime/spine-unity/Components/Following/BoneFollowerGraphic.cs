@@ -34,11 +34,12 @@
 using UnityEngine;
 
 
-namespace Spine.Unity {
-	using AxisOrientation = BoneFollower.AxisOrientation;
+namespace Spine.Unity
+{
+    using AxisOrientation = BoneFollower.AxisOrientation;
 
-	#if NEW_PREFAB_SYSTEM
-	[ExecuteAlways]
+#if NEW_PREFAB_SYSTEM
+    [ExecuteAlways]
 	#else
 	[ExecuteInEditMode]
 	#endif

@@ -30,16 +30,17 @@
 using System;
 using System.Collections.Generic;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>
-	/// <para>
-	/// Applies animations over time, queues animations for later playback, mixes (crossfading) between animations, and applies
-	/// multiple animations on top of each other (layering).</para>
-	/// <para>
-	/// See <a href='http://esotericsoftware.com/spine-applying-animations/'>Applying Animations</a> in the Spine Runtimes Guide.</para>
-	/// </summary>
-	public class AnimationState {
+    /// <summary>
+    /// <para>
+    /// Applies animations over time, queues animations for later playback, mixes (crossfading) between animations, and applies
+    /// multiple animations on top of each other (layering).</para>
+    /// <para>
+    /// See <a href='http://esotericsoftware.com/spine-applying-animations/'>Applying Animations</a> in the Spine Runtimes Guide.</para>
+    /// </summary>
+    public class AnimationState {
 		static readonly Animation EmptyAnimation = new Animation("<empty>", new ExposedList<Timeline>(), 0);
 
 		/// 1) A previously applied timeline has set this property.<para />

@@ -40,8 +40,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 #endif
 
-namespace Spine {
-	public class SkeletonJson {
+namespace Spine
+{
+    public class SkeletonJson {
 		public float Scale { get; set; }
 
 		private AttachmentLoader attachmentLoader;

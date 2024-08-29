@@ -33,17 +33,13 @@
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
 using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
-	using EventType = UnityEngine.EventType;
+namespace Spine.Unity.Editor
+{
+    using EventType = UnityEngine.EventType;
 
-	public partial class SpineEditorUtilities {
+    public partial class SpineEditorUtilities {
 		public static class DragAndDropInstantiation {
 			public struct SpawnMenuData {
 				public Vector3 spawnPoint;

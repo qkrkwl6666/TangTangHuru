@@ -27,8 +27,9 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-namespace Spine.Unity {
-	public class DoubleBuffered<T> where T : new() {
+namespace Spine.Unity
+{
+    public class DoubleBuffered<T> where T : new() {
 		readonly T a = new T();
 		readonly T b = new T();
 		bool usingA;

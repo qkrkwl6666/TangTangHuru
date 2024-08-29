@@ -42,15 +42,14 @@
 #endif
 
 using UnityEditor;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Reflection;
 
-namespace Spine.Unity.Editor {
-	using Event = UnityEngine.Event;
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Event = UnityEngine.Event;
+    using Icons = SpineEditorUtilities.Icons;
 
-	[CustomEditor(typeof(SkeletonRenderer))]
+    [CustomEditor(typeof(SkeletonRenderer))]
 	[CanEditMultipleObjects]
 	public class SkeletonRendererInspector : UnityEditor.Editor {
 		public static bool advancedFoldout;
