@@ -23,6 +23,7 @@ public class CurrWeaponViewer : MonoBehaviour
             var icon = iconLoader.SetIconByName("Icon" + currWeapons[i].weaponDataRef.WeaponName);
 
             weaponEntries[i].SetInfo(icon, currWeapons[i].currLevel);
+            weaponEntries[i].SetType(currWeapons[i].weaponDataRef.WeaponType);
         }
     }
 }

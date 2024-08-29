@@ -43,7 +43,8 @@ public class ShopUI : MonoBehaviour
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("220101"));
 
         shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610001"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("610101"));
+
+        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("210004"));
 
 
 
