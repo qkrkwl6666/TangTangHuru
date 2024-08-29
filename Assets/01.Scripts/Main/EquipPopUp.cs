@@ -120,7 +120,7 @@ public class EquipPopUp : MonoBehaviour
                 itemStatusText1.text = Defines.damage + Math.Round(item.itemData.Damage, 2);
                 itemStatusText2.text = Defines.attackCoolTime + Math.Round(item.itemData.CoolDown, 2);
                 itemStatusText3.text = Defines.criticalChance + Math.Round(item.itemData.CriticalChance, 2) + "%";
-                itemStatusText4.text = Defines.criticalDamage + Math.Round(item.itemData.Criticaldam, 2) + "%";
+                itemStatusText4.text = Defines.criticalDamage + Math.Round(item.itemData.Criticaldam, 2) + "น่";
 
                 foreach (var text in itemStatusTexts)
                 {

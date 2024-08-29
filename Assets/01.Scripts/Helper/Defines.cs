@@ -144,6 +144,7 @@ public static class Defines
     // 애니메이션
     public static readonly string idle = "idle";
     public static readonly string walk = "walk";
+    public static readonly string walk2 = "walk2";
     public static readonly string attack = "attack";
     public static readonly string attack2 = "attack2";
     public static readonly string dead = "dead";
