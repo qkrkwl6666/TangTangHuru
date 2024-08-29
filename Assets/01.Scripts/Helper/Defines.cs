@@ -37,6 +37,7 @@ public static class Defines
     public static readonly string cRank = "C_Rank";
     public static readonly string sRank = "S_Rank";
     public static readonly string ssRank = "SS_Rank";
+    public static readonly string tornado = "Tornado";
 
 
 

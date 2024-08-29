@@ -37,7 +37,7 @@ public class MonsterSkeletonSharing : MonoBehaviour
 
                 foreach (var skeletonRenderer in skeletonRendererList.Value)
                 {
-                    //if(!skeletonRenderer.gameObject.activeSelf) continue;
+                    if(!skeletonRenderer.gameObject.activeSelf) continue;
 
                     sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
                     skeletonRenderer.skeleton.UpdateWorldTransform();

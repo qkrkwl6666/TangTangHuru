@@ -49,7 +49,7 @@ public class StageSelectionUI : MonoBehaviour
             DataTableManager.Instance.OnAllTableLoaded += InitStageUI;
         else
         {
-            Debug.Log("세이브 이미 로드 완료됨");
+            //Debug.Log("세이브 이미 로드 완료됨");
             InitStageUI();
         }
 
