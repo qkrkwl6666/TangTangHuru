@@ -1,4 +1,7 @@
 using DG.Tweening;
+using DG.Tweening.Core.Easing;
+using Spine.Unity;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
@@ -24,14 +27,14 @@ public class Monster : LivingEntity, IPlayerObserver
     private bool isSliderVisible = true;
     public bool isBoomType = false;
 
-    private MeshRenderer meshRenderer;
+    private bool isHitEffectVisible= true;
+    private SkeletonRenderer skeletonRenderer;
     private Color originalColor;
+    private Color targetColor = Color.red;
 
     public void Initialize(PlayerSubject playerSubject)
     {
         this.playerSubject = playerSubject;
-
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
     }
 
     public void Initialize(PlayerSubject playerSubject, in MonsterData monsterData)
@@ -56,6 +59,9 @@ public class Monster : LivingEntity, IPlayerObserver
         playerSubject.AddObserver(this);
 
         AwakeHealth();
+
+        skeletonRenderer = GetComponentInChildren<SkeletonRenderer>();
+        originalColor = skeletonRenderer.Skeleton.GetColor();
     }
 
     public void SetHpBar()
@@ -128,6 +134,7 @@ public class Monster : LivingEntity, IPlayerObserver
         if (health <= 0 && !dead)
         {
             Die();
+            return;
         }
 
         if (hpBar == null) return;
@@ -139,6 +146,11 @@ public class Monster : LivingEntity, IPlayerObserver
                 hpBar.gameObject.SetActive(true);
             }
             hpBar.value = health;
+        }
+
+        if (isHitEffectVisible)
+        {
+            HitEffect();
         }
     }
 
@@ -155,6 +167,11 @@ public class Monster : LivingEntity, IPlayerObserver
         }
     }
 
+    public void ActiveHitEffect(bool isVisible)
+    {
+        isHitEffectVisible = isVisible;
+    }
+
     private void NuckBack(float impact)
     {
         //transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
@@ -165,5 +182,14 @@ public class Monster : LivingEntity, IPlayerObserver
         transform.DOMove(targetPosition, 0.3f).SetEase(Ease.OutQuad);
     }
 
+    private void HitEffect()
+    {
+        skeletonRenderer.Skeleton.SetColor(targetColor);
+
+        DOTween.To(() => skeletonRenderer.Skeleton.GetColor(),
+                   x => skeletonRenderer.Skeleton.SetColor(x),
+                   originalColor,
+                   0.5f);
+    }
 
 }

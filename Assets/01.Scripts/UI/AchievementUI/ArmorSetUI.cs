@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +18,11 @@ public class ArmorSetUI : MonoBehaviour
             {
                 var entry = Instantiate(entryPrefab, content.transform);
                 entry.SetImages(i);
-                entry.rewardButton.onClick.AddListener(IncreaseCraftPersent);
+                entry.rewardButton.onClick.AddListener(() =>
+                {
+                    IncreaseCraftPersent();
+                    entry.rewardButton.interactable = false;
+                });
                 entries.Add(entry);
             }
         }

@@ -20,6 +20,8 @@ public class AchievementUI : MonoBehaviour
 
     private void OnEnable()
     {
+        entryCount = AchievementManager.Instance.achievements.Count;
+
         if (sorted)
         {
             for (int i = 0; i < entryCount; i++)
@@ -28,8 +30,6 @@ public class AchievementUI : MonoBehaviour
             }
             return;
         }
-
-        entryCount = AchievementManager.Instance.achievements.Count;
 
         for (int i = 0; i < entryCount; i++)
         {
