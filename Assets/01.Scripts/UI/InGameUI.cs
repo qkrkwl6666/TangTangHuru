@@ -124,6 +124,8 @@ public class InGameUI : MonoBehaviour, IPlayerObserver
 
     public void ExitMainButton()
     {
+        //테스트중
+        StopAllCoroutines();
         GameManager.Instance.LoadSceneAsync(Defines.mainScene);
     }
 

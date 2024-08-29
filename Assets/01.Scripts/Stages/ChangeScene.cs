@@ -13,6 +13,8 @@ public class ChangeScene : MonoBehaviour
 
     public void MoveToLobby()
     {
+        //테스트중
+        StopAllCoroutines();
         GameManager.Instance.LoadSceneAsync(Defines.mainScene);
     }
 

@@ -106,7 +106,7 @@ public class GameManager : Singleton<GameManager>
     // Defines �뿉�꽌 �샇異� ex) Defines.main 
     public void LoadSceneAsync(string sceneName)
     {
-        SoundManager.Instance.ClearSoundPlayerPool();
+        //StopAllCoroutines();
 
         loadingUI.SetActive(true);
 
@@ -117,12 +117,13 @@ public class GameManager : Singleton<GameManager>
 
         Addressables.LoadSceneAsync(sceneName).Completed += (op) =>
         {
-
+            SoundManager.Instance.ClearSoundPlayerPool();
             if (sceneName != Defines.mainScene)
             {
                 loadingUI.SetActive(false);
             }
             SoundManager.Instance.CreateTemporalObjects();
+            Invoke("ChangeBGM", 1);
         };
 
         if (sceneName == Defines.mainScene)
@@ -134,7 +135,6 @@ public class GameManager : Singleton<GameManager>
             BGM_Index = CurrentStage;
             SoundManager.Instance.EnterStage();
         }
-        Invoke("ChangeBGM", 1.5f);
     }
 
     public void StartGame()

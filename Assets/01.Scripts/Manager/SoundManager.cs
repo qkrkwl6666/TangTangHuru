@@ -298,8 +298,14 @@ public class SoundManager : Singleton<SoundManager>
 
     private IEnumerator ReturnSoundPlayerAfterPlay(TemporalSoundPlayer soundPlayer, SoundType type)
     {
-        yield return new WaitUntil(() => !soundPlayer.AudioSource.isPlaying);
-        ReturnSoundPlayer(soundPlayer, type);
+        yield return new WaitUntil(() =>
+       soundPlayer.AudioSource == null || !soundPlayer.AudioSource.isPlaying);
+
+        // AudioSource가 파괴되었는지 다시 확인하고, ReturnSoundPlayer를 호출
+        if (soundPlayer != null && soundPlayer.AudioSource != null)
+        {
+            ReturnSoundPlayer(soundPlayer, type);
+        }
     }
 
     public void InitVolumes(float bgmVolume, float effectVolume)
