@@ -40,10 +40,18 @@ public class WeaponCreator : MonoBehaviour
 
     private bool isSoundLooping = false;
 
+    private bool evolvable = false;
+
     private void Start()
     {
+        if (isMainWeapon)
+        {
+            evolvable = true;
+        }
+
         weaponUpgrader = GetComponent<WeaponUpgrader>();
         weaponDataInStage = Instantiate(weaponDataRef);
+        currLevel = weaponDataInStage.Level;
 
         Addressables.LoadAssetAsync<PassiveData>("EmptyPassiveData").Completed += (EmptyData) =>
         {
@@ -54,7 +62,6 @@ public class WeaponCreator : MonoBehaviour
 
     private void OnEnable()
     {
-        currLevel = 1;
         SpawnCoroutine = Spawn();
         StartCoroutine(SpawnCoroutine);
     }
@@ -292,9 +299,12 @@ public class WeaponCreator : MonoBehaviour
 
     private void LevelUp()
     {
-        if (currLevel >= 5)
+        if(currLevel > 5)
         {
-            currLevel = 5;
+            return;
+        }
+        if (currLevel == 5)
+        {
             weaponUpgrader.Evolution(weapons);
         }
         else
@@ -391,5 +401,14 @@ public class WeaponCreator : MonoBehaviour
             //SoundManager.Instance.PlaySound2D(weaponDataRef.WeaponName);
             SoundManager.Instance.PlayShortSound(weaponDataRef.WeaponName, 0, false, SoundType.ATTACK_EFFECT);
         }
+    }
+
+    public void SetEvolovable(bool choice)
+    {
+        evolvable = choice;
+    }
+    public bool GetEvolovable()
+    {
+        return evolvable;
     }
 }
