@@ -56,8 +56,6 @@ public class ItemSlotUI : MonoBehaviour
             }
         };
         isSelected = true;
-
-
     }
 
     public void ClearInfo()
@@ -76,5 +74,4 @@ public class ItemSlotUI : MonoBehaviour
         isSelected = false;
         slotIcon.gameObject.SetActive(false);
     }
-
 }
