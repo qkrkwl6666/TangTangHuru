@@ -6,7 +6,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
-using static UnityEditor.IMGUI.Controls.PrimitiveBoundsHandle;
 
 public class MainInventory : MonoBehaviour
 {
@@ -997,8 +996,6 @@ public class MainInventory : MonoBehaviour
             }
             LoadEquipItem(item.Value.Item1);
         }
-
-
     }
 
     public void LoadEquipPet((Item item, GameObject slotUI) equipInfo)

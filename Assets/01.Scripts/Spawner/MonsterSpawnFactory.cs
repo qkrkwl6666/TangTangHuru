@@ -36,7 +36,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
     private InGameUI gameUI;
     private float currentSpawnDistance = 0f;
 
-    private float mapMaxSize = 250f;
     private float spawnSpace = 5f;
     private MonsterSkeletonSharing monsterSkeletonSharing;
 
@@ -283,7 +282,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                 if (spawnPos.x >= Defines.maxMapSize)
                     spawnPos.x = Defines.maxMapSize - 5;
                 else if (spawnPos.x <= -Defines.maxMapSize)
-                    spawnPos.x = -Defines.maxMapSize + 2;
+                    spawnPos.x = -Defines.maxMapSize + 5;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= Defines.maxMapSize)
@@ -306,8 +305,8 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 spawnPos;
 
         // Todo : ÀÓ½Ã Ã³¸® ÇÏµåÄÚµù º¯°æ ÇØ¾ßÇÔ
-        if (playerTransform.position.x >= mapMaxSize || playerTransform.position.x <= -mapMaxSize
-            || playerTransform.position.y >= mapMaxSize || playerTransform.position.y <= -mapMaxSize)
+        if (playerTransform.position.x >= Defines.maxMapSize || playerTransform.position.x <= -Defines.maxMapSize
+            || playerTransform.position.y >= Defines.maxMapSize || playerTransform.position.y <= -Defines.maxMapSize)
         {
             playerTransform.transform.position = Vector2.zero;
         }
@@ -319,20 +318,20 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
             spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-            if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize 
-                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
+            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
             {
                 // x ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.x >= mapMaxSize)
-                    spawnPos.x = mapMaxSize - spawnSpace;
-                else if (spawnPos.x <= -mapMaxSize)
-                    spawnPos.x = -mapMaxSize + spawnSpace;
+                if (spawnPos.x >= Defines.maxMapSize)
+                    spawnPos.x = Defines.maxMapSize - spawnSpace;
+                else if (spawnPos.x <= -Defines.maxMapSize)
+                    spawnPos.x = -Defines.maxMapSize + spawnSpace;
 
                 // y ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.y >= mapMaxSize)
-                    spawnPos.y = mapMaxSize - spawnSpace;
-                else if (spawnPos.y <= -mapMaxSize)
-                    spawnPos.y = -mapMaxSize + spawnSpace;
+                if (spawnPos.y >= Defines.maxMapSize)
+                    spawnPos.y = Defines.maxMapSize - spawnSpace;
+                else if (spawnPos.y <= -Defines.maxMapSize)
+                    spawnPos.y = -Defines.maxMapSize + spawnSpace;
             }
             else break;
         }
@@ -350,20 +349,20 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * currentSpawnDistance;
 
-        if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize
-                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
+        if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
         {
             // x ÁÂÇ¥ Á¶Á¤
-            if (spawnPos.x >= mapMaxSize)
-                spawnPos.x = mapMaxSize - spawnSpace;
-            else if (spawnPos.x <= -mapMaxSize)
-                spawnPos.x = -mapMaxSize + spawnSpace;
+            if (spawnPos.x >= Defines.maxMapSize)
+                spawnPos.x = Defines.maxMapSize - spawnSpace;
+            else if (spawnPos.x <= -Defines.maxMapSize)
+                spawnPos.x = -Defines.maxMapSize + spawnSpace;
 
             // y ÁÂÇ¥ Á¶Á¤
-            if (spawnPos.y >= mapMaxSize)
-                spawnPos.y = mapMaxSize - spawnSpace;
-            else if (spawnPos.y <= -mapMaxSize)
-                spawnPos.y = -mapMaxSize + spawnSpace;
+            if (spawnPos.y >= Defines.maxMapSize)
+                spawnPos.y = Defines.maxMapSize - spawnSpace;
+            else if (spawnPos.y <= -Defines.maxMapSize)
+                spawnPos.y = -Defines.maxMapSize + spawnSpace;
         }
 
         return spawnPos;
@@ -381,20 +380,20 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (padding * i);
             Vector2 spawnPos = point + pos;
 
-            if (spawnPos.x >= mapMaxSize || spawnPos.x <= -mapMaxSize 
-                || spawnPos.y >= mapMaxSize || spawnPos.y <= -mapMaxSize)
+            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
             {
                 // x ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.x >= mapMaxSize)
-                    spawnPos.x = mapMaxSize - spawnSpace;
-                else if (spawnPos.x <= -mapMaxSize)
-                    spawnPos.x = -mapMaxSize + spawnSpace;
+                if (spawnPos.x >= Defines.maxMapSize)
+                    spawnPos.x = Defines.maxMapSize - spawnSpace;
+                else if (spawnPos.x <= -Defines.maxMapSize)
+                    spawnPos.x = -Defines.maxMapSize + spawnSpace;
 
                 // y ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.y >= mapMaxSize)
-                    spawnPos.y = mapMaxSize - spawnSpace;
-                else if (spawnPos.y <= -mapMaxSize)
-                    spawnPos.y = -mapMaxSize + spawnSpace;
+                if (spawnPos.y >= Defines.maxMapSize)
+                    spawnPos.y = Defines.maxMapSize - spawnSpace;
+                else if (spawnPos.y <= -Defines.maxMapSize)
+                    spawnPos.y = -Defines.maxMapSize + spawnSpace;
             }
 
             lines.Add(spawnPos);

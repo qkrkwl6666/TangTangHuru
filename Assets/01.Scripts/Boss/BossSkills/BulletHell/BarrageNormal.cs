@@ -21,10 +21,12 @@ public class BarrageNormal : MonoBehaviour, IBossSkill
     public float SkillRate { get; set; } = 5f;
     public float DamageFactor { get; set; } = 1f;
 
-    public void SetCountScale(int count, float scale)
+    public void SetCountScale(int count, float scale, int randomCount, float speed)
     {
         attackCount = count;
         attackScale = scale;
+        randomAttackCount = randomCount;
+        ballSpeed = speed;
     }
 
     public void Initialize(BossSkillData bossSkillData, float damage)

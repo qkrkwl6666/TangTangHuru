@@ -10,7 +10,6 @@ public class Rush : MonoBehaviour, IBossSkill
 
     private float dashRate = 0f;
 
-    private float moveFactor = 5f;
     private float moveSpeed = 0f;
 
     private int currentSkillCount = 0;
@@ -53,7 +52,7 @@ public class Rush : MonoBehaviour, IBossSkill
         SkillRate = bossSkillData.Skill_Rate;
         Damage = damage * DamageFactor;
         enabled = false;
-        moveSpeed = boss.Speed * moveFactor;
+        moveSpeed = bossSkillData.Obejct_Speed;
     }
 
     public void Attack()
@@ -79,7 +78,6 @@ public class Rush : MonoBehaviour, IBossSkill
 
         if (time >= dashRate && !isRush)
         {
-            Debug.Log(dashRate);
             Attack();
         }
 

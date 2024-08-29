@@ -11,7 +11,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     // 공격 주기 시간
     private float attackTime = 0f;
-    private float attackDuration = 0.05f;
+    //private float attackDuration = 0.05f;
 
     private int currentSkillCount = 0;
 
@@ -36,6 +36,13 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
         SkillRate = bossSkillData.Skill_Rate;
         Damage = damage * DamageFactor;
         enabled = false;
+    }
+
+    public void Init(float skillRate, float attackScale, float ballSpeed)
+    {
+        SkillRate = skillRate;
+        this.ballSpeed = ballSpeed;
+        this.attackScale = attackScale;
     }
 
     public void InstantiateSnailBullet(AsyncOperationHandle<GameObject> op)
@@ -66,7 +73,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
     {
         attackTime += deltaTime;
 
-        if (attackTime >= attackDuration)
+        if (attackTime >= SkillRate)
         {
             attackTime = 0f;
             Attack();
@@ -75,7 +82,7 @@ public class BarrageSnail : MonoBehaviour, IBossSkill
 
     public void Attack()
     {
-        ;
+
         float angle = ((360 / maxIndex) * currentIndex) * Mathf.Deg2Rad;
         Vector2 dir = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
 

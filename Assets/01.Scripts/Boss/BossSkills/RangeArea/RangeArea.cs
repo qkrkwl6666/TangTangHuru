@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
 using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.UIElements;
 
 public class RangeArea : MonoBehaviour, IBossSkill
 {
@@ -52,6 +53,9 @@ public class RangeArea : MonoBehaviour, IBossSkill
         DamageFactor = bossSkillData.Damage_Factor;
         SkillRate = bossSkillData.Skill_Rate;
         Damage = damage * DamageFactor;
+        boomDuration = bossSkillData.Obejct_Speed;
+        scale = bossSkillData.Object_Scale;
+
         enabled = false;
 
         playerTransform = GetComponent<Boss>().PlayerTransform;
