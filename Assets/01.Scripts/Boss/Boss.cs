@@ -198,7 +198,7 @@ public class Boss : LivingEntity, IPlayerObserver
 
     public IBossSkill SelectSkill()
     {
-        Debug.Log("SelectSkill");
+        //Debug.Log("SelectSkill");
 
         if (currentSkill != null)
         {

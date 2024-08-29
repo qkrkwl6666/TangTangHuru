@@ -40,7 +40,7 @@ public class PetPopUp : MonoBehaviour
 
         if (currentItem == null)
         {
-            Debug.Log("currentItem is null");
+            //Debug.Log("currentItem is null");
             return;
         }
 

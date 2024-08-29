@@ -72,7 +72,7 @@ public class OrbCrafter : MonoBehaviour
     {
         if (stoneCount < 3)
         {
-            Debug.Log("강화석 부족!");
+            //Debug.Log("강화석 부족!");
             return false;
         }
 

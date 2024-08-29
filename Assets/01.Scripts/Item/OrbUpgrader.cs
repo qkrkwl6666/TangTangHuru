@@ -108,7 +108,7 @@ public class OrbUpgrader : MonoBehaviour
         {
             if (upgradeSlots[i].currItemId != firstItemId)
             {
-                Debug.Log("배치된 오브가 모두 같아야 한다.");
+                //Debug.Log("배치된 오브가 모두 같아야 한다.");
                 return false;
             }
         }
@@ -117,7 +117,7 @@ public class OrbUpgrader : MonoBehaviour
 
         if (orbData.Item_Tier > 3)
         {
-            Debug.Log("이미 최고티어 오브이다.");
+            //Debug.Log("이미 최고티어 오브이다.");
             return false;
         }
         return true;

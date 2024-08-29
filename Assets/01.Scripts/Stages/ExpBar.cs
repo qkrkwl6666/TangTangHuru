@@ -17,7 +17,7 @@ public class ExpBar : MonoBehaviour
         }
         else
         {
-            Debug.LogError("No Player Here!");
+            //Debug.LogError("No Player Here!");
         }
 
         playerExp.OnLevelChanged += UpdateMaxValue;

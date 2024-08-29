@@ -232,7 +232,7 @@ public class MainInventory : MonoBehaviour
             DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory;
         else
         {
-            Debug.Log("세이브 이미 로드 완료됨");
+            //Debug.Log("세이브 이미 로드 완료됨");
 
             Gold = SaveManager.SaveDataV1.Gold;
 
@@ -248,7 +248,7 @@ public class MainInventory : MonoBehaviour
 
     public void CoSaveDataLoadMainInventory()
     {
-        Debug.Log("CoSaveDataLoadMainInventory");
+        //Debug.Log("CoSaveDataLoadMainInventory");
         StartCoroutine(SaveDataLoadMainInventory());
     }
 
@@ -879,7 +879,7 @@ public class MainInventory : MonoBehaviour
 
     public IEnumerator SceneLoadMainInventory()
     {
-        Debug.Log("SceneLoadMainInventory");
+        //Debug.Log("SceneLoadMainInventory");
         var items = SaveManager.SaveDataV1.allItem;
 
         Gold = SaveManager.SaveDataV1.Gold;

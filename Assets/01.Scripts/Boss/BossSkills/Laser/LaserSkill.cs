@@ -112,7 +112,7 @@ public class LaserSkill : MonoBehaviour, IBossSkill
         if (time >= (SkillCount + laserSetting.laserRate)
             * laserSetting.rotationTypes.Count && !IsChange)
         {
-            Debug.Log("IsChange");
+            //Debug.Log("IsChange");
             IsChange = true;
         }
     }

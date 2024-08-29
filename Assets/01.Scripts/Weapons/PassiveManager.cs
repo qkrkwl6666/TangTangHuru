@@ -68,7 +68,7 @@ public class PassiveManager : MonoBehaviour
                 return;
             }
         }
-        Debug.LogError("패시브 강화 선택지 오류. 강화가능 목록에 없음.");
+        //Debug.LogError("패시브 강화 선택지 오류. 강화가능 목록에 없음.");
     }
 
     public void PassiveEquip()

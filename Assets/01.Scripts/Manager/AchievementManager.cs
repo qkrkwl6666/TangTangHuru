@@ -26,7 +26,7 @@ public class Achievement
         if (achieveState == AchieveState.Incompleted)
         {
             achieveState = AchieveState.Completed;
-            Debug.Log($"Achievement Unlocked: {title}");
+            //Debug.Log($"Achievement Unlocked: {title}");
             onUnlock?.Invoke();  // 도전과제 달성 시 추가 작업
         }
     }
@@ -169,7 +169,7 @@ public class AhievementTask
         }
         else
         {
-            Debug.LogError("Invalid key value!");
+            //Debug.LogError("Invalid key value!");
         }
     }
 
@@ -181,7 +181,7 @@ public class AhievementTask
         }
         else
         {
-            Debug.LogError("Invalid key value!");
+            //Debug.LogError("Invalid key value!");
         }
     }
 
@@ -194,7 +194,7 @@ public class AhievementTask
         }
         else
         {
-            Debug.LogError("Invalid key value!");
+            //Debug.LogError("Invalid key value!");
             return false;
         }
     }
@@ -207,7 +207,7 @@ public class AhievementTask
         }
         else
         {
-            Debug.LogError("Invalid key value!");
+            //Debug.LogError("Invalid key value!");
             return -1;
         }
     }
@@ -219,7 +219,7 @@ public class AhievementTask
         }
         else
         {
-            Debug.LogError("Invalid key value!");
+            //Debug.LogError("Invalid key value!");
             return -1;
         }
     }
@@ -275,7 +275,7 @@ public class AchievementManager : Singleton<AchievementManager>
             {
                 title = keyList[i],
                 description = stringTable.Get($"Achieve_Desc{i + 1}").Text,
-                onUnlock = () => Debug.Log("Achievement Unlocked!")
+                //onUnlock = () => Debug.Log("Achievement Unlocked!")
             });
         }
 

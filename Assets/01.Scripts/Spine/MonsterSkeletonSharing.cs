@@ -68,7 +68,7 @@ public class MonsterSkeletonSharing : MonoBehaviour
         sharedAnimationState.Add(key, new Spine.AnimationState(skeletonRenderer
             .skeletonDataAsset.GetAnimationStateData()));
 
-        Debug.Log(skeletonRenderer.skeleton);
+        //Debug.Log(skeletonRenderer.skeleton);
 
         sharedAnimationState[key].Apply(skeletonRenderer.skeleton);
         skeletonRenderer.skeleton.UpdateWorldTransform();

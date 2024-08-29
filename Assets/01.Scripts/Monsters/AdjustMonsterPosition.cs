@@ -32,7 +32,7 @@ public class AdjustMonsterPosition : MonoBehaviour, IPlayerObserver
 
         if (playerSubject == null)
         {
-            Debug.Log("ConstantChaseMove Script PlayerSubject is Null");
+            //Debug.Log("ConstantChaseMove Script PlayerSubject is Null");
             return;
         }
 
