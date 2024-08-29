@@ -17,7 +17,9 @@ public class StringTable : DataTable
     public Dictionary<string, StringData> stringTable { get; private set; } = new();
 
     private int maxTutorialCount = 19;
+    private int maxRuleBookCount = 16;
     private string defaultTutorialId = "Tutorial";
+    private string defaultRuleBookId = "RuleBookDesc_";
 
     public List<string> GetTutorialTexts()
     {
@@ -26,6 +28,22 @@ public class StringTable : DataTable
         for (int i = 1; i <= maxTutorialCount; i++)
         {
             stringTable.TryGetValue(defaultTutorialId + i, out var value);
+
+            if (value == null) continue;
+
+            list.Add(value.Text);
+        }
+
+        return list;
+    }
+
+    public List<string> GetRuleBookTexts()
+    {
+        var list = new List<string>();
+
+        for (int i = 1; i <= maxRuleBookCount; i++)
+        {
+            stringTable.TryGetValue(defaultRuleBookId + i, out var value);
 
             if (value == null) continue;
 
