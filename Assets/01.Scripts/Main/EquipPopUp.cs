@@ -254,7 +254,17 @@ public class EquipPopUp : MonoBehaviour
                 break;
         }
 
-        SetItemUI(currentItem);
+        if(GameManager.Instance.playerEquipment.ContainsKey(PlayerEquipment.Weapon))
+        {
+            bool isSame = GameManager.Instance.playerEquipment[PlayerEquipment.Weapon].Item1 == currentItem;
+
+            SetItemUI(currentItem, !isSame);
+        }
+        else
+        {
+            SetItemUI(currentItem);
+        }
+
         mainInventory.RefreshItemSlotUI();
         mainInventory.SaveInventory();
 
