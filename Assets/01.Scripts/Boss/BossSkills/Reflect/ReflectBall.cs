@@ -34,6 +34,11 @@ public class ReflectBall : MonoBehaviour
         this.copyCount = copyCount;
 
         transform.localScale = new Vector3(circleScale, circleScale, circleScale);
+
+        foreach(Transform t in transform)
+        {
+            t.localScale = new Vector3(circleScale, circleScale, circleScale);
+        }
     }
 
     public void SetDamage(float damage)

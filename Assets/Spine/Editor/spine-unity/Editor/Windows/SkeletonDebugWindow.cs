@@ -40,11 +40,11 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 
-namespace Spine.Unity.Editor {
-	using Editor = UnityEditor.Editor;
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Icons = SpineEditorUtilities.Icons;
 
-	public class SkeletonDebugWindow : EditorWindow {
+    public class SkeletonDebugWindow : EditorWindow {
 
 		const bool IsUtilityWindow = true;
 		internal static bool showBoneNames, showPaths = true, showShapes = true, showConstraints = true;

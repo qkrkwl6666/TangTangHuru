@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class MainInventory : MonoBehaviour
 {
@@ -232,7 +233,7 @@ public class MainInventory : MonoBehaviour
             DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory;
         else
         {
-            Debug.Log("세이브 이미 로드 완료됨");
+            //Debug.Log("세이브 이미 로드 완료됨");
 
             Gold = SaveManager.SaveDataV1.Gold;
 
@@ -248,7 +249,7 @@ public class MainInventory : MonoBehaviour
 
     public void CoSaveDataLoadMainInventory()
     {
-        Debug.Log("CoSaveDataLoadMainInventory");
+        //Debug.Log("CoSaveDataLoadMainInventory");
         StartCoroutine(SaveDataLoadMainInventory());
     }
 
@@ -879,7 +880,7 @@ public class MainInventory : MonoBehaviour
 
     public IEnumerator SceneLoadMainInventory()
     {
-        Debug.Log("SceneLoadMainInventory");
+        //Debug.Log("SceneLoadMainInventory");
         var items = SaveManager.SaveDataV1.allItem;
 
         Gold = SaveManager.SaveDataV1.Gold;
@@ -2048,23 +2049,23 @@ public class MainInventory : MonoBehaviour
             {
                 case (int)PlayerStatus.Attack:
                     playerStatusTexts[i].text = playerEquipment.ContainsKey
-                        (PlayerEquipment.Weapon) ? playerEquipment[PlayerEquipment.Weapon]
-                        .Item1.itemData.Damage.ToString() : "0";
+                        (PlayerEquipment.Weapon) ? Math.Round(playerEquipment[PlayerEquipment.Weapon]
+                        .Item1.itemData.Damage, 2).ToString() : "0";
                     break;
                 case (int)PlayerStatus.Health:
                     playerStatusTexts[i].text = playerEquipment.ContainsKey
-                        (PlayerEquipment.Armor) ? playerEquipment[PlayerEquipment.Armor]
-                        .Item1.itemData.Hp.ToString() : "0";
+                        (PlayerEquipment.Armor) ? Math.Round(playerEquipment[PlayerEquipment.Armor]
+                        .Item1.itemData.Hp, 2).ToString() : "0";
                     break;
                 case (int)PlayerStatus.Defence:
                     playerStatusTexts[i].text = playerEquipment.ContainsKey
-                        (PlayerEquipment.Helmet) ? playerEquipment[PlayerEquipment.Helmet]
-                        .Item1.itemData.Defense.ToString() : "0";
+                        (PlayerEquipment.Helmet) ? Math.Round(playerEquipment[PlayerEquipment.Helmet]
+                        .Item1.itemData.Defense, 2).ToString() : "0";
                     break;
                 case (int)PlayerStatus.Dodge:
                     playerStatusTexts[i].text = playerEquipment.ContainsKey
-                        (PlayerEquipment.Shoes) ? playerEquipment[PlayerEquipment.Shoes]
-                        .Item1.itemData.Dodge.ToString() : "0";
+                        (PlayerEquipment.Shoes) ? Math.Round(playerEquipment[PlayerEquipment.Shoes]
+                        .Item1.itemData.Dodge, 2).ToString() : "0";
                     break;
             }
         }

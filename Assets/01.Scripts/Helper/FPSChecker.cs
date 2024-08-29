@@ -28,7 +28,7 @@ public class FPSChecker : MonoBehaviour
 
         if (time >= fpsDuration && !isFps)
         {
-            Debug.Log($"1분 평균 프레임 : {totalFps / 60}");
+            //Debug.Log($"1분 평균 프레임 : {totalFps / 60}");
             isFps = true;
         }
     }

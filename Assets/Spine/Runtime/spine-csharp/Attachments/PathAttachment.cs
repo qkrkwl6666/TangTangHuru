@@ -28,10 +28,10 @@
  *****************************************************************************/
 
 using System;
-using System.Collections.Generic;
 
-namespace Spine {
-	public class PathAttachment : VertexAttachment {
+namespace Spine
+{
+    public class PathAttachment : VertexAttachment {
 		internal float[] lengths;
 		internal bool closed, constantSpeed;
 

@@ -39,7 +39,7 @@ public class PlayerHealth : LivingEntity
         }
         else
         {
-            Debug.LogError("Failed to load DamageText prefab.");
+            //Debug.LogError("Failed to load DamageText prefab.");
         }
     }
 
@@ -177,7 +177,7 @@ public class PlayerHealth : LivingEntity
 
     public void Health(float heal)
     {
-        Debug.Log("Health");
+        //Debug.Log("Health");
         health += heal;
 
         if (health > startingHealth)

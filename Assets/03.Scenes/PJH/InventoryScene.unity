@@ -1499,6 +1499,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4550128700590144169, guid: 6db27ed51279be84e85e65c10996fd85, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: -10
+      objectReference: {fileID: 0}
     - target: {fileID: 6048320397258229141, guid: 6db27ed51279be84e85e65c10996fd85, type: 3}
       propertyPath: upgrader
       value: 
@@ -51957,7 +51961,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 9.9
+  m_fontSize: 10
   m_fontSizeBase: 29
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -97320,6 +97324,7 @@ MonoBehaviour:
   - {fileID: 1817692994}
   - {fileID: 1807221335}
   orbUpgrader: {fileID: 1077155698}
+  orbPanel: {fileID: 488057714}
 --- !u!114 &7029745243843126816
 MonoBehaviour:
   m_ObjectHideFlags: 0

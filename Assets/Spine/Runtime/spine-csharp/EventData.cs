@@ -29,9 +29,10 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>Stores the setup pose values for an Event.</summary>
-	public class EventData {
+namespace Spine
+{
+    /// <summary>Stores the setup pose values for an Event.</summary>
+    public class EventData {
 		internal string name;
 
 		/// <summary>The name of the event, which is unique across all events in the skeleton.</summary>

@@ -105,7 +105,7 @@ public class MonsterSpawnManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("All Waves Completed");
+            //Debug.Log("All Waves Completed");
             enabled = false;
         }
     }

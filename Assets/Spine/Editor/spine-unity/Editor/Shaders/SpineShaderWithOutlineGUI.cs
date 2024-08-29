@@ -29,7 +29,6 @@
 
 using UnityEngine;
 using UnityEditor;
-using Spine.Unity;
 
 using SpineInspectorUtility = Spine.Unity.Editor.SpineInspectorUtility;
 

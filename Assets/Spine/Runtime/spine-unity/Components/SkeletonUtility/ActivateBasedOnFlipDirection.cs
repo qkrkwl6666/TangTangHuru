@@ -29,15 +29,16 @@
 
 using UnityEngine;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	/// <summary>
-	/// Utility component to support flipping of 2D hinge chains (chains of HingeJoint2D objects) along
-	/// with the parent skeleton by activating the respective mirrored versions of the hinge chain.
-	/// Note: This component is automatically attached when calling "Create Hinge Chain 2D" at <see cref="SkeletonUtilityBone"/>,
-	/// do not attempt to use this component for other purposes.
-	/// </summary>
-	public class ActivateBasedOnFlipDirection : MonoBehaviour {
+    /// <summary>
+    /// Utility component to support flipping of 2D hinge chains (chains of HingeJoint2D objects) along
+    /// with the parent skeleton by activating the respective mirrored versions of the hinge chain.
+    /// Note: This component is automatically attached when calling "Create Hinge Chain 2D" at <see cref="SkeletonUtilityBone"/>,
+    /// do not attempt to use this component for other purposes.
+    /// </summary>
+    public class ActivateBasedOnFlipDirection : MonoBehaviour {
 
 		public SkeletonRenderer skeletonRenderer;
 		public SkeletonGraphic skeletonGraphic;

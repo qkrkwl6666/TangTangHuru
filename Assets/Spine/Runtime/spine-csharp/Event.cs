@@ -29,9 +29,10 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>Stores the current pose values for an Event.</summary>
-	public class Event {
+namespace Spine
+{
+    /// <summary>Stores the current pose values for an Event.</summary>
+    public class Event {
 		internal readonly EventData data;
 		internal readonly float time;
 		internal int intValue;

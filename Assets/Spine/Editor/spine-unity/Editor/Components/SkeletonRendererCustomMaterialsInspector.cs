@@ -37,12 +37,12 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Spine.Unity.Examples;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	// This script is not intended for use with code. See the readme.txt file in SkeletonRendererCustomMaterials folder to learn more.
-	[CustomEditor(typeof(SkeletonRendererCustomMaterials))]
+    // This script is not intended for use with code. See the readme.txt file in SkeletonRendererCustomMaterials folder to learn more.
+    [CustomEditor(typeof(SkeletonRendererCustomMaterials))]
 	public class SkeletonRendererCustomMaterialsInspector : UnityEditor.Editor {
 		List<SkeletonRendererCustomMaterials.AtlasMaterialOverride> componentCustomMaterialOverrides, _customMaterialOverridesPrev;
 		List<SkeletonRendererCustomMaterials.SlotMaterialOverride> componentCustomSlotMaterials, _customSlotMaterialsPrev;

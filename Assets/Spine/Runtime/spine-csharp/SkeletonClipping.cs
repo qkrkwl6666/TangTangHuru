@@ -29,8 +29,9 @@
 
 using System;
 
-namespace Spine {
-	public class SkeletonClipping {
+namespace Spine
+{
+    public class SkeletonClipping {
 		internal readonly Triangulator triangulator = new Triangulator();
 		internal readonly ExposedList<float> clippingPolygon = new ExposedList<float>();
 		internal readonly ExposedList<float> clipOutput = new ExposedList<float>(128);

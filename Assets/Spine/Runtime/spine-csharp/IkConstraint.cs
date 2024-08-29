@@ -29,15 +29,16 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>
-	/// <para>
-	/// Stores the current pose for an IK constraint. An IK constraint adjusts the rotation of 1 or 2 constrained bones so the tip of
-	/// the last bone is as close to the target bone as possible.</para>
-	/// <para>
-	/// See <a href="http://esotericsoftware.com/spine-ik-constraints">IK constraints</a> in the Spine User Guide.</para>
-	/// </summary>
-	public class IkConstraint : IUpdatable {
+namespace Spine
+{
+    /// <summary>
+    /// <para>
+    /// Stores the current pose for an IK constraint. An IK constraint adjusts the rotation of 1 or 2 constrained bones so the tip of
+    /// the last bone is as close to the target bone as possible.</para>
+    /// <para>
+    /// See <a href="http://esotericsoftware.com/spine-ik-constraints">IK constraints</a> in the Spine User Guide.</para>
+    /// </summary>
+    public class IkConstraint : IUpdatable {
 		internal IkConstraintData data;
 		internal ExposedList<Bone> bones = new ExposedList<Bone>();
 		internal Bone target;

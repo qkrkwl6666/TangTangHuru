@@ -49,7 +49,7 @@ public class IconLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Failed to load {iconName} sprite.");
+            //Debug.LogError($"Failed to load {iconName} sprite.");
         }
     }
 
@@ -61,7 +61,7 @@ public class IconLoader : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Icon with name {iconName} not found.");
+            //Debug.LogError($"Icon with name {iconName} not found.");
             return null;
         }
     }

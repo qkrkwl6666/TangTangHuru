@@ -28,11 +28,10 @@
  *****************************************************************************/
 
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
-namespace Spine.Unity.AttachmentTools {
-	public static class AttachmentRegionExtensions {
+namespace Spine.Unity.AttachmentTools
+{
+    public static class AttachmentRegionExtensions {
 		#region GetRegion
 		/// <summary>
 		/// Tries to get the region (image) of a renderable attachment. If the attachment is not renderable, it returns null.</summary>

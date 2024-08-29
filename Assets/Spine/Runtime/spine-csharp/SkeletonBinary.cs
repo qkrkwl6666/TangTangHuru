@@ -40,8 +40,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 #endif
 
-namespace Spine {
-	public class SkeletonBinary {
+namespace Spine
+{
+    public class SkeletonBinary {
 		public const int BONE_ROTATE = 0;
 		public const int BONE_TRANSLATE = 1;
 		public const int BONE_SCALE = 2;

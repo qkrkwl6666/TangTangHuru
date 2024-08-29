@@ -30,8 +30,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	[CustomEditor(typeof(SkeletonMecanimRootMotion))]
+namespace Spine.Unity.Editor
+{
+    [CustomEditor(typeof(SkeletonMecanimRootMotion))]
 	[CanEditMultipleObjects]
 	public class SkeletonMecanimRootMotionInspector : SkeletonRootMotionBaseInspector {
 		protected SerializedProperty mecanimLayerFlags;

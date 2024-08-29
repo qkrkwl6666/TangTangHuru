@@ -74,7 +74,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         else
         {
-            Debug.LogError("Canvas가 없습니다!");
+            //Debug.LogError("Canvas가 없습니다!");
             return null;
         }
     }

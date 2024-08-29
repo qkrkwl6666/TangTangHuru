@@ -33,12 +33,12 @@ using System.Linq;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Spine.Unity.Examples;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	// This script is not intended for use with code. See spine-unity documentation page for additional information.
-	[CustomEditor(typeof(SkeletonGraphicCustomMaterials))]
+    // This script is not intended for use with code. See spine-unity documentation page for additional information.
+    [CustomEditor(typeof(SkeletonGraphicCustomMaterials))]
 	public class SkeletonGraphicCustomMaterialsInspector : UnityEditor.Editor {
 		List<SkeletonGraphicCustomMaterials.AtlasMaterialOverride> componentCustomMaterialOverrides, _customMaterialOverridesPrev;
 		List<SkeletonGraphicCustomMaterials.AtlasTextureOverride> componentCustomTextureOverrides, _customTextureOverridesPrev;

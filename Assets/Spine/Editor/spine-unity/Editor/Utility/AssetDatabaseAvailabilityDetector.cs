@@ -29,8 +29,9 @@
 
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	public static class AssetDatabaseAvailabilityDetector {
+namespace Spine.Unity.Editor
+{
+    public static class AssetDatabaseAvailabilityDetector {
 		const string MarkerResourceName = "SpineAssetDatabaseMarker";
 		private static bool isMarkerLoaded;
 

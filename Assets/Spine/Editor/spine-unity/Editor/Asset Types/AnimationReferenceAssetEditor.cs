@@ -27,18 +27,17 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 using System.Reflection;
 using System;
 
-namespace Spine.Unity.Editor {
-	using Editor = UnityEditor.Editor;
+namespace Spine.Unity.Editor
+{
+    using Editor = UnityEditor.Editor;
 
-	[CustomEditor(typeof(AnimationReferenceAsset))]
+    [CustomEditor(typeof(AnimationReferenceAsset))]
 	public class AnimationReferenceAssetEditor : Editor {
 
 		const string InspectorHelpText = "This is a Spine-Unity Animation Reference Asset. It serializes a reference to a SkeletonDataAsset and an animationName. It does not contain actual animation data. At runtime, it stores a reference to a Spine.Animation.\n\n" +

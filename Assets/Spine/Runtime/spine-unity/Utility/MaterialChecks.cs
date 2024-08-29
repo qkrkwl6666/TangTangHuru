@@ -27,14 +27,14 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
 
-namespace Spine.Unity {
-	/// <summary>Utility class providing methods to check material settings for incorrect combinations.</summary>
-	public class MaterialChecks {
+namespace Spine.Unity
+{
+    /// <summary>Utility class providing methods to check material settings for incorrect combinations.</summary>
+    public class MaterialChecks {
 
 		static readonly int STRAIGHT_ALPHA_PARAM_ID = Shader.PropertyToID("_StraightAlphaInput");
 		static readonly string ALPHAPREMULTIPLY_ON_KEYWORD = "_ALPHAPREMULTIPLY_ON";

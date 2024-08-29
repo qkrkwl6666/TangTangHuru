@@ -39,8 +39,9 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-namespace Spine.Unity {
-	public delegate void MeshGeneratorDelegate (MeshGeneratorBuffers buffers);
+namespace Spine.Unity
+{
+    public delegate void MeshGeneratorDelegate (MeshGeneratorBuffers buffers);
 	public struct MeshGeneratorBuffers {
 		/// <summary>The vertex count that will actually be used for the mesh. The Lengths of the buffer arrays may be larger than this number.</summary>
 		public int vertexCount;

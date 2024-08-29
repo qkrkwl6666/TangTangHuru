@@ -33,17 +33,12 @@
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
-	using EventType = UnityEngine.EventType;
+namespace Spine.Unity.Editor
+{
+    using EventType = UnityEngine.EventType;
 
-	public static class SpineHandles {
+    public static class SpineHandles {
 		public static Color BoneColor { get { return new Color(0.8f, 0.8f, 0.8f, 0.4f); } }
 		public static Color PathColor { get { return new Color(254/255f, 127/255f, 0); } }
 		public static Color TransformContraintColor { get { return new Color(170/255f, 226/255f, 35/255f); } }

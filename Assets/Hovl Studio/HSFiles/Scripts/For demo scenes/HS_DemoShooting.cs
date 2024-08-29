@@ -75,7 +75,7 @@ public class HS_DemoShooting : MonoBehaviour
         }
         else
         {
-            Debug.Log("No camera");
+            //Debug.Log("No camera");
         }
     }
 

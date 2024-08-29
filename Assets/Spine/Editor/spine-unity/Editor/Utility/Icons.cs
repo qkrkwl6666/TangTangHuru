@@ -33,15 +33,10 @@
 
 using UnityEngine;
 using UnityEditor;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Linq;
-using System.Reflection;
-using System.Globalization;
 
-namespace Spine.Unity.Editor {
-	public partial class SpineEditorUtilities {
+namespace Spine.Unity.Editor
+{
+    public partial class SpineEditorUtilities {
 		public static class Icons {
 			public static Texture2D skeleton;
 			public static Texture2D nullBone;

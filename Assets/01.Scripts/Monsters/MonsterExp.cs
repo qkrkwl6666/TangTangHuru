@@ -45,7 +45,7 @@ public class MonsterExp : MonoBehaviour, IPlayerObserver, IInGameItem
     {
         if (playerSubject == null)
         {
-            Debug.Log("MonsterExp Script PlayerSubject is Null");
+            //Debug.Log("MonsterExp Script PlayerSubject is Null");
             return;
         }
         this.playerSubject = playerSubject;

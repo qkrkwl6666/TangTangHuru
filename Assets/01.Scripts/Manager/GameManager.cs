@@ -64,7 +64,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        Debug.Log("GameManagerStart");
+        //Debug.Log("GameManagerStart");
 
         mainInventory = GameObject.FindWithTag("MainInventory")
             .GetComponent<MainInventory>();

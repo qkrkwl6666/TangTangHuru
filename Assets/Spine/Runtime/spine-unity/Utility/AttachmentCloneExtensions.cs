@@ -28,12 +28,11 @@
  *****************************************************************************/
 
 using UnityEngine;
-using System.Collections.Generic;
-using System.Collections;
 
-namespace Spine.Unity.AttachmentTools {
+namespace Spine.Unity.AttachmentTools
+{
 
-	public static class AttachmentCloneExtensions {
+    public static class AttachmentCloneExtensions {
 		/// <summary>
 		/// Clones the attachment.</summary>
 		public static Attachment GetCopy (this Attachment o, bool cloneMeshesAsLinked) {

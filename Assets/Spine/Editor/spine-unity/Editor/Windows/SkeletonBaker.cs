@@ -35,41 +35,38 @@
 
 using UnityEngine;
 using UnityEditor;
-using UnityEditorInternal;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.IO;
-using Spine;
 
-namespace Spine.Unity.Editor {
+namespace Spine.Unity.Editor
+{
 
-	/// <summary>
-	/// [SUPPORTS]
-	/// Linear, Constant, and Bezier Curves*
-	/// Inverse Kinematics*
-	/// Inherit Rotation
-	/// Translate Timeline
-	/// Rotate Timeline
-	/// Scale Timeline**
-	/// Event Timeline***
-	/// Attachment Timeline
-	///
-	/// RegionAttachment
-	/// MeshAttachment (optionally Skinned)
-	///
-	/// [LIMITATIONS]
-	/// *Bezier Curves are baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
-	/// *Inverse Kinematics is baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
-	/// ***Events may only fire 1 type of data per event in Unity safely so priority to String data if present in Spine key, otherwise a Float is sent whether the Spine key was Int or Float with priority given to Int.
-	///
-	/// [DOES NOT SUPPORT]
-	/// FFD (Unity does not provide access to BlendShapes with code)
-	/// Color Keys (Maybe one day when Unity supports full FBX standard and provides access with code)
-	/// Draw Order Keyframes
-	/// </summary>
-	public static class SkeletonBaker {
+    /// <summary>
+    /// [SUPPORTS]
+    /// Linear, Constant, and Bezier Curves*
+    /// Inverse Kinematics*
+    /// Inherit Rotation
+    /// Translate Timeline
+    /// Rotate Timeline
+    /// Scale Timeline**
+    /// Event Timeline***
+    /// Attachment Timeline
+    ///
+    /// RegionAttachment
+    /// MeshAttachment (optionally Skinned)
+    ///
+    /// [LIMITATIONS]
+    /// *Bezier Curves are baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
+    /// *Inverse Kinematics is baked into the animation at 60fps and are not realtime. Use bakeIncrement constant to adjust key density if desired.
+    /// ***Events may only fire 1 type of data per event in Unity safely so priority to String data if present in Spine key, otherwise a Float is sent whether the Spine key was Int or Float with priority given to Int.
+    ///
+    /// [DOES NOT SUPPORT]
+    /// FFD (Unity does not provide access to BlendShapes with code)
+    /// Color Keys (Maybe one day when Unity supports full FBX standard and provides access with code)
+    /// Draw Order Keyframes
+    /// </summary>
+    public static class SkeletonBaker {
 
 		#region SkeletonMecanim's Mecanim Clips
 		#if SPINE_SKELETONMECANIM

@@ -30,8 +30,9 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Spine.Unity.Editor {
-	[CustomEditor(typeof(SkeletonRootMotionBase))]
+namespace Spine.Unity.Editor
+{
+    [CustomEditor(typeof(SkeletonRootMotionBase))]
 	[CanEditMultipleObjects]
 	public class SkeletonRootMotionBaseInspector : UnityEditor.Editor {
 		protected SerializedProperty rootMotionBoneName;

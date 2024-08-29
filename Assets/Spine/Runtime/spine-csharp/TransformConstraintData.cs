@@ -27,10 +27,9 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
-
-namespace Spine {
-	public class TransformConstraintData : ConstraintData {
+namespace Spine
+{
+    public class TransformConstraintData : ConstraintData {
 		internal ExposedList<BoneData> bones = new ExposedList<BoneData>();
 		internal BoneData target;
 		internal float rotateMix, translateMix, scaleMix, shearMix;

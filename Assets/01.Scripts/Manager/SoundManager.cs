@@ -135,7 +135,7 @@ public class SoundManager : Singleton<SoundManager>
             {
                 clipDictionary.Add(clip.name, clip);
             }
-            Debug.Log("All sounds loaded successfully.");
+            //Debug.Log("All sounds loaded successfully.");
 
             if (currPlayingSounds.Count == 0)
             {
@@ -144,7 +144,7 @@ public class SoundManager : Singleton<SoundManager>
         }
         else
         {
-            Debug.LogError("Failed to load sounds.");
+            //Debug.LogError("Failed to load sounds.");
         }
     }
 

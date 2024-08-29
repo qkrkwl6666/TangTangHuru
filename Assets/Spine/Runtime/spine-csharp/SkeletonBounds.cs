@@ -29,13 +29,14 @@
 
 using System;
 
-namespace Spine {
+namespace Spine
+{
 
-	/// <summary>
-	/// Collects each BoundingBoxAttachment that is visible and computes the world vertices for its polygon.
-	/// The polygon vertices are provided along with convenience methods for doing hit detection.
-	/// </summary>
-	public class SkeletonBounds {
+    /// <summary>
+    /// Collects each BoundingBoxAttachment that is visible and computes the world vertices for its polygon.
+    /// The polygon vertices are provided along with convenience methods for doing hit detection.
+    /// </summary>
+    public class SkeletonBounds {
 		private ExposedList<Polygon> polygonPool = new ExposedList<Polygon>();
 		private float minX, minY, maxX, maxY;
 

@@ -35,11 +35,12 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
 
-namespace Spine.Unity.Editor {
-	using Event = UnityEngine.Event;
-	using Icons = SpineEditorUtilities.Icons;
+namespace Spine.Unity.Editor
+{
+    using Event = UnityEngine.Event;
+    using Icons = SpineEditorUtilities.Icons;
 
-	[CustomEditor(typeof(BoundingBoxFollowerGraphic))]
+    [CustomEditor(typeof(BoundingBoxFollowerGraphic))]
 	public class BoundingBoxFollowerGraphicInspector : UnityEditor.Editor {
 		SerializedProperty skeletonGraphic, slotName, isTrigger, clearStateOnDisable;
 		BoundingBoxFollowerGraphic follower;

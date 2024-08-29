@@ -27,17 +27,16 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Spine;
 
-namespace Spine.Unity.Editor {
-	using Event = UnityEngine.Event;
+namespace Spine.Unity.Editor
+{
+    using Event = UnityEngine.Event;
 
-	[CustomEditor(typeof(SpineSpriteAtlasAsset)), CanEditMultipleObjects]
+    [CustomEditor(typeof(SpineSpriteAtlasAsset)), CanEditMultipleObjects]
 	public class SpineSpriteAtlasAssetInspector : UnityEditor.Editor {
 		SerializedProperty atlasFile, materials;
 		SpineSpriteAtlasAsset atlasAsset;

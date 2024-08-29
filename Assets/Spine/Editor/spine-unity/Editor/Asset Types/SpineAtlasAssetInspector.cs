@@ -35,12 +35,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using Spine;
 
-namespace Spine.Unity.Editor {
-	using Event = UnityEngine.Event;
+namespace Spine.Unity.Editor
+{
+    using Event = UnityEngine.Event;
 
-	[CustomEditor(typeof(SpineAtlasAsset)), CanEditMultipleObjects]
+    [CustomEditor(typeof(SpineAtlasAsset)), CanEditMultipleObjects]
 	public class SpineAtlasAssetInspector : UnityEditor.Editor {
 		SerializedProperty atlasFile, materials;
 		SpineAtlasAsset atlasAsset;

@@ -29,16 +29,17 @@
 
 using System;
 
-namespace Spine {
-	/// <summary>
-	/// Stores a bone's current pose.
-	/// <para>
-	/// A bone has a local transform which is used to compute its world transform. A bone also has an applied transform, which is a
-	/// local transform that can be applied to compute the world transform. The local transform and applied transform may differ if a
-	/// constraint or application code modifies the world transform after it was computed from the local transform.
-	/// </para>
-	/// </summary>
-	public class Bone : IUpdatable {
+namespace Spine
+{
+    /// <summary>
+    /// Stores a bone's current pose.
+    /// <para>
+    /// A bone has a local transform which is used to compute its world transform. A bone also has an applied transform, which is a
+    /// local transform that can be applied to compute the world transform. The local transform and applied transform may differ if a
+    /// constraint or application code modifies the world transform after it was computed from the local transform.
+    /// </para>
+    /// </summary>
+    public class Bone : IUpdatable {
 		static public bool yDown;
 
 		internal BoneData data;

@@ -27,12 +27,12 @@
  * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
-using System;
 using UnityEngine;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	public class RegionlessAttachmentLoader : AttachmentLoader {
+    public class RegionlessAttachmentLoader : AttachmentLoader {
 
 		static AtlasRegion emptyRegion;
 		static AtlasRegion EmptyRegion {

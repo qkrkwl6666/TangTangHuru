@@ -34,9 +34,10 @@ using UnityEngine;
 
 using CompatibilityProblemInfo = Spine.Unity.SkeletonDataCompatibility.CompatibilityProblemInfo;
 
-namespace Spine.Unity {
+namespace Spine.Unity
+{
 
-	[CreateAssetMenu(fileName = "New SkeletonDataAsset", menuName = "Spine/SkeletonData Asset")]
+    [CreateAssetMenu(fileName = "New SkeletonDataAsset", menuName = "Spine/SkeletonData Asset")]
 	public class SkeletonDataAsset : ScriptableObject {
 		#region Inspector
 		public AtlasAssetBase[] atlasAssets = new AtlasAssetBase[0];
