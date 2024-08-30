@@ -24,6 +24,7 @@ public class MonsterSpawnManager : MonoBehaviour
 
     private bool isHpBarOn = true;
     private bool isHpTextOn = true;
+    private bool isHitEffectOn= true;
 
     private void Awake()
     {
@@ -153,6 +154,16 @@ public class MonsterSpawnManager : MonoBehaviour
         foreach (var monster in monsterSpawnFactory.monsters)
         {
             monster.GetComponent<DamageText>().ActiveDamageText(isHpBarOn);
+        }
+    }
+
+    public void ToggleMonsterHitEffect()
+    {
+        isHitEffectOn = !isHitEffectOn;
+
+        foreach (var monster in monsterSpawnFactory.monsters)
+        {
+            monster.GetComponent<Monster>().ActiveHitEffect(isHitEffectOn);
         }
     }
 
