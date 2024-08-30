@@ -176,6 +176,8 @@ public class Monster : LivingEntity, IPlayerObserver
     {
         //transform.Translate((gameObject.transform.position - PlayerTransform.position).normalized * impact);
 
+        if (playerTransform == null) return;
+
         Vector3 direction = (transform.position - playerTransform.position).normalized;
         Vector3 targetPosition = transform.position + direction * impact;
 

@@ -90,6 +90,8 @@ public class InGameInventory : MonoBehaviour
     {
         SaveManager.SaveDataV1.Gold += Coin;
 
+        Coin = 0;
+
         List<IInGameItem> tempItems = new List<IInGameItem>();
 
         if (items.Count == 0) return null;

@@ -213,6 +213,7 @@ public class MainUI : MonoBehaviour
 
     public void EquipmentAppraisalUIButton()
     {
+        mainInventory.RefreshItemSlotUI();
         equipmentAppraisal.RefreshGemStoneSlotUI();
 
         for (int i = 0; i < uiGameObjects.Count; i++)
