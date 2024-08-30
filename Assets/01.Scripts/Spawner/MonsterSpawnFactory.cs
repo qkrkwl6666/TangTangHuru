@@ -81,8 +81,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
                     var skeletonRenderer = go.GetComponentInChildren<SkeletonRenderer>();
 
-                    monsterSkeletonSharing.AddSkeletonRenderers(monsterData.Monster_Prefab.ToString(), skeletonRenderer);
-
                     var monsterView = go.AddComponent<MonsterView>();
                     monsterView.skeletonRenderer = skeletonRenderer;
 
@@ -93,6 +91,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
                     adp.Initialize(playerSubject);
 
                     monsterScript.Initialize(playerSubject, monsterData);
+                    monsterSkeletonSharing.AddSkeletonRenderers(monsterData.Monster_Prefab.ToString(), skeletonRenderer);
 
                     switch (monsterData.Type)
                     {
