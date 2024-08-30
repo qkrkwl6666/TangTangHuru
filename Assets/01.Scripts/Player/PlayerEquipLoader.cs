@@ -89,16 +89,16 @@ public class PlayerEquipLoader : MonoBehaviour
                         switch (orb.ItemType)
                         {
                             case ItemType.OrbAttack:
-                                mainDmg += orb.itemData.Damage;
+                                mainDmg += (orb.itemData.Damage * 0.01f) * mainDmg;
                                 break;
                             case ItemType.OrbHp:
-                                hpValue += orb.itemData.Hp;
+                                hpValue += (hpValue * orb.itemData.Hp);
                                 break;
                             case ItemType.OrbDefence:
-                                defValue += orb.itemData.Defense;
+                                defValue += (defValue * orb.itemData.Defense);
                                 break;
                             case ItemType.OrbDodge:
-                                dodgeValue += orb.itemData.Dodge;
+                                dodgeValue += (dodgeValue * orb.itemData.Dodge);
                                 break;
                         }
                     }

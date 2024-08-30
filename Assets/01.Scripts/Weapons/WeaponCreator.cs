@@ -386,9 +386,12 @@ public class WeaponCreator : MonoBehaviour
 
     private void PlayWeaponSound()
     {
-        if(weaponDataRef.WeaponName == "Staff"
-            && weaponDataRef.WeaponName == "Orbit"
-            && weaponDataRef.WeaponName == "OrbitEvo"
+        if(weaponDataRef.WeaponName == "Orbit"
+            && weaponDataRef.WeaponName == "OrbitEvo")
+        {
+            return;
+        }
+        else if(weaponDataRef.WeaponName == "Staff"
             && weaponDataRef.WeaponName == "Axe"
             && weaponDataRef.WeaponName == "AxeEvo"
             && weaponDataRef.WeaponName == "SpreadEvo")

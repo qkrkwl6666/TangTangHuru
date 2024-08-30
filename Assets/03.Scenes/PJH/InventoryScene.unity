@@ -7185,6 +7185,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1695441426}
   m_CullTransparentMesh: 1
+--- !u!114 &1707756453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+  m_PrefabInstance: {fileID: 7509355304122130920}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1714603405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7345,6 +7356,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e13e831ad21d204885b8a0ecf9a711f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1807221336 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+  m_PrefabInstance: {fileID: 4668624876988250021}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1808785774 stripped
@@ -8453,6 +8475,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2955492766589329455, guid: 8a2f31d67f28d5c4ab8d468c02789d2b, type: 3}
   m_PrefabInstance: {fileID: 5920302959579751170}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2136625777 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+  m_PrefabInstance: {fileID: 6824866276617039408}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2137489170
 GameObject:
   m_ObjectHideFlags: 0
@@ -78247,6 +78280,34 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3774806734104755187}
     m_Modifications:
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807221335}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ItemSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7253410205020206317, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
       propertyPath: m_Name
       value: OrbSlot
@@ -99059,6 +99120,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5722399766599948510}
     m_Modifications:
+    - target: {fileID: 1022186237205947303, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 2136625777}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1737026274}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ItemSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7253410205020206317, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
       propertyPath: m_Name
       value: OrbSlot
@@ -99250,6 +99343,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2775823555224848820}
     m_Modifications:
+    - target: {fileID: 1022186237205947303, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 1807221336}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807221335}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ItemSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7253410205020206317, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
       propertyPath: m_Name
       value: OrbSlot
@@ -103012,6 +103137,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4282983190308959399}
     m_Modifications:
+    - target: {fileID: 1022186237205947303, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: button
+      value: 
+      objectReference: {fileID: 1707756453}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 889407708}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ItemSlotUI, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2479427612951421984, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7253410205020206317, guid: b27ebf67a837a5142bbc9a2c8941af95, type: 3}
       propertyPath: m_Name
       value: OrbSlot

@@ -59,32 +59,33 @@ public class WeaponOrbSlot : MonoBehaviour
 
         foreach (var slot in upgradeSlots)
         {
-            if(slot.currItemId == 0)
+            if(slot.currItem == null)
                 continue;
         }
     }
 
     public void AddOrbToWeapon(ItemSlotUI slot)
     {
-        var orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(slot.currItemId.ToString());
+        //var orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(slot.currItemId.ToString());
+
+
+        //var selectedOrb = equipPopUp.mainInventory.GetItemTypesTier((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier);
 
         var currWeapon = equipPopUp.currentItem as M_Weapon;
-        var selectedOrb = equipPopUp.mainInventory.GetItemTypesTier((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier);
-
-        if(currWeapon.orbs == null)
+        if (currWeapon.orbs == null)
         {
             currWeapon.orbs = new();
         }
-        currWeapon.orbs.Add(selectedOrb[0]);
+        currWeapon.orbs.Add(slot.currItem);
     }
 
     public void RemoveOrbFromWeapon(ItemSlotUI slot)
     {
-        var orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(slot.currItemId.ToString());
+        //var orbData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(slot.currItemId.ToString());
+        //var selectedOrb = equipPopUp.mainInventory.GetItemTypesTier((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier);
 
         var currWeapon = equipPopUp.currentItem as M_Weapon;
-        var selectedOrb = equipPopUp.mainInventory.GetItemTypesTier((ItemType)orbData.Item_Type, (ItemTier)orbData.Item_Tier);
-        currWeapon.orbs.Remove(selectedOrb[0]);
+        currWeapon.orbs.Remove(slot.currItem);
     }
 
     public void LoadEquippedOrbList()

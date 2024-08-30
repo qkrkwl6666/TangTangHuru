@@ -13,13 +13,16 @@ public class OrbDesc : MonoBehaviour
     private ItemData itemData;
     private ItemSlotUI connectedSlot;
 
+    private Item currOrb;
+
     private void Start()
     {
     }
 
-    public void SetInfo(int id)
+    public void SetInfo(Item orb)
     {
-        orbId = id;
+        currOrb = orb;
+        orbId = orb.ItemId;
         itemData = DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(orbId.ToString());
         var stringDesc = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Desc_Id);
         var stringType = DataTableManager.Instance.Get<StringTable>(DataTableManager.String).Get(itemData.Name_Id);
@@ -56,5 +59,10 @@ public class OrbDesc : MonoBehaviour
     public ItemSlotUI GetConnection()
     {
         return connectedSlot;
+    }
+
+    public Item GetCurrItem()
+    {
+        return currOrb;
     }
 }

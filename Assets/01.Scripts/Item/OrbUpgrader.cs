@@ -63,6 +63,7 @@ public class OrbUpgrader : MonoBehaviour
     public void SelectOrbInPanel(int index)
     {
         popUp_OrbPanel.currSlot.SetOrbInfo(popUp_OrbPanel.orbList[index]);
+        popUp_OrbPanel.currSlot.AddOrbInfo();
         popUp_OrbPanel.gameObject.SetActive(false);
     }
     public void UndoSelect(ItemSlotUI slot)
@@ -99,14 +100,14 @@ public class OrbUpgrader : MonoBehaviour
         if (upgradeSlots == null || upgradeSlots.Length < 2)
             return false;
 
-        firstItemId = upgradeSlots[0].currItemId;
+        firstItemId = upgradeSlots[0].currItem.ItemId;
         if (firstItemId == 0)
             return false;
 
 
         for (int i = 1; i < upgradeSlots.Length; i++)
         {
-            if (upgradeSlots[i].currItemId != firstItemId)
+            if (upgradeSlots[i].currItem.ItemId != firstItemId)
             {
                 //Debug.Log("배치된 오브가 모두 같아야 한다.");
                 return false;

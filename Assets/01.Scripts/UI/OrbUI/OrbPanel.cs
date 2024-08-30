@@ -65,7 +65,7 @@ public class OrbPanel : MonoBehaviour
                 {
                     foreach (var currOrb in sortedOrbList)
                     {
-                        orbList[count].SetInfo(currOrb.ItemId);
+                        orbList[count].SetInfo(currOrb);
                         orbList[count].gameObject.SetActive(true);
 
                         int index = count;
