@@ -1,5 +1,6 @@
 using Spine.Unity;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Pool;
@@ -221,7 +222,7 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
 
     public void CreateBoss(BossData bossData)
     {
-        Vector2 bossPos = (Random.insideUnitCircle.normalized * 3) + bossSpawnPosition;
+        Vector2 bossPos = RandomBossPosition(playerTransform, 3f);
 
         Addressables.InstantiateAsync(bossData.Boss_Prefab, bossPos, Quaternion.identity).Completed +=
             (x) =>
@@ -269,29 +270,32 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 randomCirclePos;
         Vector2 spawnPos;
 
-        while (true)
-        {
-            randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
-            spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+        randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
+        spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize 
-                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
-            {
-                // x ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.x >= Defines.maxMapSize)
-                    spawnPos.x = Defines.maxMapSize - 10;
-                else if (spawnPos.x <= -Defines.maxMapSize)
-                    spawnPos.x = -Defines.maxMapSize + 10;
+        //while (true)
+        //{
+        //    randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
+        //    spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-                // y ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.y >= Defines.maxMapSize)
-                    spawnPos.y = Defines.maxMapSize - 10;
-                else if (spawnPos.y <= -Defines.maxMapSize)
-                    spawnPos.y = -Defines.maxMapSize + 10;
-            }
-            else break;
-        }
-        
+        //    if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize 
+        //        || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
+        //    {
+        //        // x ÁÂÇ¥ Á¶Á¤
+        //        if (spawnPos.x >= Defines.maxMapSize)
+        //            spawnPos.x = Defines.maxMapSize - 10;
+        //        else if (spawnPos.x <= -Defines.maxMapSize)
+        //            spawnPos.x = -Defines.maxMapSize + 10;
+
+        //        // y ÁÂÇ¥ Á¶Á¤
+        //        if (spawnPos.y >= Defines.maxMapSize)
+        //            spawnPos.y = Defines.maxMapSize - 10;
+        //        else if (spawnPos.y <= -Defines.maxMapSize)
+        //            spawnPos.y = -Defines.maxMapSize + 10;
+        //    }
+        //    else break;
+        //}
+
         //Debug.Log(spawnPos);
 
         return spawnPos;
@@ -303,28 +307,66 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 randomCirclePos;
         Vector2 spawnPos;
 
-        // Todo : ÀÓ½Ã Ã³¸® ÇÏµåÄÚµù º¯°æ ÇØ¾ßÇÔ
         if (playerTransform.position.x >= Defines.maxMapSize || playerTransform.position.x <= -Defines.maxMapSize
             || playerTransform.position.y >= Defines.maxMapSize || playerTransform.position.y <= -Defines.maxMapSize)
         {
             playerTransform.transform.position = Vector2.zero;
         }
 
+        float randomDistance = Random.Range(currentSpawnDistance / 2, currentSpawnDistance);
+
+        randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
+        spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+        //while (true)
+        //{
+        //    
+
+        //    randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
+        //    spawnPos = (Vector2)playerTransform.position + randomCirclePos;
+
+        //    if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+        //        || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
+        //    {
+        //        // x ÁÂÇ¥ Á¶Á¤
+        //        if (spawnPos.x >= Defines.maxMapSize)
+        //            spawnPos.x = Defines.maxMapSize - spawnSpace;
+        //        else if (spawnPos.x <= -Defines.maxMapSize)
+        //            spawnPos.x = -Defines.maxMapSize + spawnSpace;
+
+        //        // y ÁÂÇ¥ Á¶Á¤
+        //        if (spawnPos.y >= Defines.maxMapSize)
+        //            spawnPos.y = Defines.maxMapSize - spawnSpace;
+        //        else if (spawnPos.y <= -Defines.maxMapSize)
+        //            spawnPos.y = -Defines.maxMapSize + spawnSpace;
+        //    }
+        //    else break;
+        //}
+
+        //Debug.Log(spawnPos);
+        return spawnPos;
+    }
+
+    public Vector2 RandomBossPosition(Transform playerTransform, float distance)
+    {
+        if (playerTransform == null) return Vector2.zero;
+
+        Vector2 randomCirclePos;
+        Vector2 spawnPos;
+
         while (true)
         {
-            float randomDistance = Random.Range(currentSpawnDistance / 2, currentSpawnDistance);
-
-            randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * randomDistance;
+            randomCirclePos = UnityEngine.Random.insideUnitCircle.normalized * distance;
             spawnPos = (Vector2)playerTransform.position + randomCirclePos;
 
-            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize 
                 || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
             {
                 // x ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.x >= Defines.maxMapSize)
                     spawnPos.x = Defines.maxMapSize - spawnSpace;
                 else if (spawnPos.x <= -Defines.maxMapSize)
-                    spawnPos.x = -Defines.maxMapSize + spawnSpace;
+                    spawnPos.x = -Defines.maxMapSize + 10;
 
                 // y ÁÂÇ¥ Á¶Á¤
                 if (spawnPos.y >= Defines.maxMapSize)
@@ -335,7 +377,6 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             else break;
         }
 
-        //Debug.Log(spawnPos);
         return spawnPos;
     }
 
@@ -348,21 +389,21 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
         Vector2 CirclePos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
         Vector2 spawnPos = (Vector2)playerTransform.position + CirclePos * currentSpawnDistance;
 
-        if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
-                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
-        {
-            // x ÁÂÇ¥ Á¶Á¤
-            if (spawnPos.x >= Defines.maxMapSize)
-                spawnPos.x = Defines.maxMapSize - spawnSpace;
-            else if (spawnPos.x <= -Defines.maxMapSize)
-                spawnPos.x = -Defines.maxMapSize + spawnSpace;
+        //if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+        //        || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
+        //{
+        //    // x ÁÂÇ¥ Á¶Á¤
+        //    if (spawnPos.x >= Defines.maxMapSize)
+        //        spawnPos.x = Defines.maxMapSize - spawnSpace;
+        //    else if (spawnPos.x <= -Defines.maxMapSize)
+        //        spawnPos.x = -Defines.maxMapSize + spawnSpace;
 
-            // y ÁÂÇ¥ Á¶Á¤
-            if (spawnPos.y >= Defines.maxMapSize)
-                spawnPos.y = Defines.maxMapSize - spawnSpace;
-            else if (spawnPos.y <= -Defines.maxMapSize)
-                spawnPos.y = -Defines.maxMapSize + spawnSpace;
-        }
+        //    // y ÁÂÇ¥ Á¶Á¤
+        //    if (spawnPos.y >= Defines.maxMapSize)
+        //        spawnPos.y = Defines.maxMapSize - spawnSpace;
+        //    else if (spawnPos.y <= -Defines.maxMapSize)
+        //        spawnPos.y = -Defines.maxMapSize + spawnSpace;
+        //}
 
         return spawnPos;
     }
@@ -379,21 +420,21 @@ public class MonsterSpawnFactory : MonoBehaviour, IPlayerObserver
             Vector2 pos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * (padding * i);
             Vector2 spawnPos = point + pos;
 
-            if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
-                || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
-            {
-                // x ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.x >= Defines.maxMapSize)
-                    spawnPos.x = Defines.maxMapSize - spawnSpace;
-                else if (spawnPos.x <= -Defines.maxMapSize)
-                    spawnPos.x = -Defines.maxMapSize + spawnSpace;
+            //if (spawnPos.x >= Defines.maxMapSize || spawnPos.x <= -Defines.maxMapSize
+            //    || spawnPos.y >= Defines.maxMapSize || spawnPos.y <= -Defines.maxMapSize)
+            //{
+            //    // x ÁÂÇ¥ Á¶Á¤
+            //    if (spawnPos.x >= Defines.maxMapSize)
+            //        spawnPos.x = Defines.maxMapSize - spawnSpace;
+            //    else if (spawnPos.x <= -Defines.maxMapSize)
+            //        spawnPos.x = -Defines.maxMapSize + spawnSpace;
 
-                // y ÁÂÇ¥ Á¶Á¤
-                if (spawnPos.y >= Defines.maxMapSize)
-                    spawnPos.y = Defines.maxMapSize - spawnSpace;
-                else if (spawnPos.y <= -Defines.maxMapSize)
-                    spawnPos.y = -Defines.maxMapSize + spawnSpace;
-            }
+            //    // y ÁÂÇ¥ Á¶Á¤
+            //    if (spawnPos.y >= Defines.maxMapSize)
+            //        spawnPos.y = Defines.maxMapSize - spawnSpace;
+            //    else if (spawnPos.y <= -Defines.maxMapSize)
+            //        spawnPos.y = -Defines.maxMapSize + spawnSpace;
+            //}
 
             lines.Add(spawnPos);
         }
