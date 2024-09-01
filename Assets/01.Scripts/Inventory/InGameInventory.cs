@@ -26,6 +26,7 @@ public class InGameInventory : MonoBehaviour
 
     // 플레이어 코인 수
     public int Coin { get; private set; } = 0;
+    public int TotalCoin { get; private set; } = 0;
 
     private int coreCount;
     public int CoreCount
@@ -78,7 +79,7 @@ public class InGameInventory : MonoBehaviour
     {
         SaveItem();
 
-        gameUI.SetGameClearUI(Coin, Kill);
+        gameUI.SetGameClearUI(TotalCoin, Kill);
 
         if (GameManager.Instance.CurrentStage == SaveManager.SaveDataV1.MaxStage)
         {
@@ -89,6 +90,7 @@ public class InGameInventory : MonoBehaviour
     public List<IInGameItem> SaveItem(bool isEffect = false)
     {
         SaveManager.SaveDataV1.Gold += Coin;
+        TotalCoin += Coin;
 
         Coin = 0;
 
