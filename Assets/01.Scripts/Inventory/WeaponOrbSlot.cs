@@ -6,7 +6,7 @@ public class WeaponOrbSlot : MonoBehaviour
 {
     public EquipPopUp equipPopUp;
     public ItemSlotUI[] upgradeSlots;
-    public OrbUpgrader orbUpgrader;
+    public OrbUpgraderView orbUpgrader;
     public OrbPanel orbPanel;
 
     private bool resetOn = true;
@@ -101,7 +101,7 @@ public class WeaponOrbSlot : MonoBehaviour
 
             orbPanel.SetList();
 
-            //¾ÈÄÑÁø »óÅÂ·Î È£ÃâÇØ¼­ ´Ù ²¨Á®ÀÖÀ½
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â·ï¿½ È£ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             foreach (var invenOrb in orbPanel.orbList)
             {
                 if (weaponOrb.ItemId == invenOrb.orbId)

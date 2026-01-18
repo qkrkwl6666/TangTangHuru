@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class OrbPanel : MonoBehaviour
 {
-    public OrbUpgrader upgrader;
+    public OrbUpgraderView upgrader;
     public GameObject content;
     public List<OrbDesc> orbList;
 
@@ -53,7 +53,7 @@ public class OrbPanel : MonoBehaviour
             orbList[i].gameObject.SetActive(false);
         }
 
-        //ÀÎº¥Åä¸®¿¡¼­ °³¼ö ¹Þ¾Æ¿Í¼­ ¸ñ·Ï Ãâ·ÂÇÏ°í, ÀÎº¥Åä¸® Á¶ÇÕ°á°ú AddItem¸Þ¼Òµå·Î Ãß°¡
+        //ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾Æ¿Í¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï°ï¿½, ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½Õ°ï¿½ï¿½ AddItemï¿½Þ¼Òµï¿½ï¿½ ï¿½ß°ï¿½
         int count = 0;
         List<Item> sortedOrbList = new();
         for (int i = 0; i < orbTypes.Count; ++i)
