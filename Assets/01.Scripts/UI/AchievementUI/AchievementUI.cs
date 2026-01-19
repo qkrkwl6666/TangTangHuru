@@ -31,20 +31,16 @@ public class AchievementUI : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < entryCount; i++)
-        {
-            entryList.Add(entryPrefab);
-        }
-        sorted = true;
-
+        // 인스턴스화된 객체를 entryList에 저장
         for (int i = 0; i < entryCount; i++)
         {
             var index = i;
-            entryList[i].SetDescription(i);
-            Instantiate(entryList[i].gameObject, content.transform);
-
-            entryList[i].rewardButton.onClick.AddListener(() => GiveRewardScroll(index));
+            var entryInstance = Instantiate(entryPrefab, content.transform);
+            entryInstance.SetDescription(i);
+            entryInstance.rewardButton.onClick.AddListener(() => GiveRewardScroll(index));
+            entryList.Add(entryInstance);
         }
+        sorted = true;
 
         for (int i = 0; i < petRewardButtons.Count; i++)
         {
@@ -62,16 +58,16 @@ public class AchievementUI : MonoBehaviour
         petScrolls[index].gameObject.SetActive(true);
 
         SaveManager.SaveDataV1.scrollStates.Clear();
-        for (int i = 0; i <= petScrolls.Count; i++)
+        for (int i = 0; i < petScrolls.Count; i++) // <= 를 < 로 수정
         {
-            SaveManager.SaveDataV1.scrollStates.Add(petScrolls[index].gameObject.activeSelf);
+            SaveManager.SaveDataV1.scrollStates.Add(petScrolls[i].gameObject.activeSelf); // index를 i로 수정
         }
 
-        //���� ��Ҵ��� üũ
+        // 스크롤 모았는지 체크
         CheckScrolls();
 
         SaveManager.SaveDataV1.petRewardStates.Clear();
-        for (int i = 0; i <= petRewardButtons.Count; i++)
+        for (int i = 0; i < petRewardButtons.Count; i++) // <= 를 < 로 수정
         {
             SaveManager.SaveDataV1.petRewardStates.Add(petRewardButtons[i].interactable);
         }
@@ -96,7 +92,7 @@ public class AchievementUI : MonoBehaviour
         petRewardButtons[num].interactable = false;
 
         SaveManager.SaveDataV1.petRewardStates.Clear();
-        for (int i = 0; i <= petRewardButtons.Count; i++)
+        for (int i = 0; i < petRewardButtons.Count; i++) // <= 를 < 로 수정
         {
             SaveManager.SaveDataV1.petRewardStates.Add(petRewardButtons[i].interactable);
         }

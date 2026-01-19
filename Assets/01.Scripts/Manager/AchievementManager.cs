@@ -12,7 +12,7 @@ public enum AchieveState
 [Serializable]
 public class Achievement
 {
-    //ÀúÀåÁ¤º¸
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public AchieveState achieveState;
 
     public string title;
@@ -26,7 +26,7 @@ public class Achievement
         {
             achieveState = AchieveState.Completed;
             //Debug.Log($"Achievement Unlocked: {title}");
-            onUnlock?.Invoke();  // µµÀü°úÁ¦ ´Ş¼º ½Ã Ãß°¡ ÀÛ¾÷
+            onUnlock?.Invoke();  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½Û¾ï¿½
         }
     }
 }
@@ -160,7 +160,7 @@ public class AhievementTask
     };
 
 
-    public void AddProgress(string key) //ÇØ´ç µµÀü°úÁ¦ ÁøÇàµµ Áõ°¡
+    public void AddProgress(string key) //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµ ï¿½ï¿½ï¿½ï¿½
     {
         if (progressValues.ContainsKey(key))
         {
@@ -172,7 +172,7 @@ public class AhievementTask
         }
     }
 
-    public void AddProgress(string key, int num) //ÇØ´ç µµÀü°úÁ¦ ÁøÇàµµ Áõ°¡
+    public void AddProgress(string key, int num) //ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµ ï¿½ï¿½ï¿½ï¿½
     {
         if (progressValues.ContainsKey(key))
         {
@@ -198,7 +198,7 @@ public class AhievementTask
         }
     }
 
-    public int GetProgress(string key) //ÇöÀç ÁøÇàµµ È®ÀÎ
+    public int GetProgress(string key) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½àµµ È®ï¿½ï¿½
     {
         if (progressValues.ContainsKey(key))
         {
@@ -210,7 +210,7 @@ public class AhievementTask
             return -1;
         }
     }
-    public int GetCondition(string key) //´Ş¼º Á¶°Ç È®ÀÎ
+    public int GetCondition(string key) //ï¿½Ş¼ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
     {
         if (completeConditions.ContainsKey(key))
         {
@@ -225,6 +225,7 @@ public class AhievementTask
 
     public void SaveProgress()
     {
+        SavedAchieveProgress.Clear(); // ê¸°ì¡´ ë°ì´í„° ì´ˆê¸°í™” í›„ ì €ì¥
         foreach (var key in progressValues.Keys)
         {
             SavedAchieveProgress.Add(progressValues[key]);
@@ -249,16 +250,16 @@ public class AchievementManager : Singleton<AchievementManager>
 
     public AhievementTask myTasks;
 
-    // µµÀü°úÁ¦ ¸®½ºÆ®
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     public List<Achievement> achievements = new List<Achievement>();
 
-    // µµÀü°úÁ¦ ÃÊ±âÈ­ ¹× µî·Ï
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½
     private void Start()
     {
         InitializeAchievements();
     }
 
-    // µµÀü°úÁ¦ ÃÊ±âÈ­ ¸Ş¼Òµå
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½Ş¼Òµï¿½
     private void InitializeAchievements()
     {
         achievements.Clear();
@@ -292,13 +293,13 @@ public class AchievementManager : Singleton<AchievementManager>
 
     }
 
-    //µµÀü°úÁ¦ ´Ş¼ºÈ®ÀÎ
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½È®ï¿½ï¿½
     public bool Check(string taskName)
     {
         return myTasks.CheckCompleted(taskName);
     }
 
-    //µµÀü°úÁ¦ ´Ş¼º
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¼ï¿½
     public void UnlockAchievement(string achievementTitle)
     {
         var achievement = achievements.Find(a => a.title == achievementTitle);
@@ -320,6 +321,10 @@ public class AchievementManager : Singleton<AchievementManager>
         {
             SavedStates.Add(achievements[i].achieveState);
         }
+
+        // SaveManagerì— ì‹¤ì œë¡œ ì €ì¥
+        SaveManager.SaveDataV1.SavedStates = new List<AchieveState>(SavedStates);
+        SaveManager.SaveDataV1.SavedAchieveProgress = new List<int>(myTasks.SavedAchieveProgress);
     }
 
     public List<string> GetArmorNameList()

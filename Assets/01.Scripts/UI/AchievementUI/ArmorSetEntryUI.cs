@@ -46,35 +46,39 @@ public class ArmorSetEntryUI : MonoBehaviour
         }
     }
 
-    public void CheckProgress(int index)
+    public void CheckProgress(int setIndex)
     {
         var armorList = AchievementManager.Instance.GetArmorNameList();
+
+        // setIndex는 1~7 (세트 번호), armorList 인덱스는 (setIndex-1)*3 부터 시작
+        int baseIndex = (setIndex - 1) * 3;
 
         foreach (var item in items)
         {
             switch (item.Item_Type)
             {
                 case (int)ItemType.Helmet:
-                    armorHeadDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index - 1]));
+                    armorHeadDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[baseIndex]));
                     break;
                 case (int)ItemType.Armor:
-                    armorBodyDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index]));
+                    armorBodyDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[baseIndex + 1]));
                     break;
                 case (int)ItemType.Shose:
-                    armorShoesDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[index + 1]));
+                    armorShoesDark.gameObject.SetActive(!AchievementManager.Instance.Check(armorList[baseIndex + 2]));
                     break;
             }
+        }
 
-            if (!armorHeadDark.gameObject.activeSelf
-                && !armorBodyDark.gameObject.activeSelf
-                && !armorShoesDark.gameObject.activeSelf)
-            {
-                rewardButton.interactable = true;
-            }
-            else
-            {
-                rewardButton.interactable = false;
-            }
+        // 모든 장비가 수집되었는지 확인 (foreach 밖에서 한 번만 체크)
+        if (!armorHeadDark.gameObject.activeSelf
+            && !armorBodyDark.gameObject.activeSelf
+            && !armorShoesDark.gameObject.activeSelf)
+        {
+            rewardButton.interactable = true;
+        }
+        else
+        {
+            rewardButton.interactable = false;
         }
     }
 }

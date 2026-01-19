@@ -9,10 +9,10 @@ using UnityEngine.UI;
 
 public class MainInventory : MonoBehaviour
 {
-    // ÀüÃ¼ ¾ÆÀÌÅÛ ÄÁÅ×ÀÌ³Ê
+    // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½
     private Dictionary<ItemType, Dictionary<ItemTier, List<Item>>> allItem = new();
 
-    // ÇÃ·¹ÀÌ¾î°¡ °¡Áö°íÀÖ´Â ¾ÆÀÌÅÛ ÄÁÅ×ÀÌ³Ê Àåºñ 
+    // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ 
     private Dictionary<PlayerEquipment, (Item, GameObject ItemSlot)> playerEquipment = new();
 
     // ArmorSet
@@ -20,66 +20,66 @@ public class MainInventory : MonoBehaviour
 
     public List<Image> subWeaponImages = new();
 
-    public List<TextMeshProUGUI> playerStatusTexts = new(); // ½ºÅİ ÅØ½ºÆ®
+    public List<TextMeshProUGUI> playerStatusTexts = new(); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
 
-    public List<TextMeshProUGUI> equipmentTextUI = new(); // ¾÷±×·¹ÀÌµå ÅØ½ºÆ®   Á¢±Ù½Ã (PlayerEquipment) - 1 
-    public List<GameObject> defaultEquipmentSlotUI = new(); // ±âº» UI           Á¢±Ù½Ã (PlayerEquipment) - 1
-    public List<GameObject> EquipmentSlotUI = new(); // ½ÇÁ¦ ¾ÆÀÌÅÛ UI           Á¢±Ù½Ã (PlayerEquipment) - 1
+    public List<TextMeshProUGUI> equipmentTextUI = new(); // ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ ï¿½Ø½ï¿½Æ®   ï¿½ï¿½ï¿½Ù½ï¿½ (PlayerEquipment) - 1 
+    public List<GameObject> defaultEquipmentSlotUI = new(); // ï¿½âº» UI           ï¿½ï¿½ï¿½Ù½ï¿½ (PlayerEquipment) - 1
+    public List<GameObject> EquipmentSlotUI = new(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI           ï¿½ï¿½ï¿½Ù½ï¿½ (PlayerEquipment) - 1
 
     public List<M_UISlot> equipmentSlotUI = new();
 
-    // Æê Á¤º¸
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public List<GameObject> petSlotUI = new();
     public Button petEquipSlotUI;
     public M_UISlot petMUISlot;
 
-    // ÇöÀç »ı¼ºµÈ UI ½½·Ô ¾ÆÀÌÅÛ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     private SortedList<int, (Item, GameObject ItemSlot)> itemSlotUI = new();
 
-    // ¼Ò¸ğÇ° ¾ÆÀÌÅÛ ÄÁÅ×ÀÌ³Ê
+    // ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½
     private Dictionary<string, (Item item, int count)> consumableItems = new();
 
-    // ¼¼Æ® È¿°ú ÅØ½ºÆ®
+    // ï¿½ï¿½Æ® È¿ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
     public TextMeshProUGUI setText;
 
     public Transform content;
 
-    // ¾ÆÀÌÅÛ ·£´ı Å×½ºÆ® ÄÚµå 
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½Úµï¿½ 
     public List<int> items = new();
 
     public PlayerViewUI playerViewUI;
 
     private MainUI mainUI;
 
-    // ÀçÈ­ °ñµå ¹× ´ÙÀÌ¾Æ
+    // ï¿½ï¿½È­ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
     public TextMeshProUGUI goldText;
     public TextMeshProUGUI diamondText;
 
     public int Gold { get; set; }
     public int Diamond { get; set; }
 
-    #region Á¤·Ä
-    public Button allFilterButton;    // ÀüÃ¼
+    #region ï¿½ï¿½ï¿½ï¿½
+    public Button allFilterButton;    // ï¿½ï¿½Ã¼
     public TextMeshProUGUI allFilterText;
-    public Button weaponFilterButton; // ¹«±â
-    public Button consumableButton;   // ¼Ò¸ğÇ°
-    public Button petButton;          // Æê
+    public Button weaponFilterButton; // ï¿½ï¿½ï¿½ï¿½
+    public Button consumableButton;   // ï¿½Ò¸ï¿½Ç°
+    public Button petButton;          // ï¿½ï¿½
 
     private FilterType currentFilterType;
 
     public TextMeshProUGUI allFoucsText;
 
-    // ±âº» ¾ÆÀÌÄÜ
+    // ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public GameObject weaponNormalIcon;
     public GameObject consumableNormalIcon;
     public GameObject petNormalIcon;
 
-    // Æ÷Ä¿½º ¾ÆÀÌÄÜ
+    // ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public GameObject weaponFocusIcon;
     public GameObject consumableFocusIcon;
     public GameObject petFocusIcon;
 
-    // Æ÷Ä¿½º ¶óÀÎ
+    // ï¿½ï¿½Ä¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public GameObject allFocusLine;
     public GameObject weaponFocusLine;
     public GameObject consumableFocusLine;
@@ -105,7 +105,7 @@ public class MainInventory : MonoBehaviour
         filterFoucsLine[FilterType.Pet] = petFocusLine;
     }
 
-    // Á¤·Ä ¹öÆ° ¸Ş¼­µå
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ° ï¿½Ş¼ï¿½ï¿½ï¿½
     public void OnAllFilterButton()
     {
         ItemFilterUISlot(FilterType.All);
@@ -232,7 +232,7 @@ public class MainInventory : MonoBehaviour
             DataTableManager.Instance.OnAllTableLoaded += CoSaveDataLoadMainInventory;
         else
         {
-            //Debug.Log("¼¼ÀÌºê ÀÌ¹Ì ·Îµå ¿Ï·áµÊ");
+            //Debug.Log("ï¿½ï¿½ï¿½Ìºï¿½ ï¿½Ì¹ï¿½ ï¿½Îµï¿½ ï¿½Ï·ï¿½ï¿½");
 
             Gold = SaveManager.SaveDataV1.Gold;
 
@@ -262,7 +262,7 @@ public class MainInventory : MonoBehaviour
 
     public Item MainInventoryAddItem(string itemId, int itemLevel = 0)
     {
-        // ±íÀº º¹»ç ÀúÀå
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         var item = DataTableManager.Instance.Get<ItemTable>
             (DataTableManager.item).GetItemData(itemId).DeepCopy();
@@ -275,7 +275,7 @@ public class MainInventory : MonoBehaviour
         ItemTier itemTier = (ItemTier)item.Item_Tier;
 
         var mainItem = MakeItem(item);
-        // ¾ÆÀÌÅÛ Å¸ÀÔÀÌ ¾ø´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½
 
         if (!allItem.ContainsKey(itemType))
         {
@@ -286,7 +286,7 @@ public class MainInventory : MonoBehaviour
             return mainItem;
         }
 
-        // ¾ÆÀÌÅÛ Å¸ÀÔÀÌ ÀÖ°í ¾ÆÀÌÅÛ Æ¼¾î°¡ ¾ø´Ù¸é 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î°¡ ï¿½ï¿½ï¿½Ù¸ï¿½ 
         if (!allItem[itemType].ContainsKey(itemTier))
         {
             allItem[itemType].Add(itemTier, new List<Item>());
@@ -295,7 +295,7 @@ public class MainInventory : MonoBehaviour
             return mainItem;
         }
 
-        // ¾ÆÀÌÅÛ Å¸ÀÔ°ú ¾ÆÀÌÅÛ Æ¼¾î°¡ ÀÖ´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î°¡ ï¿½Ö´Ù¸ï¿½
         {
             allItem[itemType][itemTier].Add(mainItem);
             return mainItem;
@@ -303,7 +303,7 @@ public class MainInventory : MonoBehaviour
 
     }
 
-    // ****ÁÖÀÇ**** : Item ÀÎ½ºÅÏ½º »ı¼º ¾ÆÀÌµğ°¡ º¹»çµÊ
+    // ****ï¿½ï¿½ï¿½ï¿½**** : Item ï¿½Î½ï¿½ï¿½Ï½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public Item MainInventoryAddItem(Item item)
     {
         if (item == null) return null;
@@ -331,7 +331,7 @@ public class MainInventory : MonoBehaviour
             return mainItem;
         }
 
-        // ¾ÆÀÌÅÛ Å¸ÀÔÀÌ ÀÖ°í ¾ÆÀÌÅÛ Æ¼¾î°¡ ¾ø´Ù¸é 
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î°¡ ï¿½ï¿½ï¿½Ù¸ï¿½ 
         if (!allItem[itemType].ContainsKey(itemTier))
         {
             allItem[itemType].Add(itemTier, new List<Item>());
@@ -340,7 +340,7 @@ public class MainInventory : MonoBehaviour
             return mainItem;
         }
 
-        // ¾ÆÀÌÅÛ Å¸ÀÔ°ú ¾ÆÀÌÅÛ Æ¼¾î°¡ ÀÖ´Ù¸é
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ô°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ¼ï¿½î°¡ ï¿½Ö´Ù¸ï¿½
         {
             allItem[itemType][itemTier].Add(mainItem);
             return mainItem;
@@ -367,6 +367,9 @@ public class MainInventory : MonoBehaviour
                 }
             }
         }
+
+        // ë„ì „ê³¼ì œ ì§„í–‰ ìƒí™© ì €ì¥
+        AchievementManager.Instance.SaveAchievement();
 
         SaveManager.Instance.SaveGame(SaveManager.SaveDataV1);
     }
@@ -416,9 +419,9 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
-            case 7: // Åõ±¸
-            case 8: // °©¿Ê
-            case 9: // ½Å¹ß
+            case 7: // ï¿½ï¿½ï¿½ï¿½
+            case 8: // ï¿½ï¿½ï¿½ï¿½
+            case 9: // ï¿½Å¹ï¿½
                 {
                     M_Armour m_armour = new M_Armour();
 
@@ -431,8 +434,8 @@ public class MainInventory : MonoBehaviour
 
                     return m_armour;
                 }
-            case 10: // Àåºñ ¿ø¼®
-            case 11: // °­È­¼®
+            case 10: // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            case 11: // ï¿½ï¿½È­ï¿½ï¿½
             case 19: // PetFood
                 {
                     M_Item m_item = new M_Item();
@@ -468,7 +471,7 @@ public class MainInventory : MonoBehaviour
 
                     if (item.ItemTier != ItemTier.Normal)
                     {
-                        // ¼­ºê ¹«±â
+                        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
                         M_Weapon tempWeapon = item as M_Weapon; 
 
@@ -518,9 +521,9 @@ public class MainInventory : MonoBehaviour
 
                     return m_item;
                 }
-            case ItemType.Helmet: // Åõ±¸
-            case ItemType.Armor: // °©¿Ê
-            case ItemType.Shose: // ½Å¹ß
+            case ItemType.Helmet: // ï¿½ï¿½ï¿½ï¿½
+            case ItemType.Armor: // ï¿½ï¿½ï¿½ï¿½
+            case ItemType.Shose: // ï¿½Å¹ï¿½
                 {
                     M_Armour m_armour = new M_Armour();
 
@@ -528,8 +531,8 @@ public class MainInventory : MonoBehaviour
 
                     return m_armour;
                 }
-            case ItemType.EquipmentGem: // Àåºñ ¿ø¼®
-            case ItemType.ReinforcedStone: // °­È­¼®
+            case ItemType.EquipmentGem: // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            case ItemType.ReinforcedStone: // ï¿½ï¿½È­ï¿½ï¿½
             case ItemType.PetFood: // PetFood
                 {
                     M_Item m_item = new M_Item();
@@ -543,14 +546,14 @@ public class MainInventory : MonoBehaviour
         return null;
     }
 
-    // ÇöÀç °¡Áö°í ÀÖ´Â ¾ÆÀÌÅÛ ui ¿¡ »ı¼º ÀÌ¹Ì »ı¼ºµÈ ¾ÆÀÌÅÛ ui¶ó¸é ³Ñ±â±â
-    // »õ·Î°íÄ§ Å¸ÀÌ¹ÖÀº °ÔÀÓ¿¡ Ã³À½ Á¢¼Ó½Ã ÀÎ °ÔÀÓ Á¾·á ÈÄ ¸ŞÀÎ¾À ÀÌµ¿ ½Ã
-    // ¾ÆÀÌÅÛÀ» È¹µæ½Ã
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ui ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ uiï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½
+    // ï¿½ï¿½ï¿½Î°ï¿½Ä§ Å¸ï¿½Ì¹ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó¿ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Î¾ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½ï¿½
     public void RefreshItemSlotUI()
     {
         //float firstTime = Time.time;
 
-        // ¼Ò¸ğÇ° °³¼ö ÃÊ±âÈ­
+        // ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
         var keys = new List<string>(consumableItems.Keys);
         foreach (var key in keys)
         {
@@ -578,7 +581,7 @@ public class MainInventory : MonoBehaviour
                         case ItemType.Helmet:
                         case ItemType.Armor:
                         case ItemType.Shose:
-                        case ItemType.Pet: // Todo ÀÓ½Ã
+                        case ItemType.Pet: // Todo ï¿½Ó½ï¿½
                         case ItemType.OrbAttack:
                         case ItemType.OrbHp:
                         case ItemType.OrbDefence:
@@ -599,7 +602,7 @@ public class MainInventory : MonoBehaviour
             }
         }
 
-        // ¼Ò¸ğÇ° UI ¾÷µ¥ÀÌÆ®
+        // ï¿½Ò¸ï¿½Ç° UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 
         foreach (var kvp in consumableItems)
         {
@@ -607,7 +610,7 @@ public class MainInventory : MonoBehaviour
             {
                 CreateOrUpdateItemSlot(kvp.Value.item, true, kvp.Value.count);
             }
-            else // ¼Ò¸ğÇ°ÀÌ 0ÀÏ °æ¿ì ¾ÆÀÌÅÛ »èÁ¦
+            else // ï¿½Ò¸ï¿½Ç°ï¿½ï¿½ 0ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 RemoveItem(kvp.Value.item.ItemId);
             }
@@ -615,7 +618,7 @@ public class MainInventory : MonoBehaviour
 
         //float time = Time.time - firstTime;
 
-        //Debug.Log($"°É¸° ½Ã°£ : {time}");
+        //Debug.Log($"ï¿½É¸ï¿½ ï¿½Ã°ï¿½ : {time}");
     }
 
     public void CreateOrUpdateItemSlot(Item item, bool isConsumable = false, int itemCount = 0, bool isImageRank = false)
@@ -700,12 +703,12 @@ public class MainInventory : MonoBehaviour
         }
     }
 
-    // Àåºñ ¹«±â ¾ÆÀÌÅÛ »èÁ¦
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void RemoveItem(int instanceId, bool isPet = false)
     {
         if (!itemSlotUI.ContainsKey(instanceId)) return;
 
-        // ¾ÆÀÌÅÛ ÀåÂø ÁßÀÌ¸é ÀåÂø¿¡¼­µµ »èÁ¦
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
         if (!isPet)
         {
@@ -724,7 +727,7 @@ public class MainInventory : MonoBehaviour
 
         var item = itemSlotUI[instanceId];
 
-        // item UI ½½·Ô »èÁ¦
+        // item UI ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         Destroy(item.ItemSlot);
         itemSlotUI.Remove(instanceId);
 
@@ -768,7 +771,7 @@ public class MainInventory : MonoBehaviour
         return true;
     }
 
-    // ¼Ò¸ğÇ° ¾ÆÀÌÅÛ »èÁ¦
+    // ï¿½Ò¸ï¿½Ç° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public bool RemoveItem(ItemType itemType, ItemTier itemTier, int removeCount)
     {
         if (!allItem.ContainsKey(itemType))
@@ -845,7 +848,7 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem(item);
         }
 
-        // ÃÊ±â ¾ÆÀÌÅÛ Áö±Ş
+        // ï¿½Ê±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         initializeNewPlayerItems();
         //CheatinitializeNewPlayerItems();
 
@@ -861,14 +864,14 @@ public class MainInventory : MonoBehaviour
 
         yield return new WaitForSeconds(0.4f);
 
-        // ·Îµå ÈÄ ¾÷±×·¹ÀÌµå 
+        // ï¿½Îµï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½×·ï¿½ï¿½Ìµï¿½ 
         LoadWeaponUpgrade();
 
         //RefreshItemSlotUI();
 
         //yield return new WaitForSeconds(0.3f);
 
-        // ³»°¡ ÇöÀç ÀåÂøÇÏ°í ÀÖ´Â ¾ÆÀÌÅÛ ÇÃ·¹ÀÌ¾î¿¡ ÀåÂø ½ÃÅ°±â
+        // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î¿¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å°ï¿½ï¿½
         LoadDataPlayerEquip();
         RefreshPlayerStatusText();
 
@@ -1071,7 +1074,7 @@ public class MainInventory : MonoBehaviour
     }
 
 
-    // Àåºñ ÀåÂø
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void EquipItem(Item item)
     {
         if (!itemSlotUI.TryGetValue(item.InstanceId, out var slot)) return;
@@ -1145,7 +1148,48 @@ public class MainInventory : MonoBehaviour
 
         RefreshCharacterSpine();
 
+        // ë°©ì–´êµ¬ ì°©ìš© ì‹œ ë„ì „ê³¼ì œ ì§„í–‰ë„ ë“±ë¡
+        RegisterArmorAchievement(equipInfo.item);
+
         PlayerArmorSetCheck();
+    }
+
+    /// <summary>
+    /// ë°©ì–´êµ¬ ì°©ìš© ì‹œ í•´ë‹¹ ì„¸íŠ¸/ë¶€ìœ„ì˜ ë„ì „ê³¼ì œ ì§„í–‰ë„ ë“±ë¡
+    /// </summary>
+    private void RegisterArmorAchievement(Item item)
+    {
+        // ë°©ì–´êµ¬ê°€ ì•„ë‹ˆë©´ ë¬´ì‹œ
+        if (item.ItemType != ItemType.Helmet &&
+            item.ItemType != ItemType.Armor &&
+            item.ItemType != ItemType.Shose)
+            return;
+
+        int setType = item.itemData.SetType;
+        if (setType < 1 || setType > 7) return;
+
+        // ì„¸íŠ¸ ì´ë¦„ ë°°ì—´ (ArmorSet enum ìˆœì„œì— ë§ì¶¤)
+        string[] setNames = { "HolyKnight", "SilverStrider", "ShadowWork", "RedStone", "StormBreaker", "MoonWalker", "SkyWatch" };
+        string setName = setNames[setType - 1];
+
+        // ë¶€ìœ„ì— ë”°ë¥¸ í‚¤ ìƒì„±
+        string partName = item.ItemType switch
+        {
+            ItemType.Helmet => "Helmet",
+            ItemType.Armor => "Armor",
+            ItemType.Shose => "Shoes",
+            _ => ""
+        };
+
+        if (string.IsNullOrEmpty(partName)) return;
+
+        string achievementKey = setName + partName;
+
+        // ë„ì „ê³¼ì œ ì§„í–‰ë„ ë“±ë¡ (ê°’ì´ 1ì´ ë˜ë©´ ì™„ë£Œ)
+        if (AchievementManager.Instance.myTasks.GetProgress(achievementKey) < 1)
+        {
+            AchievementManager.Instance.myTasks.AddProgress(achievementKey);
+        }
     }
 
     public void PlayerArmorSetCheck()
@@ -1281,7 +1325,7 @@ public class MainInventory : MonoBehaviour
         RefreshPlayerStatusText();
     }
 
-    // Æê ÀåÂø
+    // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetEquipPetItemUI((Item item, GameObject slotUI) equipInfo)
     {
         if (playerEquipment.ContainsKey(PlayerEquipment.Pet))
@@ -1465,7 +1509,7 @@ public class MainInventory : MonoBehaviour
             }
         }
 
-        // ÇÃ·¹ÀÌ¾î ¹«±â°¡ ¾øÀ» °æ¿ì 
+        // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½â°¡ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
         if (!playerEquipment.ContainsKey(PlayerEquipment.Weapon))
         {
             playerViewUI.SetNoneWeaponCharacterSkin(playerViewUI.CurrentCharacterSkin);
@@ -1501,17 +1545,17 @@ public class MainInventory : MonoBehaviour
     {
         if (SaveManager.isSaveFile) return;
 
-        // ·¹Àüµå ¹«±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         // MainInventoryAddItem("200005", 10);
         // MainInventoryAddItem("200105", 10);
         // MainInventoryAddItem("210105", 10);
         // MainInventoryAddItem("220005", 10);
         // MainInventoryAddItem("220105", 10);
 
-        // ÀÏ¹İ ¹«±â
+        // ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
         MainInventoryAddItem("200001", 0);
 
-        // Æ©Åä¸®¾ó Àç·á
+        // Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½
         MainInventoryAddItem("200002", 0);
 
         //MainInventoryAddItem("200101", 0);
@@ -1520,12 +1564,12 @@ public class MainInventory : MonoBehaviour
         //MainInventoryAddItem("220001", 0);
         //MainInventoryAddItem("220101", 0);
 
-        // ·¹Àüµå Àåºñ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         //MainInventoryAddItem("400015", 10);
         //MainInventoryAddItem("401015", 10);
         //MainInventoryAddItem("402015", 10);
 
-        // °­È­¼® Àåºñ ¿ø¼®
+        // ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < 5; i++)
         {
             //MainInventoryAddItem("600002");
@@ -1535,7 +1579,7 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem("600006");
         }
         MainInventoryAddItem("600001");
-        // ¿Àºê
+        // ï¿½ï¿½ï¿½ï¿½
         // MainInventoryAddItem("610004");
         // 
         // MainInventoryAddItem("610104");
@@ -1543,7 +1587,7 @@ public class MainInventory : MonoBehaviour
         // MainInventoryAddItem("610304");
         // 
 
-        // Æê
+        // ï¿½ï¿½
         MainInventoryAddItem("710001");
         MainInventoryAddItem("710002");
         MainInventoryAddItem("710003");
@@ -1702,17 +1746,17 @@ public class MainInventory : MonoBehaviour
     {
         if (SaveManager.isSaveFile) return;
 
-        // ·¹Àüµå ¹«±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         MainInventoryAddItem("200005", 10);
         MainInventoryAddItem("200105", 10);
         MainInventoryAddItem("210105", 10);
         MainInventoryAddItem("220005", 10);
         MainInventoryAddItem("220105", 10);
 
-        // ÀÏ¹İ ¹«±â
+        // ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½
         MainInventoryAddItem("200001", 0);
 
-        // Æ©Åä¸®¾ó Àç·á
+        // Æ©ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½
         MainInventoryAddItem("200002", 0);
 
         MainInventoryAddItem("200101", 0);
@@ -1721,12 +1765,12 @@ public class MainInventory : MonoBehaviour
         MainInventoryAddItem("220001", 0);
         MainInventoryAddItem("220101", 0);
 
-        // ·¹Àüµå Àåºñ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
         MainInventoryAddItem("400015", 10);
         MainInventoryAddItem("401015", 10);
         MainInventoryAddItem("402015", 10);
 
-        // °­È­¼® Àåºñ ¿ø¼®
+        // ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         for (int i = 0; i < 100; i++)
         {
             MainInventoryAddItem("600002");
@@ -1736,7 +1780,7 @@ public class MainInventory : MonoBehaviour
             MainInventoryAddItem("600006");
         }
         MainInventoryAddItem("600001");
-        //¿Àºê
+        //ï¿½ï¿½ï¿½ï¿½
         MainInventoryAddItem("610004");
         
         MainInventoryAddItem("610104");
@@ -2012,7 +2056,7 @@ public class MainInventory : MonoBehaviour
         }
     }
 
-    // ¼­ºê ¹«±â ·£´ı »Ì±â
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì±ï¿½
     public List<ItemData> GetRandomSubWeapon(int count)
     {
         List<ItemData> subWeaponItems = new List<ItemData>();
@@ -2114,18 +2158,18 @@ public enum ItemType
     Wand = 5,
     Staff = 6,
 
-    Helmet = 7, // Åõ±¸
-    Armor = 8, // °©¿Ê
-    Shose = 9, // ½Å¹ß
-    EquipmentGem = 10, // Àåºñ ¿ø¼®
-    ReinforcedStone = 11, // °­È­¼®
-    OrbAttack = 12, // ¿Àºê
-    OrbDefence = 13, // ¿Àºê
-    OrbHp = 14, // ¿Àºê
-    OrbDodge = 15, // ¿Àºê
-    Pet = 16, // Æê
+    Helmet = 7, // ï¿½ï¿½ï¿½ï¿½
+    Armor = 8, // ï¿½ï¿½ï¿½ï¿½
+    Shose = 9, // ï¿½Å¹ï¿½
+    EquipmentGem = 10, // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    ReinforcedStone = 11, // ï¿½ï¿½È­ï¿½ï¿½
+    OrbAttack = 12, // ï¿½ï¿½ï¿½ï¿½
+    OrbDefence = 13, // ï¿½ï¿½ï¿½ï¿½
+    OrbHp = 14, // ï¿½ï¿½ï¿½ï¿½
+    OrbDodge = 15, // ï¿½ï¿½ï¿½ï¿½
+    Pet = 16, // ï¿½ï¿½
 
-    Weapon = 17, // ÀüÃ¼ ¹«±â
+    Weapon = 17, // ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
     SubWeapon = 18,
     PetFood = 19,
 }
@@ -2143,12 +2187,12 @@ public enum ItemTier
 
 public enum PlayerEquipment
 {
-    Weapon = 1, // ¹«±â
+    Weapon = 1, // ï¿½ï¿½ï¿½ï¿½
 
-    Helmet = 2, // Åõ±¸
-    Armor = 3,  // °©¿Ê
-    Shoes = 4,  // ½Å¹ß
-    Pet = 5, // Æê
+    Helmet = 2, // ï¿½ï¿½ï¿½ï¿½
+    Armor = 3,  // ï¿½ï¿½ï¿½ï¿½
+    Shoes = 4,  // ï¿½Å¹ï¿½
+    Pet = 5, // ï¿½ï¿½
 }
 
 public enum FilterType
