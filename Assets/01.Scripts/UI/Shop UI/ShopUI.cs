@@ -6,6 +6,7 @@ public class ShopUI : MonoBehaviour
     public MainInventory inventory;
     public ShopEntry shopEntryPrefab;
     public GameObject shopContent;
+    public List<int> shopListCodes = new List<int>();
 
     private List<ItemData> shopItems = new List<ItemData>();
     private List<ShopEntry> shopEntries = new List<ShopEntry>();
@@ -35,13 +36,16 @@ public class ShopUI : MonoBehaviour
 
     private void SetShopItems()
     {
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720001"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720002"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720003"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720004"));
-        shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("600006"));
+        for(int i = 0; i < shopListCodes.Count; i++)
+        {
+            shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData(shopListCodes[i].ToString()));
+        }
+        //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720001"));
+        //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720002"));
+        //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720003"));
+        //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("720004"));
+        //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("600006"));
         //shopItems.Add(DataTableManager.Instance.Get<ItemTable>(DataTableManager.item).GetItemData("220101"));
-
 
     }
 
