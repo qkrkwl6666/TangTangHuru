@@ -61,9 +61,7 @@ public class OrbCrafterPresenter
         UpdateStoneCount();
     }
 
-    /// <summary>
-    /// 제작 성공 처리
-    /// </summary>
+    // 제작 성공 처리
     private void HandleCraftSuccess()
     {
         if (model.ShouldIncrementGaige())
@@ -93,51 +91,39 @@ public class OrbCrafterPresenter
         SaveGaige();
     }
 
-    /// <summary>
-    /// 제작 실패 처리
-    /// </summary>
+    // 제작 실패 처리
     private void HandleCraftFail()
     {
         SoundManager.Instance.PlaySound2D("failed");
     }
 
-    /// <summary>
-    /// 강화석 개수 업데이트
-    /// </summary>
+    // 강화석 개수 업데이트
     private void UpdateStoneCount()
     {
         model.StoneCount = inventory.GetItemCount(ItemType.ReinforcedStone, ItemTier.Normal);
         view.SetStoneCount(model.StoneCount);
     }
 
-    /// <summary>
-    /// 게이지 저장
-    /// </summary>
+    // 게이지 저장
     private void SaveGaige()
     {
         SaveManager.SaveDataV1.gaige = model.GaigeNum;
     }
 
-    /// <summary>
-    /// 게이지 로드
-    /// </summary>
+    // 게이지 로드
     private void LoadGaige()
     {
         model.GaigeNum = SaveManager.SaveDataV1.gaige;
     }
 
-    /// <summary>
-    /// 성공 확률 증가 (외부 호출용)
-    /// </summary>
+    // 성공 확률 증가 (외부 호출용)
     public void IncreasePercent(int amount)
     {
         model.IncreasePercent(amount);
         view.SetSuccessPercent(model.CreatePercent);
     }
 
-    /// <summary>
-    /// 리소스 정리
-    /// </summary>
+    // 리소스 정리
     public void Dispose()
     {
         view.OnCraftButtonClicked -= HandleCraft;

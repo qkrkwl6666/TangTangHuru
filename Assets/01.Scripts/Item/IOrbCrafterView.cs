@@ -6,38 +6,24 @@ using System;
 /// </summary>
 public interface IOrbCrafterView
 {
-    /// <summary>
-    /// 제작 버튼 클릭 이벤트
-    /// </summary>
+    // 제작 버튼 클릭 이벤트
     event Action OnCraftButtonClicked;
 
-    /// <summary>
-    /// 강화석 개수 표시 업데이트
-    /// </summary>
+    // 강화석 개수 표시 업데이트
     void SetStoneCount(int count);
 
-    /// <summary>
-    /// 성공 확률 표시 업데이트
-    /// </summary>
+    // 성공 확률 표시 업데이트
     void SetSuccessPercent(int percent);
 
-    /// <summary>
-    /// 게이지 UI 업데이트
-    /// </summary>
+    // 게이지 UI 업데이트
     void UpdateGaige(int filledCount, int maxCount);
 
-    /// <summary>
-    /// 게이지 초기화 (모두 투명하게)
-    /// </summary>
+    // 게이지 초기화 (모두 투명하게)
     void ResetGaige();
 
-    /// <summary>
-    /// 오브 획득 알림 패널 표시
-    /// </summary>
+    // 오브 획득 알림 패널 표시
     void ShowNoticePanel(ItemData itemData);
 
-    /// <summary>
-    /// OrbPanel 갱신
-    /// </summary>
+    // OrbPanel 갱신
     void RefreshOrbPanel();
 }

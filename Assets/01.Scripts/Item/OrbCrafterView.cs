@@ -108,7 +108,7 @@ public class OrbCrafterView : MonoBehaviour, IOrbCrafterView
 
     #endregion
 
-    #region 외부 호출용 Public API (하위 호환성)
+    #region 외부 호출용 Public API
 
     /// <summary>
     /// 외부에서 성공 확률을 증가시킬 때 사용
